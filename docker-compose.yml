@@ -1,18 +1,19 @@
 version: '3.9'
 
 networks:
-  n_backend:
-    driver: bridge
-  n_frontend:
+  transcendence:
     driver: bridge
 
 services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                     #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  frontend:
-    build: srcs/Frontend
-    container_name: frontend
+  nest_app:
+    networks: 
+      - transcendence
+    build: srcs/nest_app
+    container_name: nest_app
+    image: nest_app
     ports:
       - "3000:3000"
     env_file:
@@ -21,27 +22,12 @@ services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                     #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  backend:
-    build: srcs/BackEnd
-    container_name: backend
-    ports:
-      - "8080:8080"
-    depends_on:
-      - database
-    env_file:
-      - "./.env"
-    # environment:
-    #   - DATABASE_URL=postgres://postgres:test@database:5432/nest
-    restart: always
-# # # # # # # # # # # # # # # # # # # # # # # # # # # #
-#                                                     #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # #
   database:
+    networks: 
+      - transcendence
     build: srcs/db
     container_name: db
     image: postgres
-    ports:
-      - "5432:5432"
     env_file:
         - "./.env"
     restart: always
@@ -52,10 +38,4 @@ volumes:
     driver_opts:
       o: 'bind'
       type: 'none'
-      device: '/home/${USER}/data/website'
-  website:
-    driver: local
-    driver_opts:
-      o: 'bind'
-      type: 'none'
-      device: '/home/${USER}/data/db'
+      device: '/${HOME}/data/db'
