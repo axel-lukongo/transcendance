@@ -5,6 +5,6 @@ RUN apt-get update && \
     vim \
 	postgresql
 
-COPY	init.sh .
+COPY init.sh .
 
 ENTRYPOINT ["bash", "./init.sh"]

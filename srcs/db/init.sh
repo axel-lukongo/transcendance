@@ -1,2 +1,4 @@
 service postgresql start
-tail -f /dev/null
+sudo -i -u postgres
+createdb test_trans
+psql test_trans
