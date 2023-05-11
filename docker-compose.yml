@@ -11,6 +11,8 @@ services:
   nest_app:
     networks: 
       - transcendence
+    depends_on:
+      - database 
     build: srcs/nest_app
     container_name: nest_app
     image: nest_app

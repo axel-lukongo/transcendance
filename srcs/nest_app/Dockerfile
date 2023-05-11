@@ -1,6 +1,14 @@
 FROM debian:buster
 
 RUN apt-get update && \
-    apt-get install -y vim
+    apt-get install -y vim \
+	npm \
+	curl \
+	git \
+	zsh
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+COPY ./init.sh .
+
+
+ENTRYPOINT ["bash",  "./init.sh"]

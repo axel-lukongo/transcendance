@@ -1,3 +1,8 @@
+#DOESN'T WORK FOR NOW | Install OH My ZSH for better bash can comment this 2 lignes
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# zsh
+
+
 service postgresql start
 cat << EOF | adduser $POSTGRES_USER
 $POSTGRES_PASSWORD
