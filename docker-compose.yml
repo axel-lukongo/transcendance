@@ -18,7 +18,7 @@ services:
       - "3000:3000"
     env_file:
       - "./.env"
-    restart: always
+    restart: no
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                     #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -30,7 +30,9 @@ services:
     image: postgres
     env_file:
         - "./.env"
-    restart: always
+    restart: no
+    volumes: 
+      - "db:/var/lib/postgressql/data"
 
 volumes:
   db:
