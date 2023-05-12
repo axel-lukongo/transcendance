@@ -4,11 +4,24 @@ RUN apt-get update && \
     apt-get install -y vim \
 	npm \
 	curl \
-	git \
-	zsh
+	git 
 
+RUN npm install -g @nestjs/cli
+
+RUN npm install -g n
+
+RUN	n latest  
+
+RUN	hash -r
 
 COPY ./init.sh .
 
+COPY ./ft_transcendence /ft_transcendence/ 
 
-ENTRYPOINT ["bash",  "./init.sh"]
+WORKDIR ./ft_transcendence/
+
+RUN npm install prisma --save-dev
+
+# RUN unset DATABASE_URL && export DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${DB_PORT}/${POSTGRES_DB_NAME}?schema=public"
+
+ENTRYPOINT ["bash",  "../init.sh"]

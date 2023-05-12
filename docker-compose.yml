@@ -8,6 +8,20 @@ services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                     #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  database:
+    networks: 
+      - transcendence
+    build: srcs/db
+    container_name: db
+    image: postgres
+    env_file:
+        - "./.env"
+    restart: no
+    volumes: 
+      - "db:/var/lib/postgressql/data"
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                                     #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
   nest_app:
     networks: 
       - transcendence
@@ -21,20 +35,6 @@ services:
     env_file:
       - "./.env"
     restart: no
-# # # # # # # # # # # # # # # # # # # # # # # # # # # #
-#                                                     #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  database:
-    networks: 
-      - transcendence
-    build: srcs/db
-    container_name: db
-    image: postgres
-    env_file:
-        - "./.env"
-    restart: no
-    volumes: 
-      - "db:/var/lib/postgressql/data"
 
 volumes:
   db:
