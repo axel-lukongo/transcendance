@@ -16,6 +16,11 @@ EOF
 
 sudo -u postgres createuser $POSTGRES_USER
 sudo -u postgres createdb $POSTGRES_DB_NAME
-echo "alter user $POSTGRES_USER with encrypted password '$POSTGRES_PASSWORD'; grant all privileges on database $POSTGRES_DB_NAME to $POSTGRES_USER; grant all privileges on schema public to $POSTGRES_USER; alter user $POSTGRES_USER createdb" | sudo -u postgres psql
+cat << EOF | sudo -u postgres psql
+alter user $POSTGRES_USER with encrypted password '$POSTGRES_PASSWORD';
+grant all privileges on database $POSTGRES_DB_NAME to $POSTGRES_USER;
+grant all privileges on schema public to $POSTGRES_USER;
+alter user $POSTGRES_USER createdb;
+EOF
 service postgresql stop
 sudo -u postgres /usr/lib/postgresql/11/bin/postgres -D /etc/postgresql/11/main/
