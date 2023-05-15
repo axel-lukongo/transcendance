@@ -22,6 +22,4 @@ WORKDIR ./ft_transcendence/
 
 RUN npm install prisma --save-dev
 
-# RUN unset DATABASE_URL && export DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${DB_PORT}/${POSTGRES_DB_NAME}?schema=public"
-
 ENTRYPOINT ["bash",  "../init.sh"]
