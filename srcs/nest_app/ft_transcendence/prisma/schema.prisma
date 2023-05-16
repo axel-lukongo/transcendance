@@ -62,8 +62,8 @@ model Users_Chanels {
 model Message {
   id               Int      @id @default(autoincrement())
   sender_id        Int
-  user_receiver_id Int
-  chan_receiver_id Int
+  user_receiver_id Int?
+  chan_receiver_id Int?
   content          String
   sent_at          DateTime
   sender           User     @relation("Send", fields: [sender_id], references: [id])
