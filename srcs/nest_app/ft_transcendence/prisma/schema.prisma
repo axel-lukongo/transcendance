@@ -11,63 +11,62 @@ datasource db {
 }
 
 model User {
-  id			Int       @id @default(autoincrement())
-  token			Int
-  nickname		String
-  avatar		String?
+  id        Int             @id @default(autoincrement())
+  token     Int
+  nickname  String
+  avatar    String?
   //  Un tableau de relations vers le modèle UsersPong, 
   // représentant les jeux de pong où cet utilisateur est le joueur 1.
-  userPong		Pong[]    @relation("User1")
+  userPong  Pong[]          @relation("User1")
   //  Un tableau de relations vers le modèle UsersPong, 
   // représentant les jeux de pong où cet utilisateur est le joueur 2.
-  userPong2		Pong[]    @relation("User2")
-  chanels		Users_Chanels[]
-  own_chan		Chanel[]
-  messages		Message[]
-  incom_msgs	Message[] @relation("private_message_recipient_user")
+  userPong2 Pong[]          @relation("User2")
+  chanels   Users_Chanels[]
+  own_chan  Chanel[]
+  sender    Message[]       @relation("Send")
+  receiver  Message[]       @relation("Receive")
 }
 
 model Pong {
-  id			Int			@id @default(autoincrement())
-  userId1		Int
-  userId2		Int
-  scoreUser1	Int
-  scoreUser2	Int
-  Versus_date	DateTime
-  user1			User		@relation("User1", fields: [userId1], references: [id])
-  user2			User		@relation("User2", fields: [userId2], references: [id])
+  id          Int      @id @default(autoincrement())
+  userId1     Int
+  userId2     Int
+  scoreUser1  Int
+  scoreUser2  Int
+  Versus_date DateTime
+  user1       User     @relation("User1", fields: [userId1], references: [id])
+  user2       User     @relation("User2", fields: [userId2], references: [id])
 }
 
 model Chanel {
-  id			Int			@id @default(autoincrement())
-  owner_id		Int
-  chanel_name	String
-  chanel_size	Int
-  max_users		Int
-  owner			User		@relation(fields: [owner_id], references: [id])
-  users			Users_Chanels[]
-  messages		Message[]
+  id          Int             @id @default(autoincrement())
+  owner_id    Int
+  chanel_name String
+  chanel_size Int
+  max_users   Int
+  owner       User            @relation(fields: [owner_id], references: [id])
+  users       Users_Chanels[]
+  messages    Message[]
 }
 
 model Users_Chanels {
-  user_id		Int
-  chanel_id		Int
-  
+  user_id   Int
+  chanel_id Int
+
+  user   User   @relation(fields: [user_id], references: [id])
+  chanel Chanel @relation(fields: [chanel_id], references: [id])
+
   @@id([user_id, chanel_id])
-  
-  user			User		@relation(fields: [user_id], references: [id])
-  chanel		Chanel		@relation(fields: [chanel_id], references: [id])
 }
 
 model Message {
-  id			Int			@id @default(autoincrement())
-  sender_id		Int
-  receiver_id	Int
-  recipient_id	Int
-  content		String
-  sent_at		DateTime
-  sender		User		@relation(fields: [sender_id], references: [id])
-  recipient		Chanel?		@relation(fields: [receiver_id], references: [id])
-  receiver_user	User?		@relation("private_message_recipient_user", fields: [recipient_id], references: [id])
+  id               Int      @id @default(autoincrement())
+  sender_id        Int
+  user_receiver_id Int
+  chan_receiver_id Int
+  content          String
+  sent_at          DateTime
+  sender           User     @relation("Send", fields: [sender_id], references: [id])
+  sent_to_user     User?    @relation("Receive", fields: [user_receiver_id], references: [id])
+  send_to_chan     Chanel?  @relation(fields: [chan_receiver_id], references: [id])
 }
-
