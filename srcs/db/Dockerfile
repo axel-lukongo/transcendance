@@ -10,9 +10,9 @@ RUN apt-get update && \
 
 COPY init.sh .
 
-COPY ./postgresql.conf /etc/postgresql/11/main/postgresql.conf
+COPY ./comf/postgresql.conf /etc/postgresql/11/main/postgresql.conf
 
-COPY ./pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
+COPY ./conf/pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
 
 # RUN chown pos:xtgres:postgres /etc/postgresql/11/main/postgresql.conf && chmod u+rwx /etc/postgresql/11/main/postgresql.conf
 
