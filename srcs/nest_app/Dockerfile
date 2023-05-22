@@ -18,7 +18,7 @@ COPY ./init.sh .
 
 COPY ./ft_transcendence /ft_transcendence/ 
 
-WORKDIR ./ft_transcendence/
+WORKDIR /ft_transcendence/
 
 RUN npm install prisma --save-dev
 

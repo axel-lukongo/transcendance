@@ -33,7 +33,7 @@ model Pong {
   userId2     Int
   scoreUser1  Int
   scoreUser2  Int
-  Versus_date DateTime
+  Versus_date DateTime  @default(now())
   user1       User     @relation("User1", fields: [userId1], references: [id])
   user2       User     @relation("User2", fields: [userId2], references: [id])
 }
@@ -65,7 +65,7 @@ model Message {
   user_receiver_id Int?
   chan_receiver_id Int?
   content          String
-  sent_at          DateTime
+  sent_at          DateTime @default(now())
   sender           User     @relation("Send", fields: [sender_id], references: [id])
   sent_to_user     User?    @relation("Receive", fields: [user_receiver_id], references: [id])
   send_to_chan     Chanel?  @relation(fields: [chan_receiver_id], references: [id])
