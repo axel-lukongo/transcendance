@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { CreateUserDto} from './user.dto'
+import { CreateUserDto} from '../dto/user.dto'
 import { resolve } from 'path';
 import { rejects } from 'assert';
 
