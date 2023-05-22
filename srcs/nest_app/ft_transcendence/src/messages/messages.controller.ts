@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
-import { CreateMessageDto, UpdateMessageDto } from './dto/MessageDto';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { CreateMessageDto, UpdateMessageDto } from '../dto/messages.dto';
 import { MessagesService } from './messages.service';
 
 @Controller('messages')
@@ -20,6 +20,11 @@ export class MessagesController {
 	@Put(':id')
 	updateMessage(@Param('id') id_search: number, @Body() msgDto: UpdateMessageDto): Promise<any> {
 		return this.msgServ.updateMessage(id_search, msgDto);
+	}
+
+	@Delete(':id')
+	deleteMessage(@Param('id') search_id: number) {
+		return this.msgServ.deleteMessage(search_id);
 	}
 
 }
