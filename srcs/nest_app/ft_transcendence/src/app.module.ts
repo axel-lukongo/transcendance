@@ -6,7 +6,7 @@ import { UserController } from './user/user.controller';
 
 @Module({
   imports: [UserModule, MessagesModule],
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

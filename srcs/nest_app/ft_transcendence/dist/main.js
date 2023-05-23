@@ -6,7 +6,7 @@ const cors = require("cors");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(cors({ origin: 'http://localhost:3000' }));
-    await app.listen(5000);
+    await app.listen(3000);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
