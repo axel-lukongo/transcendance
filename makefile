@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
+#    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/05/16 14:47:40 by idouidi          ###   ########.fr        #
+#    Updated: 2023/05/23 03:55:39 by asimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,10 @@ clean:	down
 
 re : 	clean up
 
-nest_app: docker exec -it nest_app bash
+nest_app: 
+	docker exec -it nest_app bash
 
-db: docker exec -it db bash
-
+db: 
+	docker exec -it db bash
 
 .PHONY: start stop re ps clean nest_app db

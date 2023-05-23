@@ -13,17 +13,21 @@ export class MessagesController {
 	}
 
 	@Get(':id')
-	async getMessage(@Param('id') id_search: number): Promise<any> {
-		const msg = await this.msgServ.getMessage(id_search);
+	async getMessage(@Param('id') id: string): Promise<any> {
+		const search_id = parseInt(id, 10);
+		const msg = await this.msgServ.getMessage(search_id);
+		return msg;
 	}
-
+	
 	@Put(':id')
-	updateMessage(@Param('id') id_search: number, @Body() msgDto: UpdateMessageDto): Promise<any> {
-		return this.msgServ.updateMessage(id_search, msgDto);
+	updateMessage(@Param('id') id: string, @Body() msgDto: UpdateMessageDto): Promise<any> {
+		const search_id = parseInt(id, 10);
+		return this.msgServ.updateMessage(search_id, msgDto);
 	}
-
+	
 	@Delete(':id')
-	deleteMessage(@Param('id') search_id: number) {
+	deleteMessage(@Param('id') id: string) {
+		const search_id = parseInt(id, 10);
 		return this.msgServ.deleteMessage(search_id);
 	}
 

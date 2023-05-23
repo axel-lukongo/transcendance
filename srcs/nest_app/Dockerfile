@@ -22,4 +22,9 @@ WORKDIR /ft_transcendence/
 
 RUN npm install prisma --save-dev
 
-ENTRYPOINT ["bash",  "../init.sh"]
+RUN npm install --save @prisma/client \
+	@nestjs/mapped-types \
+	class-validator \
+	class-transformer
+
+ENTRYPOINT ["bash", "../init.sh"]

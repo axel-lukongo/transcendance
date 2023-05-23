@@ -10,7 +10,7 @@ RUN apt-get update && \
 
 COPY init.sh .
 
-COPY ./comf/postgresql.conf /etc/postgresql/11/main/postgresql.conf
+COPY ./conf/postgresql.conf /etc/postgresql/11/main/postgresql.conf
 
 COPY ./conf/pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
 

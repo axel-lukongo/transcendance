@@ -1,15 +1,17 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, IsOptional } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateMessageDto {
 
 	@IsInt()
 	@IsNotEmpty()
-	id_sender: number;
+	sender_id: number;
 
+	@IsOptional()
 	@IsInt()
 	user_receiver_id: number;
 	
+	@IsOptional()
 	@IsInt()
 	chan_receiver_id: number;
 	
