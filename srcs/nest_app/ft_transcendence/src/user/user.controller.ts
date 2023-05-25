@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Delete, Patch, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Patch, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { PrismaClient, User } from '@prisma/client';
 import { CreateUserDto } from '../dto/user.dto'
@@ -12,28 +12,30 @@ export class UserController {
       return this.userService.createUser(userDto);
     }
 
+
     @Delete(':id')
     async deleteUser(@Param('id') id: number): Promise<User | null> {
       return this.userService.deleteUser(id);
     }
 
-    @Get(':nickname')
+    @Get('nickname')
     async getUserByNickname(@Param('nickname') nick: string): Promise<User | null> {
+      console.log(nick)
       return this.userService.getUserByNickname(nick);
     }
 
     @Patch(':id/token')
-    async updateUserToken(@Param('id') id: number, @Body() { token }: { token: number }): Promise<User | null> {
+    async updateUserToken(@Param('id', ParseIntPipe) id: number, @Body() { token }: { token: number }): Promise<User | null> {
       return this.userService.updateUser(id, { token });
     }
 
     @Patch(':id/nickname')
-    async updateUserNickname(@Param('id') id: number, @Body() { nickname }: { nickname: string }): Promise<User | null> {
+    async updateUserNickname(@Param('id', ParseIntPipe) id: number, @Body() { nickname }: { nickname: string }): Promise<User | null> {
       return this.userService.updateUser(id, { nickname });
     }
 
     @Patch(':id/nickname')
-    async updateUserAvatarImg(@Param('id') id: number, @Body() { avatar }: { avatar: string }): Promise<User | null> {
+    async updateUserAvatarImg(@Param('id', ParseIntPipe) id: number, @Body() { avatar }: { avatar: string }): Promise<User | null> {
       return this.userService.updateUser(id, { avatar });
     }
 }
