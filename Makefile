@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
+#    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/05/23 03:55:39 by asimon           ###   ########.fr        #
+#    Updated: 2023/05/25 16:57:26 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ up:
 		docker compose -f docker-compose.yml up --force-recreate #-d --force-recreate
 
 down:
-		docker compose -f docker-compose.yml down 
+		docker compose -f docker-compose.yml down -v
 
 ps:		
 		docker compose -f docker-compose.yml ps -a
@@ -26,7 +26,6 @@ ps:
 
 clean:	down
 		docker system prune
-		docker volume rm srcs_db srcs_website
 
 		rm -rf ${HOME}/data/db
 		mkdir -p ${HOME}/data/db
