@@ -22,14 +22,14 @@ services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                     #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  nest_app:
+  back-end:
     networks: 
       - transcendence
     depends_on:
       - database
-    build: srcs/nest_app
-    container_name: nest_app
-    image: nest_app
+    build: srcs/back-end
+    container_name: back-end
+    image: back-end
     ports:
       - "3000:3000"
       - "5555:5555" # prisma studio | A enlever en prod!

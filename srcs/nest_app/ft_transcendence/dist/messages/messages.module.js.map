@@ -1,1 +1,0 @@
-{"version":3,"file":"messages.module.js","sourceRoot":"","sources":["../../src/messages/messages.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,yDAAqD;AACrD,+DAA2D;AAC3D,2CAA8C;AAMvC,IAAM,cAAc,GAApB,MAAM,cAAc;CAAG,CAAA;AAAjB,cAAc;IAJ1B,IAAA,eAAM,EAAC;QACN,SAAS,EAAE,CAAC,kCAAe,EAAE,qBAAY,CAAC;QAC1C,WAAW,EAAE,CAAC,wCAAkB,CAAC;KAClC,CAAC;GACW,cAAc,CAAG;AAAjB,wCAAc"}
