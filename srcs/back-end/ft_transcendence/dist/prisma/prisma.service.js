@@ -6,21 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChanelModule = void 0;
-const chanel_service_1 = require("./chanel.service");
-const chanel_resolver_1 = require("./chanel.resolver");
+exports.PrismaService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_module_1 = require("../prisma/prisma.module");
-let ChanelModule = class ChanelModule {
+const client_1 = require("@prisma/client");
+let PrismaService = class PrismaService extends client_1.PrismaClient {
+    async onModuleInit() {
+        await this.$connect();
+    }
+    async enableShutdownHooks(app) {
+        this.$on('beforeExit', async () => {
+            await app.close();
+        });
+    }
 };
-ChanelModule = __decorate([
-    (0, common_1.Global)(),
-    (0, common_1.Module)({
-        imports: [
-            prisma_module_1.PrismaModule,
-        ],
-        providers: [chanel_resolver_1.ChanelResolver, chanel_service_1.ChanelService]
-    })
-], ChanelModule);
-exports.ChanelModule = ChanelModule;
-//# sourceMappingURL=chanel.module.js.map
+PrismaService = __decorate([
+    (0, common_1.Injectable)()
+], PrismaService);
+exports.PrismaService = PrismaService;
+console.log("\n\n 2================================ \n\n");
+//# sourceMappingURL=prisma.service.js.map

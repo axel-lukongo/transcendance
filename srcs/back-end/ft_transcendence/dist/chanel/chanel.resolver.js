@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChanelResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const chanel_service_1 = require("./chanel.service");
+const chanel_entity_1 = require("./entities/chanel.entity");
 const create_chanel_input_1 = require("./dto/create-chanel.input");
-const update_chanel_input_1 = require("./dto/update-chanel.input");
 let ChanelResolver = class ChanelResolver {
     constructor(chanelService) {
         this.chanelService = chanelService;
     }
-    create(createChanelInput) {
+    createChanel(createChanelInput) {
         return this.chanelService.create(createChanelInput);
     }
     findAll() {
@@ -30,49 +30,39 @@ let ChanelResolver = class ChanelResolver {
     findOne(id) {
         return this.chanelService.findOne(id);
     }
-    update(updateChanelInput) {
-        return this.chanelService.update(updateChanelInput.id, updateChanelInput);
-    }
-    remove(id) {
+    removeChanel(id) {
         return this.chanelService.remove(id);
     }
 };
 __decorate([
-    (0, graphql_1.Mutation)('createChanel'),
+    (0, graphql_1.Mutation)(() => chanel_entity_1.Chanel),
     __param(0, (0, graphql_1.Args)('createChanelInput')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_chanel_input_1.CreateChanelInput]),
     __metadata("design:returntype", void 0)
-], ChanelResolver.prototype, "create", null);
+], ChanelResolver.prototype, "createChanel", null);
 __decorate([
-    (0, graphql_1.Query)('chanel'),
+    (0, graphql_1.Query)(() => [chanel_entity_1.Chanel], { name: 'chanell' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "findAll", null);
 __decorate([
-    (0, graphql_1.Query)('chanel'),
-    __param(0, (0, graphql_1.Args)('id')),
+    (0, graphql_1.Query)(() => chanel_entity_1.Chanel, { name: 'chanel' }),
+    __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "findOne", null);
 __decorate([
-    (0, graphql_1.Mutation)('updateChanel'),
-    __param(0, (0, graphql_1.Args)('updateChanelInput')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_chanel_input_1.UpdateChanelInput]),
-    __metadata("design:returntype", void 0)
-], ChanelResolver.prototype, "update", null);
-__decorate([
-    (0, graphql_1.Mutation)('removeChanel'),
-    __param(0, (0, graphql_1.Args)('id')),
+    (0, graphql_1.Mutation)(() => chanel_entity_1.Chanel),
+    __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], ChanelResolver.prototype, "remove", null);
+], ChanelResolver.prototype, "removeChanel", null);
 ChanelResolver = __decorate([
-    (0, graphql_1.Resolver)('Chanel'),
+    (0, graphql_1.Resolver)(() => chanel_entity_1.Chanel),
     __metadata("design:paramtypes", [chanel_service_1.ChanelService])
 ], ChanelResolver);
 exports.ChanelResolver = ChanelResolver;

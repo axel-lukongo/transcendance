@@ -5,14 +5,15 @@ export class Chanel {
 	@Field(type => Int)
 	id: number;
 
-	@Field()
-	owner_id: number;
+	@Field({nullable: true})
+	chanel_name: string;
 
 	@Field({nullable: true})
-	channel_name: string;
+	chanel_size: number;
 
-	@Field()
-	channel_size: number;
+	@Field({nullable: true})
+	max_users: number;
+  
 }
 
 

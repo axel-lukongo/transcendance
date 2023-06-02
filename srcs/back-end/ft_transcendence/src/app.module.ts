@@ -7,14 +7,19 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { ChanelService } from './chanel/chanel.service';
 import { ChanelResolver } from './chanel/chanel.resolver';
 import { PrismaClient } from '@prisma/client';
+// import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 @Module({
 	imports: [
 		GraphQLModule.forRoot({
 			autoSchemaFile: join(process.cwd(), 'src/schemas.gql'),
+			// plugins: [ApolloServerPluginLandingPageLocalDefault()],
+			driver: ApolloDriver,
+			playground: true,
 		}),
-		ChanelModule,
+		// PrismaModule
 	],
 	providers: [ChanelService, ChanelResolver, PrismaClient]
 })
 export class AppModule {}
+console.log("\n\n 1================================ \n\n");

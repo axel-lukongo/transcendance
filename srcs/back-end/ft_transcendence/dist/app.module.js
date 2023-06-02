@@ -7,15 +7,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-const chanel_module_1 = require("./chanel/chanel.module");
+const common_1 = require("@nestjs/common");
+const graphql_1 = require("@nestjs/graphql");
+const path_1 = require("path");
+const apollo_1 = require("@nestjs/apollo");
+const chanel_service_1 = require("./chanel/chanel.service");
+const chanel_resolver_1 = require("./chanel/chanel.resolver");
+const client_1 = require("@prisma/client");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
-    Module({
-        imports: [UserModule, MessagesModule, chanel_module_1.ChanelModule],
-        controllers: [],
-        providers: [],
+    (0, common_1.Module)({
+        imports: [
+            graphql_1.GraphQLModule.forRoot({
+                autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schemas.gql'),
+                driver: apollo_1.ApolloDriver,
+                playground: true,
+            }),
+        ],
+        providers: [chanel_service_1.ChanelService, chanel_resolver_1.ChanelResolver, client_1.PrismaClient]
     })
 ], AppModule);
 exports.AppModule = AppModule;
+console.log("\n\n 1================================ \n\n");
 //# sourceMappingURL=app.module.js.map

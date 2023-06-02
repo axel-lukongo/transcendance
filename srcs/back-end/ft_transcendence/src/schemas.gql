@@ -1,0 +1,26 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Chanel {
+  id: Int!
+  chanel_name: String
+  chanel_size: Float
+  max_users: Float
+}
+
+type Query {
+  chanell: [Chanel!]!
+  chanel(id: Int!): Chanel!
+}
+
+type Mutation {
+  createChanel(createChanelInput: CreateChanelInput!): Chanel!
+  removeChanel(id: Int!): Chanel!
+}
+
+input CreateChanelInput {
+  chanel_name: String!
+  chanel_size: Float!
+  max_users: Float!
+}
