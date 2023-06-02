@@ -10,14 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateChanelInput = void 0;
-const create_chanel_input_1 = require("./create-chanel.input");
 const graphql_1 = require("@nestjs/graphql");
-let UpdateChanelInput = class UpdateChanelInput extends (0, graphql_1.PartialType)(create_chanel_input_1.CreateChanelInput) {
+let UpdateChanelInput = class UpdateChanelInput {
 };
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], UpdateChanelInput.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], UpdateChanelInput.prototype, "chanel_name", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", Number)
+], UpdateChanelInput.prototype, "chanel_size", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", Number)
+], UpdateChanelInput.prototype, "max_users", void 0);
 UpdateChanelInput = __decorate([
     (0, graphql_1.InputType)()
 ], UpdateChanelInput);

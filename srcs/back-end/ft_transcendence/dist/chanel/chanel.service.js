@@ -22,11 +22,16 @@ let ChanelService = class ChanelService {
         });
     }
     findAll() {
-        console.log("\n\n 3================================ \n\n");
         return this.prisma.chanel.findMany({});
     }
     findOne(id) {
         return this.prisma.chanel.findUnique({ where: { id: id } });
+    }
+    async update(id, data) {
+        return this.prisma.chanel.update({
+            where: { id },
+            data,
+        });
     }
     remove(id) {
         return this.prisma.chanel.delete({ where: { id: id } });

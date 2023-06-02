@@ -1,8 +1,16 @@
-import { CreateChanelInput } from './create-chanel.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateChanelInput extends PartialType(CreateChanelInput) {
+export class UpdateChanelInput {
   @Field(() => Int)
   id: number;
+
+  @Field({ nullable: true })
+  chanel_name?: string;
+
+  @Field({ nullable: true })
+  chanel_size?: number;
+
+  @Field({ nullable: true })
+  max_users?: number;
 }

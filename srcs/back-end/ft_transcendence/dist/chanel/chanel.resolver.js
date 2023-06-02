@@ -17,6 +17,7 @@ const graphql_1 = require("@nestjs/graphql");
 const chanel_service_1 = require("./chanel.service");
 const chanel_entity_1 = require("./entities/chanel.entity");
 const create_chanel_input_1 = require("./dto/create-chanel.input");
+const update_chanel_input_1 = require("./dto/update-chanel.input");
 let ChanelResolver = class ChanelResolver {
     constructor(chanelService) {
         this.chanelService = chanelService;
@@ -30,6 +31,9 @@ let ChanelResolver = class ChanelResolver {
     findOne(id) {
         return this.chanelService.findOne(id);
     }
+    updateChanel(_updateArgs) {
+        return this.chanelService.update(_updateArgs.id, _updateArgs);
+    }
     removeChanel(id) {
         return this.chanelService.remove(id);
     }
@@ -42,18 +46,25 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "createChanel", null);
 __decorate([
-    (0, graphql_1.Query)(() => [chanel_entity_1.Chanel], { name: 'chanell' }),
+    (0, graphql_1.Query)(() => [chanel_entity_1.Chanel], { name: 'Channel_findAll' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "findAll", null);
 __decorate([
-    (0, graphql_1.Query)(() => chanel_entity_1.Chanel, { name: 'chanel' }),
+    (0, graphql_1.Query)(() => chanel_entity_1.Chanel, { name: 'Channel_findOne' }),
     __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "findOne", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => chanel_entity_1.Chanel, { name: 'Channel_update' }),
+    __param(0, (0, graphql_1.Args)('updateChanelInput')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_chanel_input_1.UpdateChanelInput]),
+    __metadata("design:returntype", Promise)
+], ChanelResolver.prototype, "updateChanel", null);
 __decorate([
     (0, graphql_1.Mutation)(() => chanel_entity_1.Chanel),
     __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),

@@ -1,6 +1,6 @@
-import { CreateChanelInput } from './create-chanel.input';
-declare const UpdateChanelInput_base: import("@nestjs/common").Type<Partial<CreateChanelInput>>;
-export declare class UpdateChanelInput extends UpdateChanelInput_base {
+export declare class UpdateChanelInput {
     id: number;
+    chanel_name?: string;
+    chanel_size?: number;
+    max_users?: number;
 }
-export {};
