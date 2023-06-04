@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { ApolloDriver } from '@nestjs/apollo';
-import { ChanelService } from './chanel/chanel.service';
-import { ChanelResolver } from './chanel/chanel.resolver';
-import { PrismaClient } from '@prisma/client';
+import { UsersModule } from './users/users.module';
+import { ChanelModule } from './chanel/chanel.module';
 
 @Module({
 	imports: [
@@ -13,8 +12,8 @@ import { PrismaClient } from '@prisma/client';
 			driver: ApolloDriver,
 			playground: true,
 		}),
+		UsersModule,
+		ChanelModule
 	],
-	providers: [ChanelService, ChanelResolver, PrismaClient]
 })
 export class AppModule {}
-console.log("\n\n 1================================ \n\n");

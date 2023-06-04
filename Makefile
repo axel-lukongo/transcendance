@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/05/25 16:57:26 by idouidi          ###   ########.fr        #
+#    Updated: 2023/06/04 13:52:28 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,14 @@ all: up
 
 up:
 		# systemctl restart docker
+		mkdir -p ${HOME}/data/db
+		mkdir -p ${HOME}/data/back-end
+		mkdir -p ${HOME}/data/front-end
 		docker compose -f docker-compose.yml build #--no-cache
-		docker compose -f docker-compose.yml up --force-recreate #-d --force-recreate
+		docker compose -f docker-compose.yml up --force-recreate #-d
 
 down:
-		docker compose -f docker-compose.yml down -v
+		docker compose -f docker-compose.yml down
 
 ps:		
 		docker compose -f docker-compose.yml ps -a
@@ -26,16 +29,19 @@ ps:
 
 clean:	down
 		docker system prune
+		docker volume prune
 
-		rm -rf ${HOME}/data/db
-		mkdir -p ${HOME}/data/db
+		rm -rf ${HOME}/data/*
 
 re : 	clean up
 
-nest_app: 
-	docker exec -it nest_app bash
-
 db: 
-	docker exec -it db bash
+		docker exec -it db bash
 
-.PHONY: start stop re ps clean nest_app db
+back-end: 
+		docker exec -it back-end bash
+
+front-end: 
+		docker exec -it front-end bash
+
+.PHONY: up down re ps clean front-end back-end db

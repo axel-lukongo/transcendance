@@ -3,8 +3,8 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateChanelInput {
 //   @Field(() => Int, { description: 'Example field (placeholder)' })
-//   owner_id: number;
-
+  @Field()
+  owner_id: number;
   @Field()
   chanel_name: string;
 

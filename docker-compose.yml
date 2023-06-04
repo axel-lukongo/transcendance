@@ -6,7 +6,7 @@ networks:
 
 services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-#                                                     #
+#                    DATABASE                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   database:
     networks: 
@@ -16,11 +16,11 @@ services:
     image: postgres
     env_file:
         - "./.env"
-    restart: "no"
+    restart: "always"
     volumes: 
       - "db:/var/lib/postgressql/data"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-#                                                     #
+#                   BACK-TEND                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   back-end:
     networks: 
@@ -36,7 +36,24 @@ services:
 
     env_file:
       - "./.env"
-    restart: "no"
+    restart: "always"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                   FRONT-TEND                        #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # front-end:
+  #   networks: 
+  #     - transcendence
+  #   depends_on:
+  #     - database
+  #   build: srcs/front-end
+  #   container_name: front-end
+  #   image: front-end
+  #   ports:
+  #   - "8080:8080"
+  #   env_file:
+  #     - "./.env"
+  #   restart: "yes"
 
 volumes:
   db:
@@ -45,3 +62,15 @@ volumes:
       o: 'bind'
       type: 'none'
       device: '/${HOME}/data/db'
+  back-end:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/${HOME}/data/backend'
+  front-end:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/${HOME}/data/frontend'  

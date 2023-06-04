@@ -22,6 +22,7 @@ model User {
   // représentant les jeux de pong où cet utilisateur est le joueur 2.
   userPong2 Pong[]          @relation("User2")
   chanels   Users_Chanels[]
+  own_chan  Chanel[]
   sender    Message[]       @relation("Send")
   receiver  Message[]       @relation("Receive")
 }
@@ -39,11 +40,13 @@ model Pong {
 
 model Chanel {
   id          Int             @id @default(autoincrement())
-
+  owner_id    Int
   chanel_name String
   chanel_size Int
   max_users   Int
-
+  owner       User            @relation(fields: [owner_id], references: [id])
+  users       Users_Chanels[]
+  messages    Message[]
 }
 
 model Users_Chanels {
@@ -51,6 +54,7 @@ model Users_Chanels {
   chanel_id Int
 
   user   User   @relation(fields: [user_id], references: [id])
+  chanel Chanel @relation(fields: [chanel_id], references: [id])
 
   @@id([user_id, chanel_id])
 }
@@ -64,4 +68,5 @@ model Message {
   sent_at          DateTime @default(now())
   sender           User     @relation("Send", fields: [sender_id], references: [id])
   sent_to_user     User?    @relation("Receive", fields: [user_receiver_id], references: [id])
+  send_to_chan     Chanel?  @relation(fields: [chan_receiver_id], references: [id])
 }

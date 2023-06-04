@@ -1,23 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChanelInput } from './dto/create-chanel.input';
 import { UpdateChanelInput } from './dto/update-chanel.input';
-import { PrismaClient, Chanel } from '@prisma/client';
+import { PrismaService } from 'prisma/prisma.service';
+import { Chanel } from './entities/chanel.entity';
 
 @Injectable()
 export class ChanelService {
-	constructor(private readonly prisma: PrismaClient) {}
+	constructor(private readonly prisma: PrismaService) {}
 
-  create(createChanelInput: CreateChanelInput) {
+  async create(createChanelInput: CreateChanelInput) {
     return this.prisma.chanel.create({
 		data: createChanelInput
 	})
   }
 
-  findAll(): Promise<Chanel[]> { 
+  async findAll(): Promise<Chanel[]> { 
 	return this.prisma.chanel.findMany({});
   }
 
-  findOne(id: number): Promise<Chanel> {
+  async findOne(id: number): Promise<Chanel> {
     return this.prisma.chanel.findUnique({where: {id: id}});
   }
   async update(id: number, data: UpdateChanelInput): Promise<Chanel> {
@@ -27,7 +28,7 @@ export class ChanelService {
     });
   }
   
-  remove(id: number) {
+  async remove(id: number) {
     return this.prisma.chanel.delete({where: {id: id}});
   }
 }
