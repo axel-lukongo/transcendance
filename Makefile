@@ -6,7 +6,7 @@
 #    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/06/04 13:52:28 by idouidi          ###   ########.fr        #
+#    Updated: 2023/06/05 12:37:44 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ clean:	down
 		docker system prune
 		docker volume prune
 
-		rm -rf ${HOME}/data/*
+		sudo rm -rf ${HOME}/data/*
 
 re : 	clean up
 

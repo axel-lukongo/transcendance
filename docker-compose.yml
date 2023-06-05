@@ -8,52 +8,49 @@ services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                    DATABASE                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  database:
-    networks: 
+ database:
+    networks:
       - transcendence
     build: srcs/db
     container_name: db
     image: postgres
     env_file:
-        - "./.env"
-    restart: "always"
-    volumes: 
-      - "db:/var/lib/postgressql/data"
+      - "./.env"
+    volumes:
+      - "db:/var/lib/postgresql/data"
+    restart: always
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                   BACK-TEND                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  back-end:
-    networks: 
+ back-end:
+    networks:
       - transcendence
-    depends_on:
-      - database
+    # depends_on:
+    #   - database
     build: srcs/back-end
     container_name: back-end
     image: back-end
-    ports:
-      - "3000:3000"
-      - "5555:5555" # prisma studio | A enlever en prod!
-
     env_file:
       - "./.env"
-    restart: "always"
-
+    volumes:
+      - "back-end:/ft_transcendence"
+    restart: always
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                   FRONT-TEND                        #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  # front-end:
-  #   networks: 
-  #     - transcendence
-  #   depends_on:
-  #     - database
-  #   build: srcs/front-end
-  #   container_name: front-end
-  #   image: front-end
-  #   ports:
-  #   - "8080:8080"
-  #   env_file:
-  #     - "./.env"
-  #   restart: "yes"
+ front-end:
+    networks:
+      - transcendence
+    depends_on:
+      - back-end
+    build: srcs/front-end
+    container_name: front-end
+    image: front-end
+    ports:
+      - "8080:8080"
+    volumes:
+      - "front-end:/ft_transcendence"
+    restart: always
 
 volumes:
   db:
@@ -67,10 +64,10 @@ volumes:
     driver_opts:
       o: 'bind'
       type: 'none'
-      device: '/${HOME}/data/backend'
+      device: '/${HOME}/data/back-end'
   front-end:
     driver: local
     driver_opts:
       o: 'bind'
       type: 'none'
-      device: '/${HOME}/data/frontend'  
+      device: '/${HOME}/data/front-end'
