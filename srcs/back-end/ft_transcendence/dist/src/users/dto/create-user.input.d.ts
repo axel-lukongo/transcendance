@@ -1,3 +1,6 @@
 export declare class CreateUserInput {
-    exampleField: number;
+    id: number;
+    token: number;
+    nickname: string;
+    avatar?: string;
 }

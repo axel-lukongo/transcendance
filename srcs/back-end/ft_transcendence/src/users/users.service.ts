@@ -8,6 +8,9 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
   
   create(createUserInput: CreateUserInput) {
+    return this.prisma.user.create({
+      data: createUserInput
+    })
   }
 
   findAll() {

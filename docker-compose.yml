@@ -24,9 +24,11 @@ services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  back-end:
     networks:
-      - transcendence
-    # depends_on:
-    #   - database
+      transcendence:
+        aliases:
+          - back-end
+    depends_on:
+      - database
     build: srcs/back-end
     container_name: back-end
     image: back-end

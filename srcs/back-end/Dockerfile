@@ -42,6 +42,6 @@ COPY init.sh ../
 # Définition du répertoire de travail
 WORKDIR /ft_transcendence
 
-EXPOSE 3000
+EXPOSE 4000
 
 ENTRYPOINT ["bash", "../init.sh"]

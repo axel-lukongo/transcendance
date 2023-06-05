@@ -14,9 +14,21 @@ const graphql_1 = require("@nestjs/graphql");
 let User = class User {
 };
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int, { description: 'Example field (placeholder)' }),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
-], User.prototype, "exampleField", void 0);
+], User.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], User.prototype, "token", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], User.prototype, "nickname", void 0);
+__decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "avatar", void 0);
 User = __decorate([
     (0, graphql_1.ObjectType)()
 ], User);
