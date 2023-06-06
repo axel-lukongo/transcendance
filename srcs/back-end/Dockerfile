@@ -24,8 +24,7 @@ RUN npm install
 
 
 # Installation des packages npm supplémentaires
-RUN npm install --save \
-    @nestjs/graphql \
+RUN npm install --save @nestjs/graphql \
     graphql \
     @apollo/server \
     @nestjs/mapped-types \
@@ -33,6 +32,10 @@ RUN npm install --save \
     class-transformer \
     @prisma/client
 
+# RUN npm install --save @prisma/client \
+# 	@nestjs/mapped-types \
+# 	class-validator \
+# 	class-transformer
 # Exécution de n latest pour obtenir la dernière version de Node.js
 RUN n latest
 
