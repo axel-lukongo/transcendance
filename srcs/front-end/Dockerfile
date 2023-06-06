@@ -12,12 +12,10 @@ RUN apt-get install -y nodejs
 
 COPY ./ft_transcendence /ft_transcendence/
 
-# Installation de create-react-app pour initialiser le projet React
-# RUN npm install @apollo/client
-
 COPY ./init.sh .
 
-# Définir le répertoire de travail
 WORKDIR /ft_transcendence
+
+RUN npm install @apollo/client
 
 ENTRYPOINT ["bash", "../init.sh"]
