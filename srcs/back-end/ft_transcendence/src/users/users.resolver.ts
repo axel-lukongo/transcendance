@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { LoginUserInput } from './dto/login-user.input';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -11,6 +12,11 @@ export class UsersResolver {
   @Mutation(() => User)
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.usersService.create(createUserInput);
+  }
+
+  @Mutation(() => User)
+  loginUser(@Args('loginUserInput') loginUserInput: LoginUserInput) {
+    return this.usersService.login(loginUserInput);
   }
 
   @Query(() => [User], { name: 'users' })

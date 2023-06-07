@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { gql } from '@apollo/client';
-import Login from './components/Authentication';
+import Login from './Authentication';
 
 
 const App = () => {

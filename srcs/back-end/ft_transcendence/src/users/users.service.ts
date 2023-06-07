@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'prisma/prisma.service';
+import { LoginUserInput } from './dto/login-user.input';
+import { log } from 'util';
 
 @Injectable()
 export class UsersService {
@@ -11,6 +13,15 @@ export class UsersService {
     return this.prisma.user.create({
       data: createUserInput
     })
+  }
+
+  login(loginUserInput : LoginUserInput) {
+    return this.prisma.user.findFirst({
+      where: {
+        email: loginUserInput.email,
+        password: loginUserInput.password
+      },
+    });
   }
 
   findAll() {
