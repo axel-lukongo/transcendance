@@ -6,19 +6,18 @@
 #    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/06/05 12:37:44 by idouidi          ###   ########.fr        #
+#    Updated: 2023/06/07 20:29:46 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all: up
 
 up:
-		# systemctl restart docker
 		mkdir -p ${HOME}/data/db
 		mkdir -p ${HOME}/data/back-end
 		mkdir -p ${HOME}/data/front-end
 		docker compose -f docker-compose.yml build #--no-cache
-		docker compose -f docker-compose.yml up --force-recreate #-d
+		docker compose -f docker-compose.yml up #--force-recreate #-d
 
 down:
 		docker compose -f docker-compose.yml down
