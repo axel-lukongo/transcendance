@@ -4,6 +4,7 @@ import { join } from 'path';
 import { ApolloDriver } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { ChanelModule } from './chanel/chanel.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
 	imports: [
@@ -13,7 +14,8 @@ import { ChanelModule } from './chanel/chanel.module';
 			playground: true,
 		}),
 		UsersModule,
-		ChanelModule
+		ChanelModule,
+		MessagesModule
 	],
 })
 export class AppModule {}
