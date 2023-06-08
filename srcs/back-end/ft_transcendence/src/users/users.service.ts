@@ -3,6 +3,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'prisma/prisma.service';
 import { LoginUserInput } from './dto/login-user.input';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -14,15 +15,19 @@ export class UsersService {
     })
   }
 
-  login(loginUserInput : LoginUserInput) {
-    return this.prisma.user.findFirst({
+  async login(loginUserInput: LoginUserInput) {
+    const user = await this.prisma.user.findFirst({
       where: {
         email: loginUserInput.email,
-        password: loginUserInput.password
       },
     });
-  }
 
+    if (!user || !bcrypt.compareSync(loginUserInput.password, user.password)) {
+      throw new Error('Invalid login input');
+    }
+
+    return user;
+  }
   findAll() {
     return this.prisma.user.findMany({});
   }
