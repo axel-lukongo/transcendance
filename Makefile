@@ -6,7 +6,7 @@
 #    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/06/07 20:29:46 by idouidi          ###   ########.fr        #
+#    Updated: 2023/06/08 22:15:05 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,13 @@ up:
 		mkdir -p ${HOME}/data/db
 		mkdir -p ${HOME}/data/back-end
 		mkdir -p ${HOME}/data/front-end
-		docker compose -f docker-compose.yml build #--no-cache
-		docker compose -f docker-compose.yml up #--force-recreate #-d
+		docker compose up --build #--force-recreate #-d
 
 down:
-		docker compose -f docker-compose.yml down
+		docker compose down
 
 ps:		
-		docker compose -f docker-compose.yml ps -a
+		docker compose ps -a
 		docker ps -a
 
 clean:	down

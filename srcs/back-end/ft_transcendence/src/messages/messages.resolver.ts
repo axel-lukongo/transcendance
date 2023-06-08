@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
-import { Message } from './entities/messages.entis';
+import { Message } from './entities/messages.entity';
 import { MessagesService } from './messages.service';
 import { CreateMessageInput } from './dto/create-messages.input';
 import { UpdateChanelInput } from 'src/chanel/dto/update-chanel.input';
