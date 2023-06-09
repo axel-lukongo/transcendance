@@ -3,7 +3,8 @@ FROM debian:buster
 # Installation des dépendances
 RUN apt-get update && apt-get install -y \
     curl \
-    git
+    git \
+    xdg-utils
 
 # Installation de la dernière version de Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
@@ -32,10 +33,6 @@ RUN npm install --save @nestjs/graphql \
     class-transformer \
     @prisma/client
 
-# RUN npm install --save @prisma/client \
-# 	@nestjs/mapped-types \
-# 	class-validator \
-# 	class-transformer
 # Exécution de n latest pour obtenir la dernière version de Node.js
 RUN n latest
 

@@ -62,13 +62,13 @@ model Users_Chanels {
 }
 
 model Message {
-  id               Int      @id @default(autoincrement())
-  sender_id        Int
-  user_receiver_id Int?
-  chan_receiver_id Int?
-  content          String
-  sent_at          DateTime @default(now())
-  sender           User     @relation("Send", fields: [sender_id], references: [id])
-  sent_to_user     User?    @relation("Receive", fields: [user_receiver_id], references: [id])
-  send_to_chan     Chanel?  @relation(fields: [chan_receiver_id], references: [id])
+  id				Int      @id @default(autoincrement())
+  sender_id			Int
+  receiver_id		Int?
+  channel_id		Int?
+  content			String
+  sent_at			DateTime @default(now())
+  sender			User     @relation("Send", fields: [sender_id], references: [id])
+  receiver			User?    @relation("Receive", fields: [receiver_id], references: [id])
+  channel			Chanel?  @relation(fields: [channel_id], references: [id])
 }

@@ -14,11 +14,11 @@ export class CreateMessageInput {
 	@Field(() => Int)
 	sender_id: number;
 
-	@Field(() => Int)
-	user_receiver_id?: number;
+	@Field(() => Int, {nullable: true})
+	receiver_id?: number;
 
-	@Field(() => Int)
-	chan_receiver_id?: number;
+	@Field(() => Int, {nullable: true})
+	channel_id?: number;
 }
 
 /*
