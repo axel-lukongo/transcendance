@@ -2,15 +2,32 @@
 // import React, { useState } from 'react';
 // import { useMutation } from '@apollo/client';
 // import { gql } from '@apollo/client';
-import Login from './Authentication';
+import React from 'react';
+import '../css/App.css';
 
 
 const App = () => {
   return (
-    <Login />
+	<div className="App">
+
+	<div className='bg'></div>
+	<div className="overlay1"></div> {/* Nouvel élément pour le rectangle */}
+	<div className="overlay2"></div> {/* Nouvel élément pour le rectangle */}
+	<div className="overlay3"></div> {/* Nouvel élément pour le rectangle */}
+	<div className="overlay4"></div> {/* Nouvel élément pour le rectangle */}
+	<div className="overlay5"></div> {/* Nouvel élément pour le rectangle */}
+	<div className="overlay6"></div> {/* Nouvel élément pour le rectangle */}
+	<div className="overlay7"></div> {/* Nouvel élément pour le rectangle */}
+
+
+	{/* <div className="rectangle-9-7" />
+	<div className="rectangle-1-0-5" /> */}
+
+	* try to test *
+	</div>
+    // <Login />
   )
 }
-
 
 // const CREATE_USER = gql`
 //   mutation CreateUser($input: CreateUserInput!) {
