@@ -3,8 +3,7 @@ FROM debian:buster
 # Installation des dépendances
 RUN apt-get update && apt-get install -y \
     curl \
-    git \
-    xdg-utils
+    git 
 
 # Installation de la dernière version de Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
@@ -19,29 +18,21 @@ RUN npm install -g \
 # Copie des fichiers du projet
 COPY ./ft_transcendence /ft_transcendence/
 
-# Installation des packages npm spécifiques
-WORKDIR /ft_transcendence/
-RUN npm install
+# Copie du script d'initialisation
+COPY init.sh ./
 
+EXPOSE 4000
+
+# Définition du répertoire de travail
+WORKDIR /ft_transcendence/
 
 # Installation des packages npm supplémentaires
-RUN npm install --save @nestjs/graphql \
-    graphql \
+RUN npm install @nestjs/graphql \
     @apollo/server \
     @nestjs/mapped-types \
     class-validator \
     class-transformer \
     @prisma/client
 
-# Exécution de n latest pour obtenir la dernière version de Node.js
-RUN n latest
-
-# Copie du script d'initialisation
-COPY init.sh ../
-
-# Définition du répertoire de travail
-WORKDIR /ft_transcendence
-
-EXPOSE 4000
-
+# Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]

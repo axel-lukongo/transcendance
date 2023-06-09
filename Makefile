@@ -6,7 +6,7 @@
 #    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/06/09 14:20:08 by idouidi          ###   ########.fr        #
+#    Updated: 2023/06/09 21:07:47 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ up:
 		mkdir -p ${HOME}/data/db
 		mkdir -p ${HOME}/data/back-end
 		mkdir -p ${HOME}/data/front-end
-		docker compose up --build #--force-recreate #-d
+		docker compose up --build --force-recreate #-d
 
 down:
 		docker compose down
