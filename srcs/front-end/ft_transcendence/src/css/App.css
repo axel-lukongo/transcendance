@@ -49,7 +49,9 @@
 	  z-index: 1; /* Valeur de z-index plus basse pour l'image de fond */
   
   }
-  
+
+
+  /*grand rectangle de fond transparent*/
   .overlay1 {
 	  position: fixed;
 	  top: 3%;
@@ -63,6 +65,7 @@
   }
   
   
+  /*petit rectangle du bas */
   .overlay2 {
 	  position: fixed;
 	  top: 80%;
@@ -72,11 +75,15 @@
 	  background-position: center;
 	  background-color: rgb(239, 239, 239); /* Couleur de fond semi-transparente */
 	  border-radius: 50px; /* Valeur de border-radius pour des coins arrondis */
+	  transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
 	  z-index: 3; /* Valeur de z-index plus basse pour l'image de fond */
+  }
+  .overlay2:hover{
+	transform: scale(1.1);
   }
   
   
-  
+  /*rectangle de moyenne taille au milieu */
   .overlay3 {
 	  position: fixed;
 	  top: 40%;
@@ -85,12 +92,15 @@
 	  height: 35%;
 	  background-position: center;
 	  background-color: rgba(239, 239, 239, 0.677); /* Couleur de fond semi-transparente */
+	  transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
 	  border-radius: 50px; /* Valeur de border-radius pour des coins arrondis */
 	  z-index: 3; /* Valeur de z-index plus basse pour l'image de fond */
   }
+    .overlay3:hover{
+	transform: scale(1.1);
+  }
   
-  
-  
+  /*rectangle mauve */
   .overlay4 {
 	  position: fixed;
 	  top: 8%;
@@ -99,10 +109,15 @@
 	  height: 20%;
 	  background-position: center;
 	  background-color: rgb(78, 16, 165); /* Couleur de fond semi-transparente */
+	  transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
 	  border-radius: 50px; /* Valeur de border-radius pour des coins arrondis */
 	  z-index: 3; 
   }
-  
+  .overlay4:hover{
+	transform: scale(1.1);
+  }
+ 
+  /* petit carré a droite  */
   .overlay5 {
 	  position: fixed;
 	  top: 8%;
@@ -111,10 +126,15 @@
 	  height: 30%;
 	  background-position: center;
 	  background-color: rgb(206, 201, 201); /* Couleur de fond semi-transparente */
+	  transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
 	  border-radius: 50px; /* Valeur de border-radius pour des coins arrondis */
 	  z-index: 3; 
   }
-  
+    .overlay5:hover{
+	transform: scale(1.1);
+  }
+ 
+  /* premier rectangle en dessous du carré  */
   .overlay6 {
 	  position: fixed;
 	  top: 45%;
@@ -123,10 +143,15 @@
 	  height: 10%;
 	  background-position: center;
 	  background-color: rgb(239, 239, 239); /* Couleur de fond semi-transparente */
+	  transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
 	  border-radius: 50px; /* Valeur de border-radius pour des coins arrondis */
 	  z-index: 3; 
   }
-  
+  .overlay6:hover{
+	transform: scale(1.1);
+  }
+
+  /* deuxieme rectangle en dessous du carré  */
   .overlay7 {
 	  position: fixed;
 	  top: 60%;
@@ -135,186 +160,67 @@
 	  height: 10%;
 	  background-position: center;
 	  background-color: rgb(239, 239, 239); /* Couleur de fond semi-transparente */
+	  transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
 	  border-radius: 50px; /* Valeur de border-radius pour des coins arrondis */
 	  z-index: 3; 
   }
+    .overlay7:hover{
+	transform: scale(1.1);
+  }
   
+
+  /* fleche "back" */
+  .back-button {
+	position: fixed;
+	top: 90%; /* Ajustez la position du bouton selon vos besoins */
+	left: 2%;
+	background: url('/ft_transcendence/src/image/ic_round-arrow-back.png') no-repeat center;
+	background-size: contain;
+	width: 5%; /* Ajustez la taille du bouton selon vos besoins */
+	height: 5%;
+	border: none;
+	cursor: pointer;
+	/* transform: rotate(270deg); */
+	transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
+	z-index: 4; /* Ajustez le z-index si nécessaire */
+  }
+  .back-button:hover{
+	transform: scale(1.2);
+}
+
+
+  .message-button {
+	position: fixed;
+	top: 60%; /* Ajustez la position du bouton selon vos besoins */
+	left: 5%;
+	background: url('/ft_transcendence/src/image/message.png') no-repeat center;
+	background-size: contain;
+	width: 7%; /* Ajustez la taille du bouton selon vos besoins */
+	height: 5%;
+	border: none;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
+	z-index: 4; /* Ajustez le z-index si nécessaire */
+  }
+  .message-button:hover{
+	transform: scale(1.2);
+  }
+
+
+  .avatar-button {
+	position: fixed;
+	top: 30%; /* Ajustez la position du bouton selon vos besoins */
+	left: 6%;
+	background: url('/ft_transcendence/src/image/login.png') no-repeat center;
+	background-size: contain;
+	width: 5%; /* Ajustez la taille du bouton selon vos besoins */
+	height: 5%;
+	border: none;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
+	z-index: 4; /* Ajustez le z-index si nécessaire */
+  }
+  .avatar-button:hover{
+	transform: scale(1.2);
+  }
   
-  
-  
-  .mac-book-air---3 {
-	height: 853px;
-	width: 1262px;
-	background-color: #ffffff;
-	  z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  
-  }
-  .dash-1 {
-	height: 868px;
-	width: 1262px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-7 {
-	border-radius: 50px;
-	height: 868px;
-	width: 1262px;
-	background-color: #d9d9d9;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .frame-2 {
-	border-radius: 50px;
-	height: 827px;
-	width: 1214px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .img-1 {
-	border-radius: 34px;
-	height: 880px;
-	width: 1278px;
-	border: 1px solid #000000;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-9-7 {
-	height: 809px;
-	width: 1039px;
-	background-color: rgba(200, 84, 22, 0.69);
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .ellipse-3 {
-	height: 56px;
-	width: 65px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-9-8 {
-	opacity: 0.8999999761581421;
-	border-radius: 50px;
-	height: 313px;
-	width: 721px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-5 {
-	border-radius: 50px;
-	height: 194px;
-	width: 721px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-0 {
-	border-radius: 50px;
-	height: 196px;
-	width: 256px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-1 {
-	border-radius: 50px;
-	height: 72px;
-	width: 256px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-2 {
-	border-radius: 50px;
-	height: 72px;
-	width: 256px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-3 {
-	border-radius: 50px;
-	height: 72px;
-	width: 256px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-9-9 {
-	border-radius: 50px;
-	height: 119px;
-	width: 725px;
-	background-color: rgba(68, 25, 138, 0.800000011920929);
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .text-2 {
-	text-align: left;
-	vertical-align: top;
-	font-size: 32px;
-	font-family: Josefin Sans;
-	line-height: auto;
-	color: #000000;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .text-3 {
-	text-align: left;
-	vertical-align: top;
-	font-size: 16px;
-	font-family: Josefin Sans;
-	line-height: auto;
-	color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .system--uicons-:coins {
-	border-radius: 50px;
-	height: 32px;
-	width: 34px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .img-4 {
-	height: 29px;
-	width: 32px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .system--uicons-:message--writing {
-	border-radius: 50px;
-	height: 32px;
-	width: 34px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .img-5 {
-	height: 29px;
-	width: 32px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .img-6 {
-	height: 24px;
-	width: 26px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .rectangle-1-0-6 {
-	border-radius: 50px;
-	height: 47px;
-	width: 135px;
-	background-color: #ee786c;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .img-7 {
-	border-radius: 50px;
-	height: 39px;
-	width: 42px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .img-8 {
-	border-radius: 50px;
-	height: 35px;
-	width: 38px;
-	background-color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .text-9 {
-	text-align: left;
-	vertical-align: top;
-	font-size: 16px;
-	font-family: Josefin Sans;
-	line-height: auto;
-	color: #ffffff;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
-  .frame-1 {
-	border-radius: 50px;
-	height: 78px;
-	width: 85px;
-	z-index: 2; /* Valeur de z-index plus basse pour l'image de fond */
-  }
