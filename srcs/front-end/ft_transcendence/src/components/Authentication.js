@@ -1,5 +1,5 @@
 import { useMutation, gql } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CREATE_USER = gql`
   mutation CreateUser($input: CreateUserInput!) {
@@ -23,11 +23,15 @@ const LOGIN_USER = gql`
 `;
 
 const SignUp = ({ setFormState }) => {
-  const [formState, setSignUpFormState] = useState({
-    token: '',
-    email: '',
-    password: '',
-    nickname: ''
+  const [formState, setSignUpFormState] = useState(() => {
+    const storedData = window.sessionStorage.getItem('auth-form');
+    return storedData ? JSON.parse(storedData) : {
+      login: false,
+      token: '',
+      email: '',
+      password: '',
+      nickname: ''
+    };
   });
 
   const [signup] = useMutation(CREATE_USER);
@@ -52,6 +56,10 @@ const SignUp = ({ setFormState }) => {
         console.log(error); 
       });
   };
+
+  useEffect(() => {
+    window.sessionStorage.setItem('auth-form', JSON.stringify(formState));
+  }, [formState]);
 
   return (
     <div>
@@ -116,9 +124,13 @@ const SignUp = ({ setFormState }) => {
 };
 
 const SignIn = ({ setFormState }) => {
-  const [formState, setSignInFormState] = useState({
-    email: '',
-    password: ''
+  const [formState, setSignInFormState] = useState(() => {
+    const storedData = window.sessionStorage.getItem('auth-form');
+    return storedData ? JSON.parse(storedData) : {
+      login: true,
+      email: '',
+      password: ''
+    };
   });
 
   const [signin] = useMutation(LOGIN_USER);
@@ -129,7 +141,7 @@ const SignIn = ({ setFormState }) => {
       password: formState.password
     };
 
-    signin ({
+    signin({
       variables: {
         input: input
       }
@@ -143,6 +155,10 @@ const SignIn = ({ setFormState }) => {
         // Gestion de l'erreur
       });
   };
+
+  useEffect(() => {
+    window.sessionStorage.setItem('auth-form', JSON.stringify(formState));
+  }, [formState]);
 
   return (
     <div>
@@ -189,9 +205,14 @@ const SignIn = ({ setFormState }) => {
 };
 
 const Login = () => {
-  const [formState, setFormState] = useState({
-    login: true
+  const [formState, setFormState] = useState(() => {
+    const storedData = window.sessionStorage.getItem('auth-form');
+    return storedData ? JSON.parse(storedData) : { login: true };
   });
+
+  useEffect(() => {
+    window.sessionStorage.setItem('auth-form', JSON.stringify(formState));
+  }, [formState]);
 
   return (
     <div>
