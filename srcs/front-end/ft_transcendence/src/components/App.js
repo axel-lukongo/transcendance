@@ -4,28 +4,29 @@
 // import { gql } from '@apollo/client';
 import React from 'react';
 import '../css/App.css';
+import Authentication from './Authentication/Authentication'
 
 
 const App = () => {
   return (
-	<div className="App">
+    <Authentication />
+	// <div className="App">
 
-	<div className='bg'></div>
-	<div className="overlay1"></div> {/* Nouvel élément pour le rectangle */}
-	<div className="overlay2"></div> {/* Nouvel élément pour le rectangle */}
-	<div className="overlay3"></div> {/* Nouvel élément pour le rectangle */}
-	<div className="overlay4"></div> {/* Nouvel élément pour le rectangle */}
-	<div className="overlay5"></div> {/* Nouvel élément pour le rectangle */}
-	<div className="overlay6"></div> {/* Nouvel élément pour le rectangle */}
-	<div className="overlay7"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className='bg'></div>
+	// <div className="overlay1"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className="overlay2"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className="overlay3"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className="overlay4"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className="overlay5"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className="overlay6"></div> {/* Nouvel élément pour le rectangle */}
+	// <div className="overlay7"></div> {/* Nouvel élément pour le rectangle */}
 
 
-	{/* <div className="rectangle-9-7" />
-	<div className="rectangle-1-0-5" /> */}
+	// {/* <div className="rectangle-9-7" />
+	// <div className="rectangle-1-0-5" /> */}
 
-	* try to test *
-	</div>
-    // <Login />
+	// * try to test *
+	// </div>
   )
 }
 
