@@ -1,0 +1,105 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  token: Int!
+  nickname: String!
+  avatar: String
+}
+
+type Chanel {
+  id: Int!
+  chanel_name: String
+  chanel_size: Float
+  max_users: Float
+}
+
+type Message {
+  id: Int!
+  content: String!
+  sent_at: DateTime!
+  sender: User!
+  sender_id: Int!
+  channel_id: Int
+  channel: Chanel
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  Channel_findAll: [Chanel!]!
+  Channel_findOne(id: Int!): Chanel!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  loginUser(loginUserInput: LoginUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createChanel(createChanelInput: CreateChanelInput!): Chanel!
+  Channel_update(updateChanelInput: UpdateChanelInput!): Chanel!
+  removeChanel(id: Int!): Chanel!
+  createMessage(createMsgInput: CreateMessageInput!): Message!
+  updateMessage(updateMsgInput: UpdateMessageInput!): Message!
+  deleteMessage: Message!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  token: Int!
+  nickname: String!
+  avatar: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  token: Int
+  nickname: String
+  avatar: String
+  id: Int!
+}
+
+input CreateChanelInput {
+  owner_id: Float!
+  chanel_name: String!
+  chanel_size: Float!
+  max_users: Float!
+}
+
+input UpdateChanelInput {
+  id: Int!
+  chanel_name: String
+  chanel_size: Float
+  max_users: Float
+}
+
+input CreateMessageInput {
+  content: String!
+  sent_at: DateTime
+  sender_id: Int!
+  channel_id: Int
+}
+
+input UpdateMessageInput {
+  content: String
+  sent_at: DateTime
+  sender_id: Int
+  channel_id: Int
+  id: Int!
+}

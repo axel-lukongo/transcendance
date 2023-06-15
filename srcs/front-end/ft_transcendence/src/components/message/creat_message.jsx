@@ -8,6 +8,7 @@ const CREAT_MSG = gql`
     createMessage(createMsgInput: $input) {
       content
 	  sender_id
+	  channel_id
     }
   }
 `;
@@ -16,6 +17,7 @@ const CreatMsg = () => {
 
 	const [Sender_id, setSender_id] = useState('');
 	const [Content, setContent] = useState('');
+	const [Chan_id, setChan_id] = useState('');
 	const [creatMsg] = useMutation(CREAT_MSG);
 
 
@@ -26,7 +28,8 @@ const CreatMsg = () => {
           input: {
             sender_id: parseInt(Sender_id),
             content: Content,
-          },
+			channel_id: parseInt(Chan_id),
+		},
         },
       });
       console.log(response.data);
@@ -46,7 +49,11 @@ const CreatMsg = () => {
     	setSender_id(e.target.value);
   	};
 
-  return (
+	  const handlechannel_idChange = (e) => {
+    	setChan_id(e.target.value);
+  	};
+
+	return (
 	<div>
 		<div>
 		<label htmlFor='nom'> Content </label>
@@ -56,6 +63,12 @@ const CreatMsg = () => {
 		<div>
 		<label htmlFor='nom'> Sender_id </label>
 		<input type='text' value={Sender_id} onChange={handleSender_idChange} id="champs2" name="the Sender_id" />
+		</div>
+
+
+		<div>
+		<label htmlFor='nom'> Channel_id </label>
+		<input type='text' value={Chan_id} onChange={handlechannel_idChange} id="champs3" name="the channel_id" />
 		</div>
 
 		<div>
