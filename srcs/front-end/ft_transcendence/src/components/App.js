@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import '../css/App.css';
 import '../css/message.css';
 // import Login from './Authentication';
-import Chat from './message';
+import Chat from './message/message';
 
 const App = () => {
 
