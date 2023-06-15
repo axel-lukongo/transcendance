@@ -3,6 +3,8 @@ import { ChanelService } from './chanel.service';
 import { Chanel } from './entities/chanel.entity';
 import { CreateChanelInput } from './dto/create-chanel.input';
 import { UpdateChanelInput } from './dto/update-chanel.input';
+import { UsersChanels } from './entities/user_chanel.entity';
+import { AddUserChanel } from './dto/add-user-chanel.input';
 
 @Resolver(() => Chanel)
 export class ChanelResolver {
@@ -31,5 +33,10 @@ export class ChanelResolver {
   @Mutation(() => Chanel)
   removeChanel(@Args('id', { type: () => Int }) id: number) {
     return this.chanelService.remove(id);
+  }
+
+  @Mutation(() => UsersChanels)
+  addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
+	return this.chanelService.addUser(addUserChanel);
   }
 }

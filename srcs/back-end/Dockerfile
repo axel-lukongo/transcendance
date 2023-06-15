@@ -33,7 +33,8 @@ RUN npm install @nestjs/graphql \
     @nestjs/mapped-types \
     class-validator \
     class-transformer \
-    @prisma/client
+    @prisma/client	\
+	bcrypt
 
 # Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]

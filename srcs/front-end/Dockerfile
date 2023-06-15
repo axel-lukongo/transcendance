@@ -20,7 +20,9 @@ COPY ./init.sh /
 WORKDIR /ft_transcendence
 
 # Installation des dépendances Node.js
-RUN npm install @apollo/client
+RUN npm install 
+
+RUN npm i @apollo/client
 
 # Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]

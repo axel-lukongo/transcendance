@@ -5,6 +5,7 @@ export class CreateChanelInput {
 //   @Field(() => Int, { description: 'Example field (placeholder)' })
   @Field()
   owner_id: number;
+  
   @Field()
   chanel_name: string;
 

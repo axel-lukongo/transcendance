@@ -2,9 +2,10 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class Chanel {
-	@Field(type => Int)
-	id: number;
 
+	@Field(() => Int)
+	owner_id: number;
+	
 	@Field({nullable: true})
 	chanel_name: string;
 
