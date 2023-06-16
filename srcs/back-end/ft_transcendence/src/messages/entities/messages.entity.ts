@@ -13,11 +13,11 @@ export class Message {
 	@Field(() => Date)
 	sent_at: Date;
 
-	@Field(() => User)
-	sender: User;
-
 	@Field(() => Int)
 	sender_id: number;
+
+	@Field(() => User)
+	sender: User;
 
 	@Field(() => Int, {nullable: true})
 	channel_id?: number;

@@ -16,6 +16,12 @@ let MessagesService = class MessagesService {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async findAll_msg() {
+        return this.prisma.message.findMany({});
+    }
+    async findOne_msg(id) {
+        return this.prisma.message.findUnique({ where: { id: id } });
+    }
     create(createMsg) {
         return this.prisma.message.create({ data: createMsg });
     }

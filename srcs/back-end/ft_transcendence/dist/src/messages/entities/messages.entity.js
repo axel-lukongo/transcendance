@@ -28,13 +28,13 @@ __decorate([
     __metadata("design:type", Date)
 ], Message.prototype, "sent_at", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => user_entity_1.User),
-    __metadata("design:type", user_entity_1.User)
-], Message.prototype, "sender", void 0);
-__decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Message.prototype, "sender_id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => user_entity_1.User),
+    __metadata("design:type", user_entity_1.User)
+], Message.prototype, "sender", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)

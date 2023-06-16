@@ -15,7 +15,7 @@ const apollo_client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={apollo_client}>
-	{/* <CreatUsr/> */}
+	<CreatUsr/>
 	<CreatMsg />
     {/* <App /> */}
   </ApolloProvider>,

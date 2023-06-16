@@ -22,8 +22,8 @@ type Message {
   id: Int!
   content: String!
   sent_at: DateTime!
-  sender: User!
   sender_id: Int!
+  sender: User!
   channel_id: Int
   channel: Chanel
 }
@@ -38,6 +38,8 @@ type Query {
   user(id: Int!): User!
   Channel_findAll: [Chanel!]!
   Channel_findOne(id: Int!): Chanel!
+  Message_findAll_msg: [Message!]!
+  Message_findOne_msg(id: Int!): Message!
 }
 
 type Mutation {

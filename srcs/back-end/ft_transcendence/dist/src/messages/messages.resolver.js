@@ -22,6 +22,12 @@ let MessagesResolver = class MessagesResolver {
     constructor(msgService) {
         this.msgService = msgService;
     }
+    findAll_msg() {
+        return this.msgService.findAll_msg();
+    }
+    findOne_msg(id) {
+        return this.msgService.findOne_msg(id);
+    }
     createMessage(createMsgInput) {
         return this.msgService.create(createMsgInput);
     }
@@ -32,6 +38,19 @@ let MessagesResolver = class MessagesResolver {
         return this.msgService.delete(id);
     }
 };
+__decorate([
+    (0, graphql_1.Query)(() => [messages_entity_1.Message], { name: 'Message_findAll_msg' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MessagesResolver.prototype, "findAll_msg", null);
+__decorate([
+    (0, graphql_1.Query)(() => messages_entity_1.Message, { name: 'Message_findOne_msg' }),
+    __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], MessagesResolver.prototype, "findOne_msg", null);
 __decorate([
     (0, graphql_1.Mutation)(() => messages_entity_1.Message),
     __param(0, (0, graphql_1.Args)('createMsgInput')),

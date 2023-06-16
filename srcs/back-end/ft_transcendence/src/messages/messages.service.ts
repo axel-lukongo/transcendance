@@ -1,12 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateMessageInput } from './dto/create-messages.input';
-import { UpdateChanelInput } from 'src/chanel/dto/update-chanel.input';
 import { UpdateMessageInput } from './dto/update-message.input';
+import { Message } from './entities/messages.entity';
+
 
 @Injectable()
 export class MessagesService {
 	constructor(private readonly prisma: PrismaService) {}
+
+
+
+
+	async findAll_msg() { 
+		return this.prisma.message.findMany({});
+	}
+
+	  async findOne_msg(id: number) {
+		return this.prisma.message.findUnique({where: {id: id}});
+	}
+
+
 
 	create(createMsg: CreateMessageInput) {
 		return this.prisma.message.create({ data: createMsg });

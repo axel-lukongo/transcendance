@@ -4,8 +4,8 @@ export declare class Message {
     id: number;
     content: string;
     sent_at: Date;
-    sender: User;
     sender_id: number;
+    sender: User;
     channel_id?: number;
     channel?: Chanel;
 }
