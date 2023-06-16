@@ -4,6 +4,8 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'prisma/prisma.service';
 import { LoginUserInput } from './dto/login-user.input';
 import * as bcrypt from 'bcrypt';
+import { CreateContactInput } from '../contacts/dto/create-contact.input';
+import { Contact } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -46,4 +48,5 @@ export class UsersService {
   remove(id: number) {
     return this.prisma.user.delete({where: {id: id}});
   }
+
 }

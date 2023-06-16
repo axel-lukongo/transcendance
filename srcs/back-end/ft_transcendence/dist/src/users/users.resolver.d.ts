@@ -2,6 +2,7 @@ import { UsersService } from './users.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { LoginUserInput } from './dto/login-user.input';
+import { CreateContactInput } from './dto/create-contact.input';
 export declare class UsersResolver {
     private readonly usersService;
     constructor(usersService: UsersService);
@@ -11,4 +12,6 @@ export declare class UsersResolver {
     findOne(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     updateUser(updateUserInput: UpdateUserInput): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     removeUser(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
+    createContact(createContact: CreateContactInput): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
+    findAllContact(id: number): import(".prisma/client").Prisma.PrismaPromise<import(".prisma/client").Contact[]>;
 }

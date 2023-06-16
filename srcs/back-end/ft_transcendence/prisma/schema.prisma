@@ -25,13 +25,20 @@ model User {
 	userPong2			Pong[]          @relation("User2")
 	chanels				Users_Chanels[]
 	own_chan			Chanel[]
+	contact				Contact[]		@relation("contactRef")
+	reverse_contact		Contact[]		@relation("reverseContactRef")
 	sender				Message[]       @relation("Send")
-	contact				User[]
 	receiver			Message[]       @relation("Receive")
 }
 
-model	Contact {
-
+model Contact {
+	id					Int				@default(autoincrement())@id
+	user_id				Int				
+	contact_id			Int				
+	pending				Boolean?		@default(true)
+	contact				User			@relation("contactRef", fields: [user_id], references: [id])
+	user				User			@relation("reverseContactRef", fields: [contact_id], references: [id])
+	@@unique([user_id, contact_id])
 }
 
 model Pong {

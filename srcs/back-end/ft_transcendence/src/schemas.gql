@@ -11,6 +11,13 @@ type User {
   avatar: String
 }
 
+type Contact {
+  id: Int!
+  user_id: Int!
+  contact_id: Int!
+  pending: Boolean!
+}
+
 type Chanel {
   owner_id: Int!
   chanel_name: String
@@ -44,6 +51,7 @@ scalar DateTime
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  contacts(id: Int!): [Contact!]!
   Channel_findAll: [Chanel!]!
   Channel_findOne(id: Int!): Chanel!
 }
@@ -53,6 +61,7 @@ type Mutation {
   loginUser(loginUserInput: LoginUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createContact(createContact: CreateContactInput!): Contact!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
   Channel_update(updateChanelInput: UpdateChanelInput!): Chanel!
   removeChanel(id: Int!): Chanel!
@@ -82,6 +91,12 @@ input UpdateUserInput {
   nickname: String
   avatar: String
   id: Int!
+}
+
+input CreateContactInput {
+  user_id: Int!
+  contact_id: Int!
+  pending: Boolean
 }
 
 input CreateChanelInput {

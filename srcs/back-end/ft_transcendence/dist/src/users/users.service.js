@@ -48,6 +48,16 @@ let UsersService = class UsersService {
     remove(id) {
         return this.prisma.user.delete({ where: { id: id } });
     }
+    createContact(createContact) {
+        return this.prisma.contact.create({ data: createContact });
+    }
+    findAllContact(id) {
+        return this.prisma.contact.findMany({
+            where: {
+                user_id: id
+            }
+        });
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

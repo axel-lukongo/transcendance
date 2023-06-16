@@ -3,33 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: idouidi <idouidi@student.42.fr>            +#+  +:+       +#+         #
+#    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/06/09 21:07:47 by idouidi          ###   ########.fr        #
+#    Updated: 2023/06/16 17:45:03 by asimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all: up
 
 up:
-		mkdir -p ${HOME}/data/db
-		mkdir -p ${HOME}/data/back-end
-		mkdir -p ${HOME}/data/front-end
-		docker compose up --build --force-recreate #-d
+	docker compose up --build --force-recreate #-d
 
 down:
-		docker compose down
+	docker compose down
 
 ps:		
-		docker compose ps -a
-		docker ps -a
+	docker compose ps -a
+	docker ps -a
 
 clean:	down
 		docker system prune
 		docker volume prune
 
-		sudo rm -rf ${HOME}/data/*
 
 re : 	clean up
 
