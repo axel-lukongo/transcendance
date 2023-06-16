@@ -9,49 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersService = void 0;
+exports.ContactsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
-const bcrypt = require("bcrypt");
-let UsersService = class UsersService {
+let ContactsService = class ContactsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createUserInput) {
-        return this.prisma.user.create({
-            data: createUserInput
-        });
+    createContact(createContact) {
+        return this.prisma.contact.create({ data: createContact });
     }
-    async login(loginUserInput) {
-        const user = await this.prisma.user.findFirst({
+    findAllContacts(id) {
+        return this.prisma.contact.findMany({
             where: {
-                email: loginUserInput.email,
-            },
+                OR: [
+                    { user_id: id },
+                    { contact_id: id }
+                ]
+            }
         });
-        if (!user || !bcrypt.compareSync(loginUserInput.password, user.password)) {
-            throw new Error('Invalid login input');
-        }
-        return user;
-    }
-    findAll() {
-        return this.prisma.user.findMany({});
-    }
-    findOne(id) {
-        return this.prisma.user.findUnique({ where: { id: id } });
-    }
-    update(id, data) {
-        return this.prisma.user.update({
-            where: { id },
-            data
-        });
-    }
-    remove(id) {
-        return this.prisma.user.delete({ where: { id: id } });
     }
 };
-UsersService = __decorate([
+ContactsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], UsersService);
-exports.UsersService = UsersService;
-//# sourceMappingURL=users.service.js.map
+], ContactsService);
+exports.ContactsService = ContactsService;
+//# sourceMappingURL=contacts.service.js.map

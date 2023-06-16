@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateContactInput } from './dto/create-contact.input';
+// import { }
 
 @Injectable()
 export class ContactsService {
@@ -22,7 +23,7 @@ export class ContactsService {
 	  })
 	}
 
-//   findContact(nickname: string, user_id: number) {
-//     return this.prisma.contact.findFirstOrThrow({where: { nickname: }})
+//   findContact(user_id: number) {
+//     return this.prisma.contact.findFirstOrThrow({where: { id: }})
 //   }
 }

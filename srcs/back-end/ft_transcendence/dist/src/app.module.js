@@ -14,6 +14,7 @@ const apollo_1 = require("@nestjs/apollo");
 const users_module_1 = require("./users/users.module");
 const chanel_module_1 = require("./chanel/chanel.module");
 const messages_module_1 = require("./messages/messages.module");
+const contacts_module_1 = require("./contacts/contacts.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,7 +27,8 @@ AppModule = __decorate([
             }),
             users_module_1.UsersModule,
             chanel_module_1.ChanelModule,
-            messages_module_1.MessagesModule
+            messages_module_1.MessagesModule,
+            contacts_module_1.ContactsModule
         ],
     })
 ], AppModule);
