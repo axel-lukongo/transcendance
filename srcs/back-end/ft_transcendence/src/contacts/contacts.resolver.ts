@@ -26,6 +26,7 @@ export class ContactsResolver {
   
 	@ResolveField(() => User, {name: "contact"})
 	findContact(@Parent() contact: Contact) {
+		// Need to add check for not display is own profil
 		const {contact_id} = contact;
 		return this.userService.findOne(contact_id);
 	}
