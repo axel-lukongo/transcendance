@@ -1,8 +1,7 @@
 
-  
-  import React, { useState, useEffect } from 'react';
-  import { gql, useQuery, useMutation } from '@apollo/client';
-  import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import axios from 'axios';
   
   const FIND_USER_BY_INTRA_LOGIN = gql`
   query FindUserByIntraLogin($login: String!) {
