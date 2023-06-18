@@ -47,7 +47,7 @@ model Chanel {
   max_users   Int
   owner       User            @relation(fields: [owner_id], references: [id])
   users       Users_Chanels[]
-  messages    Message[]
+  messages    Message[]       @relation("ChanelMessages")
 }
 
 model Users_Chanels {
@@ -67,5 +67,5 @@ model Message {
   content			String
   sent_at			DateTime @default(now())
   sender			User     @relation("Send", fields: [sender_id], references: [id])
-  channel			Chanel?  @relation(fields: [channel_id], references: [id])
+  channel			Chanel?  @relation("ChanelMessages", fields: [channel_id], references: [id])
 }
