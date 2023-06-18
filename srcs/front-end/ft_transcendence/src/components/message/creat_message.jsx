@@ -13,7 +13,7 @@ const CREAT_MSG = gql`
   }
 `;
 
-const CreatMsg = () => {
+const CreatMsg = ({ show }) => {
 
 	const [Sender_id, setSender_id] = useState('');
 	const [Content, setContent] = useState('');
@@ -54,7 +54,7 @@ const CreatMsg = () => {
   	};
 
 	return (
-	<div>
+	<div className={`Creat_Msg ${show ? 'showw' : ''}`}>
 		<div>
 		<label htmlFor='nom'> Content </label>
 		<input type='text' value={Content} onChange={handleContentChange} id="champs1" name="the Content" />
