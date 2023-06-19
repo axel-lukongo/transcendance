@@ -12,11 +12,10 @@ const CONTACTS = gql`query GetContactList($input: Int!){
 }` 
 
 
-export default function ContactList() {
+export default function ContactListPending() {
 
 	const {data, isLoading, error} = useQuery(CONTACTS, {variables: {input: 1}});
 
-	console.log(data.contacts);
 	if (isLoading)
 		return (<div><p>Loading...</p></div>);
 	
@@ -32,13 +31,14 @@ export default function ContactList() {
 		<h3>List Contact</h3>
 		{data.contacts.map((element, index) => (
 			<li key={index}>
+			{ element.pending && ( 
 				<div>
-					<h4>Profil</h4>
-					<div>name: {element.contact.nickname.toString()} </div>
+					<h4>{element.contact.nickname.toString()}</h4>
 					<div>email: {element.contact.email.toString()} </div>
 					<div>token: {element.contact.token.toString()} </div>
+					<div>Pending: {element.pending.toString()} </div>
 				</div>
-				<div>Pending: {element.pending.toString()} </div>
+				)} 
 			</li>
 		))}
 	</div>);

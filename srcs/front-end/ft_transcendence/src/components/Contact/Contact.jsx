@@ -1,10 +1,10 @@
 import React from "react"
-import ContactList from "./listContact"
+import ContactListPending from "./listContact"
 
 export default function Contact() {
 
 	return (<div>
 			<p>Ici</p>
-			<ContactList/>
+			<ContactListPending/>
 	</div>);
 }
