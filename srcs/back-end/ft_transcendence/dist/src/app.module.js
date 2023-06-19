@@ -23,6 +23,7 @@ AppModule = __decorate([
                 autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schemas.gql'),
                 driver: apollo_1.ApolloDriver,
                 playground: true,
+                installSubscriptionHandlers: true,
             }),
             users_module_1.UsersModule,
             chanel_module_1.ChanelModule,

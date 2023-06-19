@@ -106,3 +106,7 @@ input UpdateMessageInput {
   channel_id: Int
   id: Int!
 }
+
+type Subscription {
+  addmessage: Message!
+}

@@ -1,11 +1,13 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Int, Parent} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Int, Parent, Subscription} from '@nestjs/graphql';
 import { ChanelService } from './chanel.service';
 import { Chanel } from './entities/chanel.entity';
 import { CreateChanelInput } from './dto/create-chanel.input';
 import { UpdateChanelInput } from './dto/update-chanel.input';
 import { MessagesResolver } from '../messages/messages.resolver';
 import { Message } from 'src/messages/entities/messages.entity';
+import { PubSub } from 'graphql-subscriptions';
 
+// const pubSub = new PubSub();
 @Resolver(() => Chanel)
 export class ChanelResolver {
   constructor(private readonly chanelService: ChanelService,
@@ -41,4 +43,9 @@ export class ChanelResolver {
   async messages(@Parent() chanel: Chanel) {
     return this.messagesResolver.findAll_msg(); // Utilisez la méthode appropriée pour récupérer les messages associés au canal à partir de MessagesResolver
   }
+
+//   @Subscription(() => [Message])
+//   addmessage(){
+// 	return pubSub.asyncIterator('addMessage');
+// }
 }

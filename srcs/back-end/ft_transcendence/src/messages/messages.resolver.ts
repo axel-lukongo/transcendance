@@ -1,10 +1,13 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Subscription } from '@nestjs/graphql';
 import { Message } from './entities/messages.entity';
 import { MessagesService } from './messages.service';
 import { CreateMessageInput } from './dto/create-messages.input';
 import { UpdateChanelInput } from 'src/chanel/dto/update-chanel.input';
 import { UpdateMessageInput } from './dto/update-message.input';
-// import { User } from 'src/users/entities/user.entity';
+import { PubSub } from 'graphql-subscriptions';
+
+const pubSub = new PubSub();
+const NEW_MSG = 'addMessage';
 
 @Resolver(() => Message)
 export class MessagesResolver {
@@ -22,6 +25,10 @@ export class MessagesResolver {
 
 	@Mutation(() => Message)
 	createMessage(@Args('createMsgInput') createMsgInput: CreateMessageInput) {
+		const new_message = this.msgService.create(createMsgInput);
+		pubSub.publish(NEW_MSG, {
+			addmessage: new_message,
+		});
 		return this.msgService.create(createMsgInput);
 	}
 
@@ -33,5 +40,10 @@ export class MessagesResolver {
 	@Mutation(() => Message)
 	deleteMessage(id: number) {
 		return this.msgService.delete(id);
+	}
+
+	@Subscription(() => Message)
+	addmessage(){
+	  return pubSub.asyncIterator(NEW_MSG);
 	}
 }

@@ -18,6 +18,9 @@ const messages_entity_1 = require("./entities/messages.entity");
 const messages_service_1 = require("./messages.service");
 const create_messages_input_1 = require("./dto/create-messages.input");
 const update_message_input_1 = require("./dto/update-message.input");
+const graphql_subscriptions_1 = require("graphql-subscriptions");
+const pubSub = new graphql_subscriptions_1.PubSub();
+const NEW_MSG = 'addMessage';
 let MessagesResolver = class MessagesResolver {
     constructor(msgService) {
         this.msgService = msgService;
@@ -29,6 +32,10 @@ let MessagesResolver = class MessagesResolver {
         return this.msgService.findOne_msg(id);
     }
     createMessage(createMsgInput) {
+        const new_message = this.msgService.create(createMsgInput);
+        pubSub.publish(NEW_MSG, {
+            addmessage: new_message,
+        });
         return this.msgService.create(createMsgInput);
     }
     updateMessage(MsgInput) {
@@ -36,6 +43,9 @@ let MessagesResolver = class MessagesResolver {
     }
     deleteMessage(id) {
         return this.msgService.delete(id);
+    }
+    addmessage() {
+        return pubSub.asyncIterator(NEW_MSG);
     }
 };
 __decorate([
@@ -71,6 +81,12 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], MessagesResolver.prototype, "deleteMessage", null);
+__decorate([
+    (0, graphql_1.Subscription)(() => messages_entity_1.Message),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MessagesResolver.prototype, "addmessage", null);
 MessagesResolver = __decorate([
     (0, graphql_1.Resolver)(() => messages_entity_1.Message),
     __metadata("design:paramtypes", [messages_service_1.MessagesService])
