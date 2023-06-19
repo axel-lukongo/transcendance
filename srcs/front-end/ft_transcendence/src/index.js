@@ -1,7 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom/client';
+import reportWebVitals from './reportWebVitals';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import { createRoot } from 'react-dom';
-
 import App from './components/App';
 
 const apollo_client = new ApolloClient({
@@ -9,8 +9,11 @@ const apollo_client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <ApolloProvider client={apollo_client}>
     <App />
   </ApolloProvider>
 );
+
+reportWebVitals();

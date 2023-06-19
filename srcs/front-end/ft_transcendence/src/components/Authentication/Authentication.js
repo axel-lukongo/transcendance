@@ -4,8 +4,8 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import axios from 'axios';
   
   const FIND_USER_BY_INTRA_LOGIN = gql`
-  query FindUserByIntraLogin($login: String!) {
-    findUserByIntraLogin(intra_login: $login) {
+  query FindUserByIntraLogin($intra_login: String!) {
+    findUserByIntraLogin(intra_login: $intra_login) {
       email
       nickname
       avatar
@@ -18,6 +18,7 @@ import axios from 'axios';
       createUser(createUserInput: $input) {
         token
         email
+        intra_login
         nickname
         avatar
       }
@@ -32,19 +33,27 @@ const Authentication = () => {
 
   const [code, setCode] = useState(null);
 
-  const handleSignIn = () => {
+  const handleSignIn = (e) => {
+    e.preventDefault();
     window.location.href = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-8080a9dd49bd7eeeefcfb34e552ffec79991e6fb973b6debbd2b1e7874a5ee91&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=code";
-  }
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCode = urlParams.get('code');
+    if (urlCode) {
+      setCode(urlCode);
+      window.history.replaceState(null, null, window.location.pathname); // Remove the code from the URL
+    }
+  }, []);
 
   const { data: findUserDataQuery, loading: findUserLoadingQuery, error: findUserErrorQuery } = useQuery(FIND_USER_BY_INTRA_LOGIN, {
-    variables: { login: userData.login },
+    variables: { intra_login: userData.login },
     skip: !userData.login, // Skip the query if userData.login is not set
   });
   
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setCode(urlParams.get('code'));
 
     if (code) {
       const requestData = {
@@ -67,13 +76,14 @@ const Authentication = () => {
             }
           };
           axios.get('https://api.intra.42.fr/v2/me', loginRequestData)
-            .then(response => {
-              setUserData(prevState => ({
-                ...prevState,
-                login: response.data.login
-              }));
-            })
-            .catch(error => {
+          .then(response => {
+            setUserData(prevState => ({
+              ...prevState,
+              login: response.data.login
+            }));
+          })
+          .catch(error => {
+              console.log(response.data);
               console.error('Error:', error);
             });
         });
@@ -116,7 +126,7 @@ const Authentication = () => {
   return (
     <div>
       <button onClick={handleSignIn}>SIGNIN</button>
-      <div>
+      {/* <div>
         {isSignedIn ? 
           ( findUserDataQuery ? (
             <><p>Email: {findUserDataQuery.findUserByIntraLogin.email}</p><p>Nickname: {findUserDataQuery.findUserByIntraLogin.nickname}</p><p>Avatar: {findUserDataQuery.findUserByIntraLogin.avatar}</p></>
@@ -130,7 +140,7 @@ const Authentication = () => {
             )
         ) 
         : null}
-      </div>
+      </div> */}
     </div>
   );
   

@@ -5,11 +5,11 @@ export class CreateUserInput {
   @Field()
   email: string;
 
-  @Field()
-  password: string;
-
   @Field(() => Int)
   token: number;
+
+  @Field()
+  intra_login: string;
 
   @Field()
   nickname: string;
