@@ -29,7 +29,7 @@ export class ContactsResolver {
 	findContact(@Parent() contact: Contact) {
 		// Need to add check for not display is own profil
 		const {contact_id} = contact;
-		return this.userService.findOne(contact_id);
+		return this.userService.findOneUserById(contact_id);
 	}
 
 	@Mutation(() => Contact, {name: "replyAddContact"}) 

@@ -1,4 +1,5 @@
 #!/bin/bash
+npm install
 
 sleep 5
 

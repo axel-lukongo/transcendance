@@ -1,5 +1,4 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Chanel } from 'src/chanel/entities/chanel.entity';
 
 @ObjectType()
 export class User {
@@ -10,10 +9,10 @@ export class User {
   email: string;
 
   @Field()
-  password: string;
+  token: string;
 
-  @Field(() => Int)
-  token: number;
+  @Field()
+  intra_login: string;
 
   @Field()
   nickname: string;
