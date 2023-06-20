@@ -71,7 +71,7 @@ type Mutation {
   deleteMessage: Message!
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
-  deleteContact(id: Float!): Contact!
+  deleteContact(id: Int!): Contact!
 }
 
 input CreateUserInput {

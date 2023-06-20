@@ -38,7 +38,7 @@ export class ContactsResolver {
 	}
 
 	@Mutation(() => Contact, {name: "deleteContact"})
-	deleteContact(@Args("id") contact_id: number) {
+	deleteContact(@Args("id", {type: () => Int }) contact_id: number) {
 		return (this.contactService.delete(contact_id));
 	}
 }

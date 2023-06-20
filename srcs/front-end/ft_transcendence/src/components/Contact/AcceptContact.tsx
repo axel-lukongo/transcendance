@@ -1,10 +1,10 @@
 import React from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useEffect } from "react";
-import { IAcceptContactProps } from "./interfaces/Requests.interface"
+import { IRequestProps } from "./interfaces/Requests.interface"
 
 
-export default function AcceptContact({element, refetch}: IAcceptContactProps) {
+export default function AcceptContact({element, refetch}: IRequestProps) {
 	
 	const ACCEPTE_CONTACT = gql`mutation ReplyAddContact($input: UpdateContact!){
 		replyAddContact(reply: $input) {

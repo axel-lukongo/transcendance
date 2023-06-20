@@ -1,8 +1,13 @@
+import React from 'react';
 import Authentication from './components/Authentication/Authentication';
+import Contact from './components/Contact/Contact';
 
 const App = () => {
   return (
-		<Authentication />
+    <React.Fragment>
+      <Authentication />
+      <Contact />
+    </React.Fragment>
   )
  }
 

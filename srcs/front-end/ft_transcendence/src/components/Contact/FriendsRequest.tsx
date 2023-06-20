@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client"
 import { useEffect } from "react";
 import {IContacts} from "./interfaces/Contact.interface"
 import  AccepContact  from './AcceptContact'
+import RefuseContact from "./RefuseContact";
 
 const CONTACTS = gql`query GetRequestList($input: Int!){
 	contactsRequest(user_id: $input){
@@ -38,10 +39,13 @@ export default function FriendsRequest() {
 	if (!data)
 	return (<div>No data</div>);
 
-	const contacts = data.contacts;
+	const contacts = data.contactsRequest;
 
 	if (!contacts)
+	{
+		console.log(data);
 		return (<div>Pas de contacts</div>)
+	}
 	
 	return (<div>
 		<h3>Friends request</h3>
@@ -59,6 +63,7 @@ export default function FriendsRequest() {
 					</div>
 				} 
 				<AccepContact element={element} refetch={refetch} />
+				<RefuseContact element={element} refetch={refetch} />
 				</li>
 			))
 			}
