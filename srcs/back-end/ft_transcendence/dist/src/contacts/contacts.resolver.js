@@ -20,22 +20,26 @@ const contacts_service_1 = require("./contacts.service");
 const create_contact_input_1 = require("./dto/create-contact.input");
 const user_entity_1 = require("../users/entities/user.entity");
 const users_service_1 = require("../users/users.service");
+const update_contact_input_1 = require("./dto/update-contact.input");
 let ContactsResolver = class ContactsResolver {
-    constructor(myService, userService) {
-        this.myService = myService;
+    constructor(contactService, userService) {
+        this.contactService = contactService;
         this.userService = userService;
     }
     createContact(createContact) {
         if (createContact.user_id == createContact.contact_id)
             throw new Error("Can't add your self");
-        return this.myService.createContact(createContact);
+        return this.contactService.createContact(createContact);
     }
     findAllContacts(id) {
-        return this.myService.findAllContacts(id);
+        return this.contactService.findAllContacts(id);
     }
     findContact(contact) {
         const { contact_id } = contact;
         return this.userService.findOne(contact_id);
+    }
+    replyInviteContact(reply) {
+        return (this.contactService.replyAddContact(reply));
     }
 };
 __decorate([
@@ -59,6 +63,13 @@ __decorate([
     __metadata("design:paramtypes", [contact_entity_1.Contact]),
     __metadata("design:returntype", void 0)
 ], ContactsResolver.prototype, "findContact", null);
+__decorate([
+    (0, graphql_2.Mutation)(() => contact_entity_1.Contact, { name: "replyAddContact" }),
+    __param(0, (0, graphql_2.Args)("reply")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_contact_input_1.UpdateContact]),
+    __metadata("design:returntype", void 0)
+], ContactsResolver.prototype, "replyInviteContact", null);
 ContactsResolver = __decorate([
     (0, graphql_1.Resolver)(() => contact_entity_1.Contact),
     __metadata("design:paramtypes", [contacts_service_1.ContactsService,

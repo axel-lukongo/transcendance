@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateContact = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const create_contact_input_1 = require("./create-contact.input");
-class UpdateContact extends (0, graphql_1.PartialType)(create_contact_input_1.CreateContactInput) {
-}
+let UpdateContact = class UpdateContact extends (0, graphql_1.PartialType)(create_contact_input_1.CreateContactInput) {
+};
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
@@ -22,5 +22,8 @@ __decorate([
     (0, graphql_1.Field)(() => Boolean),
     __metadata("design:type", Boolean)
 ], UpdateContact.prototype, "pending", void 0);
+UpdateContact = __decorate([
+    (0, graphql_1.InputType)()
+], UpdateContact);
 exports.UpdateContact = UpdateContact;
 //# sourceMappingURL=update-contact.input.js.map

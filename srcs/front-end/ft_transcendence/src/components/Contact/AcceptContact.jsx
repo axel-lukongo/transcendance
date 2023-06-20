@@ -11,6 +11,7 @@ export default function AcceptContact({element, refetch}) {
 	const [acceptContact] = useMutation(ACCEPTE_CONTACT);
 
 	const handleClick = (e) => {
+		console.log(e)
 		acceptContact({
 			variables: {
 				input: {
@@ -19,7 +20,6 @@ export default function AcceptContact({element, refetch}) {
 				}
 			}
 		})
-		// console.log(element.id);
 	} 
 
 

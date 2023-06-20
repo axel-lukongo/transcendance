@@ -29,6 +29,12 @@ let ContactsService = class ContactsService {
             }
         });
     }
+    replyAddContact(reply) {
+        return this.prisma.contact.update({
+            where: { id: reply.id },
+            data: reply
+        });
+    }
 };
 ContactsService = __decorate([
     (0, common_1.Injectable)(),

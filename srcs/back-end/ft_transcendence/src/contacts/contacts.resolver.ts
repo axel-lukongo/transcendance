@@ -5,23 +5,24 @@ import { ContactsService } from './contacts.service'
 import { CreateContactInput } from './dto/create-contact.input';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { UpdateContact } from './dto/update-contact.input';
 
 @Resolver(() => Contact)
 export class ContactsResolver {
 
-	constructor(private readonly myService: ContactsService,
+	constructor(private readonly contactService: ContactsService,
 				private readonly userService: UsersService) {}
 	
 	@Mutation(() => Contact, {name: "createContact"})
 	createContact(@Args("createContact") createContact: CreateContactInput) {
 	  if (createContact.user_id == createContact.contact_id)
 		  throw new Error("Can't add your self");
-	  return this.myService.createContact(createContact);
+	  return this.contactService.createContact(createContact);
 	}
   
 	@Query(() => [Contact], {name: 'contacts'})
 	findAllContacts(@Args("user_id", {type: () => Int}) id: number) {
-	  return this.myService.findAllContacts(id);
+	  return this.contactService.findAllContacts(id);
 	}
   
 	@ResolveField(() => User, {name: "contact"})
@@ -29,5 +30,10 @@ export class ContactsResolver {
 		// Need to add check for not display is own profil
 		const {contact_id} = contact;
 		return this.userService.findOne(contact_id);
+	}
+
+	@Mutation(() => Contact, {name: "replyAddContact"}) 
+	replyInviteContact(@Args("reply") reply: UpdateContact) {
+		return (this.contactService.replyAddContact(reply));
 	}
 }

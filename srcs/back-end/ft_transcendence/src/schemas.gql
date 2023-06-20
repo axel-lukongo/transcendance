@@ -70,6 +70,7 @@ type Mutation {
   updateMessage(updateMsgInput: UpdateMessageInput!): Message!
   deleteMessage: Message!
   createContact(createContact: CreateContactInput!): Contact!
+  replyAddContact(reply: UpdateContact!): Contact!
 }
 
 input CreateUserInput {
@@ -135,4 +136,11 @@ input CreateContactInput {
   user_id: Int!
   contact_id: Int!
   pending: Boolean
+}
+
+input UpdateContact {
+  user_id: Int
+  contact_id: Int
+  pending: Boolean!
+  id: Int!
 }
