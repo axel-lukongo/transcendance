@@ -27,6 +27,6 @@ export class ContactsResolver {
 	@ResolveField(() => User, {name: "contact"})
 	findContact(@Parent() contact: Contact) {
 		const {contact_id} = contact;
-		return this.userService.findOne(contact_id);
+		return this.userService.findOneUserById(contact_id);
 	}
 }

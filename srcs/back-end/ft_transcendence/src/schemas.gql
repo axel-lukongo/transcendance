@@ -5,8 +5,8 @@
 type User {
   id: Int!
   email: String!
-  password: String!
   token: Int!
+  intra_login: String!
   nickname: String!
   avatar: String
 }
@@ -50,8 +50,9 @@ type Contact {
 }
 
 type Query {
-  users: [User!]!
-  user(id: Int!): User!
+  findAllUsers: [User!]!
+  findOneUserById(id: Int!): User!
+  findOneUserByIntraLogin(intra_login: String!): User!
   Channel_findAll: [Chanel!]!
   Channel_findOne(id: Int!): Chanel!
   contacts(user_id: Int!): [Contact!]!
@@ -59,7 +60,6 @@ type Query {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  loginUser(loginUserInput: LoginUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
@@ -74,21 +74,16 @@ type Mutation {
 
 input CreateUserInput {
   email: String!
-  password: String!
   token: Int!
+  intra_login: String!
   nickname: String!
   avatar: String
 }
 
-input LoginUserInput {
-  email: String!
-  password: String!
-}
-
 input UpdateUserInput {
   email: String
-  password: String
   token: Int
+  intra_login: String
   nickname: String
   avatar: String
   id: Int!
