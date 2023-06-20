@@ -63,9 +63,10 @@ const Chat = ({ show }) => {
 
   useEffect(() => {
     const subscription = wsClient.request({ query: NEW_MESSAGE_SUBSCRIPTION }).subscribe({
-      next: (response) => {
+      next: (response) => { //next est une fonction de suscribe qui s'execute a chaque nouveau changements
+		//reponse c'est la ou les reponse de notre server est stocker.
         const newMessage = response.data.addmessage;
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, newMessage]); //on copie les messages precedent et on rajoute newMessage
       },
       error: (error) => {
         console.error('WebSocket error:', error);
@@ -75,7 +76,7 @@ const Chat = ({ show }) => {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, []);//le [] c'est le tableau de dependance, lorsque il est vide ca signifie que on execute notre useEffect que 1 fois
 
   return (
     <div className={`Chat ${show ? 'show' : ''}`}>
