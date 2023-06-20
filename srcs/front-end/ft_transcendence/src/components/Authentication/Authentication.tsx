@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import axios from 'axios';
   
@@ -29,13 +29,13 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
   /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
   /*                      STATE                             */
   /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
-  const Authentication = () => {
+  const Authentication: FC = () => {
   const [userData, setUserData] = useState({
     token: '',
     login: '',
   });
   
-  const [code, setCode] = useState(null);
+  const [code, setCode] = useState<string>('');
   const [canCheck, setCanCheck] = useState(false);
 
   /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -43,15 +43,15 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
   /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 
   //The user is redirect to 42 api Oauth for connect to the site
-  const handleSignIn = (e) => {
+  const handleSignIn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     window.location.href = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-8080a9dd49bd7eeeefcfb34e552ffec79991e6fb973b6debbd2b1e7874a5ee91&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&response_type=code";
   };
 
   // We use the information on the form that user send to create his profil on the db 
-  const handleCreateUser = (e) => {
+  const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { nickname, email, avatar } = e.target;
+    const { nickname, email, avatar } = e.currentTarget;
     console.log(nickname.value, email.value, avatar.value);
     createUser({
       variables: {
@@ -97,7 +97,7 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
     const urlCode = urlParams.get('code');
     if (urlCode) {
       setCode(urlCode);
-      window.history.replaceState(null, null, window.location.pathname); // Remove the code from the URL
+      window.history.replaceState(null, '', window.location.pathname); // Remove the code from the URL
     }
   }, []);
 
