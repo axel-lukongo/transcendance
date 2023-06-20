@@ -6,8 +6,10 @@ import axios from 'axios';
 const FIND_USER_BY_INTRA_LOGIN = gql`
   query FindOneUserByIntraLogin($intra_login: String!) {
     findOneUserByIntraLogin(intra_login: $intra_login) {
-      nickname
+      token
       email
+      intra_login
+      nickname
       avatar
     }
   }
@@ -61,9 +63,13 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
           avatar: avatar.value
         }
       }
-    }).then(response => {
+    })
+    
+    .then(response => {
       console.log('User created:', response.data.createUser);
-    }).catch(error => {
+    })
+    
+    .catch(error => {
         console.error('Error creating user:', error);
       });
   };
@@ -113,7 +119,7 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
             ...prevState,
             token: response.data.access_token
           }));
-          console.log('the acces token :', requestData);
+          console.log('the acces token :', response.data);
         })
 
         .catch(error => {
@@ -149,7 +155,11 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
   
   //this "useffect" is used to update canCheck to know when in the return if the user exists or not in db
   useEffect(() => {
+    if (findUserDataQuery || findUserLoadingQuery || findUserErrorQuery)
+    {
       setCanCheck(true);
+      console.log(findUserDataQuery);
+    }
   }, [findUserDataQuery, findUserLoadingQuery, findUserErrorQuery]);
 
   /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -157,29 +167,31 @@ const FIND_USER_BY_INTRA_LOGIN = gql`
   /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
   return (
     <div>
-      <button onClick={handleSignIn}>SIGNIN</button>
-        <div>
-          {canCheck && (
+      {!canCheck ? (
+        <button onClick={handleSignIn}>SIGNIN</button>
+      ) : (
+        <>
+          {!findUserLoadingQuery && !findUserErrorQuery && findUserDataQuery ? (
             <>
-              {!findUserLoadingQuery && !findUserErrorQuery && findUserDataQuery ? (
-                <>
-                  <p>Email: {findUserDataQuery.email}</p>
-                  <p>Nickname: {findUserDataQuery.nickname}</p>
-                  <p>Avatar: {findUserDataQuery.avatar}</p>
-                </>
-              ) : (
-                <form onSubmit={(e) => handleCreateUser(e)}>
-                  <input type="text" placeholder="Nickname" name="nickname" />
-                  <input type="text" placeholder="Email" name="email" />
-                  <input type="text" placeholder="Avatar" name="avatar" />
-                  <button type="submit">Send</button>
-                </form>
-              )}
+              <p>Token: {findUserDataQuery.findOneUserByIntraLogin.token}</p>
+              <p>Email: {findUserDataQuery.findOneUserByIntraLogin.email}</p>
+              <p>intra_login: {findUserDataQuery.findOneUserByIntraLogin.intra_login}</p>
+              <p>Nickname: {findUserDataQuery.findOneUserByIntraLogin.nickname}</p>
+              <p>Avatar: {findUserDataQuery.findOneUserByIntraLogin.avatar}</p>
             </>
+          ) : (
+            <form onSubmit={handleCreateUser}>
+              <input type="text" placeholder="Nickname" name="nickname" />
+              <input type="text" placeholder="Email" name="email" />
+              <input type="text" placeholder="Avatar" name="avatar" />
+              <button type="submit">Send</button>
+            </form>
           )}
-        </div>
+        </>
+      )}
     </div>
   );
+  
 };
 
 export default Authentication;

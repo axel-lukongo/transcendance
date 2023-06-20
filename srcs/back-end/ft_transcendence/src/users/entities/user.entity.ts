@@ -8,8 +8,8 @@ export class User {
   @Field()
   email: string;
 
-  @Field(() => Int)
-  token: number;
+  @Field()
+  token: string;
 
   @Field()
   intra_login: string;

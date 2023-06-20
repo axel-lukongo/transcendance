@@ -5,7 +5,7 @@
 type User {
   id: Int!
   email: String!
-  token: Int!
+  token: String!
   intra_login: String!
   nickname: String!
   avatar: String
@@ -74,7 +74,7 @@ type Mutation {
 
 input CreateUserInput {
   email: String!
-  token: Int!
+  token: String!
   intra_login: String!
   nickname: String!
   avatar: String
@@ -82,7 +82,7 @@ input CreateUserInput {
 
 input UpdateUserInput {
   email: String
-  token: Int
+  token: String
   intra_login: String
   nickname: String
   avatar: String

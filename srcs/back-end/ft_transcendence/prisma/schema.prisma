@@ -13,7 +13,7 @@ datasource db {
 model User {
 	id					Int             @id @default(autoincrement())
 	email				String          @unique
-	token				Int             @unique
+	token				String          @unique
 	intra_login			String			@unique
 	nickname			String          @unique
 	avatar				String?
