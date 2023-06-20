@@ -8,6 +8,7 @@ import '../css/App.css';
 // import AddUserChanel from './Channel/Addusers';
 // import Chanel from './Channel/Chanel';
 import Contact from './Contact/Contact'
+import React from 'react';
 
 const App = () => {
   return (

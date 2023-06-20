@@ -1,30 +1,32 @@
+import React from "react";
 import { gql, useQuery } from "@apollo/client"
 import { useEffect } from "react";
+import {IContacts} from "./interfaces/Contact.interface"
 import  AccepContact  from './AcceptContact'
 
-const CONTACTS = gql`query GetContactList($input: Int!){
-	contacts(user_id: $input){
+const CONTACTS = gql`query GetRequestList($input: Int!){
+	contactsRequest(user_id: $input){
 		id
 		pending
 		contact {
-		  nickname
-		  email
-		  token
+			id
+			nickname
+			email
+			token
 		}
 	  }
 }` 
 
-
 export default function FriendsRequest() {
 
-	const {data, isLoading, error, refetch} = useQuery(CONTACTS, {variables: {input: 1}});
+	const {data, loading, error, refetch} = useQuery(CONTACTS, {variables: {input: 1}});
 	
-	
+
 	useEffect(() => {
 		refetch();
-	}, [refetch]);
+	});
 
-	if (isLoading)
+	if (loading)
 	return (<div><p>Loading...</p></div>);
 	
 	if (error) {
@@ -37,16 +39,17 @@ export default function FriendsRequest() {
 	return (<div>No data</div>);
 
 	const contacts = data.contacts;
+
+	if (!contacts)
+		return (<div>Pas de contacts</div>)
 	
 	return (<div>
 		<h3>Friends request</h3>
 		{
-			contacts.length === 0 ? (
-			<div>No contacts available</div>
-			) : (
+			
 			<ul>{
-			contacts.map((element) => (
-				element.pending && <li key={element.id}>
+			contacts.map((element: IContacts) => (
+				/*element.pending && */ <li key={element.id}>
 				{ 
 					<div>
 							<h4>{element.contact.nickname.toString()}</h4>
@@ -55,12 +58,11 @@ export default function FriendsRequest() {
 							<div>Pending: {element.pending.toString()} </div>
 					</div>
 				} 
-				<AccepContact element={element} />
+				<AccepContact element={element} refetch={refetch} />
 				</li>
 			))
 			}
-		</ul> )
+		</ul>
 		}
-		<button onClick={() => refetch()}> Refresh</button>
 	</div>);
 }

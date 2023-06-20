@@ -19,9 +19,13 @@ let ContactsService = class ContactsService {
     createContact(createContact) {
         return this.prisma.contact.create({ data: createContact });
     }
-    findAllContacts(id) {
+    delete(contact_id) {
+        return (this.prisma.contact.delete({ where: { id: contact_id } }));
+    }
+    findAllContactsRequest(id) {
         return this.prisma.contact.findMany({
             where: {
+                pending: true,
                 OR: [
                     { user_id: id },
                     { contact_id: id }

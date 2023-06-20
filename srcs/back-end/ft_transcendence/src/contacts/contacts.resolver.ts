@@ -20,9 +20,9 @@ export class ContactsResolver {
 	  return this.contactService.createContact(createContact);
 	}
   
-	@Query(() => [Contact], {name: 'contacts'})
-	findAllContacts(@Args("user_id", {type: () => Int}) id: number) {
-	  return this.contactService.findAllContacts(id);
+	@Query(() => [Contact], {name: 'contactsRequest'})
+	findAllContactsRequest(@Args("user_id", {type: () => Int}) id: number) {
+	  return this.contactService.findAllContactsRequest(id);
 	}
   
 	@ResolveField(() => User, {name: "contact"})
@@ -35,5 +35,10 @@ export class ContactsResolver {
 	@Mutation(() => Contact, {name: "replyAddContact"}) 
 	replyInviteContact(@Args("reply") reply: UpdateContact) {
 		return (this.contactService.replyAddContact(reply));
+	}
+
+	@Mutation(() => Contact, {name: "deleteContact"})
+	deleteContact(@Args("id") contact_id: number) {
+		return (this.contactService.delete(contact_id));
 	}
 }

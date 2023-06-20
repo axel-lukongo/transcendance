@@ -5,6 +5,7 @@ export declare class ContactsService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     createContact(createContact: CreateContactInput): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
-    findAllContacts(id: number): import(".prisma/client").Prisma.PrismaPromise<import(".prisma/client").Contact[]>;
+    delete(contact_id: number): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
+    findAllContactsRequest(id: number): import(".prisma/client").Prisma.PrismaPromise<import(".prisma/client").Contact[]>;
     replyAddContact(reply: UpdateContact): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
 }

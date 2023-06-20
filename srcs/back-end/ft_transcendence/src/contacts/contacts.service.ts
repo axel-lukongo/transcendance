@@ -13,9 +13,14 @@ export class ContactsService {
 		return this.prisma.contact.create({ data: createContact });
 	}
 
-	findAllContacts(id: number) {
+	delete(contact_id: number) {
+		return (this.prisma.contact.delete({where: {id: contact_id}}));
+	}
+
+	findAllContactsRequest(id: number) {
 		return this.prisma.contact.findMany({
 			where: {
+				pending: true,
 				OR: [
 					{ user_id: id }, 
 					{ contact_id: id }

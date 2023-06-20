@@ -54,7 +54,7 @@ type Query {
   user(id: Int!): User!
   Channel_findAll: [Chanel!]!
   Channel_findOne(id: Int!): Chanel!
-  contacts(user_id: Int!): [Contact!]!
+  contactsRequest(user_id: Int!): [Contact!]!
 }
 
 type Mutation {
@@ -71,6 +71,7 @@ type Mutation {
   deleteMessage: Message!
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
+  deleteContact(id: Float!): Contact!
 }
 
 input CreateUserInput {

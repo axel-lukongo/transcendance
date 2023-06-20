@@ -31,8 +31,8 @@ let ContactsResolver = class ContactsResolver {
             throw new Error("Can't add your self");
         return this.contactService.createContact(createContact);
     }
-    findAllContacts(id) {
-        return this.contactService.findAllContacts(id);
+    findAllContactsRequest(id) {
+        return this.contactService.findAllContactsRequest(id);
     }
     findContact(contact) {
         const { contact_id } = contact;
@@ -40,6 +40,9 @@ let ContactsResolver = class ContactsResolver {
     }
     replyInviteContact(reply) {
         return (this.contactService.replyAddContact(reply));
+    }
+    deleteContact(contact_id) {
+        return (this.contactService.delete(contact_id));
     }
 };
 __decorate([
@@ -50,12 +53,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ContactsResolver.prototype, "createContact", null);
 __decorate([
-    (0, graphql_2.Query)(() => [contact_entity_1.Contact], { name: 'contacts' }),
+    (0, graphql_2.Query)(() => [contact_entity_1.Contact], { name: 'contactsRequest' }),
     __param(0, (0, graphql_2.Args)("user_id", { type: () => graphql_2.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], ContactsResolver.prototype, "findAllContacts", null);
+], ContactsResolver.prototype, "findAllContactsRequest", null);
 __decorate([
     (0, graphql_1.ResolveField)(() => user_entity_1.User, { name: "contact" }),
     __param(0, (0, graphql_1.Parent)()),
@@ -70,6 +73,13 @@ __decorate([
     __metadata("design:paramtypes", [update_contact_input_1.UpdateContact]),
     __metadata("design:returntype", void 0)
 ], ContactsResolver.prototype, "replyInviteContact", null);
+__decorate([
+    (0, graphql_2.Mutation)(() => contact_entity_1.Contact, { name: "deleteContact" }),
+    __param(0, (0, graphql_2.Args)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], ContactsResolver.prototype, "deleteContact", null);
 ContactsResolver = __decorate([
     (0, graphql_1.Resolver)(() => contact_entity_1.Contact),
     __metadata("design:paramtypes", [contacts_service_1.ContactsService,

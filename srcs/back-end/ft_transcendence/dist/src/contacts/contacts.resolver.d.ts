@@ -8,7 +8,8 @@ export declare class ContactsResolver {
     private readonly userService;
     constructor(contactService: ContactsService, userService: UsersService);
     createContact(createContact: CreateContactInput): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
-    findAllContacts(id: number): import(".prisma/client").Prisma.PrismaPromise<import(".prisma/client").Contact[]>;
+    findAllContactsRequest(id: number): import(".prisma/client").Prisma.PrismaPromise<import(".prisma/client").Contact[]>;
     findContact(contact: Contact): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     replyInviteContact(reply: UpdateContact): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
+    deleteContact(contact_id: number): import(".prisma/client").Prisma.Prisma__ContactClient<import(".prisma/client").Contact, never>;
 }
