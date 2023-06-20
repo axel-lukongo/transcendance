@@ -58,15 +58,23 @@ const NEW_MESSAGE_SUBSCRIPTION = gql`
   }
 `;
 
-const Chat = ({ show }) => {
-	const [messages, setMessages] = useState([]);
+interface Message {
+	id: number;
+	sender_id: number;
+	content: string;
+}
+
+const Chat = ({ show }: { show: boolean }) => {
+	const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     const subscription = wsClient.request({ query: NEW_MESSAGE_SUBSCRIPTION }).subscribe({
       next: (response) => { //next est une fonction de suscribe qui s'execute a chaque nouveau changements
 		//reponse c'est la ou les reponse de notre server est stocker.
-        const newMessage = response.data.addmessage;
-        setMessages((prevMessages) => [...prevMessages, newMessage]); //on copie les messages precedent et on rajoute newMessage
+		if(response.data){
+			const newMessage = response.data.addmessage;
+			setMessages((prevMessages) => [...prevMessages, newMessage] as Message[]); //on copie les messages precedent et on rajoute newMessage
+		}
       },
       error: (error) => {
         console.error('WebSocket error:', error);

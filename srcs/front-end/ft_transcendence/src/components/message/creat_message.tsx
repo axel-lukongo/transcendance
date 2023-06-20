@@ -13,7 +13,7 @@ const CREAT_MSG = gql`
   }
 `;
 
-const CreatMsg = ({ show }) => {
+const CreatMsg = ({ show }: { show: boolean }) => {
 
 	const [Sender_id, setSender_id] = useState('');
 	const [Content, setContent] = useState('');
@@ -41,15 +41,15 @@ const CreatMsg = ({ show }) => {
   };
 
 
-	const handleContentChange = (e) => {
+	const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     	setContent(e.target.value);
   	};
 
-	  const handleSender_idChange = (e) => {
+	  const handleSender_idChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     	setSender_id(e.target.value);
   	};
 
-	  const handlechannel_idChange = (e) => {
+	  const handlechannel_idChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     	setChan_id(e.target.value);
   	};
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
 
 import App from './components/App';
-import CreatUsr from './components/creat_usr';
+// import CreatUsr from './components/creat_usr';
 import CreatMsg from './components/message/creat_message';
 import Chat from './components/message/message';
 const apollo_client = new ApolloClient({
