@@ -24,7 +24,7 @@ export default function ListContact({refetchContact, refetchProps}: IProposConta
 
 	useEffect(() => {
 		refetch();
-	}, [refetchProps]);
+	}, [refetch, refetchProps]);
 
 	if (error)
 		return (<div>An Error as happen!</div>)

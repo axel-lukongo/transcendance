@@ -12,6 +12,7 @@ type User {
 }
 
 type Chanel {
+  id: Int!
   owner_id: Int!
   chanel_name: String
   chanel_size: Float
@@ -93,10 +94,11 @@ input UpdateUserInput {
 }
 
 input CreateChanelInput {
-  owner_id: Float!
-  chanel_name: String!
-  chanel_size: Float!
-  max_users: Float!
+  owner_id: Int
+  chanel_name: String
+  chanel_size: Int
+  max_users: Int
+  logo: String
 }
 
 input UpdateChanelInput {

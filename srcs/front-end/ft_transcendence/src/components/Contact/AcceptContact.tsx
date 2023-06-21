@@ -1,6 +1,5 @@
 import React from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useEffect } from "react";
 import { IRequestProps } from "./interfaces/Requests.interface"
 
 

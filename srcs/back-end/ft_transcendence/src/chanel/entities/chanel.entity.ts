@@ -4,6 +4,9 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 export class Chanel {
 
 	@Field(() => Int)
+	id: number;
+	
+	@Field(() => Int)
 	owner_id: number;
 	
 	@Field({nullable: true})

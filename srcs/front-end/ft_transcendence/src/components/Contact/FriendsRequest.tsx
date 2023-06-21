@@ -28,7 +28,7 @@ export default function FriendsRequest({refetchContact, refetchProps}: IProposCo
 
 	useEffect(() => {
 		refetch();
-	}, [refetchProps]);
+	}, [refetch, refetchProps]);
 
 	if (loading)
 	return (<div><p>Loading...</p></div>);
