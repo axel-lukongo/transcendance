@@ -16,11 +16,17 @@ COPY ./ft_transcendence /ft_transcendence/
 # Copie du script d'initialisation
 COPY ./init.sh /
 
+# Installation des dépendances Node.js
+RUN npm install -g \
+    @apollo/client \
+    axios
+
 # Définition du répertoire de travail
 WORKDIR /ft_transcendence
 
-# Installation des dépendances Node.js
-RUN npm install @apollo/client
+RUN npm install \
+	npm install subscriptions-transport-ws
+
 
 # Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]
