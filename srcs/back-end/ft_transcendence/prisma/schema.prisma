@@ -17,11 +17,7 @@ model User {
 	intra_login			String			@unique
 	nickname			String          @unique
 	avatar				String?
-  //  Un tableau de relations vers le modèle UsersPong, 
-  // représentant les jeux de pong où cet utilisateur est le joueur 1.
 	userPong			Pong[]          @relation("User1")
-	//  Un tableau de relations vers le modèle UsersPong, 
-	// représentant les jeux de pong où cet utilisateur est le joueur 2.
 	userPong2			Pong[]          @relation("User2")
 	chanels				Users_Chanels[]
 	own_chan			Chanel[]
@@ -68,7 +64,7 @@ model Users_Chanels {
 	user_id				Int
 	chanel_id			Int
 	pending				Boolean?	@default(true)
-
+					
 	user				User		@relation(fields: [user_id], references: [id])
 	chanel				Chanel		@relation(fields: [chanel_id], references: [id])
 

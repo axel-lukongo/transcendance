@@ -1,10 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { ChanelService } from './chanel.service';
 import { Chanel } from './entities/chanel.entity';
 import { CreateChanelInput } from './dto/create-chanel.input';
 import { UpdateChanelInput } from './dto/update-chanel.input';
-import { UsersChanels } from './entities/user_chanel.entity';
-import { AddUserChanel } from './dto/add-user-chanel.input';
+import { UsersChanels } from '../user-chanels/entities/user_chanel.entity';
+import { AddUserChanel } from '../user-chanels/dto/add-user-chanel.input';
 
 @Resolver(() => Chanel)
 export class ChanelResolver {
@@ -13,11 +13,6 @@ export class ChanelResolver {
   @Mutation(() => Chanel)
   createChanel(@Args('createChanelInput') createChanelInput: CreateChanelInput) {
     return this.chanelService.create(createChanelInput);
-  }
-
-  @Query(() => [Chanel], { name: 'Channel_findAll' })
-  findAll() {
-    return this.chanelService.findAll();
   }
 
   @Query(() => Chanel, { name: 'Channel_findOne' })
@@ -35,8 +30,9 @@ export class ChanelResolver {
     return this.chanelService.remove(id);
   }
 
-  @Mutation(() => UsersChanels)
-  addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
-	return this.chanelService.addUser(addUserChanel);
+  @Query(() => [Chanel], {name: "chanels"})
+  myChanels(@Args("user_id", {type: () => Int}) user_id: number) {
+    return this.chanelService.getOwnChanels(user_id);
   }
+  
 }

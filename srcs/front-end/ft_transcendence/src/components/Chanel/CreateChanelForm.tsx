@@ -56,7 +56,7 @@ export default function CreateChanelForm() {
 					value={chanel.owner_id}
 					placeholder="type her..."
 					onChange={handleChange}
-				/>
+				/><br/>
 				<label htmlFor="chanel_name">
 				chanel_name
 				</label>
@@ -66,7 +66,7 @@ export default function CreateChanelForm() {
 					value={chanel.chanel_name}
 					placeholder="type her..."
 					onChange={handleChange}
-				/>
+				/><br/>
 				<label htmlFor="chanel_size">
 				chanel_size
 				</label>
@@ -76,7 +76,7 @@ export default function CreateChanelForm() {
 					value={chanel.chanel_size}
 					placeholder="type her..."
 					onChange={handleChange}
-				/>
+				/><br/>
 				<label htmlFor="max_users">
 				max_users
 				</label>
@@ -86,7 +86,7 @@ export default function CreateChanelForm() {
 					value={chanel.max_users}
 					placeholder="type her..."
 					onChange={handleChange}
-				/>
+				/><br/>
 				<label htmlFor="logo">
 				logo
 				</label>
@@ -96,7 +96,7 @@ export default function CreateChanelForm() {
 					value={chanel.logo}
 					placeholder="type her..."
 					onChange={handleChange}
-				/>
+				/><br/>
 				<button>Create +</button>
 			</form>
 		</div>

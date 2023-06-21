@@ -19,12 +19,6 @@ type Chanel {
   max_users: Float
 }
 
-type UsersChanels {
-  user_id: Int!
-  chanel_id: Int!
-  pending: Boolean!
-}
-
 type Message {
   id: Int!
   content: String!
@@ -50,14 +44,22 @@ type Contact {
   contact: User!
 }
 
+type UsersChanels {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean!
+  chanels: Chanel!
+}
+
 type Query {
   findAllUsers: [User!]!
   findOneUserById(id: Int!): User!
   findOneUserByIntraLogin(intra_login: String!): User!
-  Channel_findAll: [Chanel!]!
   Channel_findOne(id: Int!): Chanel!
+  chanels(user_id: Int!): [Chanel!]!
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
+  myChanels(user_id: Int!): [UsersChanels!]!
 }
 
 type Mutation {
@@ -67,13 +69,13 @@ type Mutation {
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
   Channel_update(updateChanelInput: UpdateChanelInput!): Chanel!
   removeChanel(id: Int!): Chanel!
-  addUser(addUserChanel: AddUserChanel!): UsersChanels!
   createMessage(createMsgInput: CreateMessageInput!): Message!
   updateMessage(updateMsgInput: UpdateMessageInput!): Message!
   deleteMessage: Message!
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
   deleteContact(id: Int!): Contact!
+  addUser(addUserChanel: AddUserChanel!): UsersChanels!
 }
 
 input CreateUserInput {
@@ -108,12 +110,6 @@ input UpdateChanelInput {
   max_users: Float
 }
 
-input AddUserChanel {
-  user_id: Int!
-  chanel_id: Int!
-  pending: Boolean!
-}
-
 input CreateMessageInput {
   content: String!
   sent_at: DateTime
@@ -142,4 +138,10 @@ input UpdateContact {
   contact_id: Int
   pending: Boolean!
   id: Int!
+}
+
+input AddUserChanel {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean!
 }

@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { ChanelModule } from './chanel/chanel.module';
 import { MessagesModule } from './messages/messages.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { UserChanelsModule } from './user-chanels/user-chanels.module';
 
 @Module({
 	imports: [
@@ -17,7 +18,8 @@ import { ContactsModule } from './contacts/contacts.module';
 		UsersModule,
 		ChanelModule,
 		MessagesModule,
-		ContactsModule
+		ContactsModule,
+		UserChanelsModule
 	],
 })
 export class AppModule {}
