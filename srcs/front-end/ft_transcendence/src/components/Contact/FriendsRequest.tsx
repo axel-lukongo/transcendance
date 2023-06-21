@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import {IContacts} from "./interfaces/Contact.interface"
 import  AccepContact  from './AcceptContact'
 import RefuseContact from "./RefuseContact";
-import {IFriendRequestProps} from "./interfaces/Requests.interface"
+import {IProposContact} from "./interfaces/Requests.interface"
 
 const CONTACTS = gql`query GetRequestList($input: Int!){
 	contactsRequest(user_id: $input){
@@ -21,14 +21,14 @@ const CONTACTS = gql`query GetRequestList($input: Int!){
 
 
 
-export default function FriendsRequest({refetchContact}: IFriendRequestProps) {
+export default function FriendsRequest({refetchContact, refetchProps}: IProposContact) {
 
 	const {data, loading, error, refetch} = useQuery(CONTACTS, {variables: {input: 1}});
 	
 
 	useEffect(() => {
 		refetch();
-	});
+	}, [refetchProps]);
 
 	if (loading)
 	return (<div><p>Loading...</p></div>);
@@ -65,8 +65,16 @@ export default function FriendsRequest({refetchContact}: IFriendRequestProps) {
 							<div>Pending: {element.pending.toString()} </div>
 					</div>
 				} 
-				<AccepContact element={element} refetch={refetch} refetchContact={refetchContact} />
-				<RefuseContact element={element} refetch={refetch} refetchContact={refetchContact}/>
+				<AccepContact 
+					element={element}  
+					refetchContact={refetchContact} 
+					label="Accept"
+				/>
+				<RefuseContact 
+					element={element}  
+					refetchContact={refetchContact}
+					label="Deny"
+				/>
 				</li>
 			))
 			}

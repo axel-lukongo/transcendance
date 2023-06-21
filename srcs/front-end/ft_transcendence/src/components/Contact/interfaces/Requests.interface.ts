@@ -1,14 +1,12 @@
 
 export interface IRequestProps {
 	element: { id: number};
-	refetch: () => void;
 	refetchContact: () => void;
+	label: string;
 }
 
-export interface IFriendRequestProps {
-	refetchContact: () => void;
-}
 
-export interface IProposListContact {
-	refetchContact: boolean;
+export interface IProposContact {
+	refetchContact: () => void;
+	refetchProps: boolean;
 }

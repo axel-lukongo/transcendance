@@ -14,8 +14,14 @@ export default function Contact() {
 	return (<div>
 			<p>Ici</p>
 			<React.Fragment>
-				<FriendsRequest refetchContact={handleRefetch} />
-				<ListContact refetchContact={refetchProp} />
+				<FriendsRequest 
+					refetchContact={handleRefetch}
+					refetchProps={refetchProp}
+				/>
+				<ListContact 
+					refetchContact={handleRefetch}
+					refetchProps={refetchProp}
+				/>
 			</React.Fragment>
 	</div>);
 }

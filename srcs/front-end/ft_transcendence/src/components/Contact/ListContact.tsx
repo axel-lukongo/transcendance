@@ -1,11 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { IContacts } from "./interfaces/Contact.interface";
-import { IProposListContact } from "./interfaces/Requests.interface";
+import { IProposContact } from "./interfaces/Requests.interface";
+import RefuseContact from "./RefuseContact"
 
 
 
-export default function ListContact({refetchContact}: IProposListContact) {
+export default function ListContact({refetchContact, refetchProps}: IProposContact) {
 
 	const LIST_CONTACT = gql`query GetListContact($input: Int!) {
 		myContacts(user_id: $input) {
@@ -23,7 +24,7 @@ export default function ListContact({refetchContact}: IProposListContact) {
 
 	useEffect(() => {
 		refetch();
-	}, [refetchContact]);
+	}, [refetchProps]);
 
 	if (error)
 		return (<div>An Error as happen!</div>)
@@ -44,6 +45,11 @@ export default function ListContact({refetchContact}: IProposListContact) {
 						<h4>{element.contact.nickname}</h4>
 						<div>{element.contact.email}</div>
 						<div>{element.contact.token}</div>
+						<RefuseContact 
+							element={element} 
+							refetchContact={refetchContact}
+							label="Delete"
+						/>
 					</div>
 				</li>
 			))
