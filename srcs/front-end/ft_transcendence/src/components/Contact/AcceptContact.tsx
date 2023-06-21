@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { IRequestProps } from "./interfaces/Requests.interface"
 
 
-export default function AcceptContact({element, refetchContact}: IRequestProps) {
+export default function AcceptContact({element, refetchContact, label}: IRequestProps) {
 	
 	const ACCEPTE_CONTACT = gql`mutation ReplyAddContact($input: UpdateContact!){
 		replyAddContact(reply: $input) {
@@ -34,6 +34,6 @@ export default function AcceptContact({element, refetchContact}: IRequestProps) 
 
 	return (
 	<div>
-		<button onClick={handleClick}>Accept</button>
+		<button onClick={handleClick}>{label}</button>
 	</div>);
 }
