@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AddUserChanel } from './dto/add-user-chanel.input';
 import { PrismaService } from 'prisma/prisma.service';
+import { UpdateChanelUserInput } from './dto/update-chanel-user.input';
 
 @Injectable()
 export class UserChanelsService {
@@ -19,4 +20,12 @@ export class UserChanelsService {
 		}
 		})
 	}
+
+	async acceptRequest(Requestkey: UpdateChanelUserInput) {
+		return this.prisma.users_Chanels.update({
+			where: {user_id_chanel_id: Requestkey},
+			data: {pending: false}
+		})
+	}
+	
 }

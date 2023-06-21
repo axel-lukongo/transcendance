@@ -1,7 +1,11 @@
 import { Field, PartialType, InputType, Int } from '@nestjs/graphql'
 import { AddUserChanel } from './add-user-chanel.input'
 
-export class UpdateChanelUser extends PartialType(AddUserChanel) {
+@InputType()
+export class UpdateChanelUserInput extends PartialType(AddUserChanel) {
 	@Field(() => Int)
-	id: number;
+	user_id: number;
+
+	@Field(() => Int)
+	chanel_id: number;
 }

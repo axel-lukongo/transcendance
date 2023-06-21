@@ -4,6 +4,7 @@ import { ChanelService } from 'src/chanel/chanel.service';
 import { UserChanelsService } from './user-chanels.service';
 import { AddUserChanel } from './dto/add-user-chanel.input';
 import { Chanel } from 'src/chanel/entities/chanel.entity';
+import {  UpdateChanelUserInput } from './dto/update-chanel-user.input';
 
 @Resolver(() => UsersChanels)
 export class UserChanelsResolver {
@@ -24,5 +25,10 @@ export class UserChanelsResolver {
 	@ResolveField(() => Chanel, {name: "chanels"})
 	ChanelsOwner(@Parent() chanel: UsersChanels) {
 		return this.chanelService.findOne(chanel.chanel_id);
+	}
+
+	@Mutation(() => UsersChanels, {name: "acceptRequest"})
+	acceptRequest(@Args("key") Requestkey: UpdateChanelUserInput) {
+		return this.userChanelService.acceptRequest(Requestkey);
 	}
 }
