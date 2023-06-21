@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { IRequestProps } from "./interfaces/Requests.interface"
 
 
-export default function AcceptContact({element, refetch}: IRequestProps) {
+export default function AcceptContact({element, refetch, refetchContact}: IRequestProps) {
 	
 	const ACCEPTE_CONTACT = gql`mutation ReplyAddContact($input: UpdateContact!){
 		replyAddContact(reply: $input) {
@@ -29,6 +29,7 @@ export default function AcceptContact({element, refetch}: IRequestProps) {
 			}
 		}).then((result) => {
 			refetch();
+			refetchContact();
 		})
 		.catch((error) => {
 			console.log('Réponse HTTP :', error.networkError.result);

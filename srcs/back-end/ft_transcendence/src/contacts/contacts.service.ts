@@ -20,11 +20,13 @@ export class ContactsService {
 	findAllContactsRequest(id: number) {
 		return this.prisma.contact.findMany({
 			where: {
-				pending: true,
 				OR: [
 					{ user_id: id }, 
 					{ contact_id: id }
-				]
+				],
+				NOT: {
+					pending: false
+				}
 		  }
 	  })
 	}
@@ -33,6 +35,20 @@ export class ContactsService {
 		return this.prisma.contact.update({
 			where: {id: reply.id},
 			data: reply
+		})
+	}
+
+	findContacts(user_id: number) {
+		return this.prisma.contact.findMany({
+			where: {
+				OR: [
+					{user_id: user_id},
+					{contact_id: user_id}
+				],
+				NOT: {
+					pending: true
+				}
+			}
 		})
 	}
 }

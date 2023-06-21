@@ -41,4 +41,9 @@ export class ContactsResolver {
 	deleteContact(@Args("id", {type: () => Int }) contact_id: number) {
 		return (this.contactService.delete(contact_id));
 	}
+
+	@Query( ()=> [Contact], {name: "myContacts"} )
+	getMyContacts(@Args("user_id", {type: () => Int}) user_id: number) {
+		return this.contactService.findContacts(user_id);
+	}
 }
