@@ -1,5 +1,5 @@
 
-// import React from 'react';
+// Import React from 'react';
 // import { useQuery, gql } from '@apollo/client';
 
 // const GET_CHANNEL_CONTENT = gql`
@@ -42,60 +42,62 @@
 
 // export default Chat;
 
-import React, { useEffect, useState } from 'react';
-import { gql } from 'graphql-tag';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+import React, {useEffect, useState} from 'react';
+import {gql} from 'graphql-tag';
+import {SubscriptionClient} from 'subscriptions-transport-ws';
+import {type} from 'os';
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
-const NEW_MESSAGE_SUBSCRIPTION = gql`
-  subscription {
-    addmessage {
-      id
-      content
-	  sender_id
-    }
-  }
+const NewMessageSubscription = gql`
+	subscription {
+	addmessage {
+		id
+		content
+		sender_id
+	}
+	}
 `;
 
-interface Message {
+type Message = {
 	id: number;
 	sender_id: number;
 	content: string;
-}
+};
 
-const Chat = ({ show }: { show: boolean }) => {
+const Chat = ({show}: {show: boolean}) => {
 	const [messages, setMessages] = useState<Message[]>([]);
 
-  useEffect(() => {
-    const subscription = wsClient.request({ query: NEW_MESSAGE_SUBSCRIPTION }).subscribe({
-      next: (response) => { //next est une fonction de suscribe qui s'execute a chaque nouveau changements
-		//reponse c'est la ou les reponse de notre server est stocker.
-		if(response.data){
-			const newMessage = response.data.addmessage;
-			setMessages((prevMessages) => [...prevMessages, newMessage] as Message[]); //on copie les messages precedent et on rajoute newMessage
-		}
-      },
-      error: (error) => {
-        console.error('WebSocket error:', error);
-      },
-    });
+	useEffect(() => {
+		const subscription = wsClient.request({query: NewMessageSubscription}).subscribe({
+			next(response) {
+				// Next est une fonction de suscribe qui s'execute a chaque nouveau changements
+				// reponse c'est la ou les reponse de notre server est stocker.
+				if (response.data) {
+					const newMessage = response.data.addmessage;
+					setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedent et on rajoute newMessage
+				}
+			},
+			error(error) {
+				console.error('WebSocket error:', error);
+			},
+		});
+		return () => {
+			subscription.unsubscribe();
+		};
+	}, []);
+	// Le [] c'est le tableau de dependance, lorsque il est vide ca signifie que on execute notre useEffect que 1 fois
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);//le [] c'est le tableau de dependance, lorsque il est vide ca signifie que on execute notre useEffect que 1 fois
-
-  return (
-    <div className={`Chat ${show ? 'show' : ''}`}>
-      <h1>Messages en temps réel</h1>
-      <ul>
-        {messages.map((message) => (
-          <div key={message.id}> {message.sender_id} : {message.content}</div>
-        ))}
-      </ul>
-    </div>
-  );
-}
+	return (
+		<div className={`Chat ${show ? 'show' : ''}`}>
+			<h1>Messages en temps réel</h1>
+			<ul>
+				{messages.map(message => (
+					<div key={message.id}> {message.sender_id} : {message.content}</div>
+				))}
+			</ul>
+		</div>
+	);
+};
 
 export default Chat;
