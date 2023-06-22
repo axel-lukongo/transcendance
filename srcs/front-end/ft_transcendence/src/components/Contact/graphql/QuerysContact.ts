@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 
-export 	const CONTACTS = gql`query GetRequestList($input: Int!){
+export const CONTACTS = gql`query GetRequestList($input: Int!){
 	contactsRequest(user_id: $input){
 		id
 		pending
@@ -14,7 +14,7 @@ export 	const CONTACTS = gql`query GetRequestList($input: Int!){
 	  }
 }`
 
-export 	const LIST_CONTACT = gql`query GetListContact($input: Int!) {
+export const LIST_CONTACT = gql`query GetListContact($input: Int!) {
 	myContacts(user_id: $input) {
 		id
 		contact {
