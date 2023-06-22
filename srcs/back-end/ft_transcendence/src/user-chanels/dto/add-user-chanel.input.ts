@@ -8,6 +8,6 @@ export class AddUserChanel {
 	@Field(() => Int)
 	chanel_id: number;
 
-	@Field(() => Boolean)
-	pending: boolean;
+	@Field(() => Boolean, {nullable: true})
+	pending?: boolean;
 }

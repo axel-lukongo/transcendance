@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import React from "react";
-import { IRequest } from "./interfaces/ButtonInterfaces";
-import { ACCEPT_CHANEL } from './graphql/MutationsChanel'
+import { IRequest } from "../interfaces/ButtonInterfaces";
+import { ACCEPT_CHANEL } from '../graphql/MutationsChanel'
 
 export default function AcceptChanel({element, handleChanelRefecth, label}: IRequest ) {
 

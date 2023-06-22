@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client"
-import { IRequestProps } from "./interfaces/Requests.interface";
-import { REFUSE_CONTACT } from './graphql/MutationsContact'
+import { IRequestProps } from "../interfaces/Requests.interface";
+import { REFUSE_CONTACT } from '../graphql/MutationsContact'
 
 export default function RefuseContact({element, refetchContact, label}: IRequestProps) {
 

@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { IContacts } from "./interfaces/Contact.interface";
 import { IProposContact } from "./interfaces/Requests.interface";
-import RefuseContact from "./RefuseContact"
+import RefuseContact from "./buttons/RefuseContact"
 import { LIST_CONTACT } from './graphql/QuerysContact'
+import { AddChanel } from './buttons/AddChanel'
 
 
 
