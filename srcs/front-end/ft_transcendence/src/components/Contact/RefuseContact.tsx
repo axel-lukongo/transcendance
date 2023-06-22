@@ -1,14 +1,9 @@
 import React from "react";
-import {gql, useMutation} from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import { IRequestProps } from "./interfaces/Requests.interface";
+import { REFUSE_CONTACT } from './graphql/MutationsContact'
 
 export default function RefuseContact({element, refetchContact, label}: IRequestProps) {
-
-	const REFUSE_CONTACT = gql`mutation RefuseRequestContact($input: Int!){
-		deleteContact(id: $input){
-			id
-		}
-	}`
 
 	const [delContact] = useMutation(REFUSE_CONTACT);
 

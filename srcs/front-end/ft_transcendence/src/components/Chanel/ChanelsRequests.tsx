@@ -1,24 +1,12 @@
 import React, { useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
-import {  UserChanels } from "./interfaces/Chanels.interface";
+import { useQuery } from "@apollo/client";
+import {  UserChanels, IPropsChanel } from "./interfaces/Chanels.interface";
+import AcceptChanel from './AcceptChanel'
+import {USER_CHANEL_LIST} from './graphql/Query'
 
-export interface IPropsChanel {
-	refetchChanels: boolean;
-	handleChanelRefetch: () => void;
-}
+
 
 export default function UserChanelsRequests({refetchChanels, handleChanelRefetch}: IPropsChanel) {
-
-	const USER_CHANEL_LIST = gql`query UserChanelList($input: Int!) {
-		myChanels(user_id: $input) {
-			pending
-			user_id
-			chanels {
-				id
-				chanel_name
-			}
-		}
-	}`
 
 	const {data, loading, refetch, error} = useQuery(USER_CHANEL_LIST, {
 		variables: {
@@ -39,9 +27,10 @@ export default function UserChanelsRequests({refetchChanels, handleChanelRefetch
 	if (!data)
 		return (<div>nothing to see her yet</div>)
 
+
 		return (
 			<div><h3>Chanel Request</h3>{
-				data.myChanels.map((chanel: UserChanels, index: number) => {
+				data.chanelsRequest.map((chanel: UserChanels, index: number) => {
 					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`
 
 					return (
@@ -49,6 +38,7 @@ export default function UserChanelsRequests({refetchChanels, handleChanelRefetch
 						<li >
 							<div>chanel_name: <b>{chanel.chanels.chanel_name}</b></div>
 							<div>pending: {chanel.pending.toString()}</div>
+							<AcceptChanel element={chanel} label="Join" handleChanelRefecth={handleChanelRefetch}/>
 						</li>
 					</ul>
 					);

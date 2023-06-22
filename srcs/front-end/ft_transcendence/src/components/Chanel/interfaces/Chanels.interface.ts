@@ -7,8 +7,12 @@ export interface Chanel {
 }
 
 export interface UserChanels {
-	id: number;
 	user_id: number;
 	pending: boolean;
 	chanels: Chanel;
+}
+
+export interface IPropsChanel {
+	refetchChanels?: boolean;
+	handleChanelRefetch: () => void;
 }

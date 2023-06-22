@@ -59,6 +59,7 @@ type Query {
   chanels(user_id: Int!): [Chanel!]!
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
+  chanelsRequest(user_id: Int!): [UsersChanels!]!
   myChanels(user_id: Int!): [UsersChanels!]!
 }
 
@@ -77,6 +78,7 @@ type Mutation {
   deleteContact(id: Int!): Contact!
   addUser(addUserChanel: AddUserChanel!): UsersChanels!
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
+  deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
 }
 
 input CreateUserInput {

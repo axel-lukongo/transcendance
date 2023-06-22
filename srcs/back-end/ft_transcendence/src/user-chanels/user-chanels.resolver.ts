@@ -12,23 +12,33 @@ export class UserChanelsResolver {
 	constructor(private readonly chanelService: ChanelService,
 				private readonly userChanelService: UserChanelsService) {}
 
+	@Mutation(() => UsersChanels)
+	addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
+		return this.userChanelService.addUser(addUserChanel);
+	}
+	
+	@ResolveField(() => Chanel, {name: "chanels"})
+	ChanelsOwner(@Parent() chanel: UsersChanels) {
+		return this.chanelService.findOne(chanel.chanel_id);
+	}
+	
+	@Mutation(() => UsersChanels, {name: "acceptRequest"})
+	acceptRequest(@Args("key") Requestkey: UpdateChanelUserInput) {
+		return this.userChanelService.acceptRequest(Requestkey);
+	}
+	
+	@Query(() => [UsersChanels], {name: "chanelsRequest"})
+	chanelRequest(@Args("user_id", {type: () => Int}) user_id: number) {
+		return this.userChanelService.findMyRequestChanels(user_id);
+	}
+
 	@Query(() => [UsersChanels], { name: 'myChanels' })
 	findMyChanels(@Args("user_id", {type: () => Int}) user_id: number) {
 	  return this.userChanelService.findMyChanels(user_id);
 	}
 
-	@Mutation(() => UsersChanels)
-	addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
-	  return this.userChanelService.addUser(addUserChanel);
-	}
-
-	@ResolveField(() => Chanel, {name: "chanels"})
-	ChanelsOwner(@Parent() chanel: UsersChanels) {
-		return this.chanelService.findOne(chanel.chanel_id);
-	}
-
-	@Mutation(() => UsersChanels, {name: "acceptRequest"})
-	acceptRequest(@Args("key") Requestkey: UpdateChanelUserInput) {
-		return this.userChanelService.acceptRequest(Requestkey);
+	@Mutation(() => UsersChanels, {name: "deleteChanelUser"})
+	deleteChanelUser(@Args("key") key: UpdateChanelUserInput) {
+		return this.userChanelService.delete(key);
 	}
 }

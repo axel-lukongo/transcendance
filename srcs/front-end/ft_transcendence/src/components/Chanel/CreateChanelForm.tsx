@@ -1,16 +1,9 @@
 import React from "react";
 import { useMutation, gql } from "@apollo/client";
 import { useState } from "react";
+import { CREATE_CHANEL } from './graphql/MutationsChanel'
 
 export default function CreateChanelForm() {
-
-	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInput!) {
-		createChanel(createChanelInput: $input) {
-			id
-			owner_id
-			chanel_name
-		}
-	}`
 
 	const [createChanel] = useMutation(CREATE_CHANEL);
 

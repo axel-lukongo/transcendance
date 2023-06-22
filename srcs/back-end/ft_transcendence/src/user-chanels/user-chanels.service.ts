@@ -9,7 +9,15 @@ export class UserChanelsService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async findMyChanels(user_id: number) { 
-		return this.prisma.users_Chanels.findMany({ where: { user_id } });
+		return this.prisma.users_Chanels.findMany({
+			where: { user_id, pending: false } 
+		});
+	}
+
+	async findMyRequestChanels(user_id: number) {
+		return this.prisma.users_Chanels.findMany({
+			where: {user_id, pending: true}
+		});
 	}
 
 	async addUser(input: AddUserChanel) {
@@ -28,4 +36,11 @@ export class UserChanelsService {
 		})
 	}
 	
+	async delete(key: UpdateChanelUserInput) {
+		return this.prisma.users_Chanels.delete({
+			where: {
+				user_id_chanel_id: key
+			}
+		});
+	}
 }

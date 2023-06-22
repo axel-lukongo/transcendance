@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import UserChanelsRequests from "./ChanelsRequests";
 import CreateChanelForm from "./CreateChanelForm";
+import ChanelList from "./ListChanel";
 
 export default function Chanel() {
 	
@@ -17,6 +18,10 @@ export default function Chanel() {
 				<CreateChanelForm />
 				<UserChanelsRequests 
 					refetchChanels={refetchChanels}
+					handleChanelRefetch={handleChanelRefetch}
+				 />
+				 <ChanelList 
+				 	refetchChanels={refetchChanels}
 					handleChanelRefetch={handleChanelRefetch}
 				 />
 			</React.Fragment>

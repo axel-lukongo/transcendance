@@ -1,22 +1,14 @@
-import { gql, useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
+import { useQuery } from "@apollo/client";
 import { IContacts } from "./interfaces/Contact.interface";
 import { IProposContact } from "./interfaces/Requests.interface";
 import RefuseContact from "./RefuseContact"
+import { LIST_CONTACT } from './graphql/QuerysContact'
 
 
 
 export default function ListContact({refetchContact, refetchProps}: IProposContact) {
 
-	const LIST_CONTACT = gql`query GetListContact($input: Int!) {
-		myContacts(user_id: $input) {
-			id
-			contact {
-				nickname
-				intra_login
-			}
-		}
-	}`
 
 	const {data, loading, error, refetch} = useQuery(LIST_CONTACT, {
 		variables: { input: 1}
