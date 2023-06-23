@@ -10,13 +10,22 @@ import { MessagesModule } from './messages/messages.module';
 	imports: [
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			autoSchemaFile: join(process.cwd(), 'src/schemas.gql'),
+			
 			driver: ApolloDriver,
 			playground: true,
+			// resolvers: {
+            //     // UsersResolver: [UsersModule],
+            //     // ChanelResolver: [ChanelModule],
+            //     // ContactsResolver: [ContactsModule],
+            //     // MessagesResolver: [MessagesModule],
+            //     // UserChanelsResolver: [UserChanelsModule]
+            // },
 			installSubscriptionHandlers: true, 
 		}),
 		UsersModule,
 		ChanelModule,
-		MessagesModule
+		MessagesModule,
 	],
 })
+
 export class AppModule {}

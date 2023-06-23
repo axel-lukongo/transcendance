@@ -27,7 +27,7 @@ AppModule = __decorate([
             }),
             users_module_1.UsersModule,
             chanel_module_1.ChanelModule,
-            messages_module_1.MessagesModule
+            messages_module_1.MessagesModule,
         ],
     })
 ], AppModule);
