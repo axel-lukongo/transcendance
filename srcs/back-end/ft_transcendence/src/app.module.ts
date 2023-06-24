@@ -14,6 +14,8 @@ import { UserChanelsModule } from './user-chanels/user-chanels.module';
 			autoSchemaFile: join(process.cwd(), 'src/schemas.gql'),
 			driver: ApolloDriver,
 			playground: true,
+			installSubscriptionHandlers: true, 
+
 		}),
 		UsersModule,
 		ChanelModule,

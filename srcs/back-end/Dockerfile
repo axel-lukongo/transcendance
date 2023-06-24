@@ -33,6 +33,7 @@ RUN npm install @nestjs/graphql \
     class-validator \
     class-transformer \
     @prisma/client	\
+	graphql-subscriptions \
 	bcrypt
 
 # Définition du point d'entrée

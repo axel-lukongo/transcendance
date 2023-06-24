@@ -15,9 +15,6 @@ export class CreateMessageInput {
 	sender_id: number;
 
 	@Field(() => Int, {nullable: true})
-	receiver_id?: number;
-
-	@Field(() => Int, {nullable: true})
 	channel_id?: number;
 }
 

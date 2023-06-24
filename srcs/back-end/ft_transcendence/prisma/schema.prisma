@@ -24,7 +24,6 @@ model User {
 	contact				Contact[]		@relation("contactRef")
 	reverse_contact		Contact[]		@relation("reverseContactRef")
 	sender				Message[]       @relation("Send")
-	receiver			Message[]       @relation("Receive")
 }
 
 model Contact {
@@ -57,7 +56,7 @@ model Chanel {
 	logo				String?
 	owner				User		@relation(fields: [owner_id], references: [id])
 	users				Users_Chanels[]
-	messages			Message[]
+	messages			Message[]	@relation("ChanelMessages")
 }
 
 model Users_Chanels {
@@ -72,13 +71,11 @@ model Users_Chanels {
 }
 
 model Message {
-	id					Int			@id @default(autoincrement())
-	sender_id			Int
-	receiver_id			Int?
-	channel_id			Int?
-	content				String
-	sent_at				DateTime	@default(now())
-	sender				User		@relation("Send", fields: [sender_id], references: [id])
-	receiver			User?		@relation("Receive", fields: [receiver_id], references: [id])
-	channel				Chanel?		@relation(fields: [channel_id], references: [id])
+  id				Int      @id @default(autoincrement())
+  sender_id			Int
+  channel_id		Int?
+  content			String
+  sent_at			DateTime @default(now())
+  sender			User     @relation("Send", fields: [sender_id], references: [id])
+  channel			Chanel?  @relation("ChanelMessages", fields: [channel_id], references: [id])
 }

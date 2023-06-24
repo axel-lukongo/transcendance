@@ -23,11 +23,9 @@ type Message {
   id: Int!
   content: String!
   sent_at: DateTime!
-  sender: User!
   sender_id: Int!
-  receiver_id: Int
+  sender: User!
   channel_id: Int
-  receiver: User
   channel: Chanel
 }
 
@@ -57,6 +55,8 @@ type Query {
   findOneUserByIntraLogin(intra_login: String!): User!
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
+  Message_findAll_msg: [Message!]!
+  Message_findOne_msg(id: Int!): Message!
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
@@ -117,7 +117,6 @@ input CreateMessageInput {
   content: String!
   sent_at: DateTime
   sender_id: Int!
-  receiver_id: Int
   channel_id: Int
 }
 
@@ -125,7 +124,6 @@ input UpdateMessageInput {
   content: String
   sent_at: DateTime
   sender_id: Int
-  receiver_id: Int
   channel_id: Int
   id: Int!
 }
@@ -146,11 +144,15 @@ input UpdateContact {
 input AddUserChanel {
   user_id: Int!
   chanel_id: Int!
-  pending: Boolean!
+  pending: Boolean
 }
 
 input UpdateChanelUserInput {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean
+}
+
+type Subscription {
+  addmessage: Message!
 }
