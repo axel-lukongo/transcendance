@@ -5,23 +5,13 @@ import { IRequestProps } from "../interfaces/Requests.interface";
 
 export default function AddChanel({element, refetchContact, label}: IRequestProps) {
 
-	const [addUserChanel] = useMutation(ADD_USER_IN_CHANEL);
 
-	const handleClic = () => {
-		addUserChanel({
-			variables: {
-				input: { element }
-			}
-		}).then(() => {
-			refetchContact();
-		}).catch((error) => {
-			console.log("error: ", error.networkError.result);
-		})
-	}
+	const contact_id = element.contact_id;
 
+	
 	return (
 		<div>
-			<button onClick={handleClic} >{label}</button>
+			{/* <button onClick={handleClic} >{label}</button> */}
 		</div>
 	)
 }

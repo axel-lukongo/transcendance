@@ -146,7 +146,7 @@ input UpdateContact {
 input AddUserChanel {
   user_id: Int!
   chanel_id: Int!
-  pending: Boolean!
+  pending: Boolean
 }
 
 input UpdateChanelUserInput {

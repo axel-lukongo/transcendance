@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React from "react";
 import { IRequest } from "../interfaces/ButtonInterfaces";
 import { ACCEPT_CHANEL } from '../graphql/MutationsChanel'

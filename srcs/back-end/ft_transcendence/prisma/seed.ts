@@ -73,7 +73,7 @@ async function main() {
 	}
 
 	// Add Users in chanel
-	for (let i = 4; i < N_CHANEL_USER + 4; i++) { // Value Need to be changed
+	for (let i = 1; i < N_CHANEL_USER + 1; i++) { // Value Need to be changed
 		await prisma.users_Chanels.upsert({
 			where: {
 				user_id_chanel_id: {

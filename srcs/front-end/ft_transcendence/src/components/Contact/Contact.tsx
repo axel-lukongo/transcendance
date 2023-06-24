@@ -2,6 +2,9 @@ import React from "react"
 import FriendsRequest from "./FriendsRequest"
 import ListContact from "./ListContact";
 import { useState } from "react";
+import RefuseContact from "./buttons/RefuseContact";
+import AcceptChanel from "../Chanel/buttons/AcceptChanel";
+
 
 export default function Contact() {
 
@@ -21,7 +24,9 @@ export default function Contact() {
 				<ListContact 
 					refetchContact={handleRefetch}
 					refetchProps={refetchProp}
+					Button={AcceptChanel}
 				/>
 			</React.Fragment>
+			
 	</div>);
 }

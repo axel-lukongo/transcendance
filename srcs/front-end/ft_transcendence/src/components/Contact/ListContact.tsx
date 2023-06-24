@@ -4,11 +4,10 @@ import { IContacts } from "./interfaces/Contact.interface";
 import { IProposContact } from "./interfaces/Requests.interface";
 import RefuseContact from "./buttons/RefuseContact"
 import { LIST_CONTACT } from './graphql/QuerysContact'
-import AddChanel from './buttons/AddChanel'
 
 
 
-export default function ListContact({refetchContact, refetchProps}: IProposContact) {
+export default function ListContact({refetchContact, refetchProps, Button}: IProposContact) {
 
 
 	const {data, loading, error, refetch} = useQuery(LIST_CONTACT, {
@@ -43,14 +42,16 @@ export default function ListContact({refetchContact, refetchProps}: IProposConta
 							refetchContact={refetchContact}
 							label="Delete"
 						/>
-						<AddChanel
-							label="Add To Chan"
-							refetchContact={refetchContact}
-							element={element}
-						/>
+						{/* { Button && Button({element, handleChanelRefecth, label: "salut"})} */}
 					</div>
 				</li>
 			))
 		}</ul>
 	</div>)
 }
+
+// export interface IRequest {
+// 	element: UserChanels;
+// 	handleChanelRefecth: () => void;
+// 	label: string;
+// }
