@@ -5,10 +5,19 @@ import { CreateChanelInput } from './dto/create-chanel.input';
 import { UpdateChanelInput } from './dto/update-chanel.input';
 import { UsersChanels } from '../user-chanels/entities/user_chanel.entity';
 import { AddUserChanel } from '../user-chanels/dto/add-user-chanel.input';
+import { Message } from 'src/messages/entities/messages.entity';
+import { MessagesResolver } from '../messages/messages.resolver';
+import { CreateMessageInput } from '../messages/dto/create-messages.input';
+
+
+// const pubSub = new PubSub();
+// const NEW_MSG = 'addMessage';
 
 @Resolver(() => Chanel)
 export class ChanelResolver {
-  constructor(private readonly chanelService: ChanelService) {}
+  constructor(private readonly chanelService: ChanelService,
+	private readonly messagesResolver: MessagesResolver
+	) {}
 
   @Mutation(() => Chanel)
   createChanel(@Args('createChanelInput') createChanelInput: CreateChanelInput) {
@@ -35,4 +44,30 @@ export class ChanelResolver {
     return this.chanelService.getOwnChanels(user_id);
   }
   
+  @ResolveField(() => [Message])
+  async messages(@Parent() chanel: Chanel) {
+    return this.messagesResolver.findAll_msg(); // Utilisez la méthode appropriée pour récupérer les messages associés au canal à partir de MessagesResolver
+  }
+
+
+
+/** ici je vais cree une mutation pour cree un message en etant dans un chanel.
+ * je vais ensuite y mettre une subscription afin de surveiller les messages qui seront cree via le chanel
+ * et dans mon front j'aurais un abonnement qui m'affichera tous les messages de un chanel specifique
+ */
+//   @ResolveField(() => [Message])
+//   async creat_messages(@Parent() chanel: Chanel,creatMsg: CreateMessageInput) {
+  	// const new_msg = this.messagesResolver.createMessage(creatMsg);
+	// pubSub.publish(NEW_MSG, {
+	// 	addmessage: new_message,
+	// });
+//     return new_msg; 
+//   } 
+
+// @Subscription(() => Message)
+// 	addmessage(){
+// 	  return pubSub.asyncIterator(NEW_MSG);
+// 	}
+
+
 }
