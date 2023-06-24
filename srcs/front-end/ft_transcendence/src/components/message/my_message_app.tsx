@@ -1,11 +1,11 @@
 
 import React, {useState} from 'react';
-import '../css/App.css';
-import '../css/message.css';
+import '../../css/App.css';
+import '../../css/message.css';
 import Chat from './message';
 import CreatMsg from './creat_message';
 
-const my_message_app = () => {
+const Mymsg = () => {
 	const [showChat, setShowChat] = useState(false);
 
 	const handleChatClick = () => {
@@ -35,4 +35,4 @@ const my_message_app = () => {
 	);
 };
 
-export default my_message_app;
+export default Mymsg;

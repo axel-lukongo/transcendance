@@ -3,14 +3,15 @@ import {useMutation} from '@apollo/client';
 import {gql} from '@apollo/client';
 import React, {useState} from 'react';
 
+
 const createMsg = gql`
-	mutation CreatMsg($input: CreateMessageInput!) {
-	createMessage(createMsgInput: $input) {
-		content
-		SenderId
-		channel_id
-	}
-	}
+  mutation CreateMessage($createMsgInput: CreateMessageInput!) {
+    createMessage(createMsgInput: $createMsgInput) {
+      content
+      sender_id
+      channel_id 
+    }
+  }
 `;
 
 const CreatMsg = ({show}: {show: boolean}) => {
@@ -23,10 +24,10 @@ const CreatMsg = ({show}: {show: boolean}) => {
 		try {
 			const response = await creatMsg({
 				variables: {
-					input: {
-						SenderId: parseInt(SenderId, 10),
+					createMsgInput: {
+						sender_id: parseInt(SenderId),
 						content: Content,
-						channel_id: parseInt(ChanId, 10),
+						channel_id: parseInt(ChanId),
 					},
 				},
 			});
