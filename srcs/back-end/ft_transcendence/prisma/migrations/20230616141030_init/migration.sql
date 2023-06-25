@@ -11,6 +11,16 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "Contact" (
+    "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "contact_id" INTEGER NOT NULL,
+    "pending" BOOLEAN DEFAULT true,
+
+    CONSTRAINT "Contact_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Pong" (
     "id" SERIAL NOT NULL,
     "userId1" INTEGER NOT NULL,
@@ -29,6 +39,7 @@ CREATE TABLE "Chanel" (
     "chanel_name" TEXT NOT NULL,
     "chanel_size" INTEGER NOT NULL,
     "max_users" INTEGER NOT NULL,
+    "logo" TEXT,
 
     CONSTRAINT "Chanel_pkey" PRIMARY KEY ("id")
 );
@@ -37,6 +48,7 @@ CREATE TABLE "Chanel" (
 CREATE TABLE "Users_Chanels" (
     "user_id" INTEGER NOT NULL,
     "chanel_id" INTEGER NOT NULL,
+    "pending" BOOLEAN DEFAULT true,
 
     CONSTRAINT "Users_Chanels_pkey" PRIMARY KEY ("user_id","chanel_id")
 );
@@ -45,7 +57,7 @@ CREATE TABLE "Users_Chanels" (
 CREATE TABLE "Message" (
     "id" SERIAL NOT NULL,
     "sender_id" INTEGER NOT NULL,
-    "receiver_id" INTEGER NOT NULL,
+    "receiver_id" INTEGER,
     "channel_id" INTEGER,
     "content" TEXT NOT NULL,
     "sent_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -61,6 +73,12 @@ CREATE UNIQUE INDEX "User_token_key" ON "User"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_nickname_key" ON "User"("nickname");
+
+-- AddForeignKey
+ALTER TABLE "Contact" ADD CONSTRAINT "Contact_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Contact" ADD CONSTRAINT "Contact_contact_id_fkey" FOREIGN KEY ("contact_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Pong" ADD CONSTRAINT "Pong_userId1_fkey" FOREIGN KEY ("userId1") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -81,7 +99,7 @@ ALTER TABLE "Users_Chanels" ADD CONSTRAINT "Users_Chanels_chanel_id_fkey" FOREIG
 ALTER TABLE "Message" ADD CONSTRAINT "Message_sender_id_fkey" FOREIGN KEY ("sender_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_receiver_id_fkey" FOREIGN KEY ("receiver_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Message" ADD CONSTRAINT "Message_receiver_id_fkey" FOREIGN KEY ("receiver_id") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Message" ADD CONSTRAINT "Message_channel_id_fkey" FOREIGN KEY ("channel_id") REFERENCES "Chanel"("id") ON DELETE SET NULL ON UPDATE CASCADE;

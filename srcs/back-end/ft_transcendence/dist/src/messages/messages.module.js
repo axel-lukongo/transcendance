@@ -11,12 +11,11 @@ const common_1 = require("@nestjs/common");
 const messages_resolver_1 = require("./messages.resolver");
 const messages_service_1 = require("./messages.service");
 const prisma_service_1 = require("../../prisma/prisma.service");
-let MessagesModule = class MessagesModule {
+let MessagesModule = exports.MessagesModule = class MessagesModule {
 };
-MessagesModule = __decorate([
+exports.MessagesModule = MessagesModule = __decorate([
     (0, common_1.Module)({
         providers: [messages_service_1.MessagesService, messages_resolver_1.MessagesResolver, prisma_service_1.PrismaService]
     })
 ], MessagesModule);
-exports.MessagesModule = MessagesModule;
 //# sourceMappingURL=messages.module.js.map

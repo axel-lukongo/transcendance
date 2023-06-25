@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateMessageInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let CreateMessageInput = class CreateMessageInput {
+let CreateMessageInput = exports.CreateMessageInput = class CreateMessageInput {
 };
 __decorate([
     (0, graphql_1.Field)(),
@@ -29,8 +29,7 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateMessageInput.prototype, "channel_id", void 0);
-CreateMessageInput = __decorate([
+exports.CreateMessageInput = CreateMessageInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateMessageInput);
-exports.CreateMessageInput = CreateMessageInput;
 //# sourceMappingURL=create-messages.input.js.map

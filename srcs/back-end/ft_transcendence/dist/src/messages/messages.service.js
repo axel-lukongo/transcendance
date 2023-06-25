@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
-let MessagesService = class MessagesService {
+let MessagesService = exports.MessagesService = class MessagesService {
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -35,9 +35,8 @@ let MessagesService = class MessagesService {
         return this.prisma.message.delete({ where: { id: id } });
     }
 };
-MessagesService = __decorate([
+exports.MessagesService = MessagesService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], MessagesService);
-exports.MessagesService = MessagesService;
 //# sourceMappingURL=messages.service.js.map

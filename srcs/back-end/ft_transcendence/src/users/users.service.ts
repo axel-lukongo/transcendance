@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'prisma/prisma.service';
-import { LoginUserInput } from './dto/login-user.input';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -15,25 +13,16 @@ export class UsersService {
     })
   }
 
-  async login(loginUserInput: LoginUserInput) {
-    const user = await this.prisma.user.findFirst({
-      where: {
-        email: loginUserInput.email,
-      },
-    });
-
-    if (!user || !bcrypt.compareSync(loginUserInput.password, user.password)) {
-      throw new Error('Invalid login input');
-    }
-
-    return user;
-  }
   findAll() {
     return this.prisma.user.findMany({});
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUnique({where: {id: id}});
+  findOneUserById(id: number) {
+    return this.prisma.user.findUnique({where: {id}});
+  }
+
+  findOneUserByIntraLogin(intra_login: string) {
+    return this.prisma.user.findUnique({where: {intra_login}});
   }
 
   update(id: number, data: UpdateUserInput) {
@@ -46,4 +35,5 @@ export class UsersService {
   remove(id: number) {
     return this.prisma.user.delete({where: {id: id}});
   }
+
 }

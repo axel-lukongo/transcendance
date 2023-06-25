@@ -21,7 +21,7 @@ const update_message_input_1 = require("./dto/update-message.input");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const pubSub = new graphql_subscriptions_1.PubSub();
 const NEW_MSG = 'addMessage';
-let MessagesResolver = class MessagesResolver {
+let MessagesResolver = exports.MessagesResolver = class MessagesResolver {
     constructor(msgService) {
         this.msgService = msgService;
     }
@@ -87,9 +87,8 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], MessagesResolver.prototype, "addmessage", null);
-MessagesResolver = __decorate([
+exports.MessagesResolver = MessagesResolver = __decorate([
     (0, graphql_1.Resolver)(() => messages_entity_1.Message),
     __metadata("design:paramtypes", [messages_service_1.MessagesService])
 ], MessagesResolver);
-exports.MessagesResolver = MessagesResolver;
 //# sourceMappingURL=messages.resolver.js.map

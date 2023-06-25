@@ -1,31 +1,27 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloDriver } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { ChanelModule } from './chanel/chanel.module';
 import { MessagesModule } from './messages/messages.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { UserChanelsModule } from './user-chanels/user-chanels.module';
 
 @Module({
 	imports: [
-		GraphQLModule.forRoot<ApolloDriverConfig>({
+		GraphQLModule.forRoot({
 			autoSchemaFile: join(process.cwd(), 'src/schemas.gql'),
-			
 			driver: ApolloDriver,
 			playground: true,
-			// resolvers: {
-            //     // UsersResolver: [UsersModule],
-            //     // ChanelResolver: [ChanelModule],
-            //     // ContactsResolver: [ContactsModule],
-            //     // MessagesResolver: [MessagesModule],
-            //     // UserChanelsResolver: [UserChanelsModule]
-            // },
 			installSubscriptionHandlers: true, 
+
 		}),
 		UsersModule,
 		ChanelModule,
 		MessagesModule,
+		ContactsModule,
+		UserChanelsModule
 	],
 })
-
 export class AppModule {}

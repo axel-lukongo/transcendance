@@ -1,11 +1,14 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Message } from 'src/messages/entities/messages.entity';
 
 @ObjectType()
 export class Chanel {
-	@Field(type => Int)
-	id: number;
 
+	@Field(() => Int)
+	id: number;
+	
+	@Field(() => Int)
+	owner_id: number;
+	
 	@Field({nullable: true})
 	chanel_name: string;
 
@@ -14,8 +17,15 @@ export class Chanel {
 
 	@Field({nullable: true})
 	max_users: number;
-
-	// @Field(() => Message, {nullable: true})
-	// messages?: Message[];
-
+  
 }
+
+
+// id          Int             @id @default(autoincrement())
+// owner_id    Int
+// chanel_name String
+// chanel_size Int
+// max_users   Int
+// owner       User            @relation(fields: [owner_id], references: [id])
+// users       Users_Chanels[]
+// messages    Message[]

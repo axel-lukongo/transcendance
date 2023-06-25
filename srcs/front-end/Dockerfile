@@ -24,9 +24,7 @@ RUN npm install -g \
 # Définition du répertoire de travail
 WORKDIR /ft_transcendence
 
-RUN npm install \
-	npm install subscriptions-transport-ws
-
+RUN npm install
 
 # Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]

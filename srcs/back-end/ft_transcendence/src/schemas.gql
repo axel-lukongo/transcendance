@@ -5,14 +5,15 @@
 type User {
   id: Int!
   email: String!
-  password: String!
-  token: Int!
+  token: String!
+  intra_login: String!
   nickname: String!
   avatar: String
 }
 
 type Chanel {
   id: Int!
+  owner_id: Int!
   chanel_name: String
   chanel_size: Float
   max_users: Float
@@ -34,18 +35,37 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Contact {
+  id: Int!
+  user_id: Int!
+  contact_id: Int!
+  pending: Boolean!
+  contact: User!
+}
+
+type UsersChanels {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean!
+  chanels: Chanel!
+}
+
 type Query {
-  users: [User!]!
-  user(id: Int!): User!
-  Channel_findAll: [Chanel!]!
+  findAllUsers: [User!]!
+  findOneUserById(id: Int!): User!
+  findOneUserByIntraLogin(intra_login: String!): User!
   Channel_findOne(id: Int!): Chanel!
+  chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!
   Message_findOne_msg(id: Int!): Message!
+  contactsRequest(user_id: Int!): [Contact!]!
+  myContacts(user_id: Int!): [Contact!]!
+  chanelsRequest(user_id: Int!): [UsersChanels!]!
+  myChanels(user_id: Int!): [UsersChanels!]!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  loginUser(loginUserInput: LoginUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
@@ -54,35 +74,37 @@ type Mutation {
   createMessage(createMsgInput: CreateMessageInput!): Message!
   updateMessage(updateMsgInput: UpdateMessageInput!): Message!
   deleteMessage: Message!
+  createContact(createContact: CreateContactInput!): Contact!
+  replyAddContact(reply: UpdateContact!): Contact!
+  deleteContact(id: Int!): Contact!
+  addUser(addUserChanel: AddUserChanel!): UsersChanels!
+  acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
+  deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
 }
 
 input CreateUserInput {
   email: String!
-  password: String!
-  token: Int!
+  token: String!
+  intra_login: String!
   nickname: String!
   avatar: String
 }
 
-input LoginUserInput {
-  email: String!
-  password: String!
-}
-
 input UpdateUserInput {
   email: String
-  password: String
-  token: Int
+  token: String
+  intra_login: String
   nickname: String
   avatar: String
   id: Int!
 }
 
 input CreateChanelInput {
-  owner_id: Float!
-  chanel_name: String!
-  chanel_size: Float!
-  max_users: Float!
+  owner_id: Int
+  chanel_name: String
+  chanel_size: Int
+  max_users: Int
+  logo: String
 }
 
 input UpdateChanelInput {
@@ -105,6 +127,31 @@ input UpdateMessageInput {
   sender_id: Int
   channel_id: Int
   id: Int!
+}
+
+input CreateContactInput {
+  user_id: Int!
+  contact_id: Int!
+  pending: Boolean
+}
+
+input UpdateContact {
+  user_id: Int
+  contact_id: Int
+  pending: Boolean!
+  id: Int!
+}
+
+input AddUserChanel {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean
+}
+
+input UpdateChanelUserInput {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean
 }
 
 type Subscription {

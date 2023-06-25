@@ -23,10 +23,10 @@ services:
 #                   BACK-TEND                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  back-end:
-    networks:
-    - transcendence
     depends_on:
       - database
+    networks:
+    - transcendence
     build: srcs/back-end
     container_name: back-end
     image: back-end
@@ -42,10 +42,11 @@ services:
 #                   FRONT-TEND                        #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  front-end:
+    depends_on:
+     - database
+     - back-end
     networks:
       - transcendence
-    depends_on:
-      - back-end
     build: srcs/front-end
     container_name: front-end
     image: front-end
@@ -67,10 +68,10 @@ services:
 #     driver_opts:
 #       o: 'bind'
 #       type: 'none'
-#       device: '/${HOME}/data/back-end'
+#       device: './srcs/back-end/ft_transcendence/'
 #   front-end:
 #     driver: local
 #     driver_opts:
 #       o: 'bind'
 #       type: 'none'
-#       device: '/${HOME}/data/front-end'
+#       device: './srcs/front-end/ft_transcendence'

@@ -3,7 +3,7 @@ FROM debian:buster
 # Installation des dépendances
 RUN apt-get update && apt-get install -y \
     curl \
-    git 
+    git
 
 # Installation de la dernière version de Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
@@ -32,7 +32,9 @@ RUN npm install @nestjs/graphql \
     @nestjs/mapped-types \
     class-validator \
     class-transformer \
-    @prisma/client
+    @prisma/client	\
+	graphql-subscriptions \
+	bcrypt
 
 # Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]

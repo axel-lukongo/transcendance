@@ -31,3 +31,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 Makefile
+package-lock.json
+
+dist

@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let CreateUserInput = class CreateUserInput {
+let CreateUserInput = exports.CreateUserInput = class CreateUserInput {
 };
 __decorate([
     (0, graphql_1.Field)(),
@@ -20,11 +20,11 @@ __decorate([
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], CreateUserInput.prototype, "password", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
 ], CreateUserInput.prototype, "token", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], CreateUserInput.prototype, "intra_login", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
@@ -33,8 +33,7 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], CreateUserInput.prototype, "avatar", void 0);
-CreateUserInput = __decorate([
+exports.CreateUserInput = CreateUserInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateUserInput);
-exports.CreateUserInput = CreateUserInput;
 //# sourceMappingURL=create-user.input.js.map

@@ -11,16 +11,16 @@ const common_1 = require("@nestjs/common");
 const chanel_service_1 = require("./chanel.service");
 const chanel_resolver_1 = require("./chanel.resolver");
 const prisma_service_1 = require("../../prisma/prisma.service");
-const messages_resolver_1 = require("../messages/messages.resolver");
+const users_service_1 = require("../users/users.service");
 const messages_module_1 = require("../messages/messages.module");
 const messages_service_1 = require("../messages/messages.service");
-let ChanelModule = class ChanelModule {
+const messages_resolver_1 = require("../messages/messages.resolver");
+let ChanelModule = exports.ChanelModule = class ChanelModule {
 };
-ChanelModule = __decorate([
+exports.ChanelModule = ChanelModule = __decorate([
     (0, common_1.Module)({
         imports: [messages_module_1.MessagesModule],
-        providers: [chanel_resolver_1.ChanelResolver, chanel_service_1.ChanelService, prisma_service_1.PrismaService, messages_resolver_1.MessagesResolver, messages_service_1.MessagesService]
+        providers: [chanel_resolver_1.ChanelResolver, chanel_service_1.ChanelService, prisma_service_1.PrismaService, users_service_1.UsersService, messages_service_1.MessagesService, messages_resolver_1.MessagesResolver]
     })
 ], ChanelModule);
-exports.ChanelModule = ChanelModule;
 //# sourceMappingURL=chanel.module.js.map

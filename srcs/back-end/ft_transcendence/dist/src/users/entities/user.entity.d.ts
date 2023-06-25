@@ -1,8 +1,8 @@
 export declare class User {
     id: number;
     email: string;
-    password: string;
-    token: number;
+    token: string;
+    intra_login: string;
     nickname: string;
     avatar?: string;
 }

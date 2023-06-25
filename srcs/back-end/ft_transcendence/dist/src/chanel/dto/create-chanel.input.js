@@ -11,26 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateChanelInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let CreateChanelInput = class CreateChanelInput {
+let CreateChanelInput = exports.CreateChanelInput = class CreateChanelInput {
 };
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateChanelInput.prototype, "owner_id", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], CreateChanelInput.prototype, "chanel_name", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateChanelInput.prototype, "chanel_size", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateChanelInput.prototype, "max_users", void 0);
-CreateChanelInput = __decorate([
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", String)
+], CreateChanelInput.prototype, "logo", void 0);
+exports.CreateChanelInput = CreateChanelInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateChanelInput);
-exports.CreateChanelInput = CreateChanelInput;
 //# sourceMappingURL=create-chanel.input.js.map

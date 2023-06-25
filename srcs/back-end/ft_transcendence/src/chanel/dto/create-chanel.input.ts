@@ -3,16 +3,20 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateChanelInput {
 //   @Field(() => Int, { description: 'Example field (placeholder)' })
-  @Field()
+  @Field(() => Int, {nullable: true})
   owner_id: number;
-  @Field()
+  
+  @Field(() => String, {nullable: true})
   chanel_name: string;
 
-  @Field()
+  @Field(() => Int, {nullable: true})
   chanel_size: number;
 
-  @Field()
+  @Field(() => Int, {nullable: true})
   max_users: number;
+
+  @Field(() => String, {nullable: true})
+  logo: string;
 }
 
 // model Chanel {

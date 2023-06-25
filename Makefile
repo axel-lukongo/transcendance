@@ -3,43 +3,39 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alukongo <alukongo@student.42.fr>          +#+  +:+       +#+         #
+#    By: asimon <asimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 20:16:48 by idouidi           #+#    #+#              #
-#    Updated: 2023/06/19 14:00:08 by alukongo         ###   ########.fr        #
+#    Updated: 2023/06/16 18:08:04 by asimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all: up
 
 up:
-		# mkdir -p ${HOME}/data/db
-		# mkdir -p ${HOME}/data/back-end
-		# mkdir -p ${HOME}/data/front-end
-		docker compose up --build --force-recreate #-d
+	docker compose up --build --force-recreate #-d
 
 down:
-		docker compose down
+	docker compose down
 
 ps:		
-		docker compose ps -a
-		docker ps -a
+	docker compose ps -a
+	docker ps -a
 
 clean:	down
-		docker system prune
-		docker volume prune
+	docker system prune
+	docker volume prune
 
-		# sudo rm -rf ${HOME}/data/*
 
 re : 	clean up
 
 db: 
-		docker exec -it db bash
+	docker exec -it db bash
 
 back-end: 
-		docker exec -it back-end bash
+	docker exec -it back-end bash
 
 front-end: 
-		docker exec -it front-end bash
+	docker exec -it front-end bash
 
 .PHONY: up down re ps clean front-end back-end db

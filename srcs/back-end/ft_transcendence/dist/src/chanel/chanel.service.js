@@ -12,17 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChanelService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
-let ChanelService = class ChanelService {
-    constructor(prisma) {
+const users_service_1 = require("../users/users.service");
+let ChanelService = exports.ChanelService = class ChanelService {
+    constructor(prisma, user) {
         this.prisma = prisma;
+        this.user = user;
     }
     async create(createChanelInput) {
         return this.prisma.chanel.create({
             data: createChanelInput
         });
-    }
-    async findAll() {
-        return this.prisma.chanel.findMany({});
     }
     async findOne(id) {
         return this.prisma.chanel.findUnique({ where: { id: id } });
@@ -36,10 +35,13 @@ let ChanelService = class ChanelService {
     async remove(id) {
         return this.prisma.chanel.delete({ where: { id: id } });
     }
+    async getOwnChanels(user_id) {
+        return this.prisma.chanel.findMany({ where: { owner_id: user_id } });
+    }
 };
-ChanelService = __decorate([
+exports.ChanelService = ChanelService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        users_service_1.UsersService])
 ], ChanelService);
-exports.ChanelService = ChanelService;
 //# sourceMappingURL=chanel.service.js.map

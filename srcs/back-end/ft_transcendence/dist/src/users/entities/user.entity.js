@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let User = class User {
+let User = exports.User = class User {
 };
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
@@ -24,11 +24,11 @@ __decorate([
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    __metadata("design:type", Number)
 ], User.prototype, "token", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], User.prototype, "intra_login", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
@@ -37,8 +37,7 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);
-User = __decorate([
+exports.User = User = __decorate([
     (0, graphql_1.ObjectType)()
 ], User);
-exports.User = User;
 //# sourceMappingURL=user.entity.js.map

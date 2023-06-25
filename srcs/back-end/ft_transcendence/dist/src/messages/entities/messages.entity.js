@@ -13,7 +13,7 @@ exports.Message = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const user_entity_1 = require("../../users/entities/user.entity");
 const chanel_entity_1 = require("../../chanel/entities/chanel.entity");
-let Message = class Message {
+let Message = exports.Message = class Message {
 };
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
@@ -43,8 +43,7 @@ __decorate([
     (0, graphql_1.Field)(() => chanel_entity_1.Chanel, { nullable: true }),
     __metadata("design:type", chanel_entity_1.Chanel)
 ], Message.prototype, "channel", void 0);
-Message = __decorate([
+exports.Message = Message = __decorate([
     (0, graphql_1.ObjectType)()
 ], Message);
-exports.Message = Message;
 //# sourceMappingURL=messages.entity.js.map

@@ -12,14 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateMessageInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const create_messages_input_1 = require("./create-messages.input");
-let UpdateMessageInput = class UpdateMessageInput extends (0, graphql_1.PartialType)(create_messages_input_1.CreateMessageInput) {
+let UpdateMessageInput = exports.UpdateMessageInput = class UpdateMessageInput extends (0, graphql_1.PartialType)(create_messages_input_1.CreateMessageInput) {
 };
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], UpdateMessageInput.prototype, "id", void 0);
-UpdateMessageInput = __decorate([
+exports.UpdateMessageInput = UpdateMessageInput = __decorate([
     (0, graphql_1.InputType)()
 ], UpdateMessageInput);
-exports.UpdateMessageInput = UpdateMessageInput;
 //# sourceMappingURL=update-message.input.js.map

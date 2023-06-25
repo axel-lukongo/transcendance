@@ -18,18 +18,15 @@ const chanel_service_1 = require("./chanel.service");
 const chanel_entity_1 = require("./entities/chanel.entity");
 const create_chanel_input_1 = require("./dto/create-chanel.input");
 const update_chanel_input_1 = require("./dto/update-chanel.input");
-const messages_resolver_1 = require("../messages/messages.resolver");
 const messages_entity_1 = require("../messages/entities/messages.entity");
-let ChanelResolver = class ChanelResolver {
+const messages_resolver_1 = require("../messages/messages.resolver");
+let ChanelResolver = exports.ChanelResolver = class ChanelResolver {
     constructor(chanelService, messagesResolver) {
         this.chanelService = chanelService;
         this.messagesResolver = messagesResolver;
     }
     createChanel(createChanelInput) {
         return this.chanelService.create(createChanelInput);
-    }
-    findAll() {
-        return this.chanelService.findAll();
     }
     findOne(id) {
         return this.chanelService.findOne(id);
@@ -39,6 +36,9 @@ let ChanelResolver = class ChanelResolver {
     }
     removeChanel(id) {
         return this.chanelService.remove(id);
+    }
+    myChanels(user_id) {
+        return this.chanelService.getOwnChanels(user_id);
     }
     async messages(chanel) {
         return this.messagesResolver.findAll_msg();
@@ -51,12 +51,6 @@ __decorate([
     __metadata("design:paramtypes", [create_chanel_input_1.CreateChanelInput]),
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "createChanel", null);
-__decorate([
-    (0, graphql_1.Query)(() => [chanel_entity_1.Chanel], { name: 'Channel_findAll' }),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ChanelResolver.prototype, "findAll", null);
 __decorate([
     (0, graphql_1.Query)(() => chanel_entity_1.Chanel, { name: 'Channel_findOne' }),
     __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
@@ -79,16 +73,22 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ChanelResolver.prototype, "removeChanel", null);
 __decorate([
+    (0, graphql_1.Query)(() => [chanel_entity_1.Chanel], { name: "chanels" }),
+    __param(0, (0, graphql_1.Args)("user_id", { type: () => graphql_1.Int })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], ChanelResolver.prototype, "myChanels", null);
+__decorate([
     (0, graphql_1.ResolveField)(() => [messages_entity_1.Message]),
     __param(0, (0, graphql_1.Parent)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [chanel_entity_1.Chanel]),
     __metadata("design:returntype", Promise)
 ], ChanelResolver.prototype, "messages", null);
-ChanelResolver = __decorate([
+exports.ChanelResolver = ChanelResolver = __decorate([
     (0, graphql_1.Resolver)(() => chanel_entity_1.Chanel),
     __metadata("design:paramtypes", [chanel_service_1.ChanelService,
         messages_resolver_1.MessagesResolver])
 ], ChanelResolver);
-exports.ChanelResolver = ChanelResolver;
 //# sourceMappingURL=chanel.resolver.js.map

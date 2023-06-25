@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateChanelInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let UpdateChanelInput = class UpdateChanelInput {
+let UpdateChanelInput = exports.UpdateChanelInput = class UpdateChanelInput {
 };
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int),
@@ -29,8 +29,7 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", Number)
 ], UpdateChanelInput.prototype, "max_users", void 0);
-UpdateChanelInput = __decorate([
+exports.UpdateChanelInput = UpdateChanelInput = __decorate([
     (0, graphql_1.InputType)()
 ], UpdateChanelInput);
-exports.UpdateChanelInput = UpdateChanelInput;
 //# sourceMappingURL=update-chanel.input.js.map

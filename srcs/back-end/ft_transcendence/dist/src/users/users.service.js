@@ -12,8 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
-const bcrypt = require("bcrypt");
-let UsersService = class UsersService {
+let UsersService = exports.UsersService = class UsersService {
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -22,22 +21,14 @@ let UsersService = class UsersService {
             data: createUserInput
         });
     }
-    async login(loginUserInput) {
-        const user = await this.prisma.user.findFirst({
-            where: {
-                email: loginUserInput.email,
-            },
-        });
-        if (!user || !bcrypt.compareSync(loginUserInput.password, user.password)) {
-            throw new Error('Invalid login input');
-        }
-        return user;
-    }
     findAll() {
         return this.prisma.user.findMany({});
     }
-    findOne(id) {
-        return this.prisma.user.findUnique({ where: { id: id } });
+    findOneUserById(id) {
+        return this.prisma.user.findUnique({ where: { id } });
+    }
+    findOneUserByIntraLogin(intra_login) {
+        return this.prisma.user.findUnique({ where: { intra_login } });
     }
     update(id, data) {
         return this.prisma.user.update({
@@ -49,9 +40,8 @@ let UsersService = class UsersService {
         return this.prisma.user.delete({ where: { id: id } });
     }
 };
-UsersService = __decorate([
+exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], UsersService);
-exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

@@ -14,9 +14,11 @@ const apollo_1 = require("@nestjs/apollo");
 const users_module_1 = require("./users/users.module");
 const chanel_module_1 = require("./chanel/chanel.module");
 const messages_module_1 = require("./messages/messages.module");
-let AppModule = class AppModule {
+const contacts_module_1 = require("./contacts/contacts.module");
+const user_chanels_module_1 = require("./user-chanels/user-chanels.module");
+let AppModule = exports.AppModule = class AppModule {
 };
-AppModule = __decorate([
+exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             graphql_1.GraphQLModule.forRoot({
@@ -28,8 +30,9 @@ AppModule = __decorate([
             users_module_1.UsersModule,
             chanel_module_1.ChanelModule,
             messages_module_1.MessagesModule,
+            contacts_module_1.ContactsModule,
+            user_chanels_module_1.UserChanelsModule
         ],
     })
 ], AppModule);
-exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

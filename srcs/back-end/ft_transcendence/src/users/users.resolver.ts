@@ -1,9 +1,8 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int} from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { LoginUserInput } from './dto/login-user.input';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -14,20 +13,23 @@ export class UsersResolver {
     return this.usersService.create(createUserInput);
   }
 
-  @Mutation(() => User)
-  loginUser(@Args('loginUserInput') loginUserInput: LoginUserInput) {
-    return this.usersService.login(loginUserInput);
-  }
 
-  @Query(() => [User], { name: 'users' })
+  @Query(() => [User], { name: 'findAllUsers' })
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.findOne(id);
+  @Query(() => User, { name: 'findOneUserById' })
+  findOneUserById(@Args('id', { type: () => Int }) id: number) {
+    return this.usersService.findOneUserById(id);
   }
+
+
+  @Query(() => User, { name: 'findOneUserByIntraLogin' })
+  findOneUserByIntraLogin(@Args('intra_login', { type: () => String }) intra_login: string) {
+    return this.usersService.findOneUserByIntraLogin(intra_login);
+  }
+
 
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
@@ -38,4 +40,5 @@ export class UsersResolver {
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.remove(id);
   }
+
 }

@@ -1,7 +1,7 @@
 export declare class CreateUserInput {
     email: string;
-    password: string;
-    token: number;
+    token: string;
+    intra_login: string;
     nickname: string;
     avatar?: string;
 }

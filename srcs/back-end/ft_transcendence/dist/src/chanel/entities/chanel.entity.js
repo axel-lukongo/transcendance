@@ -11,12 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Chanel = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let Chanel = class Chanel {
+let Chanel = exports.Chanel = class Chanel {
 };
 __decorate([
-    (0, graphql_1.Field)(type => graphql_1.Int),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Chanel.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], Chanel.prototype, "owner_id", void 0);
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
@@ -29,8 +33,7 @@ __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", Number)
 ], Chanel.prototype, "max_users", void 0);
-Chanel = __decorate([
+exports.Chanel = Chanel = __decorate([
     (0, graphql_1.ObjectType)()
 ], Chanel);
-exports.Chanel = Chanel;
 //# sourceMappingURL=chanel.entity.js.map
