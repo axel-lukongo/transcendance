@@ -42,8 +42,22 @@ export class MessagesResolver {
 		return this.msgService.delete(id);
 	}
 
-	@Subscription(() => Message)
-	addmessage(){
-	  return pubSub.asyncIterator(NEW_MSG);
+
+	/**
+	 * j'ai rajouter un filtre dans les souscription afin que les message puissent etre envoyer
+	  uniquement a des chanels qui seront specifier au moment de la creation, 
+	 * payload: il contiendras les donnees qui auront ete cree lors de la mutation
+	 * variables: il contiendras l'id du chanel dont je veux recevoir les messages
+	 * resolvedPayload.channel_id === variables.channel_id: si channel_id cree lors de la mutation
+	  correspond a channel_id qui se trouve dans ma variable alors je pourrais executer addmessages sinon je l'ignore
+	 */
+	@Subscription(() => Message, {
+	filter: async (payload, variables) => {
+		const resolvedPayload = await payload.addmessage;
+		return resolvedPayload.channel_id === variables.channel_id;
+		}
+	})
+	addmessage(@Args('channel_id', { type: () => Int }) channel_id: number) {
+		return pubSub.asyncIterator(NEW_MSG);
 	}
 }

@@ -122,7 +122,7 @@ const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
 const NewMessageSubscription = gql`
 	subscription {
-	addmessage {
+	addmessage(channel_id: 1) {
 		id
 		content
 		sender_id

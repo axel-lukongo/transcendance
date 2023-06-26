@@ -44,7 +44,7 @@ let MessagesResolver = exports.MessagesResolver = class MessagesResolver {
     deleteMessage(id) {
         return this.msgService.delete(id);
     }
-    addmessage() {
+    addmessage(channel_id) {
         return pubSub.asyncIterator(NEW_MSG);
     }
 };
@@ -82,9 +82,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MessagesResolver.prototype, "deleteMessage", null);
 __decorate([
-    (0, graphql_1.Subscription)(() => messages_entity_1.Message),
+    (0, graphql_1.Subscription)(() => messages_entity_1.Message, {
+        filter: async (payload, variables) => {
+            const resolvedPayload = await payload.addmessage;
+            console.log("la variable: ", variables.channel_id);
+            console.log("\nle payload: ", resolvedPayload);
+            return resolvedPayload.channel_id === variables.channel_id;
+        }
+    }),
+    __param(0, (0, graphql_1.Args)('channel_id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], MessagesResolver.prototype, "addmessage", null);
 exports.MessagesResolver = MessagesResolver = __decorate([

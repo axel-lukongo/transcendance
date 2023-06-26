@@ -57,18 +57,20 @@ export class ChanelResolver {
  * je vais ensuite y mettre une subscription afin de surveiller les messages qui seront cree via le chanel
  * et dans mon front j'aurais un abonnement qui m'affichera tous les messages de un chanel specifique
  */
-//   @ResolveField(() => [Message])
-//   async creat_messages(@Parent() chanel: Chanel,creatMsg: CreateMessageInput) {
-  	// const new_msg = this.messagesResolver.createMessage(creatMsg);
-	// pubSub.publish(NEW_MSG, {
-	// 	addmessage: new_message,
-	// });
+//   @Mutation(() => [Message])
+//   async createMessageChan(
+// 	@Args('chanelId', { type: () => Int }) chanelId: number,
+// 	@Args('createMessageInput') createMessageInput: CreateMessageInput) {
+// 	const new_msg = this.messagesResolver.createMessage(createMessageInput);
+// 	pubSub.publish(NEW_MSG, {
+// 		AddMessageChan: new_msg,
+// 	});
 //     return new_msg; 
 //   } 
 
 
 // @Subscription(() => Message)
-// 	addmessage(){
+// 	AddMessageChan(){
 // 	  return pubSub.asyncIterator(NEW_MSG);
 // 	}
 

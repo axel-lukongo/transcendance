@@ -54,5 +54,5 @@ export declare class MessagesResolver {
         model: {};
         client: {};
     }>;
-    addmessage(): AsyncIterator<unknown, any, undefined>;
+    addmessage(channel_id: number): AsyncIterator<unknown, any, undefined>;
 }

@@ -155,5 +155,5 @@ input UpdateChanelUserInput {
 }
 
 type Subscription {
-  addmessage: Message!
+  addmessage(channel_id: Int!): Message!
 }
