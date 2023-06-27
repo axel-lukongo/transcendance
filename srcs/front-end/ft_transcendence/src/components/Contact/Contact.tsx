@@ -24,7 +24,6 @@ export default function Contact() {
 				<ListContact 
 					refetchContact={handleRefetch}
 					refetchProps={refetchProp}
-					Button={AcceptChanel}
 				/>
 			</React.Fragment>
 			

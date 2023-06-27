@@ -1,12 +1,11 @@
 
 import React, {useState} from 'react';
-import './css/App.css';
-import './css/message.css';
-import Chat from './components/message/message';
-import CreatMsg from './components/message/creat_message';
-import Chanel from './components/Chanel/Chanel';
+import '../css/App.css';
+import '../css/message.css';
+import Chat from './message';
+import CreatMsg from './creat_message';
 
-const App = () => {
+const my_message_app = () => {
 	const [showChat, setShowChat] = useState(false);
 
 	const handleChatClick = () => {
@@ -18,9 +17,8 @@ const App = () => {
 	};
 
 	return (
-		<div className='App'>
-			<Chanel />
-			{/* <div className='bg'></div>
+		<div className='my_message_app'>
+			<div className='bg'></div>
 			<div className='overlay1'></div>
 			<div className='overlay2'></div>
 			<div className='overlay3'></div>
@@ -32,10 +30,9 @@ const App = () => {
 			<button className='message-button' onClick={handleChatClick}></button>
 			<button className='avatar-button'></button>
 			<Chat show={showChat} />
-			<CreatMsg show={showChat} /> */}
-
+			<CreatMsg show={showChat} />
 		</div>
 	);
 };
 
-export default App;
+export default my_message_app;

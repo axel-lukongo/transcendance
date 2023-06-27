@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { IContacts } from "./interfaces/Contact.interface";
-import { IProposContact } from "./interfaces/Requests.interface";
+import { IProposContact, IContacts } from "../interfaces/interfaces";
 import RefuseContact from "./buttons/RefuseContact"
 import { LIST_CONTACT } from './graphql/QuerysContact'
 
 
 
-export default function ListContact({refetchContact, refetchProps, Button}: IProposContact) {
+export default function ListContact({refetchContact, refetchProps}: IProposContact) {
 
 
 	const {data, loading, error, refetch} = useQuery(LIST_CONTACT, {
@@ -42,16 +41,9 @@ export default function ListContact({refetchContact, refetchProps, Button}: IPro
 							refetchContact={refetchContact}
 							label="Delete"
 						/>
-						{/* { Button && Button({element, handleChanelRefecth, label: "salut"})} */}
 					</div>
 				</li>
 			))
 		}</ul>
 	</div>)
 }
-
-// export interface IRequest {
-// 	element: UserChanels;
-// 	handleChanelRefecth: () => void;
-// 	label: string;
-// }
