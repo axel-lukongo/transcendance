@@ -1,41 +1,24 @@
-.Chat {
+.Contact_pad {
 	position: absolute;
-	height: 30%;
-	width: 30%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: white;
+	height: 20%;
+	width: 20%;
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px rgba(236, 233, 233, 0.101);
 	z-index: 7;
 	opacity: 0; /* Définissez l'opacité initiale à 0 */
-	overflow:auto;
 	transition: opacity 0.5s ease;
   }
 
-  .Creat_Msg {
-	position: absolute;
-	height: 10%;
-	width: 30%;
-	top: 74%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: white;
-	padding: 20px;
-	/* border-radius: 5px; */
-	box-shadow: 0 2px 4px rgba(236, 233, 233, 0.101);
-	z-index: 7;
-	opacity: 0; /* Définissez l'opacité initiale à 0 */
-	transition: opacity 0.5s ease;
-  }
-
-  .Creat_Msg.showw {
+  .Contact_pad.showw {
 	opacity: 1; /* Définissez l'opacité à 1 lorsque la classe 'show' est appliquée */
   }
 
-  .Chat.show {
+  .Contact_show {
 	opacity: 1; /* Définissez l'opacité à 1 lorsque la classe 'show' est appliquée */
   }
   

@@ -85,8 +85,6 @@ __decorate([
     (0, graphql_1.Subscription)(() => messages_entity_1.Message, {
         filter: async (payload, variables) => {
             const resolvedPayload = await payload.addmessage;
-            console.log("la variable: ", variables.channel_id);
-            console.log("\nle payload: ", resolvedPayload);
             return resolvedPayload.channel_id === variables.channel_id;
         }
     }),
