@@ -5,18 +5,9 @@ import './css/message.css';
 import Chat from './components/message/message';
 import CreatMsg from './components/message/creat_message';
 import Chanel from './components/Chanel/Chanel';
+import Mymsg from './components/message/my_message_app';
 
 const App = () => {
-	const [showChat, setShowChat] = useState(false);
-
-	const handleChatClick = () => {
-		if (showChat) {
-			setShowChat(false);
-		} else {
-			setShowChat(true);
-		}
-	};
-
 	return (
 		<div className='App'>
 			<Chanel />
@@ -34,6 +25,7 @@ const App = () => {
 			<Chat show={showChat} />
 			<CreatMsg show={showChat} /> */}
 
+			<Mymsg />
 		</div>
 	);
 };
