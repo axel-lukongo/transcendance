@@ -6,6 +6,10 @@ import Chat from './components/message/message';
 import CreatMsg from './components/message/creat_message';
 import Chanel from './components/Chanel/Chanel';
 import Mymsg from './components/message/my_message_app';
+import {
+	createBrowserRouter,
+	RouterProvider,
+  } from "react-router-dom";
 
 const App = () => {
 	return (

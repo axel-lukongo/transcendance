@@ -1,8 +1,8 @@
 import React from "react";
-import AccepContact  from './buttons/AcceptContact'
-import RefuseContact from "./buttons/RefuseContact";
 import { useQuery } from "@apollo/client"
 import { useEffect } from "react";
+import AccepContact  from './buttons/AcceptContact'
+import RefuseContact from "./buttons/RefuseContact";
 import { CONTACTS } from './graphql/QuerysContact'
 import { IContacts, IProposContact } from "../interfaces/interfaces"
 
