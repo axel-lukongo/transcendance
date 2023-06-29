@@ -1,8 +1,7 @@
-
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {gql} from 'graphql-tag';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
-import {type} from 'os';
+// import {type} from 'os';
 
 //je me connect a mon server via le protocol websocket
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -29,7 +28,10 @@ type Message = {
  */
 
 const Chat = ({show}: {show: boolean}) => {
-	const [messages, setMessages] = useState<Message[]>([]);
+	const storedMessages = localStorage.getItem('messages');
+	const initialMessages = storedMessages ? JSON.parse(storedMessages) : [];
+	const [messages, setMessages] = useState<Message[]>(initialMessages);
+	// Si il y avais des chose dans intialMessages alors je le met dans mon useState
 
 	useEffect(() => {
 		const subscription = wsClient.request({query: NewMessageSubscription}).subscribe({
@@ -38,8 +40,14 @@ const Chat = ({show}: {show: boolean}) => {
 				// reponse c'est la ou les reponse de notre server est stocker.
 				if (response.data) {
 					const newMessage = response.data.addmessage;
-					setMessages(prevMessages => [...prevMessages, newMessage] as Message[]);
-					// On copie les messages precedent dans prevMessages et on rajoute newMessage a l'interieur de ma variable messages
+					setMessages(prevMessages => {
+						const updatedMessages = [...prevMessages, newMessage];
+						// On copie les messages precedent dans prevMessages et on rajoute newMessage a l'interieur de ma variable messages
+						localStorage.setItem('messages', JSON.stringify(updatedMessages));
+						// Cette ligne c'est pour sauvegarder les messages meme apres le rechargement de la page
+						// On le stock dans un json et 'message' reprensente la cle de l'endroit ou est stocker le updatedMessages
+						return updatedMessages as Message[];
+					});
 				}
 			},
 			error(error) {

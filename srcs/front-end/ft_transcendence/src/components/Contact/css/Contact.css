@@ -11,6 +11,7 @@
 	box-shadow: 0 2px 4px rgba(236, 233, 233, 0.101);
 	z-index: 7;
 	opacity: 0; /* Définissez l'opacité initiale à 0 */
+	overflow: auto;
 	transition: opacity 0.5s ease;
   }
 
