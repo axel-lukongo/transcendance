@@ -1,5 +1,6 @@
 import React, { useEffect, useState, FC } from 'react';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
+import MyMessage from '../message/my_message_app';
 
 const CREATE_USER = gql`
   mutation CreateUser($input: CreateAuthenticationInput!) {
@@ -112,7 +113,7 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
-      <p>Accès au site car le session storage est initialisé</p>
+      <MyMessage />
     ) : (
       <>
         {!canCheck ? (
