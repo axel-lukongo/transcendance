@@ -15,7 +15,6 @@ export default function Chanel() {
 	return (
 		<div>
 			<React.Fragment>
-				<CreateChanelForm />
 				<UserChanelsRequests 
 					refetchChanels={refetchChanels}
 					handleChanelRefetch={handleChanelRefetch}

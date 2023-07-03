@@ -1,8 +1,12 @@
 import React from "react";
-import {} from "../../interfaces/interfaces"
+import { Chanel } from "../../interfaces/interfaces"
 import { useMutation } from "@apollo/client";
 
-export default function AddContactInChanel() {
+export interface ITmpProps {
+	chanel_id: number; 
+}
+
+export default function AddContactInChanel({ chanel_id }: ITmpProps) {
 
 
 	const handleClick = () => {
