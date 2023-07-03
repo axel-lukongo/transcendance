@@ -4,8 +4,9 @@
 
 type User {
   id: Int!
-  email: String!
   token: String!
+  is_connecting: Boolean!
+  email: String!
   intra_login: String!
   nickname: String!
   avatar: String
@@ -17,6 +18,7 @@ type Chanel {
   chanel_name: String
   chanel_size: Float
   max_users: Float
+  messages: [Message!]!
 }
 
 type Message {
@@ -42,29 +44,19 @@ type Contact {
   contact: User!
 }
 
-type UsersChanels {
-  user_id: Int!
-  chanel_id: Int!
-  pending: Boolean!
-  chanels: Chanel!
-}
-
 type Query {
   findAllUsers: [User!]!
-  findOneUserById(id: Int!): User!
-  findOneUserByIntraLogin(intra_login: String!): User!
+  findUserById(id: Int!): User!
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!
   Message_findOne_msg(id: Int!): Message!
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
-  chanelsRequest(user_id: Int!): [UsersChanels!]!
-  myChanels(user_id: Int!): [UsersChanels!]!
+  makeAuthentication(code: String!): User!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
@@ -76,22 +68,11 @@ type Mutation {
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
   deleteContact(id: Int!): Contact!
-  addUser(addUserChanel: AddUserChanel!): UsersChanels!
-  acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
-  deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
-}
-
-input CreateUserInput {
-  email: String!
-  token: String!
-  intra_login: String!
-  nickname: String!
-  avatar: String
+  createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
 }
 
 input UpdateUserInput {
   email: String
-  token: String
   intra_login: String
   nickname: String
   avatar: String
@@ -141,18 +122,12 @@ input UpdateContact {
   id: Int!
 }
 
-input AddUserChanel {
-  user_id: Int!
-  chanel_id: Int!
-  pending: Boolean
-}
-
-input UpdateChanelUserInput {
-  user_id: Int!
-  chanel_id: Int!
-  pending: Boolean
+input CreateAuthenticationInput {
+  email: String!
+  nickname: String!
+  avatar: String
 }
 
 type Subscription {
-  addmessage: Message!
+  addmessage(channel_id: Int!): Message!
 }

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Subscription } from '@nestjs/graphql';
 import { ChanelService } from './chanel.service';
 import { Chanel } from './entities/chanel.entity';
 import { CreateChanelInput } from './dto/create-chanel.input';
@@ -8,6 +8,7 @@ import { AddUserChanel } from '../user-chanels/dto/add-user-chanel.input';
 import { Message } from 'src/messages/entities/messages.entity';
 import { MessagesResolver } from '../messages/messages.resolver';
 import { CreateMessageInput } from '../messages/dto/create-messages.input';
+import { PubSub } from 'graphql-subscriptions';
 
 
 // const pubSub = new PubSub();
@@ -51,21 +52,25 @@ export class ChanelResolver {
 
 
 
+
 /** ici je vais cree une mutation pour cree un message en etant dans un chanel.
  * je vais ensuite y mettre une subscription afin de surveiller les messages qui seront cree via le chanel
  * et dans mon front j'aurais un abonnement qui m'affichera tous les messages de un chanel specifique
  */
-//   @ResolveField(() => [Message])
-//   async creat_messages(@Parent() chanel: Chanel,creatMsg: CreateMessageInput) {
-  	// const new_msg = this.messagesResolver.createMessage(creatMsg);
-	// pubSub.publish(NEW_MSG, {
-	// 	addmessage: new_message,
-	// });
+//   @Mutation(() => [Message])
+//   async createMessageChan(
+// 	@Args('chanelId', { type: () => Int }) chanelId: number,
+// 	@Args('createMessageInput') createMessageInput: CreateMessageInput) {
+// 	const new_msg = this.messagesResolver.createMessage(createMessageInput);
+// 	pubSub.publish(NEW_MSG, {
+// 		AddMessageChan: new_msg,
+// 	});
 //     return new_msg; 
 //   } 
 
+
 // @Subscription(() => Message)
-// 	addmessage(){
+// 	AddMessageChan(){
 // 	  return pubSub.asyncIterator(NEW_MSG);
 // 	}
 

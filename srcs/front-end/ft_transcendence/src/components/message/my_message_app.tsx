@@ -4,15 +4,27 @@ import '../../css/App.css';
 import '../../css/message.css';
 import Chat from './message';
 import CreatMsg from './creat_message';
+import Contact from '../Contact/Contact';
+import '../Contact/css/Contact.css'
 
-const Mymsg = () => {
+const MyMessage = () => {
 	const [showChat, setShowChat] = useState(false);
+	const [showContact, setShowContact] = useState(false);
 
 	const handleChatClick = () => {
 		if (showChat) {
 			setShowChat(false);
 		} else {
 			setShowChat(true);
+			setShowContact(false);
+		}
+	};
+	const handleContactClick = () => {
+		if (showContact) {
+			setShowContact(false);
+		} else {
+			setShowContact(true);
+			setShowChat(false);
 		}
 	};
 
@@ -28,11 +40,13 @@ const Mymsg = () => {
 			<div className='overlay7'></div>
 			<button className='back-button'></button>
 			<button className='message-button' onClick={handleChatClick}></button>
-			<button className='avatar-button'></button>
+			<button className='avatar-button' onClick={handleContactClick}></button>
+		
 			<Chat show={showChat} />
 			<CreatMsg show={showChat} />
+			<Contact show={showContact} />
 		</div>
 	);
 };
 
-export default Mymsg;
+export default MyMessage;

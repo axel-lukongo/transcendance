@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { CREATE_CHANEL } from './graphql/MutationsChanel'
 

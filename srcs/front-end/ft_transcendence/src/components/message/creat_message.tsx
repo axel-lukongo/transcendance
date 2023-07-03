@@ -32,8 +32,8 @@ const CreatMsg = ({show}: {show: boolean}) => {
 				},
 			});
 			console.log(response.data);
-			setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
-			setSenderId('');
+			// setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
+			// setSenderId('');
 		} catch (error) {
 			console.error(error);
 		}
