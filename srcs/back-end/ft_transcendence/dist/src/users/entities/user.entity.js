@@ -20,11 +20,15 @@ __decorate([
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], User.prototype, "token", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Boolean),
+    __metadata("design:type", Boolean)
+], User.prototype, "is_connecting", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], User.prototype, "token", void 0);
+], User.prototype, "email", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)

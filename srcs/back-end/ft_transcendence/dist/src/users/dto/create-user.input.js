@@ -20,10 +20,6 @@ __decorate([
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], CreateUserInput.prototype, "token", void 0);
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", String)
 ], CreateUserInput.prototype, "intra_login", void 0);
 __decorate([
     (0, graphql_1.Field)(),

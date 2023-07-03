@@ -1,34 +1,22 @@
-import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'prisma/prisma.service';
 export declare class UsersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(createUserInput: CreateUserInput): import(".prisma/client").Prisma.Prisma__UserClient<{
-        id: number;
-        email: string;
-        token: string;
-        intra_login: string;
-        nickname: string;
-        avatar: string;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         id: number;
-        email: string;
         token: string;
+        is_connecting: boolean;
+        email: string;
         intra_login: string;
         nickname: string;
         avatar: string;
     } & {})[]>;
-    findOneUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<{
+    findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: number;
-        email: string;
         token: string;
+        is_connecting: boolean;
+        email: string;
         intra_login: string;
         nickname: string;
         avatar: string;
@@ -38,10 +26,11 @@ export declare class UsersService {
         model: {};
         client: {};
     }>;
-    findOneUserByIntraLogin(intra_login: string): import(".prisma/client").Prisma.Prisma__UserClient<{
+    findUserByToken(token: string): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: number;
-        email: string;
         token: string;
+        is_connecting: boolean;
+        email: string;
         intra_login: string;
         nickname: string;
         avatar: string;
@@ -53,8 +42,9 @@ export declare class UsersService {
     }>;
     update(id: number, data: UpdateUserInput): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: number;
-        email: string;
         token: string;
+        is_connecting: boolean;
+        email: string;
         intra_login: string;
         nickname: string;
         avatar: string;
@@ -66,8 +56,9 @@ export declare class UsersService {
     }>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__UserClient<{
         id: number;
-        email: string;
         token: string;
+        is_connecting: boolean;
+        email: string;
         intra_login: string;
         nickname: string;
         avatar: string;

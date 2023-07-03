@@ -9,29 +9,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
-const path_1 = require("path");
-const apollo_1 = require("@nestjs/apollo");
 const users_module_1 = require("./users/users.module");
 const chanel_module_1 = require("./chanel/chanel.module");
 const messages_module_1 = require("./messages/messages.module");
+const apollo_1 = require("@nestjs/apollo");
 const contacts_module_1 = require("./contacts/contacts.module");
-const user_chanels_module_1 = require("./user-chanels/user-chanels.module");
+const auth_utils_1 = require("./utils/auth.utils");
+const path_1 = require("path");
+const authentication_module_1 = require("./authentication/authentication.module");
 let AppModule = exports.AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(auth_utils_1.AuthMiddleware)
+            .forRoutes({ path: '*', method: common_1.RequestMethod.ALL });
+    }
 };
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            graphql_1.GraphQLModule.forRoot({
-                autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schemas.gql'),
+            graphql_1.GraphQLModule.forRootAsync({
                 driver: apollo_1.ApolloDriver,
-                playground: true,
-                installSubscriptionHandlers: true,
+                useFactory: () => ({
+                    autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/schemas.gql'),
+                    playground: true,
+                    context: ({ req, res }) => ({ req, res }),
+                    installSubscriptionHandlers: true,
+                })
             }),
             users_module_1.UsersModule,
             chanel_module_1.ChanelModule,
             messages_module_1.MessagesModule,
             contacts_module_1.ContactsModule,
-            user_chanels_module_1.UserChanelsModule
+            authentication_module_1.AuthenticationModule
         ],
     })
 ], AppModule);

@@ -16,19 +16,14 @@ let UsersService = exports.UsersService = class UsersService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createUserInput) {
-        return this.prisma.user.create({
-            data: createUserInput
-        });
-    }
     findAll() {
         return this.prisma.user.findMany({});
     }
-    findOneUserById(id) {
+    findUserById(id) {
         return this.prisma.user.findUnique({ where: { id } });
     }
-    findOneUserByIntraLogin(intra_login) {
-        return this.prisma.user.findUnique({ where: { intra_login } });
+    findUserByToken(token) {
+        return this.prisma.user.findUnique({ where: { token } });
     }
     update(id, data) {
         return this.prisma.user.update({

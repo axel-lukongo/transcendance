@@ -14,25 +14,24 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const user_entity_1 = require("./entities/user.entity");
-const create_user_input_1 = require("./dto/create-user.input");
 const update_user_input_1 = require("./dto/update-user.input");
 let UsersResolver = exports.UsersResolver = class UsersResolver {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    createUser(createUserInput) {
-        return this.usersService.create(createUserInput);
-    }
-    findAll() {
+    findAllUsers(context) {
+        const { token } = context;
+        console.log('dans le resolveur', token);
+        if (!token || !this.usersService.findUserByToken(token)) {
+            throw new common_1.ForbiddenException('Invalid token');
+        }
         return this.usersService.findAll();
     }
-    findOneUserById(id) {
-        return this.usersService.findOneUserById(id);
-    }
-    findOneUserByIntraLogin(intra_login) {
-        return this.usersService.findOneUserByIntraLogin(intra_login);
+    findUserById(id) {
+        return this.usersService.findUserById(id);
     }
     updateUser(updateUserInput) {
         return this.usersService.update(updateUserInput.id, updateUserInput);
@@ -42,32 +41,19 @@ let UsersResolver = exports.UsersResolver = class UsersResolver {
     }
 };
 __decorate([
-    (0, graphql_1.Mutation)(() => user_entity_1.User),
-    __param(0, (0, graphql_1.Args)('createUserInput')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_input_1.CreateUserInput]),
-    __metadata("design:returntype", void 0)
-], UsersResolver.prototype, "createUser", null);
-__decorate([
     (0, graphql_1.Query)(() => [user_entity_1.User], { name: 'findAllUsers' }),
+    __param(0, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UsersResolver.prototype, "findAll", null);
+], UsersResolver.prototype, "findAllUsers", null);
 __decorate([
-    (0, graphql_1.Query)(() => user_entity_1.User, { name: 'findOneUserById' }),
+    (0, graphql_1.Query)(() => user_entity_1.User, { name: 'findUserById' }),
     __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], UsersResolver.prototype, "findOneUserById", null);
-__decorate([
-    (0, graphql_1.Query)(() => user_entity_1.User, { name: 'findOneUserByIntraLogin' }),
-    __param(0, (0, graphql_1.Args)('intra_login', { type: () => String })),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], UsersResolver.prototype, "findOneUserByIntraLogin", null);
+], UsersResolver.prototype, "findUserById", null);
 __decorate([
     (0, graphql_1.Mutation)(() => user_entity_1.User),
     __param(0, (0, graphql_1.Args)('updateUserInput')),

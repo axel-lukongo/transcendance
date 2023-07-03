@@ -6,10 +6,13 @@ export class User {
   id: number;
 
   @Field()
-  email: string;
+  token: string;
+
+  @Field(() => Boolean)
+  is_connecting: boolean;
 
   @Field()
-  token: string;
+  email: string;
 
   @Field()
   intra_login: string;
@@ -38,18 +41,3 @@ export class User {
   // @Field(() => [Message])
   // receiver: Message[];
 }
-
-/*
-model User {
-  id        Int             @id @default(autoincrement())
-  token     Int             @unique
-  nickname  String          @unique
-  avatar    String?
-  userPong  Pong[]          @relation("User1")
-  userPong2 Pong[]          @relation("User2")
-  chanels   Users_Chanels[]
-  own_chan  Chanel[]
-  sender    Message[]       @relation("Send")
-  receiver  Message[]       @relation("Receive")
-}
-*/
