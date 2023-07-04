@@ -2,6 +2,9 @@ import { sign } from 'jsonwebtoken';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+import axios from 'axios';
 
 export const generateAccessToken = (userId: number): string => {
   const secret = process.env.CLIENT_SECRET_BACKEND; // clé secrète pour la signature du token
@@ -11,9 +14,59 @@ export const generateAccessToken = (userId: number): string => {
   return sign(payload, secret, { expiresIn });
 };
 
+export const generateTwoFactorCode = (): string => {
+  const code = crypto.randomBytes(3).toString('hex').toUpperCase();
+  console.log('code mail :', code);
+  return code;
+};
+
 interface AuthenticatedRequest extends Request {
   userId?: number;
 }
+
+const getTemporaryEmail = async () => {
+  try {
+    const response = await axios.get('https://api.temp-mail.org/request/new/');
+    const { email } = response.data;
+    return email;
+  } catch (error) {
+    console.error('Error fetching temporary email:', error);
+    return null;
+  }
+};
+
+
+
+export const sendTwoFactorCodeByEmail = async (code: string, email: string) => {
+  const fromEmail = await getTemporaryEmail();
+
+  if (fromEmail) {
+    const transport = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: process.env.MAILTRAP_USERNAME,
+        pass: process.env.MAILTRAP_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: fromEmail,
+      to: email,
+      subject: 'Two-Factor Authentication Code',
+      text: `Your two-factor authentication code is: ${code}`,
+    };
+
+    try {
+      await transport.sendMail(mailOptions);
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
+}
+
+
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -44,3 +97,5 @@ export class AuthMiddleware implements NestMiddleware {
     next();
   }
 }
+
+

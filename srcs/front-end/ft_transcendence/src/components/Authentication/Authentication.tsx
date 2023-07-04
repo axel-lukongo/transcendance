@@ -1,10 +1,22 @@
 import React, { useEffect, useState, FC } from 'react';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import MyMessage from '../message/my_message_app';
 
 const CREATE_USER = gql`
   mutation CreateUser($input: CreateAuthenticationInput!) {
     createUser(createAuthenticationInput: $input) {
+      id
+      token
+      email
+      nickname
+      avatar
+    }
+  }
+`;
+
+const CHECK_2AF = gql`
+  query CheckTwoAuthenticationFactor($input: String!) {
+    checkTwoAuthenticationFactor(code: $input) {
       id
       token
       email
@@ -23,6 +35,8 @@ const Authentication: FC = () => {
   const [canCheck, setCanCheck] = useState(false);
   
   const [userExist, setUserExist] = useState(true);
+
+  const [user2fa, setUser2fa] = useState(false);
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      REQUEST                           */
@@ -41,6 +55,8 @@ const Authentication: FC = () => {
   `);
 
   const [createUser] = useMutation(CREATE_USER);
+
+  const [checkTwoAuthenticationFactor] = useQuery(CHECK_2AF);
 
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      HANDLE                            */
@@ -76,6 +92,24 @@ const Authentication: FC = () => {
    console.log(nickname.value, email.value, avatar.value);
   };
 
+
+  const handle2fa = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { verificationCode } = e.currentTarget;
+  
+    checkTwoAuthenticationFactor({
+      variables: {
+        input: verificationCode
+      }
+    }).then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
+        console.log('User created:', response.data.createUser);
+        sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
+      })
+      .catch((error: any) => {
+        console.error('Error creating user:', error);
+      });
+  };
+  
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      USE EFFECT                        */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -101,8 +135,10 @@ const Authentication: FC = () => {
   useEffect(() => {
     if (AuthenticationError) {
         setCanCheck(true);
-        if (AuthenticationError.message === "This user does not exist yet") 
-            setUserExist(false);
+        if (AuthenticationError.message === "To complete authentication, 2FA verification is required")
+          setUser2fa(true);
+        else if (AuthenticationError.message === "This user does not exist yet") 
+          setUserExist(false);
     }
   }, [AuthenticationError]);
 
@@ -120,15 +156,30 @@ return (
           <button onClick={handleRedirect}>SIGNIN</button>
         ) : (
           <>
-            {AuthenticationError && !userExist && (
+            {AuthenticationError && (
               <>
-                <h1>Malheureusement, tu n'as pas encore de profil enregistré sur notre site, je te propose d'en créer un !</h1>
-                <form onSubmit={handleCreateUser}>
-                  <input type="text" placeholder="Nickname" name="nickname" />
-                  <input type="text" placeholder="Email" name="email" />
-                  <input type="text" placeholder="Avatar" name="avatar" />
-                  <button type="submit">Send</button>
-                </form>
+                {!userExist && (
+                  <>
+                    {/* Affichage lorsque AuthenticationError est true et userExist est false */}
+                    <h1>Malheureusement, tu n'as pas encore de profil enregistré sur notre site, je te propose d'en créer un !</h1>
+                    <form onSubmit={handleCreateUser}>
+                      <input type="text" placeholder="Nickname" name="nickname" />
+                      <input type="text" placeholder="Email" name="email" />
+                      <input type="text" placeholder="Avatar" name="avatar" />
+                      <button type="submit">Send</button>
+                    </form>
+                  </>
+                )}
+                {user2fa && (
+                  <>
+                    {/* Affichage lorsque AuthenticationError est true et user2fa est true */}
+                    <h1>Authentification à double facteur requise</h1>
+                    <form onSubmit={handle2fa}>
+                      <input type="text" placeholder="Code de vérification" name="verificationCode" />
+                      <button type="submit">Valider</button>
+                    </form>
+                  </>
+                )}
               </>
             )}
           </>
@@ -137,6 +188,7 @@ return (
     )}
   </div>
 );
+
 
 }
 

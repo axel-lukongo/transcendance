@@ -10,6 +10,9 @@ export class User {
 
   @Field(() => Boolean)
   is_connecting: boolean;
+ 
+  @Field({ nullable: true })
+  tfa_code?: string;
 
   @Field()
   email: string;

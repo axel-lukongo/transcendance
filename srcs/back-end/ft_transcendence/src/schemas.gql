@@ -6,6 +6,7 @@ type User {
   id: Int!
   token: String!
   is_connecting: Boolean!
+  tfa_code: String
   email: String!
   intra_login: String!
   nickname: String!
@@ -54,6 +55,7 @@ type Query {
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
+  checkTwoAuthenticationFactor(code: String!): User!
 }
 
 type Mutation {
@@ -72,10 +74,6 @@ type Mutation {
 }
 
 input UpdateUserInput {
-  email: String
-  intra_login: String
-  nickname: String
-  avatar: String
   id: Int!
 }
 
