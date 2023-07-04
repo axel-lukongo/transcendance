@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {gql} from 'graphql-tag';
+import { gql } from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 // import {type} from 'os';
 
