@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FC } from 'react';
-import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import MyMessage from '../message/my_message_app';
 
 const CREATE_USER = gql`
@@ -26,6 +26,18 @@ const CHECK_2AF = gql`
   }
 `;
 
+const MAKE_AUTH= gql`
+  query MakeAuthentication($code: String!) {
+    makeAuthentication(code: $code) {
+      id
+      token
+      email
+      nickname
+      avatar
+    }
+  }
+`;
+
 const Authentication: FC = () => {
 
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -42,21 +54,11 @@ const Authentication: FC = () => {
 /*                      REQUEST                           */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
   
-  const [makeAuthenticationQuery, {data: AuthenticationData, error: AuthenticationError }] = useLazyQuery(gql`
-  query MakeAuthentication($code: String!) {
-    makeAuthentication(code: $code) {
-      id
-      token
-      email
-      nickname
-      avatar
-    }
-  }
-  `);
+  const [makeAuthenticationQuery, {data: AuthenticationData, error: AuthenticationError }] = useLazyQuery(MAKE_AUTH);
 
   const [createUser] = useMutation(CREATE_USER);
 
-  const [checkTwoAuthenticationFactor] = useQuery(CHECK_2AF);
+  const [checkTwoAuthenticationFactor] = useLazyQuery(CHECK_2AF);
 
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      HANDLE                            */
@@ -69,10 +71,9 @@ const Authentication: FC = () => {
 
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { nickname, email, avatar } = e.currentTarget;
+    const { nickname, avatar } = e.currentTarget;
     
     const user_info = {
-      email: email.value,
       nickname: nickname.value,
       avatar: avatar.value
     };
@@ -89,7 +90,8 @@ const Authentication: FC = () => {
     .catch(error => {
       console.error('Error creating user:', error);
     });
-   console.log(nickname.value, email.value, avatar.value);
+
+   console.log(nickname.value,  avatar.value);
   };
 
 
@@ -97,17 +99,14 @@ const Authentication: FC = () => {
     e.preventDefault();
     const { verificationCode } = e.currentTarget;
   
-    checkTwoAuthenticationFactor({
-      variables: {
-        input: verificationCode
-      }
-    }).then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        console.log('User created:', response.data.createUser);
+    checkTwoAuthenticationFactor({ variables: { input: verificationCode.value } })
+    .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
+        console.log('User created via 2fa:', response.data.checkTwoAuthenticationFactor);
         sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
-      })
-      .catch((error: any) => {
+    })
+    .catch((error: any) => {
         console.error('Error creating user:', error);
-      });
+    });
   };
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -136,9 +135,14 @@ const Authentication: FC = () => {
     if (AuthenticationError) {
         setCanCheck(true);
         if (AuthenticationError.message === "To complete authentication, 2FA verification is required")
-          setUser2fa(true);
+         {
+          console.log("ici 2fa");
+           setUser2fa(true);
+         }
         else if (AuthenticationError.message === "This user does not exist yet") 
+        {
           setUserExist(false);
+        }
     }
   }, [AuthenticationError]);
 
@@ -164,7 +168,6 @@ return (
                     <h1>Malheureusement, tu n'as pas encore de profil enregistré sur notre site, je te propose d'en créer un !</h1>
                     <form onSubmit={handleCreateUser}>
                       <input type="text" placeholder="Nickname" name="nickname" />
-                      <input type="text" placeholder="Email" name="email" />
                       <input type="text" placeholder="Avatar" name="avatar" />
                       <button type="submit">Send</button>
                     </form>

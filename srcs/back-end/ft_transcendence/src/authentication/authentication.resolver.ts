@@ -11,14 +11,15 @@ import { generateTwoFactorCode, sendTwoFactorCodeByEmail} from 'src/utils/auth.u
 export class AuthenticationResolver {
 
   private intraLogin: string;
+  private email: string;
   private user: User;
   constructor(private readonly authService: AuthenticationService, private readonly userService: UsersService) {}
 
   @Mutation(() => User)
   async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
-    if (this.intraLogin) {
+    if (this.intraLogin && this.email) {
     try {
-        const createUserInput: CreateUserInput = { ...createAuthenticationInput, intra_login: this.intraLogin };
+        const createUserInput: CreateUserInput = { ...createAuthenticationInput, intra_login: this.intraLogin, email: this.email };
         return await this.authService.create(createUserInput);
       } 
       catch (error) {
@@ -53,17 +54,20 @@ export class AuthenticationResolver {
     }
 
     this.intraLogin = profileResponse.data.login;
+    this.email = profileResponse.data.email;
     this.user = await this.authService.findUserByIntraLogin(this.intraLogin);
 
     if (!this.user) {
-      return { error: "This user does not exist yet" };
+      throw new Error("This user does not exist yet");
+      // return { message: "This user does not exist yet" };
     } 
     else if (this.user.tfa_code) {
       const tfa_code = generateTwoFactorCode();
       const updatedUser = await this.userService.update(this.user.id, {id : this.user.id, tfa_code });
       sendTwoFactorCodeByEmail(tfa_code, this.user.email);
       this.user = updatedUser;
-      return { error: "To complete authentication, 2FA verification is required" };
+      throw new Error("To complete authentication, 2FA verification is required")
+      // return { error: "To complete authentication, 2FA verification is required" };
       }
     return this.user;
   }
@@ -78,17 +82,3 @@ export class AuthenticationResolver {
     }
   }
 }
-
-
-// const verifyTwoFactorCode = (enteredCode: string, storedCode: string): boolean => {
-//   return enteredCode === storedCode;
-// };
-
-// const isTwoFactorCodeValid = verifyTwoFactorCode(enteredCode, session.twoFactorCode);
-
-// if (isTwoFactorCodeValid) {
-//   // Authentification à double facteur réussie
-//   // Continuer avec le reste de la logique d'authentification
-// } else {
-//   throw new Error('Invalid two-factor authentication code');
-// }

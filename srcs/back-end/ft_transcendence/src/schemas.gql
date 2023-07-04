@@ -121,7 +121,6 @@ input UpdateContact {
 }
 
 input CreateAuthenticationInput {
-  email: String!
   nickname: String!
   avatar: String
 }
