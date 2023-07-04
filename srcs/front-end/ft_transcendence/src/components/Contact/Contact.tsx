@@ -6,7 +6,8 @@ import RefuseContact from "./buttons/RefuseContact";
 import AcceptChanel from "../Chanel/buttons/AcceptChanel";
 
 
-export default function Contact() {
+
+const Contact = ({show}: {show: boolean}) => {
 
 	const [refetchProp, setRefetch] = useState(false);
 
@@ -14,8 +15,8 @@ export default function Contact() {
 		setRefetch(prevValue => !prevValue);
 	}
 
-	return (<div>
-			<p>Ici</p>
+	return (
+	<div className={`Contact_pad ${show ? 'Contact_show' : ''}`}>
 			<React.Fragment>
 				<FriendsRequest 
 					refetchContact={handleRefetch}
@@ -29,3 +30,5 @@ export default function Contact() {
 			
 	</div>);
 }
+
+export default Contact;

@@ -6,9 +6,6 @@ export class CreateUserInput {
   email: string;
 
   @Field()
-  token: string;
-
-  @Field()
   intra_login: string;
 
   @Field()
