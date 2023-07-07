@@ -3,7 +3,6 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import * as crypto from 'crypto';
-import * as nodemailer from 'nodemailer';
 
 export const generateAccessToken = (userId: number): string => {
   const secret = process.env.CLIENT_SECRET_BACKEND; // clé secrète pour la signature du token
@@ -20,37 +19,6 @@ export const generateTwoFactorCode = (): string => {
 
 interface AuthenticatedRequest extends Request {
   userId?: number;
-}
-
-
-export const sendTwoFactorCodeByEmail = async (code: string, email: string) => {
-  const fromEmail = process.env.EMAIL_2AF
-  console.log(email);
-  console.log(process.env.EMAIL_2AF_PASS);
-
-  if (fromEmail) {
-    const transport = nodemailer.createTransport({
-      service:'gmail',
-      auth: {
-        user: process.env.EMAIL_2AF,
-        pass: process.env.EMAIL_2AF_PASS
-      }
-    });
-
-    const mailOptions = {
-      from: fromEmail,
-      to: email,
-      subject: 'Two-Factor Authentication Code',
-      text: `Your two-factor authentication code is: ${code}`,
-    };
-
-    try {
-      await transport.sendMail(mailOptions);
-      console.log('Email sent successfully');
-    } catch (error) {
-      console.error('Error sending email:', error);
-    }
-  }
 }
 
 

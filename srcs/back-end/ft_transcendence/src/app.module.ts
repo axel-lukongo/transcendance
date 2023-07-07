@@ -37,6 +37,7 @@ import { ContactsModule } from './contacts/contacts.module';
 import 	{AuthMiddleware} from './utils/auth.utils'
 import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { MailingModule } from './authentication/mailing/mailing.module';
 
 @Module({
 	imports: [
@@ -49,6 +50,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 				installSubscriptionHandlers: true, 
 			})
         }),
+		MailingModule,
 		UsersModule,
 		ChanelModule,
 		MessagesModule,

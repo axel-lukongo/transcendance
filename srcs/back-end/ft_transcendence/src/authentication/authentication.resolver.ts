@@ -3,9 +3,10 @@ import { User } from 'src/users/entities/user.entity';
 import { CreateAuthenticationInput } from './dto/create-authentication.input';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { AuthenticationService } from './authentication.service';
-import axios, { AxiosResponse } from 'axios';
 import { UsersService } from 'src/users/users.service';
-import { generateTwoFactorCode, sendTwoFactorCodeByEmail} from 'src/utils/auth.utils';
+import { generateTwoFactorCode} from 'src/utils/auth.utils';
+import axios, { AxiosResponse } from 'axios';
+import { MailingService } from './mailing/mailing.service';
 
 @Resolver()
 export class AuthenticationResolver {
@@ -13,7 +14,10 @@ export class AuthenticationResolver {
   private intraLogin: string;
   private email: string;
   private user: User;
-  constructor(private readonly authService: AuthenticationService, private readonly userService: UsersService) {}
+  constructor(
+    private readonly authService: AuthenticationService, 
+    private readonly userService: UsersService,
+    private readonly mailingService: MailingService) {}
 
   @Mutation(() => User)
   async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
@@ -38,8 +42,8 @@ export class AuthenticationResolver {
       const response = await axios.post('https://api.intra.42.fr/oauth/token', {
         grant_type: 'authorization_code',
         code: code,
-        client_id: process.env.CLIENT_ID_API_42,
-        client_secret: process.env.CLIENT_SECRET_API_42,
+        client_id: process.env.CLIENT_ID_42_API,
+        client_secret: process.env.CLIENT_SECRET_42_API,
         redirect_uri: process.env.WEBSITE_URL,
       });
 
@@ -64,7 +68,7 @@ export class AuthenticationResolver {
     else if (this.user.tfa_code) {
       const tfa_code = generateTwoFactorCode();
       const updatedUser = await this.userService.update(this.user.id, {id : this.user.id, tfa_code });
-      sendTwoFactorCodeByEmail(tfa_code, this.user.email);
+      this.mailingService.sendMail(this.user.email, tfa_code);
       this.user = updatedUser;
       throw new Error("To complete authentication, 2FA verification is required")
       // return { error: "To complete authentication, 2FA verification is required" };

@@ -59,6 +59,7 @@ type Query {
 }
 
 type Mutation {
+  sendTwoFactorCodeByEmail(email: String!, code: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
