@@ -51,7 +51,7 @@ const Authentication: FC = () => {
 
   const [user2fa, setUser2fa] = useState(false);
   
-  const [avatarSuccess, setAvatarSucces] = useState(false);
+  // const [avatarSuccess, setAvatarSucces] = useState(false);
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      REQUEST                           */
@@ -113,34 +113,34 @@ const Authentication: FC = () => {
     });
   };
 
-  const handleAvatarOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+  // const handleAvatarOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files;
   
-    if (files && files.length > 0) {
-      const file = files[0];
-      const fileType = file.type;
-      const fileSize = file.size;
-      const maxSize = 2 * 1024 * 1024; // Taille maximale du fichier en octets (ex. 2 Mo) 
+  //   if (files && files.length > 0) {
+  //     const file = files[0];
+  //     const fileType = file.type;
+  //     const fileSize = file.size;
+  //     const maxSize = 2 * 1024 * 1024; // Taille maximale du fichier en octets (ex. 2 Mo) 
   
-      // Vérifications du format et de la taille du fichier
-      if (fileType === 'image/png' || fileType === 'image/jpeg') {
-        if (fileSize <= maxSize) {
-          // Fichier valide, vous pouvez effectuer d'autres traitements ici
-          setAvatarSucces(true);
-          console.log('Fichier valide :', file);
-        } 
-        else{
-          setAvatarSucces(false);
-          console.error('La taille du fichier dépasse la limite maximale.');
-        }
-      } 
-      else
-      {
-        setAvatarSucces(false);
-        console.error('Le format de fichier sélectionné n\'est pas pris en charge.');
-      }
-    }
-  };
+  //     // Vérifications du format et de la taille du fichier
+  //     if (fileType === 'image/png' || fileType === 'image/jpeg') {
+  //       if (fileSize <= maxSize) {
+  //         // Fichier valide, vous pouvez effectuer d'autres traitements ici
+  //         setAvatarSucces(true);
+  //         console.log('Fichier valide :', file);
+  //       } 
+  //       else{
+  //         setAvatarSucces(false);
+  //         console.error('La taille du fichier dépasse la limite maximale.');
+  //       }
+  //     } 
+  //     else
+  //     {
+  //       setAvatarSucces(false);
+  //       console.error('Le format de fichier sélectionné n\'est pas pris en charge.');
+  //     }
+  //   }
+  // };
     
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -200,8 +200,10 @@ const Authentication: FC = () => {
                     <h1>Malheureusement, tu n'as pas encore de profil enregistré sur notre site, je te propose d'en créer un !</h1>
                     <form onSubmit={handleCreateUser}>
                       <input type="text" placeholder="Nickname" name="nickname" />
-                      <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
-                      <button type="submit" disabled={avatarSuccess ? false : true}>Envoyer</button>
+                      <input type="text" placeholder="Avatar" name="avatar" />
+                      <button type="submit">Send</button>
+                      {/* <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
+                      <button type="submit" disabled={avatarSuccess ? false : true}>Envoyer</button> */}
                     </form>
                   </>
                 )}

@@ -14,7 +14,7 @@ model User {
 	id					Int             @id @default(autoincrement())
 	token				String?         @unique
 	is_connecting		Boolean?		@default(true)
-	tfa_code			String?			@default("test")
+	tfa_code			String?
 	email				String          @unique
 	intra_login			String			@unique
 	nickname			String          @unique

@@ -32,6 +32,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import App from './App';
@@ -66,7 +67,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <ApolloProvider client={apollo_client}>
+    <BrowserRouter>
       <App />
+    </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>
 );
