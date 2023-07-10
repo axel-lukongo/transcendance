@@ -48,8 +48,12 @@
   flex-direction: column;
   gap: 38px;
   min-width: 612px;
-  padding: 21px 30px;
-  position: relative;
+  padding: 20px 3px;
+  left: 50%;
+  top:400px;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  position: fixed;
 }
 
 .create-user-form .form-title {
@@ -96,37 +100,39 @@
   display: flex;
   flex-direction: column;
   left: 0;
-  overflow: hidden;
-  padding: 10px 15px;
+  /* overflow: hidden; */
+  padding: 10px 15px 15px 15px;
   position: absolute;
+  height: 20px;
   top: 27px;
   width: 301px;
 }
 
 .create-user-form .form-input-text {
   color: #d2d2d2;
+  background-color: transparent; /* Ajoutez cette ligne */
   font-family: "Inter-Regular", Helvetica;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 28px;
-  margin-top: -1px;
+  line-height: 38px;
+  right: 13px;
+  top: -7px;
+  /* height: 30px; */
+  /* margin-top: -1px; */
   position: relative;
   white-space: nowrap;
-  width: fit-content;
+  width: 324px;
+  border: none; /* Ajoutez cette ligne */
+
 }
 
 .create-user-form .form-avatar {
-  height: 83px !important;
+  height: 20px !important;
   min-width: 301px !important;
   width: unset !important;
 }
 
-.create-user-form .avatar-field {
-  height: 83px !important;
-  min-width: 301px !important;
-  width: unset !important;
-}
 
 .create-user-form .submit-button {
   background-color: unset;
@@ -138,3 +144,5 @@
   font-weight: 600;
   margin-right: -11px;
 }
+
+

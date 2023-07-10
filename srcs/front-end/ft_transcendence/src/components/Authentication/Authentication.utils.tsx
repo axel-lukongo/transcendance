@@ -38,12 +38,12 @@ export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
         </div>
         <div className="form-field">
           <label className="form-label">Avatar</label>
-          <div className="form-input form-avatar">
+          <div className="form-input form-avatar" >
             <input type="file" accept="image/*" className="form-input-avatar" />
           </div>
         </div>
-        <button className="submit-button" type="submit">Submit</button>
       </form>
+        <button className="submit-button" type="submit">Submit</button>
     </div>
   );
 };
