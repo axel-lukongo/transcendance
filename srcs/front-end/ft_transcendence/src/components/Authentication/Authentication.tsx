@@ -51,7 +51,6 @@ const Authentication: FC = () => {
 
   const [user2fa, setUser2fa] = useState(false);
   
-  // const [avatarSuccess, setAvatarSucces] = useState(false);
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      REQUEST                           */
@@ -81,6 +80,7 @@ const Authentication: FC = () => {
       nickname: nickname.value,
       avatar: avatar.value
     };
+
       
     createUser({
       variables: {
@@ -189,34 +189,6 @@ return (
 
 export default Authentication;
 
-  // const handleAvatarOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = event.target.files;
-  
-  //   if (files && files.length > 0) {
-  //     const file = files[0];
-  //     const fileType = file.type;
-  //     const fileSize = file.size;
-  //     const maxSize = 2 * 1024 * 1024; // Taille maximale du fichier en octets (ex. 2 Mo) 
-  
-  //     // Vérifications du format et de la taille du fichier
-  //     if (fileType === 'image/png' || fileType === 'image/jpeg') {
-  //       if (fileSize <= maxSize) {
-  //         // Fichier valide, vous pouvez effectuer d'autres traitements ici
-  //         setAvatarSucces(true);
-  //         console.log('Fichier valide :', file);
-  //       } 
-  //       else{
-  //         setAvatarSucces(false);
-  //         console.error('La taille du fichier dépasse la limite maximale.');
-  //       }
-  //     } 
-  //     else
-  //     {
-  //       setAvatarSucces(false);
-  //       console.error('Le format de fichier sélectionné n\'est pas pris en charge.');
-  //     }
-  //   }
-  // };
+
 
 //  <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
-// <button type="submit" disabled={avatarSuccess ? false : true}>Envoyer</button>  
