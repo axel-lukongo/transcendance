@@ -2,15 +2,15 @@
 // import Chanel from './components/Chanel/Chanel';
 // import Contact from './components/Contact/Contact';
 // import ListContact from './components/Contact/ListContact';
-// import MyMessage from './components/message/my_message_app';
+// import Home from './components/message/my_message_app';
 import Authentication from './components/Authentication/Authentication';
+import './css/App.css'
 
 const App = () => {
 	return (
-		<Authentication />
-		// <MyMessage />
-		// <Chanel/>
-		// <Contact/>
+		<div className='bg'>
+			<Authentication />
+		</div>
 	);
 };
 

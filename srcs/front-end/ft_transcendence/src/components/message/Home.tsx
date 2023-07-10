@@ -7,7 +7,7 @@ import Contact from '../Contact/Contact';
 import { Route, Routes, Link} from 'react-router-dom';
 
 
-const MyMessage = () => {
+const Home = () => {
   const [showChat, setShowChat] = useState(false);
   const [showContact, setShowContact] = useState(false);
 
@@ -31,7 +31,6 @@ const MyMessage = () => {
 
   return (
       <div className='my_message_app'>
-        <div className='bg'></div>
         <div className='overlay1'></div>
         <div className='overlay2'></div>
         <div className='overlay3'></div>
@@ -52,7 +51,7 @@ const MyMessage = () => {
 		<Contact show={showContact} />
 
     <Routes>
-          {/* <Route path='*' 			Component={MyMessage} /> */}
+          {/* <Route path='*' 			Component={Home} /> */}
 		  {/* <Route path="/contact"	Component={() => <Contact show={showContact} />} /> */}
 		  <Route path="/creatMsg"	Component={() => <CreatMsg show={showContact} />} />
     </Routes> 
@@ -61,4 +60,4 @@ const MyMessage = () => {
   );
 };
 
-export default MyMessage;
+export default Home;

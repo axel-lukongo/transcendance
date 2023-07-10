@@ -46,13 +46,15 @@ export class AuthenticationResolver {
         client_secret: process.env.CLIENT_SECRET_42_API,
         redirect_uri: process.env.WEBSITE_URL,
       });
-
+      console.log('ici apres premiere requete');
+      
       const access_token = response.data.access_token;
       profileResponse = await axios.get('https://api.intra.42.fr/v2/me', {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
+      console.log('ici apres deuxieme requete');
     } catch (error) {
       return { error: "42 API is not accessible. Please try again in a few minutes." };
     }
