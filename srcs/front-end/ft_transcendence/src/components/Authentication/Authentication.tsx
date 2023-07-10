@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FC } from 'react';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import Home from '../message/Home';
-import { SigninButton } from './Authentication.utils';
+import { SigninButton, CreateUserForm } from './Authentication.utils';
 
 const CREATE_USER = gql`
   mutation CreateUser($input: CreateAuthenticationInput!) {
@@ -153,7 +153,7 @@ const Authentication: FC = () => {
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      RETURN                            */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
- return (
+return (
   <div>
     {sessionStorage.getItem('user') ? (
       <Home />
@@ -166,14 +166,7 @@ const Authentication: FC = () => {
             {AuthenticationError && (
               <>
                 {!userExist && (
-                  <>
-                    <h1>Malheureusement, tu n'as pas encore de profil enregistré sur notre site, je te propose d'en créer un !</h1>
-                    <form onSubmit={handleCreateUser}>
-                      <input type="text" placeholder="Nickname" name="nickname" />
-                      <input type="text" placeholder="Avatar" name="avatar" />
-                      <button type="submit">Send</button>
-                    </form>
-                  </>
+                  <CreateUserForm onSubmit={handleCreateUser} />
                 )}
                 {user2fa && (
                   <>
@@ -191,7 +184,7 @@ const Authentication: FC = () => {
       </>
     )}
   </div>
- );
+);
 }
 
 export default Authentication;

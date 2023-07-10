@@ -1,36 +1,4 @@
-/* .SignIn-Button {
-  align-items: center;
-  box-shadow: 0px 14px 14px #00000040;
-  display: flex;
-  height: 11%;
-  top: 70%;
-  justify-content: space-around;
-  padding: 14px;
-  position: fixed;
-  width: 25%;
-  border-radius: 10px;
-  left: 37%;
-  background-color: rgba(23, 24, 110, 0.573); 
-  transition: transform 0.3s ease-in-out; 
-}
-.SignIn-Button:hover{
-	transform: scale(1.1);
-  }
 
-.SignIn-Button .SignIn-Text {
-  color: #c865db;
-  font-family: "Azeret Mono-SemiBoldItalic", Helvetica;
-  font-size: 5vw; 
-  font-style: italic;
-  font-weight: 4em; 
-  letter-spacing: 0;
-  line-height: normal;
-  position: fixed;
-  text-align: center;
-  white-space: nowrap;
-  width: 20%;
-  transform: scale(1.1);
-} */
 .SignIn-Button {
   align-items: center;
   box-shadow: 0px 14px 14px #00000040;
@@ -71,4 +39,102 @@
   width: 100%;
   transform: scale(1.1);
   transform-origin: center; /* Ajouter cette ligne */
+}
+.create-user-form {
+  align-items: center;
+  background-color: #14245e80;
+  border: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  min-width: 612px;
+  padding: 21px 30px;
+  position: relative;
+}
+
+.create-user-form .form-title {
+  color: #ffd27d;
+  font-family: "Orbitron-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  height: 56px;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  width: 552px;
+}
+
+.create-user-form .form-field {
+  border: 0px none;
+  box-shadow: 0px 4px 4px #00000040;
+  height: 83px;
+  min-width: 301px;
+  position: relative;
+}
+
+.create-user-form .form-label {
+  color: #ffd27d;
+  font-family: "Orbitron-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 301px;
+}
+
+.create-user-form .form-input {
+  align-items: flex-start;
+  background-color: #66818980;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  overflow: hidden;
+  padding: 10px 15px;
+  position: absolute;
+  top: 27px;
+  width: 301px;
+}
+
+.create-user-form .form-input-text {
+  color: #d2d2d2;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.create-user-form .form-avatar {
+  height: 83px !important;
+  min-width: 301px !important;
+  width: unset !important;
+}
+
+.create-user-form .avatar-field {
+  height: 83px !important;
+  min-width: 301px !important;
+  width: unset !important;
+}
+
+.create-user-form .submit-button {
+  background-color: unset;
+  border: none;
+  border-color: unset;
+  color: #ffd27d;
+  font-family: "Orbitron-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: -11px;
 }
