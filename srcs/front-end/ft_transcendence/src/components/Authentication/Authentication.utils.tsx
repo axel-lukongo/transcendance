@@ -104,7 +104,7 @@ export const TwoFactorAuth = ({ onSubmit }: PropsTfaCode): JSX.Element => {
 
   return (
     <div className="tfa-form">
-      <h1 className="form-title">Authentification à double facteur requise</h1>
+      <h1 className="tfa-form-title">Authentification à double facteur requise</h1>
       <form onSubmit={handleSubmit}>
         <div className="tfa-form-input">
           <input

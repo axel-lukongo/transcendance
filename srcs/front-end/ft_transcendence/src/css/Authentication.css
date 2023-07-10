@@ -48,7 +48,7 @@
   border: 1px solid #000000;
   display: flex;
   flex-direction: column;
-  gap: 38px;
+  /* gap: -10px; */
   min-width: 612px;
   padding: 20px 3px;
   left: 50%;
@@ -65,10 +65,10 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  left: 0;
+  /* left: 0; */
   /* overflow: hidden; */
   padding: 10px 15px 15px 15px;
-  position: absolute;
+  position: center;
   height: 20px;
   top: 27px;
   width: 301px;
@@ -90,8 +90,39 @@
   white-space: nowrap;
   width: 324px;
   border: none; /* Ajoutez cette ligne */
+}
+
+.tfa-form .tfa-form-title {
+  color: #ffd27d;
+  font-family: "Orbitron-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  height: 56px;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  width: 552px;
+}
+
+.tfa-form .submit-button {
+  background-color: unset;
+  border: none;
+  border-color: unset;
+  color: #ffd27d;
+  font-family: "Orbitron-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: -11px;
+}
+
+.submit-button:hover {
+  transform: scale(1.1);
+  transform-origin: center; /* Centre la transformation au point d'origine */
 
 }
+
 
 /************/
 .create-user-form {
@@ -197,5 +228,6 @@
   font-weight: 600;
   margin-right: -11px;
 }
+
 
 
