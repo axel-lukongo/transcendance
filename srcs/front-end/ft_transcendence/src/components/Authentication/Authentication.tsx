@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FC } from 'react';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import Home from '../message/Home';
-import { SigninButton, CreateUserForm } from './Authentication.utils';
+import { SigninButton, CreateUserForm, TwoFactorAuth } from './Authentication.utils';
 
 const CREATE_USER = gql`
   mutation CreateUser($input: CreateAuthenticationInput!) {
@@ -170,11 +170,7 @@ return (
                 )}
                 {user2fa && (
                   <>
-                    <h1>Authentification à double facteur requise</h1>
-                    <form onSubmit={handle2fa}>
-                      <input type="text" placeholder="Code de vérification" name="verificationCode" />
-                      <button type="submit">Valider</button>
-                    </form>
+                    <TwoFactorAuth onSubmit={handle2fa} />
                   </>
                 )}
               </>
