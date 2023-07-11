@@ -88,24 +88,23 @@ const Authentication: FC = () => {
       }
     })
     .then(response => {
-      console.log('User created:', response.data.createUser);
+      // console.log('User created:', response.data.createUser);
       sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
     })
     .catch(error => {
       console.error('Error creating user:', error);
     });
 
-   console.log(nickname.value,  avatar.value);
   };
 
 
   const handle2fa = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { verificationCode } = e.currentTarget;
+    const { code } = e.currentTarget;
   
-    checkTwoAuthenticationFactor({ variables: { input: verificationCode.value } })
+    checkTwoAuthenticationFactor({ variables: { input: code.value } })
     .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        console.log('User created via 2fa:', response.data.checkTwoAuthenticationFactor);
+        // console.log('User created via 2fa:', response.data.checkTwoAuthenticationFactor);
         sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
     })
     .catch((error: any) => {
@@ -121,7 +120,7 @@ const Authentication: FC = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlCode = urlParams.get('code');
     if (urlCode) {
-      console.log(urlCode);
+      // console.log(urlCode);
       makeAuthenticationQuery({ variables: { code: urlCode } });
       window.history.replaceState(null, '', window.location.pathname);
     }
@@ -130,7 +129,7 @@ const Authentication: FC = () => {
   useEffect(() => {
     if (AuthenticationData) {
         setCanCheck(true);
-      console.log(AuthenticationData);
+      // console.log(AuthenticationData);
       sessionStorage.setItem('user', JSON.stringify(AuthenticationData));
     }
   }, [AuthenticationData]);
@@ -140,7 +139,6 @@ const Authentication: FC = () => {
         setCanCheck(true);
         if (AuthenticationError.message === "To complete authentication, 2FA verification is required")
          {
-          console.log("ici 2fa");
            setUser2fa(true);
          }
         else if (AuthenticationError.message === "This user does not exist yet") 
@@ -184,7 +182,3 @@ return (
 }
 
 export default Authentication;
-
-
-
-//  <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />

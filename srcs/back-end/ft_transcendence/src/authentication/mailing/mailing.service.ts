@@ -9,8 +9,6 @@ export class MailingService {
   
   private async setTransport() {
     const OAuth2 = google.auth.OAuth2;
-    console.log('id :', process.env.CLIENT_ID_GMAIL_API);
-    console.log('secret :', process.env.CLIENT_SECRET_GMAIL_API);
     const oauth2Client = new OAuth2(
       process.env.CLIENT_ID_GMAIL_API,
       process.env.CLIENT_SECRET_GMAIL_API,
@@ -56,7 +54,7 @@ export class MailingService {
       };
   
       const result = await transport.sendMail(mailOptions);
-      console.log('Email sent successfully:', result);
+      // console.log('Email sent successfully:', result);
     } catch (error) {
       console.error('Error sending email:', error);
     }
