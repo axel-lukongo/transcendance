@@ -1,6 +1,6 @@
 import React, { useEffect, useState, FC } from 'react';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import Home from '../Home';
+import Home from '../Home/Home';
 import { SigninButton, CreateUserForm, TwoFactorAuth } from './Authentication.utils';
 
 const CREATE_USER = gql`

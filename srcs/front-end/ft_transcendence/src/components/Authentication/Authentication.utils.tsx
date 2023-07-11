@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "../../css/Authentication.css";
+import "./Authentications.css"
 
 
 interface PropsSignIn {

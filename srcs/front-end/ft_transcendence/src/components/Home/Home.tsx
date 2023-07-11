@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import '../css/Home.css';
-import '../css/message.css';
-import Chat from './message/message';
-import CreatMsg from './message/creat_message';
-import Contact from './Contact/Contact';
+import './Home.css';
+import '../message/messages.css';
+import Chat from '../message/message';
+import CreatMsg from '../message/creat_message';
+import Contact from '../Contact/Contact';
 import { Route, Routes, Link} from 'react-router-dom';
 
 // This component is call in authentification
@@ -32,13 +32,13 @@ const Home = () => {
 
   return (
       <div className='my_message_app'>
-        <div className='overlay1'></div>
-        <div className='overlay2'></div>
-        <div className='overlay3'></div>
-        <div className='overlay4'></div>
-        <div className='overlay5'></div>
-        <div className='overlay6'></div>
-        <div className='overlay7'></div>
+        <div className='overlay1'></div> { /* la grande case qui englobe les autres case */ }
+        <div className='overlay2'></div> { /* la case tout en bas */ }
+        <div className='overlay3'></div> { /* la case du milieu */ }
+        <div className='overlay4'></div> { /* la case violet en haut */ }
+        <div className='overlay5'></div> { /* la case pour le avatar*/ }
+        <div className='overlay6'> nickname: </div> { /* la case du nickname*/ }
+        <div className='overlay7'></div> { /* la case du mail*/ }
         <button className='back-button'></button>
         <Link to="/message">
           <button className='message-button' onClick={handleChatClick}></button>

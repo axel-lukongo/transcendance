@@ -4,7 +4,7 @@
 // import ListContact from './components/Contact/ListContact';
 // import Home from './components/message/my_message_app';
 import Authentication from './components/Authentication/Authentication';
-import './css/Home.css'
+import './components/Home/Home.css'
 
 const App = () => {
 	return (
