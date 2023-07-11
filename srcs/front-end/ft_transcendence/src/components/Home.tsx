@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import '../../css/App.css';
-import '../../css/message.css';
-import Chat from './message';
-import CreatMsg from './creat_message';
-import Contact from '../Contact/Contact';
+import '../css/Home.css';
+import '../css/message.css';
+import Chat from './message/message';
+import CreatMsg from './message/creat_message';
+import Contact from './Contact/Contact';
 import { Route, Routes, Link} from 'react-router-dom';
 
+// This component is call in authentification
 
 const Home = () => {
   const [showChat, setShowChat] = useState(false);

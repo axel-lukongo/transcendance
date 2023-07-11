@@ -15,7 +15,8 @@ const createMsg = gql`
 `;
 
 const CreatMsg = ({show}: {show: boolean}) => {
-	const [SenderId, setSenderId] = useState('');
+	const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
+	const userNickname = JSON.parse(sessionStorage.getItem('user') || '')?.nickname;
 	const [Content, setContent] = useState('');
 	const [ChanId, setChanId] = useState('');
 	const [creatMsg] = useMutation(createMsg);
@@ -25,15 +26,14 @@ const CreatMsg = ({show}: {show: boolean}) => {
 			const response = await creatMsg({
 				variables: {
 					createMsgInput: {
-						sender_id: parseInt(SenderId),
-						content: Content,
+						sender_id: userId,
+						content: userNickname + ": " + Content,
 						channel_id: parseInt(ChanId),
 					},
 				},
 			});
 			console.log(response.data);
-			// setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
-			// setSenderId('');
+			setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
 		} catch (error) {
 			console.error(error);
 		}
@@ -41,10 +41,6 @@ const CreatMsg = ({show}: {show: boolean}) => {
 
 	const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setContent(e.target.value);
-	};
-
-	const handleSenderIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSenderId(e.target.value);
 	};
 
 	const handlechannelIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,17 +55,12 @@ const CreatMsg = ({show}: {show: boolean}) => {
 			</div>
 
 			<div>
-				<label htmlFor='nom'> SenderId </label>
-				<input type='text' value={SenderId} onChange={handleSenderIdChange} id='champs2' name='the SenderId' />
-			</div>
-
-			<div>
 				<label htmlFor='nom'> Channel_id </label>
 				<input type='text' value={ChanId} onChange={handlechannelIdChange} id='champs3' name='the channel_id' />
 			</div>
 
 			<div>
-				<button onClick={handlecreatMsg} disabled={!SenderId || !Content} > the Create User</button>
+				<button onClick={handlecreatMsg} disabled={!userId || !Content} > the Create User</button>
 			</div>
 		</div>
 	);

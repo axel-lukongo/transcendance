@@ -51,6 +51,7 @@ type Query {
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!
+  Message_findAll_msg_chan(channelId: Int!): [Message!]!
   Message_findOne_msg(id: Int!): Message!
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
