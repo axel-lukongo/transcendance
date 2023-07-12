@@ -200,3 +200,54 @@
 	background: url('/ft_transcendence/src/image/Contact.png') no-repeat center;
 	background-size: contain;
   }
+
+  input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	height: 5%;
+	background: rgba(113, 67, 250, 0.50);
+	display: block;
+	border-radius: 100px;
+	position: fixed;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 50%;
+	height: 90%;
+	background: #fff;
+	border-radius: 90%;
+	transition: 0.3s;
+}
+
+input:checked + label {
+	background: #FFD233;;
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 50%;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}

@@ -72,7 +72,7 @@ const Home = () => {
          <Link to="/contact">  
            <button className='contact-button logo-box' ></button> 
          </Link>
-
+         <input type="checkbox" id="switch" /><label htmlFor="switch">Toggle</label>
       </div>
   );
 }
