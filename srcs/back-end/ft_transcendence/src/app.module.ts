@@ -10,6 +10,7 @@ import 	{AuthMiddleware} from './utils/auth.utils'
 import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
 	imports: [
@@ -22,6 +23,9 @@ import { MailingModule } from './authentication/mailing/mailing.module';
 				installSubscriptionHandlers: true, 
 			})
         }),
+		// MulterModule.register({
+		// 	dest: './uploads',
+		// }),
 		MailingModule,
 		UsersModule,
 		ChanelModule,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import '../message/messages.css';
 import Chat from '../message/message';
@@ -12,6 +12,24 @@ const Home = () => {
   const [showChat, setShowChat] = useState(false);
   const [showContact, setShowContact] = useState(false);
 
+  // const user = JSON.parse(sessionStorage.getItem('user') || '');
+
+  // useEffect(() => {
+  //   const randomX = Math.random();
+  //   const randomY = Math.random();
+  
+  //   const gameBoxWidth = 50; // Largeur en pourcentage de la boîte du jeu
+  //   const gameBoxHeight = 15; // Hauteur en pourcentage de la boîte du jeu
+  
+  //   const randomXPercentage = randomX * (100 - gameBoxWidth);
+  //   const randomYPercentage = randomY * (100 - gameBoxHeight);
+  
+  //   document.documentElement.style.setProperty('--randomX', `${randomXPercentage}%`);
+  //   document.documentElement.style.setProperty('--randomY', `${randomYPercentage}%`);
+  // }, []);
+
+
+  
   const handleChatClick = () => {
     if (showChat) {
       setShowChat(false);
@@ -30,34 +48,42 @@ const Home = () => {
     }
   };
 
+  
   return (
-      <div className='my_message_app'>
-        <div className='overlay1'></div> { /* la grande case qui englobe les autres case */ }
-        <div className='overlay2'></div> { /* la case tout en bas */ }
-        <div className='overlay3'></div> { /* la case du milieu */ }
-        <div className='overlay4'></div> { /* la case violet en haut */ }
-        <div className='overlay5'></div> { /* la case pour le avatar*/ }
-        <div className='overlay6'> nickname: </div> { /* la case du nickname*/ }
-        <div className='overlay7'></div> { /* la case du mail*/ }
-        <button className='back-button'></button>
-        <Link to="/message">
-          <button className='message-button' onClick={handleChatClick}></button>
-        </Link>
-
-        <button className='avatar-button' onClick={handleContactClick}></button>
-
-
-		<Chat show={showChat} />
-		<CreatMsg show={showChat} />
-		<Contact show={showContact} />
-
-    <Routes>
-          {/* <Route path='*' 			Component={Home} /> */}
-		  {/* <Route path="/contact"	Component={() => <Contact show={showContact} />} /> */}
-		  <Route path="/creatMsg"	Component={() => <CreatMsg show={showContact} />} />
-    </Routes> 
-
+    // peut etre rajouter une verif du session storage
+    <div className='Home'>
+      <div className='screen-box'></div> 
+      <div className='rank-box profil-box'>RANK #?</div> 
+      <div className='avatar-box profil-box'></div> 
+      <div className="history-match-box profil-box">
+      MATCH HISTORY </div>
+      <div className='nickname-box profil-box'> nickname </div>
+      <div className='email-box profil-box'>email</div> 
+      <div className='game-box profil-box'>
+        <span>PLAY</span>
+        <div className="movement-ball"></div>
       </div>
+
+      {/* <Routes> */}
+            {/* <Route path='*' 			Component={Home} /> */}
+		    {/* <Route path="/contact"	Component={() => <Contact show={showContact} />} /> */}
+		    {/* <Route path="/creatMsg"	Component={() => <CreatMsg show={showContact} />} /> */}
+      {/* </Routes>  */}
+      {/* <button className='logout-button'>LOG OUT</button> */}
+      {/* <Link to="/home"> */}
+        {/* <button className='home-button'>Home</button> */}
+      {/* </Link> */}
+      {/* <Link to="/message"> */}
+        {/* <button className='message-button' onClick={handleChatClick}>Message </button> */}
+      {/* </Link> */}
+      {/* <Link to="/contact"> */}
+        {/* <button className='contact-button'>Contact</button> */}
+      {/* </Link> */}
+		  {/* <Chat show={showChat} /> */}
+		  {/* <CreatMsg show={showChat} /> */}
+		  {/* <Contact show={showContact} /> */}
+
+  </div>
   );
 };
 

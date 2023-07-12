@@ -21,8 +21,6 @@ interface AuthenticatedRequest extends Request {
   userId?: number;
 }
 
-
-
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   use(req: AuthenticatedRequest, res: Response, next: NextFunction) {
@@ -41,7 +39,6 @@ export class AuthMiddleware implements NestMiddleware {
           req.userId = decodedToken.userId;
         } catch (error) {
           res.status(401).json({ message: 'Token invalide' });
-          
           return;
         }
       } 

@@ -25,22 +25,4 @@ export class User {
 
   @Field({ nullable: true })
   avatar?: string;
-
-  // @Field(() => [Pong])
-  // userPong: Pong[];
-
-  // @Field(() => [Pong])
-  // userPong2: Pong[];
-
-  // @Field(() => [Users_Chanels])
-  // chanels: Users_Chanels[];
-
-  // @Field(() => [Chanel])
-  // own_chan: Chanel[];
-
-  // @Field(() => [Message])
-  // sender: Message[];
-
-  // @Field(() => [Message])
-  // receiver: Message[];
 }

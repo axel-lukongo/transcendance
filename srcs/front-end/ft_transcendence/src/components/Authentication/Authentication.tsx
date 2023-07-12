@@ -75,12 +75,12 @@ const Authentication: FC = () => {
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { nickname, avatar } = e.currentTarget;
-    
     const user_info = {
       nickname: nickname.value,
       avatar: avatar.value
     };
 
+      console.log(user_info.avatar);
       
     createUser({
       variables: {

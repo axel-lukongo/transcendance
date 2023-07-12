@@ -37,7 +37,6 @@ export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
       // Vérifications du format et de la taille du fichier
       if (fileType === 'image/png' || fileType === 'image/jpeg') {
         if (fileSize <= maxSize) {
-          // Fichier valide, vous pouvez effectuer d'autres traitements ici
           console.log('Fichier valide :', file);
           setAvatar(file);
         } else {
@@ -55,8 +54,6 @@ export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('a lenvoie nickname', nickname);
-    console.log('a lenvoie avatar', avatar);
     onSubmit(event);
   };
 
