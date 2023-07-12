@@ -163,41 +163,40 @@
 	  height: 10%;
   }
 
-  .message-button {
-	position: fixed;
-	top: 55%; /* Ajustez la position du bouton selon vos besoins */
-	left: 5%;
-	background: url('/ft_transcendence/src/image/message.png') no-repeat center;
+   .logo-box{
+ 	position: fixed;
+	left:5%;
+	width: 7%;
+ 	height: 5%;
+ 	border: none;
+ 	transition: transform 0.3s ease-in-out;
+}
+
+   .logo-box:hover{
+    transform: scale(1.2);
+}
+
+   .log-out-button{
+	top : 7%;
+	background: url('/ft_transcendence/src/image/Logout.png') no-repeat center;
 	background-size: contain;
-	width: 7%; /* Ajustez la taille du bouton selon vos besoins */
-	height: 5%;
-	border: none;
-	cursor: pointer;
-	transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
-	border: 3px solid rgb(190, 154, 9); 
-	/* z-index: 4; Ajustez le z-index si nécessaire */
-  }
-  .message-button:hover{
-	transform: scale(1.2);
-  }
-
-
-  .avatar-button {
-	position: fixed;
-	top: 40%; /* Ajustez la position du bouton selon vos besoins */
-	left: 6%;
-	background: url('/ft_transcendence/src/image/login.png') no-repeat center;
+}
+	
+	.message-button {
+	top: 55%; 
+	background: url('/ft_transcendence/src/image/Message.png') no-repeat center;
 	background-size: contain;
-	width: 5%; /* Ajustez la taille du bouton selon vos besoins */
-	height: 5%;
-	border: none;
-	cursor: pointer;
-	transition: transform 0.3s ease-in-out; /*c'est cette ligne qui permet l'agrandissement de la fleche*/
-	border: 3px solid rgb(190, 154, 9); 
-	/* z-index: 4; Ajustez le z-index si nécessaire */
-  }
-  .avatar-button:hover{
-	transform: scale(1.2);
+
   }
 
-  
+  .home-button {
+	  top: 40%; 
+	  background: url('/ft_transcendence/src/image/Home.png') no-repeat center;
+	  background-size: contain;
+  }
+
+  .contact-button {
+	top: 70%; 
+	background: url('/ft_transcendence/src/image/Contact.png') no-repeat center;
+	background-size: contain;
+  }

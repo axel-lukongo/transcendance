@@ -2,6 +2,8 @@ import React, { useEffect, useState, FC } from 'react';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import Home from '../Home/Home';
 import { SigninButton, CreateUserForm, TwoFactorAuth } from './Authentication.utils';
+import { Route, Routes, Link} from 'react-router-dom';
+import Chat from '../message/message';
 
 const CREATE_USER = gql`
   mutation CreateUser($input: CreateAuthenticationInput!) {
@@ -154,8 +156,11 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
-      <Home />
-    ) : (
+		<Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/message" element={<Chat />} />
+    </Routes>	
+  ) : (
       <>
         {!canCheck ? (
           <SigninButton className="custom-signin-button" onClick={handleRedirect} />

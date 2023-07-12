@@ -37,7 +37,7 @@ type Message = {
  * @returns dans mon return j'affiche tout les nouveaux messages qui seront crée et destiné a un chanel en particulier
  */
 
-const Chat = ({show}: {show: boolean}) => {
+const Chat = () => {
 	const { loading, error, data } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
 	const [messages, setMessages] = useState<Message[]>([]);
 	// Si il y avais des chose dans intialMessages alors je le met dans mon useState
@@ -69,7 +69,7 @@ const Chat = ({show}: {show: boolean}) => {
 	// Le [] c'est le tableau de dependance, lorsque il est vide ca signifie que on execute notre useEffect que 1 fois
 
 	return (
-		<div className={`Chat ${show ? 'show' : ''}`}>
+		<div>
 			<h1>Messages en temps réel</h1>
 			{/* <div> {data} </div> */}
 			<ul>
