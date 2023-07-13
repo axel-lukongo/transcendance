@@ -1,51 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import './Home.css';
 import '../message/messages.css';
-import Chat from '../message/message';
-import CreatMsg from '../message/creat_message';
-import Contact from '../Contact/Contact';
-import { Route, Routes, Link} from 'react-router-dom';
+// import Chat from '../message/message';
+// import CreatMsg from '../message/creat_message';
+// import Contact from '../Contact/Contact';
+import {Link} from 'react-router-dom';
 
 // This component is call in authentification
 
 const Home = () => {
-  const [showChat, setShowChat] = useState(false);
-  const [showContact, setShowContact] = useState(false);
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
   // const user = JSON.parse(sessionStorage.getItem('user') || '');
-
-  // useEffect(() => {
-  //   const randomX = Math.random();
-  //   const randomY = Math.random();
-  
-  //   const gameBoxWidth = 50; // Largeur en pourcentage de la boîte du jeu
-  //   const gameBoxHeight = 15; // Hauteur en pourcentage de la boîte du jeu
-  
-  //   const randomXPercentage = randomX * (100 - gameBoxWidth);
-  //   const randomYPercentage = randomY * (100 - gameBoxHeight);
-  
-  //   document.documentElement.style.setProperty('--randomX', `${randomXPercentage}%`);
-  //   document.documentElement.style.setProperty('--randomY', `${randomYPercentage}%`);
-  // }, []);
-
-  
-  const handleChatClick = () => {
-    if (showChat) {
-      setShowChat(false);
-    } else {
-      setShowChat(true);
-      setShowContact(false);
-    }
-  };
-
-  const handleContactClick = () => {
-    if (showContact) {
-      setShowContact(false);
-    } else {
-      setShowContact(true);
-      setShowChat(false);
-    }
-  };
 
   return (
     <div className='Home'>
@@ -66,14 +36,22 @@ const Home = () => {
           <button className='home-button logo-box'></button>
         </Link>
         <Link to="/message">  
-           <button className='message-button logo-box' ></button> 
-         </Link>
+          <button className='message-button logo-box' ></button> 
+        </Link>
          
-         <Link to="/contact">  
+        <Link to="/contact">  
            <button className='contact-button logo-box' ></button> 
-         </Link>
-         <input type="checkbox" id="switch" /><label htmlFor="switch">Toggle</label>
-      </div>
+        </Link>
+
+        <div className="toggle-button-container">
+          <input type="checkbox" id="switch" checked={isChecked} onChange={handleToggle} />
+          <label htmlFor="switch" className={`toggle-button ${isChecked ? "activated" : "deactivated"}`}>
+            <span className="toggle-button-text">
+              {isChecked ? "2FA ACTIVATED" : "2FA DESACTIVATED"}
+            </span>
+          </label>
+        </div>
+    </div>
   );
 }
 
