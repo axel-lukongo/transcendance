@@ -1,45 +1,17 @@
 import React, { useEffect, useState, FC } from 'react';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
+import { Route, Routes} from 'react-router-dom';
+
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { CHECK_2AF, MAKE_AUTH } from './graphql/Query';
+import { CREATE_USER } from './graphql/Mutation';
+
+import { SigninButton } from './micro-components/SignInButton';
+import { CreateUserForm } from './micro-components/CreateUserForm';
+import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
+
 import Home from '../Home/Home';
-import { SigninButton, CreateUserForm, TwoFactorAuth } from './Authentication.utils';
-import { Route, Routes, Link} from 'react-router-dom';
-import Chat from '../message/message';
+import Chat from '../Message/message';
 
-const CREATE_USER = gql`
-  mutation CreateUser($input: CreateAuthenticationInput!) {
-    createUser(createAuthenticationInput: $input) {
-      id
-      token
-      email
-      nickname
-      avatar
-    }
-  }
-`;
-
-const CHECK_2AF = gql`
-  query CheckTwoAuthenticationFactor($input: String!) {
-    checkTwoAuthenticationFactor(code: $input) {
-      id
-      token
-      email
-      nickname
-      avatar
-    }
-  }
-`;
-
-const MAKE_AUTH= gql`
-  query MakeAuthentication($code: String!) {
-    makeAuthentication(code: $code) {
-      id
-      token
-      email
-      nickname
-      avatar
-    }
-  }
-`;
 
 const Authentication: FC = () => {
 
@@ -100,7 +72,7 @@ const Authentication: FC = () => {
   };
 
 
-  const handle2fa = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { code } = e.currentTarget;
   
@@ -173,7 +145,7 @@ return (
                 )}
                 {user2fa && (
                   <>
-                    <TwoFactorAuth onSubmit={handle2fa} />
+                    <TwoFactorAuthForm onSubmit={handleTfa} />
                   </>
                 )}
               </>

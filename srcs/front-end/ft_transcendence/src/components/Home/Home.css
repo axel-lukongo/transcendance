@@ -49,8 +49,8 @@
 	border-radius: 50px;
 	background-position: center;
 	background-color: rgba(113, 67, 250, 0.20);
-	border: 3px solid rgb(190, 154, 9);
-	color: rgb(195, 162, 9);
+	border: 3px solid #ffd27d;
+	color: #ffd27d;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -91,7 +91,7 @@
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-	background-color: #FFD233;
+	background-color: #ffd27d;
 	position: absolute;
 	-webkit-animation: moveX 3.05s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
 	-moz-animation: moveX 3.05s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
@@ -223,14 +223,14 @@
 	position: fixed;
 	top: 90%;
 	left: 82%;
-	color: #FFD233;
+	color: #ffd27d;
 	font-size: 20px;
 	font-family: "Orbitron";
 	font-weight: bold;
   }
   
   .toggle-button-text {
-	color: #FFD233;
+	color: #ffd27d;
 	font-family: "Orbitron", sans-serif;
 	text-align: center;
 	position: absolute;
@@ -251,7 +251,7 @@
   }
   
   input:checked + .toggle-button {
-	background: #FFD233;
+	background: #ffd27d;
   }
   
   input:checked + .toggle-button:after {
@@ -264,11 +264,11 @@
   }
   
   .toggle-button.activated {
-	background: #FFD233;
+	background: #ffd27d;
 	color: #FFFFFF;
   }
   
   .toggle-button.deactivated {
 	background: rgba(113, 67, 250, 0.50);
-	color: #FFD233;
+	color: #ffd27d;
   }

@@ -1,7 +1,6 @@
 import React, { useState} from 'react';
 import './Home.css';
-import '../message/messages.css';
-// import Chat from '../message/message';
+import Chat from '../Message/message';
 // import CreatMsg from '../message/creat_message';
 // import Contact from '../Contact/Contact';
 import {Link} from 'react-router-dom';

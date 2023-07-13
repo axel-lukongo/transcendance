@@ -1,39 +1,30 @@
 
-import {useMutation} from '@apollo/client';
-import {gql} from '@apollo/client';
 import React, {useState} from 'react';
 
+import {useMutation} from '@apollo/client';
+import { CREATE_MSG } from '../graphql/Mutation';
 
-const createMsg = gql`
-  mutation CreateMessage($createMsgInput: CreateMessageInput!) {
-    createMessage(createMsgInput: $createMsgInput) {
-      content
-      sender_id
-      channel_id 
-    }
-  }
-`;
 
-const CreatMsg = ({show}: {show: boolean}) => {
-	const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
+const CreateMsg = () => {
+	// const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
 	const userNickname = JSON.parse(sessionStorage.getItem('user') || '')?.nickname;
 	const [Content, setContent] = useState('');
 	const [ChanId, setChanId] = useState('');
-	const [creatMsg] = useMutation(createMsg);
+	const [createMessage] = useMutation(CREATE_MSG);
 
-	const handlecreatMsg = async () => {
+	const handlecreateMessage = async () => {
 		try {
-			const response = await creatMsg({
+			const response = await createMessage({
 				variables: {
 					createMsgInput: {
-						sender_id: userId,
+						sender_id: 1,
 						content: userNickname + ": " + Content,
 						channel_id: parseInt(ChanId),
 					},
 				},
 			});
 			console.log(response.data);
-			setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
+			// setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
 		} catch (error) {
 			console.error(error);
 		}
@@ -48,7 +39,7 @@ const CreatMsg = ({show}: {show: boolean}) => {
 	};
 
 	return (
-		<div className={`Creat_Msg ${show ? 'showw' : ''}`}>
+		<div >
 			<div>
 				<label htmlFor='nom'> Content </label>
 				<input type='text' value={Content} onChange={handleContentChange} id='champs1' name='the Content' />
@@ -57,13 +48,10 @@ const CreatMsg = ({show}: {show: boolean}) => {
 			<div>
 				<label htmlFor='nom'> Channel_id </label>
 				<input type='text' value={ChanId} onChange={handlechannelIdChange} id='champs3' name='the channel_id' />
-			</div>
-
-			<div>
-				<button onClick={handlecreatMsg} disabled={!userId || !Content} > the Create User</button>
+				<button onClick={handlecreateMessage} disabled={!Content} > send message</button>
 			</div>
 		</div>
 	);
 };
 
-export default CreatMsg;
+export default CreateMsg;
