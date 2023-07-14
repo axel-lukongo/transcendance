@@ -23,9 +23,6 @@ import { MulterModule } from '@nestjs/platform-express';
 				installSubscriptionHandlers: true, 
 			})
         }),
-		// MulterModule.register({
-		// 	dest: './uploads',
-		// }),
 		MailingModule,
 		UsersModule,
 		ChanelModule,

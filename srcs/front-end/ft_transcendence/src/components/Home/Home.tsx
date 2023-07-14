@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import './Home.css';
-import Chat from '../Message/message';
+// import Chat from '../Message/message';
 // import CreatMsg from '../message/creat_message';
 // import Contact from '../Contact/Contact';
 import {Link} from 'react-router-dom';
@@ -14,13 +14,17 @@ const Home = () => {
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
-  // const user = JSON.parse(sessionStorage.getItem('user') || '');
+  const user = JSON.parse(sessionStorage.getItem('user') || '');
+
+
 
   return (
     <div className='Home'>
       <div className='screen-box'></div> 
         <div className='rank-box profil-box'>RANK #?</div> 
-        <div className='avatar-box profil-box'></div> 
+        <div className='avatar-box profil-box'>
+        <img src="/ft_transcendence/src/uploads/avatar.jpg" alt="User Avatar" />
+        </div>
         <div className="history-match-box profil-box">
           MATCH HISTORY
         </div>

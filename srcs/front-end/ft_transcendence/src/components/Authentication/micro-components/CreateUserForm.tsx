@@ -7,6 +7,7 @@ interface PropsCreateUser {
   
   export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
     const [nickname, setNickname] = useState("");
+    const [avatar, setAvatar] = useState<File | null>(null);
     const [nicknameError, setNicknameError] = useState("");
     const [avatarError, setAvatarError] = useState("");
   
@@ -23,6 +24,7 @@ interface PropsCreateUser {
         if (fileType === 'image/png' || fileType === 'image/jpeg') {
           if (fileSize <= maxSize) {
             console.log('Fichier valide :', file);
+            setAvatar(file);
             setAvatarError('');
           } else {
             setAvatarError('La taille du fichier dépasse la limite maximale.');
@@ -72,7 +74,7 @@ interface PropsCreateUser {
             </div>
           </div>
               {avatarError && <p className="form-avatar-text-error">{avatarError}</p>}
-          <button className="submit-button" type="submit" hidden={!nickname || !!nicknameError || !!avatarError}>
+          <button className="submit-button" type="submit" hidden={!nickname || !avatar || !!nicknameError || !!avatarError}>
             Envoyer
           </button>
         </form>

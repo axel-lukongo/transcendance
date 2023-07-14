@@ -8,6 +8,11 @@ import { generateTwoFactorCode} from 'src/utils/auth.utils';
 import axios, { AxiosResponse } from 'axios';
 import { MailingService } from './mailing/mailing.service';
 
+import * as fs from 'fs';
+import * as path from 'path';
+
+
+
 @Resolver()
 export class AuthenticationResolver {
 
@@ -19,10 +24,28 @@ export class AuthenticationResolver {
     private readonly userService: UsersService,
     private readonly mailingService: MailingService) {}
 
+
   @Mutation(() => User)
   async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
     if (this.intraLogin && this.email) {
     try {
+
+      const { avatar } = createAuthenticationInput;
+      const base64Data = avatar.split(';base64,').pop() || '';
+      const binaryData = Buffer.from(base64Data, 'base64');
+
+      const fileName = 'avatar.jpg'; // Nom du fichier souhaité
+
+      // Chemin de destination pour enregistrer le fichier
+      const uploadPath = '/ft_transcendence/src/uploads';
+      const filePath = `${uploadPath}/${fileName}`;
+  
+      fs.writeFileSync(filePath, binaryData);
+  
+      // Mettez à jour createAuthenticationInput.avatar avec le chemin du fichier persistant
+      createAuthenticationInput.avatar = filePath;
+
+        // console.log(createAuthenticationInput.avatar)
         const createUserInput: CreateUserInput = { ...createAuthenticationInput, intra_login: this.intraLogin, email: this.email };
         return await this.authService.create(createUserInput);
       } 
