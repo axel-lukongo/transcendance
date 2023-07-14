@@ -18,6 +18,7 @@ const router = createBrowserRouter([{
 		element: (
 			<div>
 				<NavBar />
+				{/* <ContactList/> */}
 				<Outlet/>
 			</div>
 		),
@@ -26,7 +27,7 @@ const router = createBrowserRouter([{
 				path: "chanels",
 				element: (
 				<div>
-					<Chanel />
+					{/* <Chanel /> */}
 					<Outlet />
 				</div>),
 				children: [

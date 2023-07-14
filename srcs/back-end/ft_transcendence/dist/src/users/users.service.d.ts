@@ -3,7 +3,7 @@ import { PrismaService } from 'prisma/prisma.service';
 export declare class UsersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    findAll(): import(".prisma/client").Prisma.PrismaPromise<({
+    findAll(): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -11,8 +11,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
-    } & {})[]>;
-    findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<{
+    }, unknown> & {})[]>;
+    findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -20,13 +20,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
-    findUserByToken(token: string): import(".prisma/client").Prisma.Prisma__UserClient<{
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    findUserByToken(token: string): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -34,13 +29,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
-    update(id: number, data: UpdateUserInput): import(".prisma/client").Prisma.Prisma__UserClient<{
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    update(id: number, data: UpdateUserInput): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -48,13 +38,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
-    remove(id: number): import(".prisma/client").Prisma.Prisma__UserClient<{
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    remove(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -62,10 +47,5 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
 }

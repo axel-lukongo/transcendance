@@ -7,44 +7,44 @@ export declare class ChanelResolver {
     private readonly chanelService;
     private readonly messagesResolver;
     constructor(chanelService: ChanelService, messagesResolver: MessagesResolver);
-    createChanel(createChanelInput: CreateChanelInput): Promise<{
+    createChanel(createChanelInput: CreateChanelInput): Promise<import("@prisma/client/runtime").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
-    } & {}>;
-    findOne(id: number): Promise<{
+    }, unknown> & {}>;
+    findOne(id: number): Promise<import("@prisma/client/runtime").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
-    } & {}>;
+    }, unknown> & {}>;
     updateChanel(_updateArgs: UpdateChanelInput): Promise<Chanel>;
-    removeChanel(id: number): Promise<{
+    removeChanel(id: number): Promise<import("@prisma/client/runtime").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
-    } & {}>;
-    myChanels(user_id: number): Promise<({
+    }, unknown> & {}>;
+    myChanels(user_id: number): Promise<(import("@prisma/client/runtime").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
-    } & {})[]>;
-    messages(chanel: Chanel): Promise<({
+    }, unknown> & {})[]>;
+    messages(chanel: Chanel): Promise<(import("@prisma/client/runtime").GetResult<{
         id: number;
-        content: string;
-        sent_at: Date;
         sender_id: number;
         channel_id: number;
-    } & {})[]>;
+        content: string;
+        sent_at: Date;
+    }, unknown> & {})[]>;
 }

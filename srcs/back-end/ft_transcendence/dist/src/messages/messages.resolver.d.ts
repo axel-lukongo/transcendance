@@ -4,55 +4,40 @@ import { UpdateMessageInput } from './dto/update-message.input';
 export declare class MessagesResolver {
     private readonly msgService;
     constructor(msgService: MessagesService);
-    findAll_msg(): Promise<({
+    findAll_msg(): Promise<(import("@prisma/client/runtime").GetResult<{
         id: number;
-        content: string;
-        sent_at: Date;
         sender_id: number;
         channel_id: number;
-    } & {})[]>;
-    findOne_msg(id: number): Promise<{
-        id: number;
         content: string;
         sent_at: Date;
+    }, unknown> & {})[]>;
+    findOne_msg(id: number): Promise<import("@prisma/client/runtime").GetResult<{
+        id: number;
         sender_id: number;
         channel_id: number;
-    } & {}>;
-    createMessage(createMsgInput: CreateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<{
-        id: number;
         content: string;
         sent_at: Date;
+    }, unknown> & {}>;
+    createMessage(createMsgInput: CreateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime").GetResult<{
+        id: number;
         sender_id: number;
         channel_id: number;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
-    updateMessage(MsgInput: UpdateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<{
-        id: number;
         content: string;
         sent_at: Date;
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    updateMessage(MsgInput: UpdateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime").GetResult<{
+        id: number;
         sender_id: number;
         channel_id: number;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
-    deleteMessage(id: number): import(".prisma/client").Prisma.Prisma__MessageClient<{
-        id: number;
         content: string;
         sent_at: Date;
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    deleteMessage(id: number): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime").GetResult<{
+        id: number;
         sender_id: number;
         channel_id: number;
-    } & {}, never, {
-        result: {};
-        query: {};
-        model: {};
-        client: {};
-    }>;
+        content: string;
+        sent_at: Date;
+    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
     addmessage(channel_id: number): AsyncIterator<unknown, any, undefined>;
 }
