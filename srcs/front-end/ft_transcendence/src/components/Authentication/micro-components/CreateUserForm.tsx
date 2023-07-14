@@ -7,7 +7,6 @@ interface PropsCreateUser {
   
   export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
     const [nickname, setNickname] = useState("");
-    const [avatar, setAvatar] = useState<File | null>(null);
     const [nicknameError, setNicknameError] = useState("");
     const [avatarError, setAvatarError] = useState("");
   
@@ -25,7 +24,6 @@ interface PropsCreateUser {
           if (fileSize <= maxSize) {
             console.log('Fichier valide :', file);
             setAvatarError('');
-            setAvatar(file);
           } else {
             setAvatarError('La taille du fichier dépasse la limite maximale.');
           }
@@ -42,7 +40,7 @@ interface PropsCreateUser {
       if (input.length > 10) {
         setNicknameError("The nickname cannot exceed 10 characters.");
       } else if (input && !alphanumericRegex.test(input)) {
-        setNicknameError("The nickname can only contain alphanumeric characters.");
+        setNicknameError("The nickname can only contain alphanumeric characters and no accents");
       } else {
         setNicknameError("");
       }
@@ -70,37 +68,14 @@ interface PropsCreateUser {
           <div className={`form-field ${nicknameError ? "form-field-error" : ""}`}>
             <label className="form-label">Avatar</label>
             <div className="form-input form-avatar">
-              <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
+              <input type="file" accept="image/*" name="avatar"  onChange={handleAvatarOnChange} />
             </div>
           </div>
               {avatarError && <p className="form-avatar-text-error">{avatarError}</p>}
-          <button className="submit-button" type="submit" hidden={!avatar || !nickname || !!nicknameError }>
+          <button className="submit-button" type="submit" hidden={!nickname || !!nicknameError || !!avatarError}>
             Envoyer
           </button>
         </form>
       </div>
     ); 
-    // return (
-    //   <div className="create-user-form">
-    //     <h1 className="form-title">
-    //       Malheureusement tu n’as pas encore de profil !
-    //       <br /> Je te propose d’en créer un.
-    //     </h1>
-    //     <form onSubmit={handleSubmit}>
-    //       <div className="form-field">
-    //         <label className="form-label">Nickname</label>
-    //         <div className="form-input">
-    //           <input type="text" className="form-input-text" placeholder="Enter your nickname" name="nickname" value={nickname} onChange={handleNicknameChange} />
-    //         </div>
-    //       </div>
-    //       <div className="form-field">
-    //         <label className="form-label">Avatar</label>
-    //         <div className="form-input form-avatar">
-    //           <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
-    //         </div>
-    //       </div>
-    //       <button className="submit-button" type="submit" hidden={!avatar || !nickname}>Envoyer</button>
-    //     </form>
-    //   </div>
-    // );
   };
