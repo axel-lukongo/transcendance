@@ -8,6 +8,8 @@ interface PropsCreateUser {
   export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
     const [nickname, setNickname] = useState("");
     const [avatar, setAvatar] = useState<File | null>(null);
+    const [nicknameError, setNicknameError] = useState("");
+    const [avatarError, setAvatarError] = useState("");
   
     const handleAvatarOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
@@ -22,46 +24,83 @@ interface PropsCreateUser {
         if (fileType === 'image/png' || fileType === 'image/jpeg') {
           if (fileSize <= maxSize) {
             console.log('Fichier valide :', file);
+            setAvatarError('');
             setAvatar(file);
           } else {
-            console.error('La taille du fichier dépasse la limite maximale.');
+            setAvatarError('La taille du fichier dépasse la limite maximale.');
           }
         } else {
-          console.error('Le format de fichier sélectionné n\'est pas pris en charge.');
+          setAvatarError('Le format de fichier sélectionné n\'est pas pris en charge.');
         }
       }
     };
   
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setNickname(event.target.value);
+      const input = event.target.value;
+      const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+  
+      if (input.length > 10) {
+        setNicknameError("The nickname cannot exceed 10 characters.");
+      } else if (input && !alphanumericRegex.test(input)) {
+        setNicknameError("The nickname can only contain alphanumeric characters.");
+      } else {
+        setNicknameError("");
+      }
+      setNickname(input);
     };
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       onSubmit(event);
     };
-  
     return (
       <div className="create-user-form">
         <h1 className="form-title">
-          Malheureusement tu n’as pas encore de profil !
-          <br /> Je te propose d’en créer un.
+        Unfortunately you don't have a profile yet...
+          <br /> Let's create one!
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="form-field">
             <label className="form-label">Nickname</label>
             <div className="form-input">
               <input type="text" className="form-input-text" placeholder="Enter your nickname" name="nickname" value={nickname} onChange={handleNicknameChange} />
+            {nicknameError && <p className="form-nickname-text-error">{nicknameError}</p>}
             </div>
           </div>
-          <div className="form-field">
+          <div className={`form-field ${nicknameError ? "form-field-error" : ""}`}>
             <label className="form-label">Avatar</label>
             <div className="form-input form-avatar">
               <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
             </div>
           </div>
-          <button className="submit-button" type="submit" hidden={!avatar || !nickname}>Envoyer</button>
+              {avatarError && <p className="form-avatar-text-error">{avatarError}</p>}
+          <button className="submit-button" type="submit" hidden={!avatar || !nickname || !!nicknameError }>
+            Envoyer
+          </button>
         </form>
       </div>
-    );
+    ); 
+    // return (
+    //   <div className="create-user-form">
+    //     <h1 className="form-title">
+    //       Malheureusement tu n’as pas encore de profil !
+    //       <br /> Je te propose d’en créer un.
+    //     </h1>
+    //     <form onSubmit={handleSubmit}>
+    //       <div className="form-field">
+    //         <label className="form-label">Nickname</label>
+    //         <div className="form-input">
+    //           <input type="text" className="form-input-text" placeholder="Enter your nickname" name="nickname" value={nickname} onChange={handleNicknameChange} />
+    //         </div>
+    //       </div>
+    //       <div className="form-field">
+    //         <label className="form-label">Avatar</label>
+    //         <div className="form-input form-avatar">
+    //           <input type="file" accept="image/*" name="avatar" onChange={handleAvatarOnChange} />
+    //         </div>
+    //       </div>
+    //       <button className="submit-button" type="submit" hidden={!avatar || !nickname}>Envoyer</button>
+    //     </form>
+    //   </div>
+    // );
   };

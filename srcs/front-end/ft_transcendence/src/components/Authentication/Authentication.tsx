@@ -135,7 +135,7 @@ return (
   ) : (
       <>
         {!canCheck ? (
-          <SigninButton className="custom-signin-button" onClick={handleRedirect} />
+          <SigninButton  onClick={handleRedirect} />
         ) : (
           <>
             {AuthenticationError && (

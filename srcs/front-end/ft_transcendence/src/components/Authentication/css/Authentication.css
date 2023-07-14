@@ -106,7 +106,7 @@
   border: none;
   border-color: unset;
   color: #ffd27d;
-  font-family: "Orbitron-SemiBold", Helvetica;
+  font-family: "or";
   font-size: 20px;
   font-weight: 600;
   margin-right: -11px;
@@ -124,6 +124,8 @@
   align-items: center;
   background-color: #14245e80;
   border: 1px solid #000000;
+  font-family: "Orbitron";
+  color: #ffd27d;
   display: flex;
   flex-direction: column;
   gap: 38px;
@@ -137,8 +139,6 @@
 }
 
 .create-user-form .form-title {
-  color: #ffd27d;
-  font-family: "Orbitron-ExtraBold", Helvetica;
   font-size: 24px;
   font-weight: 800;
   height: 56px;
@@ -158,8 +158,7 @@
 }
 
 .create-user-form .form-label {
-  color: #ffd27d;
-  font-family: "Orbitron-SemiBold", Helvetica;
+  font-family: "Orbitron";
   font-size: 20px;
   font-weight: 600;
   left: 0;
@@ -187,20 +186,18 @@
 }
 
 .create-user-form .form-input-text {
-  color: #d2d2d2;
   background-color: transparent; 
-  font-family: "Inter-Regular", Helvetica;
+  font-family: 	"Orbitron";
+  color: #ffd27d;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 38px;
   right: 13px;
   top: -7px;
   position: relative;
-  white-space: nowrap;
   width: 324px;
   border: none; 
-
 }
 
 .create-user-form .form-avatar {
@@ -215,11 +212,34 @@
   border: none;
   border-color: unset;
   color: #ffd27d;
-  font-family: "Orbitron-SemiBold", Helvetica;
+  font-family: "Orbitron";
   font-size: 20px;
   font-weight: 600;
   margin-right: -11px;
 }
 
+.create-user-form .form-nickname-text-error {
+  color: #e0d318ad;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #d7231658;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
 
+.create-user-form .form-avatar-text-error {
+  margin-top: 10px;
+  color: #e0d318ad;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #d7231658;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.create-user-form .form-field.form-field-error {
+  margin-top: 53px;
+}
 
