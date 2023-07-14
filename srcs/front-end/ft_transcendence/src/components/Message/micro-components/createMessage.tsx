@@ -19,12 +19,12 @@ const CreateMsg = () => {
 					createMsgInput: {
 						sender_id: 1,
 						content: userNickname + ": " + Content,
-						channel_id: parseInt(ChanId),
+						channel_id: 1,
 					},
 				},
 			});
 			console.log(response.data);
-			// setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
+			setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
 		} catch (error) {
 			console.error(error);
 		}
@@ -41,15 +41,15 @@ const CreateMsg = () => {
 	return (
 		<div >
 			<div>
-				<label htmlFor='nom'> Content </label>
+				{/* <label htmlFor='nom'> Content </label> */}
 				<input type='text' value={Content} onChange={handleContentChange} id='champs1' name='the Content' />
+				<button onClick={handlecreateMessage} disabled={!Content} > send </button>
 			</div>
 
-			<div>
-				<label htmlFor='nom'> Channel_id </label>
-				<input type='text' value={ChanId} onChange={handlechannelIdChange} id='champs3' name='the channel_id' />
-				<button onClick={handlecreateMessage} disabled={!Content} > send message</button>
-			</div>
+			{/* <div>
+				 <label htmlFor='nom'> Channel_id </label> 
+				 <input type='text' value={ChanId} onChange={handlechannelIdChange} id='champs3' name='the channel_id' /> 
+			</div> */}
 		</div>
 	);
 };

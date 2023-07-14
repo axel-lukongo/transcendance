@@ -49,7 +49,7 @@ const Chat = () => {
 	}, [data]);
 
 	useEffect(() => {
-		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: 2 }}).subscribe({
+		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: 1 }}).subscribe({
 			next(response) {
 				// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
 				// reponse c'est la ou les reponse de notre server est stocker.
