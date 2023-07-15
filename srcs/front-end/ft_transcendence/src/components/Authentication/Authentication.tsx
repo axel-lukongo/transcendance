@@ -56,31 +56,31 @@ const Authentication: FC = () => {
     if (avatar.files.length > 0) {
       file = avatar.files[0];
       reader.readAsDataURL(file);
-    } 
+    }
     reader.onloadend = () => {
-      const avatarDataUrl = reader.result as string;
-  
-      const user_info = {
-        nickname: nickname.value,
-        avatar: avatarDataUrl
-      };
-  
-      createUser({
-        variables: {
-          input: user_info
-        }
-      })
-        .then(response => {
-          console.log('File:', response.data.createUser);
-          sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
-        })
-        .catch(error => {
-          console.log(error);
-          window.alert('Nickname is already in use. Please choose a different nickname.');
-        });
+    const avatarDataUrl = reader.result as string;
+
+    const user_info = {
+      nickname: nickname.value,
+      avatar: avatarDataUrl
     };
-  
+
+    createUser({
+      variables: {
+        input: user_info
+      }
+    })
+      .then(response => {
+        console.log('File:', response.data.createUser);
+        sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
+      })
+      .catch(error => {
+        console.log(error);
+        window.alert('Nickname is already in use. Please choose a different nickname.');
+      });
   };
+
+};
 
 
   const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {

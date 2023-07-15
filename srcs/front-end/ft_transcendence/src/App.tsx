@@ -1,5 +1,6 @@
 
 import Authentication from './components/Authentication/Authentication';
+import Home from './components/Home/Home';
 
 const App = () => {
 	

@@ -15,7 +15,7 @@ const Home = () => {
     setIsChecked(!isChecked);
   };
   const user = JSON.parse(sessionStorage.getItem('user') || '');
-
+  const imagePath = `http://localhost:4000/uploads/${user.avatar}`;
 
 
   return (
@@ -23,7 +23,7 @@ const Home = () => {
       <div className='screen-box'></div> 
         <div className='rank-box profil-box'>RANK #?</div> 
         <div className='avatar-box profil-box'>
-        <img src="/ft_transcendence/src/uploads/avatar.jpg" alt="User Avatar" />
+        <img src={imagePath} alt="User Avatar" />
         </div>
         <div className="history-match-box profil-box">
           MATCH HISTORY
