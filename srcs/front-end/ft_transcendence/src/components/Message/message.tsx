@@ -38,7 +38,7 @@ type Message = {
  * @returns dans mon return j'affiche tout les nouveaux messages qui seront crée et destiné a un chanel en particulier
 */
 
-const Chat = ({ user }: { user: User }) => {
+const Chat = () => {
 	const { loading, error, data } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
 	const [messages, setMessages] = useState<Message[]>([]);
 	// Si il y avais des chose dans intialMessages alors je le met dans mon useState

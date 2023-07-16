@@ -5,7 +5,9 @@ import { TfaToggleButton } from './micro-components/TfaToogleButton';
 
 import './css/Home.css';
 
-const Home = ({ user }: { user: User }) => {
+const Home = () => {
+
+  const user = JSON.parse(sessionStorage.getItem('user') || '');
 
   return (
     <div className='Home'>

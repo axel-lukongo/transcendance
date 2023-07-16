@@ -178,8 +178,8 @@ return (
   <div>
     {sessionStorage.getItem('user') ? (
       <Routes>
-        <Route path="/" element={<Home user={JSON.parse(sessionStorage.getItem('user') || '')} />} />
-        <Route path="/message" element={<Chat user={JSON.parse(sessionStorage.getItem('user') || '')} />} />
+        <Route path="/" element={<Home  />} />
+        <Route path="/message" element={<Chat  />} />
       </Routes>	
     ) : (
       <>
