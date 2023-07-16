@@ -56,7 +56,6 @@ export class AuthenticationResolver {
       
       const fileName = avatar ? 'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, userCreated.id) 
                               : 'http://localhost:4000/uploads/default_avatar.jpg'
-      console.log(fileName);
       
       const updateData: UpdateUserInput = { 
         id : userCreated.id,

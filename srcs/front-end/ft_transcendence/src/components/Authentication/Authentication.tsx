@@ -46,28 +46,94 @@ const Authentication: FC = () => {
     window.location.href = process.env.REACT_APP_API_42_URL?.toString() || '';
   };
 
+  // const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const { nickname, avatar } = e.currentTarget;
+
+  //   const user_info = {
+  //     nickname: nickname.value,
+  //     avatar : avatar.value // Par défaut, le lien est null
+  //   };
+    
+  //   const reader = new FileReader();
+
+  //   if (avatar && avatar.files.length > 0) {
+  //     const file = avatar.files[0];
+  //     reader.readAsDataURL(file);
+ 
+  //     reader.onloadend = () => {
+  //       const avatarDataUrl = reader.result as string;
+  //       user_info.avatar = avatarDataUrl;
+  //     }
+  //     console.log('avatar:', user_info.avatar);
+  //   }
+  //    createUser({
+  //       variables: {
+  //         input: user_info
+  //       }
+  //     })
+  //       .then(response => {
+  //         console.log('File:', response.data.createUser);
+  //         const { id, token, email, nickname, avatar } = response.data.createUser;
+  //         const user = {
+  //           id,
+  //           token,
+  //           email,
+  //           nickname,
+  //           avatar
+  //         };
+  //         sessionStorage.setItem('user', JSON.stringify(user));
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //         window.alert('Nickname is already in use. Please choose a different nickname.');
+  //       });
+  //   };
+
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { nickname, avatar } = e.currentTarget;
-
+  
     const user_info = {
       nickname: nickname.value,
-      avatar : avatar.value // Par défaut, le lien est null
+      avatar: avatar.value
     };
     
     const reader = new FileReader();
-
+  
     if (avatar && avatar.files.length > 0) {
       const file = avatar.files[0];
       reader.readAsDataURL(file);
- 
+  
       reader.onloadend = () => {
         const avatarDataUrl = reader.result as string;
         user_info.avatar = avatarDataUrl;
-      }
-    }
   
-     createUser({
+        createUser({
+          variables: {
+            input: user_info
+          }
+        })
+          .then(response => {
+            console.log('File:', response.data.createUser);
+            const { id, token, email, nickname, avatar } = response.data.createUser;
+            const user = {
+              id,
+              token,
+              email,
+              nickname,
+              avatar
+            };
+            sessionStorage.setItem('user', JSON.stringify(user));
+          })
+          .catch(error => {
+            console.log(error);
+            window.alert('Nickname is already in use. Please choose a different nickname.');
+          });
+      };
+    } else {
+      // No avatar file selected
+      createUser({
         variables: {
           input: user_info
         }
@@ -88,8 +154,10 @@ const Authentication: FC = () => {
           console.log(error);
           window.alert('Nickname is already in use. Please choose a different nickname.');
         });
-    };
-
+    }
+  };
+  
+ 
   const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { code } = e.currentTarget;
