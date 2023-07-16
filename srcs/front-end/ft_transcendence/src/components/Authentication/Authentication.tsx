@@ -12,6 +12,7 @@ import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 import Home from '../Home/Home';
 import Chat from '../Message/message';
 
+import { MessageProvider } from '../Message/micro-components/MessageContext';
 
 const Authentication: FC = () => {
 
@@ -128,10 +129,13 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
+    // <MessageProvider>
 		<Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/message" element={<Chat />} />
-    </Routes>	
+			<Route path="/" element={<Home />} />
+			<Route path="/message" element={<Chat />} />
+		</Routes>	
+    // </MessageProvider>
+
   ) : (
       <>
         {!canCheck ? (
