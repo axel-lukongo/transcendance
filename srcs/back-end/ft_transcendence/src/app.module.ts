@@ -31,9 +31,9 @@ import { MailingModule } from './authentication/mailing/mailing.module';
 	],
 })
 export class AppModule {
-	configure(consumer: MiddlewareConsumer) {
-	  consumer
-		.apply(AuthMiddleware)
-		.forRoutes({ path: '*', method: RequestMethod.ALL });
-	}
+	// configure(consumer: MiddlewareConsumer) {
+	//   consumer
+	// 	.apply(AuthMiddleware)
+	// 	.forRoutes({ path: '*', method: RequestMethod.ALL });
+	// }
   }

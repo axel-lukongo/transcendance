@@ -4,6 +4,7 @@ import {SubscriptionClient} from 'subscriptions-transport-ws';
 import CreateMsg from './micro-components/createMessage'
 import './css/messages.css';
 import {Link} from 'react-router-dom';
+import {User} from '../Interface'
 
 //je me connect a mon server via le protocol websocket
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -37,7 +38,7 @@ type Message = {
  * @returns dans mon return j'affiche tout les nouveaux messages qui seront crée et destiné a un chanel en particulier
 */
 
-const Chat = () => {
+const Chat = ({ user }: { user: User }) => {
 	const { loading, error, data } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
 	const [messages, setMessages] = useState<Message[]>([]);
 	// Si il y avais des chose dans intialMessages alors je le met dans mon useState

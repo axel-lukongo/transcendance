@@ -30,7 +30,7 @@ async function saveBase64ToFile(base64Link: string, userId: number): Promise<str
   
   fs.writeFileSync(filePath, binaryData);
   
-  return filePath;
+  return fileName;
 }
 
 @Resolver()
@@ -54,15 +54,16 @@ export class AuthenticationResolver {
       const createUserInput: CreateUserInput = { ...rest, intra_login: this.intraLogin, email: this.email };
       let  userCreated = await this.authService.create(createUserInput);
       
-      const filePath = avatar ? await saveBase64ToFile(avatar, userCreated.id) : '/ft_transcendence/src/uploads/default_avatar.jpg'
-      
-      console.log(filePath);
+      const fileName = avatar ? 'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, userCreated.id) 
+                              : 'http://localhost:4000/uploads/default_avatar.jpg'
+      console.log(fileName);
       
       const updateData: UpdateUserInput = { 
         id : userCreated.id,
-        avatar: filePath 
+        avatar: fileName 
       };
       return await this.userService.update(userCreated.id, updateData);
+
       } 
       catch (error) {
         throw new Error("createUser Error: " + error);

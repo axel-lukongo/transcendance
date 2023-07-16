@@ -74,7 +74,7 @@ interface PropsCreateUser {
             </div>
           </div>
               {avatarError && <p className="form-avatar-text-error">{avatarError}</p>}
-          <button className="submit-button" type="submit" hidden={!nickname || !avatar || !!nicknameError || !!avatarError}>
+          <button className="submit-button" type="submit" hidden={!nickname || !!nicknameError || !!avatarError}>
             Envoyer
           </button>
         </form>

@@ -50,38 +50,45 @@ const Authentication: FC = () => {
     e.preventDefault();
     const { nickname, avatar } = e.currentTarget;
 
-    const reader = new FileReader();
-
-    let file;
-    if (avatar.files.length > 0) {
-      file = avatar.files[0];
-      reader.readAsDataURL(file);
-    }
-    reader.onloadend = () => {
-    const avatarDataUrl = reader.result as string;
-
     const user_info = {
       nickname: nickname.value,
-      avatar: avatarDataUrl
+      avatar : avatar.value // Par défaut, le lien est null
     };
+    
+    const reader = new FileReader();
 
-    createUser({
-      variables: {
-        input: user_info
+    if (avatar && avatar.files.length > 0) {
+      const file = avatar.files[0];
+      reader.readAsDataURL(file);
+ 
+      reader.onloadend = () => {
+        const avatarDataUrl = reader.result as string;
+        user_info.avatar = avatarDataUrl;
       }
-    })
-      .then(response => {
-        console.log('File:', response.data.createUser);
-        sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
+    }
+  
+     createUser({
+        variables: {
+          input: user_info
+        }
       })
-      .catch(error => {
-        console.log(error);
-        window.alert('Nickname is already in use. Please choose a different nickname.');
-      });
-  };
-
-};
-
+        .then(response => {
+          console.log('File:', response.data.createUser);
+          const { id, token, email, nickname, avatar } = response.data.createUser;
+          const user = {
+            id,
+            token,
+            email,
+            nickname,
+            avatar
+          };
+          sessionStorage.setItem('user', JSON.stringify(user));
+        })
+        .catch(error => {
+          console.log(error);
+          window.alert('Nickname is already in use. Please choose a different nickname.');
+        });
+    };
 
   const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,8 +118,16 @@ const Authentication: FC = () => {
 
   useEffect(() => {
     if (AuthenticationData) {
-        setCanCheck(true);
-      sessionStorage.setItem('user', JSON.stringify(AuthenticationData));
+      const { id, token, email, nickname, avatar } = AuthenticationData.makeAuthentication;
+      const user = {
+        id,
+        token,
+        email,
+        nickname,
+        avatar
+      };
+      sessionStorage.setItem('user', JSON.stringify(user));
+      setCanCheck(true);
     }
   }, [AuthenticationData]);
 
@@ -136,14 +151,14 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
-		<Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/message" element={<Chat />} />
-    </Routes>	
-  ) : (
+      <Routes>
+        <Route path="/" element={<Home user={JSON.parse(sessionStorage.getItem('user') || '')} />} />
+        <Route path="/message" element={<Chat user={JSON.parse(sessionStorage.getItem('user') || '')} />} />
+      </Routes>	
+    ) : (
       <>
         {!canCheck ? (
-          <SigninButton  onClick={handleRedirect} />
+          <SigninButton onClick={handleRedirect} />
         ) : (
           <>
             {AuthenticationError && (
