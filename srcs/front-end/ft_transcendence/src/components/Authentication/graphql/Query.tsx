@@ -8,6 +8,7 @@ export const CHECK_2AF = gql`
       email
       nickname
       avatar
+      tfa_code
     }
   }
 `;
@@ -20,6 +21,7 @@ export const MAKE_AUTH= gql`
       email
       nickname
       avatar
+      tfa_code
     }
   }
 `;

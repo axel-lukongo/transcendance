@@ -1,15 +1,11 @@
-import React, { useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import { User } from '../Interface';
+import { TfaToggleButton } from './micro-components/TfaToogleButton';
 
-import './Home.css';
+import './css/Home.css';
 
 const Home = ({ user }: { user: User }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleToggle = () => {
-    setIsChecked(!isChecked);
-  };
 
   return (
     <div className='Home'>
@@ -23,8 +19,12 @@ const Home = ({ user }: { user: User }) => {
           <div className="history-match-box profil-box">
             MATCH HISTORY
           </div>
-          <div className='nickname-box profil-box'>nickname</div>
-          <div className='email-box profil-box'>email</div>
+          <div className='info-box profil-box'>
+          {user.nickname}
+          <br />
+          {user.email}
+          </div>
+
           <div className='game-box profil-box'>
             <span>PLAY</span>
             <div className="movement-ball"></div>
@@ -39,14 +39,7 @@ const Home = ({ user }: { user: User }) => {
           <Link to="/contact">
             <button className='contact-button logo-box'></button>
           </Link>
-          <div className="toggle-button-container">
-            <input type="checkbox" id="switch" checked={isChecked} onChange={handleToggle} />
-            <label htmlFor="switch" className={`toggle-button ${isChecked ? "activated" : "deactivated"}`}>
-              <span className="toggle-button-text">
-                {isChecked ? "2FA ACTIVATED" : "2FA DESACTIVATED"}
-              </span>
-            </label>
-          </div>
+          <TfaToggleButton userId={user.id} tfaCode={user.tfa_code} />
         </>
       )}
     </div>

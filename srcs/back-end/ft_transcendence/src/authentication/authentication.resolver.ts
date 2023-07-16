@@ -103,7 +103,7 @@ export class AuthenticationResolver {
       throw new Error("This user does not exist yet");
       // return { message: "This user does not exist yet" };
     } 
-    else if (this.user.tfa_code) {
+    else if (this.user.tfa_code === "true") {
       const tfa_code = generateTwoFactorCode();
       const updatedUser = await this.userService.update(this.user.id, {id : this.user.id, tfa_code });
       this.mailingService.sendMail(this.user.email, tfa_code);
