@@ -4,6 +4,7 @@ import { TfaToggleButton } from './micro-components/TfaToogleButton';
 
 import './css/Home.css';
 import NicknameBox from './micro-components/NicknameBox';
+import AvatarBox from './micro-components/AvatarBox';
 
 const Home = () => {
 
@@ -15,9 +16,7 @@ const Home = () => {
         <>
           <div className='screen-box'></div>
           <div className='rank-box profil-box'>RANK #?</div>
-          <div className='avatar-box profil-box'>
-            <img src={user.avatar} alt="User Avatar" />
-          </div>
+          <AvatarBox />
           <div className="history-match-box profil-box">
             MATCH HISTORY
           </div>
@@ -47,5 +46,3 @@ const Home = () => {
 }
 
 export default Home;
-
-

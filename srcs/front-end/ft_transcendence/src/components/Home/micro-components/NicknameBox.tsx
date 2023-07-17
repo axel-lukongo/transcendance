@@ -40,7 +40,7 @@ const NicknameBox = () => {
       },
     })
       .then((response) => {
-        console.log('User updated: ', response)
+        console.log('User nickname is updated: ', response)
         const updatedUser = response.data.updateUser;
         if (updatedUser.nickname) {
             userFromStorage.nickname = updatedUser.nickname;
