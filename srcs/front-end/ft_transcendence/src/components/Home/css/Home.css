@@ -143,18 +143,31 @@
   }
 
   .avatar-box {
-	  top: 8%;
-	  left: 74%;
-	  width: 20%;
-	  height: 30%;
+	top: 8%;
+	left: 74%;
+	width: 20%;
+	height: 30%;
+	border-radius: 50%;
+	overflow: hidden;
   }
+  
+  .avatar-box img {
+	width: 100%;
+	height: 100%;
+  }
+  
  
-  .nickname-box {
-	  top: 45%;
-	  left: 74%;
-	  width: 20%;
-	  height: 10%;
+  .info-box {
+	top: 45%;
+	left: 74%;
+	width: 22%;
+	height: 10%;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
   }
+
 
   .email-box {
 	  top: 60%;

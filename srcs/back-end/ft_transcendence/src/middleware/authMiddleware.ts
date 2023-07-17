@@ -1,21 +1,6 @@
-import { sign } from 'jsonwebtoken';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import * as crypto from 'crypto';
-
-export const generateAccessToken = (userId: number): string => {
-  const secret = process.env.CLIENT_SECRET_BACKEND; // clé secrète pour la signature du token
-  const expiresIn = '1h'; // Durée de validité du token (1 heure dans cet exemple)
-
-  const payload = { userId };
-  return sign(payload, secret, { expiresIn });
-};
-
-export const generateTwoFactorCode = (): string => {
-  const code = crypto.randomBytes(3).toString('hex').toUpperCase();
-  return code;
-};
 
 interface AuthenticatedRequest extends Request {
   userId?: number;
@@ -47,7 +32,6 @@ export class AuthMiddleware implements NestMiddleware {
         return;
       }
     }
-
     next();
   }
 }

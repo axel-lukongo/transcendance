@@ -1,7 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { generateAccessToken } from 'src/utils/auth.utils';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
+import { sign } from 'jsonwebtoken';
+
+const generateAccessToken = (userId: number): string => {
+  const secret = process.env.CLIENT_SECRET_BACKEND; // clé secrète pour la signature du token
+  const expiresIn = '1h'; // Durée de validité du token (1 heure dans cet exemple)
+
+  const payload = { userId };
+  return sign(payload, secret, { expiresIn });
+};
 
 @Injectable()
 export class AuthenticationService {

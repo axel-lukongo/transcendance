@@ -77,6 +77,13 @@ type Mutation {
 
 input UpdateUserInput {
   id: Int!
+  token: String
+  is_connecting: Boolean
+  tfa_code: String
+  email: String
+  intra_login: String
+  nickname: String
+  avatar: String
 }
 
 input CreateChanelInput {

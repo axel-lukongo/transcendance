@@ -4,6 +4,7 @@ import {SubscriptionClient} from 'subscriptions-transport-ws';
 import CreateMsg from './micro-components/createMessage'
 import './css/messages.css';
 import {Link} from 'react-router-dom';
+import {User} from '../Interface'
 
 //je me connect a mon server via le protocol websocket
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});

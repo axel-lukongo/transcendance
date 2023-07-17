@@ -45,7 +45,8 @@
 .tfa-form {
   align-items: center;
   background-color: #14245e80;
-  border: 1px solid #000000;
+  color: #ffd27d;
+  font-family: "Orbitron";
   display: flex;
   flex-direction: column;
   min-width: 612px;
@@ -75,7 +76,7 @@
   color: #d2d2d2;
   background-color: transparent; 
   font-family: "Inter-Regular", Helvetica;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 38px;
@@ -89,7 +90,7 @@
 
 .tfa-form .tfa-form-title {
   color: #ffd27d;
-  font-family: "Orbitron-ExtraBold", Helvetica;
+  font-family: "Orbitron";
   font-size: 24px;
   font-weight: 800;
   height: 56px;
@@ -103,10 +104,9 @@
 
 .tfa-form .submit-button {
   background-color: unset;
-  border: none;
-  border-color: unset;
+  font-family: "Orbitron";
   color: #ffd27d;
-  font-family: "or";
+  border: none;
   font-size: 20px;
   font-weight: 600;
   margin-right: -11px;
@@ -123,7 +123,6 @@
 .create-user-form {
   align-items: center;
   background-color: #14245e80;
-  border: 1px solid #000000;
   font-family: "Orbitron";
   color: #ffd27d;
   display: flex;
@@ -240,6 +239,6 @@
 }
 
 .create-user-form .form-field.form-field-error {
-  margin-top: 53px;
+  margin-top:70px;
 }
 

@@ -6,11 +6,10 @@ import { ChanelModule } from './chanel/chanel.module';
 import { MessagesModule } from './messages/messages.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ContactsModule } from './contacts/contacts.module';
-import 	{AuthMiddleware} from './utils/auth.utils'
+import 	{AuthMiddleware} from './middleware/authMiddleware'
 import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
-import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
 	imports: [
@@ -23,9 +22,6 @@ import { MulterModule } from '@nestjs/platform-express';
 				installSubscriptionHandlers: true, 
 			})
         }),
-		// MulterModule.register({
-		// 	dest: './uploads',
-		// }),
 		MailingModule,
 		UsersModule,
 		ChanelModule,
@@ -35,9 +31,9 @@ import { MulterModule } from '@nestjs/platform-express';
 	],
 })
 export class AppModule {
-	configure(consumer: MiddlewareConsumer) {
-	  consumer
-		.apply(AuthMiddleware)
-		.forRoutes({ path: '*', method: RequestMethod.ALL });
-	}
+	// configure(consumer: MiddlewareConsumer) {
+	//   consumer
+	// 	.apply(AuthMiddleware)
+	// 	.forRoutes({ path: '*', method: RequestMethod.ALL });
+	// }
   }

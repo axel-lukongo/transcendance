@@ -49,40 +49,83 @@ const Authentication: FC = () => {
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { nickname, avatar } = e.currentTarget;
+  
     const user_info = {
       nickname: nickname.value,
       avatar: avatar.value
     };
-
-      console.log(user_info.avatar);
-      
-    createUser({
-      variables: {
-        input: user_info
-      }
-    })
-    .then(response => {
-      // console.log('User created:', response.data.createUser);
-      sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
-    })
-    .catch(error => {
-      console.error('Error creating user:', error);
-    });
-
+    
+    const reader = new FileReader();
+  
+    if (avatar && avatar.files.length > 0) {
+      const file = avatar.files[0];
+      reader.readAsDataURL(file);
+  
+      reader.onloadend = () => {
+        const avatarDataUrl = reader.result as string;
+        user_info.avatar = avatarDataUrl;
+  
+        createUser({
+          variables: {
+            input: user_info
+          }
+        })
+          .then(response => {
+            console.log('user created:', response.data.createUser);
+            const { id, token, email, nickname, avatar, tfa_code } = response.data.createUser;
+            const user = {
+              id,
+              token,
+              email,
+              nickname,
+              avatar,
+              tfa_code
+            };
+            sessionStorage.setItem('user', JSON.stringify(user));
+          })
+          .catch(error => {
+            console.log(error);
+            window.alert('Nickname is already in use. Please choose a different nickname.');
+          });
+      };
+    } else {
+      // No avatar file selected
+      createUser({
+        variables: {
+          input: user_info
+        }
+      })
+        .then(response => {
+          console.log('user created:', response.data.createUser);
+          const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
+          const user = {
+            id,
+            token,
+            email,
+            nickname,
+            avatar,
+            tfa_code
+          };
+          sessionStorage.setItem('user', JSON.stringify(user));
+        })
+        .catch(error => {
+          console.log(error);
+          window.alert('Nickname is already in use. Please choose a different nickname.');
+        });
+    }
   };
-
-
+  
+ 
   const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { code } = e.currentTarget;
   
     checkTwoAuthenticationFactor({ variables: { input: code.value } })
     .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        // console.log('User created via 2fa:', response.data.checkTwoAuthenticationFactor);
         sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
     })
     .catch((error: any) => {
-        console.error('Error creating user:', error);
+      window.alert('The code you entered does not match the one sent to the email address');
     });
   };
 
@@ -94,7 +137,6 @@ const Authentication: FC = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlCode = urlParams.get('code');
     if (urlCode) {
-      // console.log(urlCode);
       makeAuthenticationQuery({ variables: { code: urlCode } });
       window.history.replaceState(null, '', window.location.pathname);
     }
@@ -102,9 +144,16 @@ const Authentication: FC = () => {
 
   useEffect(() => {
     if (AuthenticationData) {
-        setCanCheck(true);
-      // console.log(AuthenticationData);
-      sessionStorage.setItem('user', JSON.stringify(AuthenticationData));
+      const { id, token, email, nickname, avatar } = AuthenticationData.makeAuthentication;
+      const user = {
+        id,
+        token,
+        email,
+        nickname,
+        avatar
+      };
+      sessionStorage.setItem('user', JSON.stringify(user));
+      setCanCheck(true);
     }
   }, [AuthenticationData]);
 
@@ -128,14 +177,14 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
-		<Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/message" element={<Chat />} />
-    </Routes>	
-  ) : (
+      <Routes>
+        <Route path="/" element={<Home  />} />
+        <Route path="/message" element={<Chat  />} />
+      </Routes>	
+    ) : (
       <>
         {!canCheck ? (
-          <SigninButton  onClick={handleRedirect} />
+          <SigninButton onClick={handleRedirect} />
         ) : (
           <>
             {AuthenticationError && (
