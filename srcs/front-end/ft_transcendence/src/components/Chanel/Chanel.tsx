@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import UserChanelsRequests from "./ChanelsRequests";
-import CreateChanelForm from "./CreateChanelForm";
-import ChanelList from "./ListChanel";
+import UserChanelsRequests from "./micro-components/ChanelsRequests";
+import CreateChanelForm from "./micro-components/CreateChanelForm";
+import ChanelList from "./micro-components/ListChanel";
 
 export default function Chanel() {
 	

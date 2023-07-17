@@ -1,9 +1,9 @@
 import React from "react"
-import FriendsRequest from "./FriendsRequest"
-import ListContact from "./ListContact";
+import FriendsRequest from "./micro-components/FriendsRequest"
+import ListContact from "./micro-components/ListContact";
 import { useState } from "react";
-import RefuseContact from "./buttons/RefuseContact";
-import AcceptChanel from "../Chanel/buttons/AcceptChanel";
+import RefuseContact from "./micro-components/buttons/RefuseContact";
+import AcceptChanel from "../Chanel/micro-components/buttons/AcceptChanel";
 
 
 

@@ -2,6 +2,7 @@ import { sign } from 'jsonwebtoken';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
+import * as crypto from 'crypto';
 
 export const generateAccessToken = (userId: number): string => {
   const secret = process.env.CLIENT_SECRET_BACKEND; // clé secrète pour la signature du token
@@ -9,6 +10,11 @@ export const generateAccessToken = (userId: number): string => {
 
   const payload = { userId };
   return sign(payload, secret, { expiresIn });
+};
+
+export const generateTwoFactorCode = (): string => {
+  const code = crypto.randomBytes(3).toString('hex').toUpperCase();
+  return code;
 };
 
 interface AuthenticatedRequest extends Request {
@@ -21,17 +27,18 @@ export class AuthMiddleware implements NestMiddleware {
     const token = req.headers.authorization?.split(' ')[1];
     const isUserCreationRequest = req.body.operationName === 'CreateUser';
     const isMakeAuthenticationRequest = req.body.operationName === 'MakeAuthentication';
+    const ischeckTwoAuthenticationFactorRequest = req.body.operationName === 'checkTwoAuthenticationFactor';
     const isGraphqlEndpoint = req.originalUrl === '/graphql';
 
     // Vérifie si la requête n'est pas une création / connexion  d'utilisateur 
-    if (!isUserCreationRequest && !isMakeAuthenticationRequest && !isGraphqlEndpoint) {
+    if (!isUserCreationRequest && !isMakeAuthenticationRequest 
+      && !ischeckTwoAuthenticationFactorRequest && !isGraphqlEndpoint) {
       if (token) {
         try {
           const decodedToken = verify(token, process.env.CLIENT_SECRET_BACKEND) as { userId: number };
           req.userId = decodedToken.userId;
         } catch (error) {
           res.status(401).json({ message: 'Token invalide' });
-          
           return;
         }
       } 
@@ -44,3 +51,5 @@ export class AuthMiddleware implements NestMiddleware {
     next();
   }
 }
+
+

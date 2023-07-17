@@ -18,6 +18,12 @@ export class MessagesResolver {
 		return this.msgService.findAll_msg();
 	}
 
+
+	@Query(() => [Message], { name: 'Message_findAll_msg_chan' })
+	findAll_msg_chan(@Args('channelId', { type: () => Int }) channelId: number) {
+	  return this.msgService.findAll_msg_chan(channelId);
+	}
+
 	@Query(() => Message, { name: 'Message_findOne_msg' })
 	findOne_msg(@Args('id', { type: () => Int }) id: number) {
 		return this.msgService.findOne_msg(id);

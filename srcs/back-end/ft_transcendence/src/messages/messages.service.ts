@@ -20,7 +20,13 @@ export class MessagesService {
 		return this.prisma.message.findUnique({where: {id: id}});
 	}
 
-
+	async findAll_msg_chan(channelId: number) {
+		return this.prisma.message.findMany({
+		  where: {
+			channel_id: channelId // Utilisation de la variable channelId pour filtrer les messages
+		  }
+		});
+	  }
 
 	create(createMsg: CreateMessageInput) {
 		return this.prisma.message.create({ data: createMsg });

@@ -7,6 +7,7 @@ export declare class UsersResolver {
         id: number;
         token: string;
         is_connecting: boolean;
+        tfa_code: string;
         email: string;
         intra_login: string;
         nickname: string;
@@ -16,6 +17,7 @@ export declare class UsersResolver {
         id: number;
         token: string;
         is_connecting: boolean;
+        tfa_code: string;
         email: string;
         intra_login: string;
         nickname: string;
@@ -25,6 +27,7 @@ export declare class UsersResolver {
         id: number;
         token: string;
         is_connecting: boolean;
+        tfa_code: string;
         email: string;
         intra_login: string;
         nickname: string;
@@ -34,6 +37,7 @@ export declare class UsersResolver {
         id: number;
         token: string;
         is_connecting: boolean;
+        tfa_code: string;
         email: string;
         intra_login: string;
         nickname: string;

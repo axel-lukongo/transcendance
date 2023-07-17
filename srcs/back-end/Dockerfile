@@ -21,20 +21,18 @@ COPY ./ft_transcendence /ft_transcendence/
 # Copie du script d'initialisation
 COPY init.sh ./
 
-EXPOSE 4000
 
 # Définition du répertoire de travail
 WORKDIR /ft_transcendence/
 
 # Installation des packages npm supplémentaires
 RUN npm install @nestjs/graphql \
-    @apollo/server \
     @nestjs/mapped-types \
     class-validator \
     class-transformer \
     @prisma/client	\
-	graphql-subscriptions \
-	bcrypt
+	graphql-subscriptions 
+
 
 # Définition du point d'entrée
 ENTRYPOINT ["bash", "../init.sh"]

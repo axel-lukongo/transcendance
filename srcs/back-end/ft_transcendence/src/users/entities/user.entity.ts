@@ -10,6 +10,9 @@ export class User {
 
   @Field(() => Boolean)
   is_connecting: boolean;
+ 
+  @Field({ nullable: true })
+  tfa_code?: string;
 
   @Field()
   email: string;
@@ -22,22 +25,4 @@ export class User {
 
   @Field({ nullable: true })
   avatar?: string;
-
-  // @Field(() => [Pong])
-  // userPong: Pong[];
-
-  // @Field(() => [Pong])
-  // userPong2: Pong[];
-
-  // @Field(() => [Users_Chanels])
-  // chanels: Users_Chanels[];
-
-  // @Field(() => [Chanel])
-  // own_chan: Chanel[];
-
-  // @Field(() => [Message])
-  // sender: Message[];
-
-  // @Field(() => [Message])
-  // receiver: Message[];
 }

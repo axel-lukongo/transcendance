@@ -1,0 +1,245 @@
+
+.SignIn-Button {
+  align-items: center;
+  box-shadow: 0px 14px 14px #00000040;
+  display: flex;
+  height: 11%;
+  top: 70%;
+  justify-content: space-around;
+  padding: 14px;
+  position: fixed;
+  width: 25%;
+  border-radius: 10px;
+  left: 37%;
+  background-color: rgba(23, 24, 110, 0.573);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: center; /* Ajouter cette ligne */
+  overflow: hidden; /* Empêche le contenu de déborder */
+
+}
+
+.SignIn-Button:hover {
+  transform: scale(1.1);
+  transform-origin: center; /* Centre la transformation au point d'origine */
+
+}
+
+.SignIn-Button .SignIn-Text {
+  color: #c865db;
+  transform: scale(1); /* Réinitialise la transformation du texte */
+  font-family: 	"Orbitron";
+  font-size: 5vw;
+  font-style:  italic;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+  transform: scale(1.1);
+  transform-origin: center; /* Ajouter cette ligne */
+}
+/***********/
+
+.tfa-form {
+  align-items: center;
+  background-color: #14245e80;
+  border: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  min-width: 612px;
+  padding: 20px 3px;
+  left: 50%;
+  top:400px;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  position: fixed;
+}
+
+.tfa-form .tfa-form-input {
+  align-items: flex-start;
+  background-color: #66818980;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px 15px 15px;
+  position: center;
+  height: 20px;
+  top: 27px;
+  width: 301px;
+}
+
+.tfa-form .tfa-form-input-text {
+  color: #d2d2d2;
+  background-color: transparent; 
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 38px;
+  right: 13px;
+  top: -7px;
+  position: relative;
+  white-space: nowrap;
+  width: 324px;
+  border: none; 
+}
+
+.tfa-form .tfa-form-title {
+  color: #ffd27d;
+  font-family: "Orbitron-ExtraBold", Helvetica;
+  font-size: 24px;
+  font-weight: 800;
+  height: 56px;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  width: 552px;
+}
+
+.tfa-form .submit-button {
+  background-color: unset;
+  border: none;
+  border-color: unset;
+  color: #ffd27d;
+  font-family: "or";
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: -11px;
+}
+
+.submit-button:hover {
+  transform: scale(1.1);
+  transform-origin: center; /* Centre la transformation au point d'origine */
+
+}
+
+
+/************/
+.create-user-form {
+  align-items: center;
+  background-color: #14245e80;
+  border: 1px solid #000000;
+  font-family: "Orbitron";
+  color: #ffd27d;
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  min-width: 612px;
+  padding: 20px 3px;
+  left: 50%;
+  top:400px;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  position: fixed;
+}
+
+.create-user-form .form-title {
+  font-size: 24px;
+  font-weight: 800;
+  height: 56px;
+  letter-spacing: 0;
+  line-height: 28px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  width: 552px;
+}
+
+.create-user-form .form-field {
+  border: 0px none;
+  height: 83px;
+  min-width: 301px;
+  position: relative;
+}
+
+.create-user-form .form-label {
+  font-family: "Orbitron";
+  font-size: 20px;
+  font-weight: 600;
+  left: 0;
+  letter-spacing: 0;
+  line-height: 28px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  width: 301px;
+}
+
+.create-user-form .form-input {
+  align-items: flex-start;
+  background-color: #66818980;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  padding: 10px 15px 15px 15px;
+  position: absolute;
+  height: 20px;
+  top: 27px;
+  width: 301px;
+}
+
+.create-user-form .form-input-text {
+  background-color: transparent; 
+  font-family: 	"Orbitron";
+  color: #ffd27d;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 38px;
+  right: 13px;
+  top: -7px;
+  position: relative;
+  width: 324px;
+  border: none; 
+}
+
+.create-user-form .form-avatar {
+  height: 20px !important;
+  min-width: 301px !important;
+  width: unset !important;
+}
+
+
+.create-user-form .submit-button {
+  background-color: unset;
+  border: none;
+  border-color: unset;
+  color: #ffd27d;
+  font-family: "Orbitron";
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: -11px;
+}
+
+.create-user-form .form-nickname-text-error {
+  color: #e0d318ad;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #d7231658;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.create-user-form .form-avatar-text-error {
+  margin-top: 10px;
+  color: #e0d318ad;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #d7231658;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.create-user-form .form-field.form-field-error {
+  margin-top: 53px;
+}
+

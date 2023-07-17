@@ -18,6 +18,13 @@ export declare class MessagesService {
         content: string;
         sent_at: Date;
     }, unknown> & {}>;
+    findAll_msg_chan(channelId: number): Promise<(import("@prisma/client/runtime").GetResult<{
+        id: number;
+        sender_id: number;
+        channel_id: number;
+        content: string;
+        sent_at: Date;
+    }, unknown> & {})[]>;
     create(createMsg: CreateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime").GetResult<{
         id: number;
         sender_id: number;

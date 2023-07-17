@@ -34,11 +34,16 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - WEBSITE_URL=${WEBSITE_URL}
-      - CLIENT_ID_API_42=${CLIENT_ID_API_42}
-      - CLIENT_SECRET_API_42=${CLIENT_SECRET_API_42}
+      - CLIENT_ID_42_API=${CLIENT_ID_42_API}
+      - CLIENT_SECRET_42_API=${CLIENT_SECRET_42_API}
       - CLIENT_SECRET_BACKEND=${CLIENT_SECRET_BACKEND}
+      - CLIENT_ID_GMAIL_API=${CLIENT_ID_GMAIL_API}
+      - CLIENT_SECRET_GMAIL_API=${CLIENT_SECRET_GMAIL_API}
+      - REFRESH_TOKEN_GMAIL_API=${REFRESH_TOKEN_GMAIL_API}
+      - EMAIL=${EMAIL}
     ports:
       - "4000:4000"
+      - "5555:5555"
     volumes:
       - "./srcs/back-end/ft_transcendence:/ft_transcendence"
     restart: always

@@ -6,6 +6,7 @@ type User {
   id: Int!
   token: String!
   is_connecting: Boolean!
+  tfa_code: String
   email: String!
   intra_login: String!
   nickname: String!
@@ -50,13 +51,16 @@ type Query {
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!
+  Message_findAll_msg_chan(channelId: Int!): [Message!]!
   Message_findOne_msg(id: Int!): Message!
   contactsRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
+  checkTwoAuthenticationFactor(code: String!): User!
 }
 
 type Mutation {
+  sendTwoFactorCodeByEmail(email: String!, code: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
@@ -72,10 +76,6 @@ type Mutation {
 }
 
 input UpdateUserInput {
-  email: String
-  intra_login: String
-  nickname: String
-  avatar: String
   id: Int!
 }
 
@@ -123,7 +123,6 @@ input UpdateContact {
 }
 
 input CreateAuthenticationInput {
-  email: String!
   nickname: String!
   avatar: String
 }
