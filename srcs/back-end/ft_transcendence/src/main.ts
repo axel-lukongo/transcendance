@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as express from 'express'
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,12 +11,12 @@ async function bootstrap() {
     preflightContinue: false,
     optionsSuccessStatus: 204,
     credentials: true,
-    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization, secret',
     exposedHeaders: 'Content-Disposition',
     maxAge: 86400,
   })
 
-  app.use('/uploads', express.static('/ft_transcendence/src/uploads'));
+  // app.use('/uploads', express.static('/ft_transcendence/src/uploads'));
 
   await app.listen(4000);
 

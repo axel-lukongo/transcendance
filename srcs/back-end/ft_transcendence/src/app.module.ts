@@ -10,7 +10,7 @@ import 	{AuthMiddleware} from './middleware/authMiddleware'
 import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
-
+import * as express from 'express'
 @Module({
 	imports: [
 		GraphQLModule.forRootAsync<ApolloDriverConfig>({
@@ -31,9 +31,12 @@ import { MailingModule } from './authentication/mailing/mailing.module';
 	],
 })
 export class AppModule {
-	// configure(consumer: MiddlewareConsumer) {
-	//   consumer
-	// 	.apply(AuthMiddleware)
-	// 	.forRoutes({ path: '*', method: RequestMethod.ALL });
-	// }
-  }
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(AuthMiddleware)
+			.forRoutes({ path: '*', method: RequestMethod.ALL });
+		consumer
+      	.apply(express.static('/ft_transcendence/src/uploads'))
+      	.forRoutes('uploads/*');
+	}
+}

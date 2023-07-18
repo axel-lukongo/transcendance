@@ -6,6 +6,7 @@ import './css/Home.css';
 import NicknameBox from './micro-components/NicknameBox';
 import AvatarBox from './micro-components/AvatarBox';
 
+
 const Home = () => {
 
   const user = JSON.parse(sessionStorage.getItem('user') || '');
