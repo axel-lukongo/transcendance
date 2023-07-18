@@ -24,6 +24,7 @@ const AvatarBox = () => {
 
       const reader = new FileReader();
       reader.readAsDataURL(avatarFiles);
+
       reader.onloadend = () => {
         setAvatar(reader.result as string);
         updateUser({

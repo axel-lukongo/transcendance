@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as express from 'express'
 
 
 async function bootstrap() {
@@ -16,7 +17,7 @@ async function bootstrap() {
     maxAge: 86400,
   })
 
-  // app.use('/uploads', express.static('/ft_transcendence/src/uploads'));
+  app.use('/uploads', express.static('/ft_transcendence/src/uploads'));
 
   await app.listen(4000);
 
