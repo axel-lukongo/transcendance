@@ -40,10 +40,10 @@ const CreateMsg = () => {
 
 	return (
 		<div >
-			<div>
+			<div >
 				{/* <label htmlFor='nom'> Content </label> */}
-				<input type='text' value={Content} onChange={handleContentChange} id='champs1' name='the Content' />
-				<button onClick={handlecreateMessage} disabled={!Content} > send </button>
+				<input type='text' value={Content} onChange={handleContentChange} id='champs1' name='the Content' className='input-message' />
+				<button onClick={handlecreateMessage} disabled={!Content} className='send-button' > send </button>
 			</div>
 
 			{/* <div>
