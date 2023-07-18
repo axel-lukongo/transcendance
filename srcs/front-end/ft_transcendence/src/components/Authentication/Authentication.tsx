@@ -12,6 +12,7 @@ import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 import Home from '../Home/Home';
 import Chat from '../Message/message';
 
+// import { MessageContext } from '../Message/micro-components/MessageContext';
 
 const Authentication: FC = () => {
 
@@ -128,10 +129,12 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
-		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/message" element={<Chat />} />
-		</Routes>	
+
+
+	<Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/message" element={<Chat />} />
+    </Routes>	
 
   ) : (
       <>

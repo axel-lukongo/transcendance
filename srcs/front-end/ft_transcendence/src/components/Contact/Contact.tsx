@@ -13,13 +13,13 @@ const Contact = ({show}: {show: boolean}) => {
 	}
 
 	return (
-	<div className={`Contact_pad ${show ? 'Contact_show' : ''}`}>
+	<div >
 			<React.Fragment>
 				<FriendsRequest 
 					refetchContact={handleRefetch}
 					refetchProps={refetchProp}
 				/>
-				<ListContact 
+				<ListContact
 					refetchContact={handleRefetch}
 					refetchProps={refetchProp}
 				/>

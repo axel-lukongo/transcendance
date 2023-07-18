@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import {gql, useQuery} from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import CreateMsg from './micro-components/createMessage'
@@ -29,7 +29,7 @@ const GET_MESSAGES_BY_CHANNEL = gql`
 type Message = {
 	id: number;
 	sender_id: number;
-	content: string;  
+	content: string;
 };
 
 /**
@@ -37,43 +37,24 @@ type Message = {
 */
 
 const Chat = () => {
-	const { loading, error, data } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
+	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
 	const [messages, setMessages] = useState<Message[]>([]);
-	// Si il y avais des chose dans intialMessages alors je le met dans mon useState
-	/*le probleme c'est que lorsque je envoie des msg, ils sont mis dans mon useState message mais ensuite
-	lorsque je change de route ma useState est remis a 0 et donc je suis obliger de reload pour faire
-	la requete GET_MESSAGES_BY_CHANNEL afin de mettre les nouveaux message dans ma state
-	donc l'idee que j'ai c'est de prendre le session storage et de initialiser ces messages avec ceux de la db
-	ensuite de refaire mon ancien system ou j'utilisais le session storage pour initaliser l'etat initial de mon useState
-	*/
-
 
 	useEffect(() => {
-		const storedMessages = sessionStorage.getItem('messages');
-		if (storedMessages) {
-		  const parsedMessages = JSON.parse(storedMessages);
-		  setMessages(parsedMessages);
-		} else if (data && data.Message_findAll_msg_chan) {
+		if (data && data.Message_findAll_msg_chan) {
+		  refetch();
 		  setMessages(data.Message_findAll_msg_chan);
-		  sessionStorage.setItem('messages', JSON.stringify(data.Message_findAll_msg_chan));
-		}
-	  }, [data]);
+	  }
+	}, [data]);
 
 	useEffect(() => {
-			const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: 1 }}).subscribe({
+		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: 1 }}).subscribe({
 			next(response) {
 				// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
 				// reponse c'est la ou les reponse de notre server est stocker.
 				if (response.data) {
 					const newMessage = response.data.addmessage;
-					setMessages(prevMessages => {
-						const updatedMessages = [...prevMessages, newMessage];
-						// On copie les messages precedent dans prevMessages et on rajoute newMessage a l'interieur de ma variable messages
-						sessionStorage.setItem('messages', JSON.stringify(updatedMessages));
-						// Cette ligne c'est pour sauvegarder les messages meme apres le rechargement de la page
-						// On le stock dans un json et 'message' reprensente la cle de l'endroit ou est stocker le updatedMessages
-						return updatedMessages as Message[];
-					});
+					setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedent et on rajoute newMessage
 				}
 			},
 			error(error) {
