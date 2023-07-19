@@ -11,6 +11,7 @@ import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 
 import Home from '../Home/Home';
 import Chat from '../Message/message';
+import Contact from '../Contact/Contact';
 
 
 const Authentication: FC = () => {
@@ -180,6 +181,7 @@ return (
       <Routes>
         <Route path="/" element={<Home  />} />
         <Route path="/message" element={<Chat  />} />
+        <Route path='/contact' element={<Contact />} />
       </Routes>	
     ) : (
       <>

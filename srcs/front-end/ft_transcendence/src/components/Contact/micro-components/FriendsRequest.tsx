@@ -6,6 +6,8 @@ import RefuseContact from "./buttons/RefuseContact";
 import { CONTACTS } from '../graphql/QuerysContact'
 import { IContacts, IProposContact } from "../../interfaces/interfaces"
 
+import "../css/Contact.css"
+
 
 export default function FriendsRequest({refetchContact, refetchProps}: IProposContact) {
 
@@ -35,35 +37,29 @@ export default function FriendsRequest({refetchContact, refetchProps}: IProposCo
 		return (<div>Pas de contacts</div>)
 	}
 	
-	return (<div>
-		<h3>Friends request</h3>
+	return (
+		<div className="Friend_contact ">
 		{
-			
-			<ul>{
 			contacts.map((element: IContacts) => (
-				<li key={element.id}>
-				{ 
-					<div>
-							<h4>{element.contact.nickname.toString()}</h4>
-							<div>email: {element.contact.email.toString()} </div>
-							<div>token: {element.contact.token.toString()} </div>
-							<div>Pending: {element.pending.toString()} </div>
+				<div className="card">
+					<div className="avatar">
 					</div>
-				} 
-				<AccepContact 
+					<p id="card_p">{element.contact.nickname.toString()}</p>
+					<div className="response">
+					<AccepContact 
 					element={element}  
 					refetchContact={refetchContact} 
-					label="Accept"
-				/>
-				<RefuseContact 
+					label="accept"
+					/>
+					<RefuseContact 
 					element={element}  
 					refetchContact={refetchContact}
-					label="Deny"
-				/>
-				</li>
+					label="refuse"
+					/>
+					</div>
+				</div>
 			))
-			}
-		</ul>
 		}
-	</div>);
+		</div>
+	);
 }

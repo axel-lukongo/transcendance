@@ -1,13 +1,13 @@
-import React from "react"
+import React, { useState } from "react"
 import FriendsRequest from "./micro-components/FriendsRequest"
 import ListContact from "./micro-components/ListContact";
-import { useState } from "react";
 import RefuseContact from "./micro-components/buttons/RefuseContact";
 import AcceptChanel from "../Chanel/micro-components/buttons/AcceptChanel";
 
+import './css/Contact.css'
 
 
-const Contact = ({show}: {show: boolean}) => {
+const Contact = () => {
 
 	const [refetchProp, setRefetch] = useState(false);
 
@@ -16,16 +16,22 @@ const Contact = ({show}: {show: boolean}) => {
 	}
 
 	return (
-	<div className={`Contact_pad ${show ? 'Contact_show' : ''}`}>
+	<div className="Contact_pad">
 			<React.Fragment>
-				<FriendsRequest 
-					refetchContact={handleRefetch}
-					refetchProps={refetchProp}
-				/>
-				<ListContact 
-					refetchContact={handleRefetch}
-					refetchProps={refetchProp}
-				/>
+				<div className="box_request">
+				<h2 id="Contact_labels">Friends request</h2>
+					<FriendsRequest 
+						refetchContact={handleRefetch}
+						refetchProps={refetchProp}
+						/>
+				</div>
+				<div className="box_ListContact">
+					<div className="title"><h2 id="Contact_labels">List Contact</h2></div>
+					<ListContact 
+						refetchContact={handleRefetch}
+						refetchProps={refetchProp}
+					/>
+				</div>
 			</React.Fragment>
 			
 	</div>);

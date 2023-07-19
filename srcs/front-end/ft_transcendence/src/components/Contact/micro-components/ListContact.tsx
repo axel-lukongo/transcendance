@@ -4,10 +4,9 @@ import { IProposContact, IContacts } from "../../interfaces/interfaces";
 import RefuseContact from "./buttons/RefuseContact"
 import { LIST_CONTACT } from '../graphql/QuerysContact'
 
-
+import "../css/Contact.css"
 
 export default function ListContact({refetchContact, refetchProps}: IProposContact) {
-
 
 	const {data, loading, error, refetch} = useQuery(LIST_CONTACT, {
 		variables: { input: 1}
@@ -27,23 +26,22 @@ export default function ListContact({refetchContact, refetchProps}: IProposConta
 		return (<div>Nothing to see her</div>)
 
 	return (
-	<div>
-		<h3>List Contact</h3>
-		<ul>{
-			data.myContacts.map((element: IContacts) => (
-				<li key={element.id}>
-					<div>
-						<h4>{element.contact.nickname}</h4>
+		<div className="List_contact">
+			{
+				data.myContacts.map((element: IContacts) => (
+					<div className="card">
+						<div className="avatar"></div>
+						<p>{element.contact.nickname}</p>
 						<div>{element.contact.email}</div>
 						<div>{element.contact.token}</div>
 						<RefuseContact 
 							element={element} 
 							refetchContact={refetchContact}
-							label="Delete"
+							label="delete"
 						/>
 					</div>
-				</li>
-			))
-		}</ul>
-	</div>)
+				))
+			}
+		</div>
+	)
 }

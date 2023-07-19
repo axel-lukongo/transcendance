@@ -13,7 +13,7 @@ const Home = () => {
     <div className='Home'>
       {user && (
         <>
-          <div className='screen-box'></div>
+          <div className='screen-box'>
           <div className='rank-box profil-box'>RANK #?</div>
           <div className='avatar-box profil-box'>
             <img src={user.avatar} alt="User Avatar" />
@@ -42,6 +42,7 @@ const Home = () => {
             <button className='contact-button logo-box'></button>
           </Link>
           <TfaToggleButton userId={user.id} tfaCode={user.tfa_code} />
+          </div>
         </>
       )}
     </div>
