@@ -43,4 +43,14 @@ export declare class UsersResolver {
         nickname: string;
         avatar: string;
     }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    searchUsers(research: string): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime").GetResult<{
+        id: number;
+        token: string;
+        is_connecting: boolean;
+        tfa_code: string;
+        email: string;
+        intra_login: string;
+        nickname: string;
+        avatar: string;
+    }, unknown> & {})[]>;
 }

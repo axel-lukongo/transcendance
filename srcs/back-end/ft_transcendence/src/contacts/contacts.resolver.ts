@@ -62,4 +62,5 @@ export class ContactsResolver {
 	getMyContacts(@Args("user_id", {type: () => Int}) user_id: number) {
 		return this.contactService.findContacts(user_id);
 	}
+
 }

@@ -31,4 +31,13 @@ export class UsersService {
     return this.prisma.user.delete({where: {id: id}});
   }
 
+  researchUsers(research: string) {
+    return this.prisma.user.findMany({
+      where: {
+        nickname: {
+          contains: research
+        }
+      }
+    })
+  }
 }
