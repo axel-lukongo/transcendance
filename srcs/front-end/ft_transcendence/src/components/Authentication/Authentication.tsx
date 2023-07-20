@@ -144,13 +144,14 @@ const Authentication: FC = () => {
 
   useEffect(() => {
     if (AuthenticationData) {
-      const { id, token, email, nickname, avatar } = AuthenticationData.makeAuthentication;
+      const { id, token, email, nickname, avatar, tfa_code} = AuthenticationData.makeAuthentication;
       const user = {
         id,
         token,
         email,
         nickname,
-        avatar
+        avatar,
+        tfa_code
       };
       sessionStorage.setItem('user', JSON.stringify(user));
       setCanCheck(true);
