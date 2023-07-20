@@ -63,11 +63,10 @@ const Authentication: FC = () => {
       }
     })
     .then(response => {
-      // console.log('User created:', response.data.createUser);
       sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
     })
     .catch(error => {
-      console.error('Error creating user:', error);
+      window.alert('Nickname is already in use. Please choose a different nickname.');
     });
 
   };
@@ -79,11 +78,10 @@ const Authentication: FC = () => {
   
     checkTwoAuthenticationFactor({ variables: { input: code.value } })
     .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        // console.log('User created via 2fa:', response.data.checkTwoAuthenticationFactor);
         sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
     })
     .catch((error: any) => {
-        console.error('Error creating user:', error);
+      window.alert('The code you entered does not match the one sent to the email address');
     });
   };
 
@@ -95,7 +93,6 @@ const Authentication: FC = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlCode = urlParams.get('code');
     if (urlCode) {
-      // console.log(urlCode);
       makeAuthenticationQuery({ variables: { code: urlCode } });
       window.history.replaceState(null, '', window.location.pathname);
     }
@@ -104,7 +101,6 @@ const Authentication: FC = () => {
   useEffect(() => {
     if (AuthenticationData) {
         setCanCheck(true);
-      // console.log(AuthenticationData);
       sessionStorage.setItem('user', JSON.stringify(AuthenticationData));
     }
   }, [AuthenticationData]);
@@ -139,7 +135,7 @@ return (
   ) : (
       <>
         {!canCheck ? (
-          <SigninButton className="custom-signin-button" onClick={handleRedirect} />
+          <SigninButton  onClick={handleRedirect} />
         ) : (
           <>
             {AuthenticationError && (
