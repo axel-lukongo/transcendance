@@ -38,11 +38,23 @@ const CreateMsg = () => {
 		setChanId(e.target.value);
 	};
 
+	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter' && Content.trim() !== '') {
+		  handlecreateMessage();
+		}
+	};
+
 	return (
 		<div >
 			<div >
 				{/* <label htmlFor='nom'> Content </label> */}
-				<input type='text' value={Content} onChange={handleContentChange} id='champs1' name='the Content' className='input-message' />
+				<input type='text'
+				value={Content}
+				onChange={handleContentChange}
+				id='champs1'
+				name='the Content'
+				onKeyPress={handleKeyPress}
+				className='input-message' />
 				<button onClick={handlecreateMessage} disabled={!Content} className='send-button' > send </button>
 			</div>
 

@@ -11,6 +11,7 @@ import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { UserChanelsModule } from './user-chanels/user-chanels.module';
 
 @Module({
 	imports: [
@@ -31,7 +32,8 @@ import { MulterModule } from '@nestjs/platform-express';
 		ChanelModule,
 		MessagesModule,
 		ContactsModule,
-		AuthenticationModule
+		AuthenticationModule,
+		UserChanelsModule
 	],
 })
 export class AppModule {
