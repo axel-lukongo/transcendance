@@ -20,3 +20,10 @@ export const ADD_USER_IN_CHANEL = gql`mutation AddUserInChanel($input: AddUserCh
 		}
 	}
 }`
+
+export const CREATE_CONTACT = gql`mutation CreateContact($input: CreateContactInput!) {
+	createContact(createContact: $input) {
+		id
+		pending
+	}
+}`

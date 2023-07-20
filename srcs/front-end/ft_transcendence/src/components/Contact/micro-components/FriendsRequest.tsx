@@ -9,16 +9,16 @@ import { IContacts, IProposContact } from "../../interfaces/interfaces"
 import "../css/Contact.css"
 
 
-export default function FriendsRequest({refetchContact, refetchProps}: IProposContact) {
+export default function FriendsRequest({refetchContact, refetchProps, user}: IProposContact) {
 
-	const {data, loading, error, refetch} = useQuery(CONTACTS, {variables: {input: 1}});
+	const {data, loading, error, refetch} = useQuery(CONTACTS, {variables: {input: user.id}});
 
 	useEffect(() => {
 		refetch();
 	}, [refetch, refetchProps]);
 
 	if (loading)
-	return (<div><p>Loading...</p></div>);
+		return (<div><p>Loading...</p></div>);
 	
 	if (error) {
 		console.log(error);
@@ -41,23 +41,22 @@ export default function FriendsRequest({refetchContact, refetchProps}: IProposCo
 		<div className="Friend_contact ">
 		{
 			contacts.map((element: IContacts) => (
-				<div className="card">
-					<div className="avatar">
-					</div>
-					<p id="card_p">{element.contact.nickname.toString()}</p>
-					<div className="response">
-					<AccepContact 
-					element={element}  
-					refetchContact={refetchContact} 
-					label="accept"
-					/>
-					<RefuseContact 
-					element={element}  
-					refetchContact={refetchContact}
-					label="refuse"
-					/>
-					</div>
-				</div>
+                <div key={element.id} className="card">
+                    <div className="avatar"></div>
+                    <p id="card_p">{element.contact.nickname.toString()}</p>
+                    <div className="response">
+                        <AccepContact 
+                        element={element}  
+                        refetchContact={refetchContact} 
+                        label="accept"
+                        />
+                        <RefuseContact 
+                        element={element}  
+                        refetchContact={refetchContact}
+                        label="refuse"
+                        />
+                    </div>
+                </div>
 			))
 		}
 		</div>

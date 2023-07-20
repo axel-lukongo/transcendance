@@ -6,10 +6,12 @@ import { LIST_CONTACT } from '../graphql/QuerysContact'
 
 import "../css/Contact.css"
 
-export default function ListContact({refetchContact, refetchProps}: IProposContact) {
+export default function ListContact({refetchContact, refetchProps, user, setSwap}: IProposContact) {
 
 	const {data, loading, error, refetch} = useQuery(LIST_CONTACT, {
-		variables: { input: 1}
+		variables: { 
+			input: user.id
+		}
 	});	
 
 	useEffect(() => {
@@ -17,7 +19,9 @@ export default function ListContact({refetchContact, refetchProps}: IProposConta
 	}, [refetch, refetchProps]);
 
 	if (error)
-		return (<div>An Error as happen!</div>)
+	{console.log("http:", error.networkError)
+	return (<div>An Error as occured!</div>)
+}
 
 	if (loading)
 		return (<div>Loading...</div>);
@@ -29,7 +33,7 @@ export default function ListContact({refetchContact, refetchProps}: IProposConta
 		<div className="List_contact">
 			{
 				data.myContacts.map((element: IContacts) => (
-					<div className="card">
+					<div key={element.id} className="card">
 						<div className="avatar"></div>
 						<p>{element.contact.nickname}</p>
 						<div>{element.contact.email}</div>

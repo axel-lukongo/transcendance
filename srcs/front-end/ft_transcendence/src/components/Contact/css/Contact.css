@@ -1,3 +1,13 @@
+
+/* General */
+
+h2 {
+	font-weight: bold;
+	margin: 0;
+}
+
+/* Page */
+
 .Contact_pad {
 	position: absolute;
 	top: 3%;
@@ -11,23 +21,47 @@
 	font-family: "Orbitron";
 }
 
-h2 {
-	top: 0%;
-	text-align: center;
-	font-weight: bold;
-}
-
 .title {
-	position: relative;
+	display: flex;
 	width: 100%;
+	height: 20%;
+	align-items: center;
+	justify-content: center;
 }
 
 #Contact_labels {
-	position: relative;
-	height: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 80%;
 	width: 100%;
-	/* font: bold; */
 }
+	/* Swap Buttons */
+
+	#listContact_btn {
+		width: 30px;
+		height: 30px;
+		background: url("/ft_transcendence/src/image/list-interface-symbol.png") center no-repeat;
+		background-size: contain;
+		border: 0px transparent;
+		object-fit: scale-down;
+		align-items: center;
+		margin-right: 5%;
+	}
+	
+	#addContact_btn {
+		/* position: relative; */
+		width: 30px;
+		height: 30px;
+		background: url("/ft_transcendence/src/image/user.png") center no-repeat;
+		background-size: contain;
+		border: 0px transparent;
+		object-fit: scale-down;
+		align-items: center;
+		margin-right: 5%;
+	}
+
+/* Friend Request */
 
 .box_request{
 	position: relative;
@@ -74,8 +108,6 @@ h2 {
 	border-radius: 48%;
 }
 
-
-
 .Friend_contact #card_p {
 	margin-top: 6%;
 	margin-bottom: 7%;
@@ -88,19 +120,23 @@ h2 {
 	justify-content:  space-around;
 }
 
-#accept {
-	height: 100%;
-	background: url('/ft_transcendence/src/image/check.png') no-repeat center;
-	background-size: contain;
-	border: 0px;
-}
+	/* Friend Request Btn */
 
-#refuse {
-	height: 100%;
-	background: url('/ft_transcendence/src/image/cross.png') no-repeat center;
-	background-size: contain;
-	border: 10px;
-}
+	#accept {
+		height: 100%;
+		background: url('/ft_transcendence/src/image/check.png') no-repeat center;
+		background-size: contain;
+		border: 0px;
+	}
+
+	#refuse {
+		height: 100%;
+		background: url('/ft_transcendence/src/image/cross.png') no-repeat center;
+		background-size: contain;
+		border: 10px;
+	}
+		
+/* List Contact */
 
 .box_ListContact {
 	position: relative;
@@ -148,12 +184,40 @@ h2 {
 	margin-left: 2%;
 }
 
+	/* List Contact Button */
 
-#delete {
+	#delete {
+		position: relative;
+		background: url(/ft_transcendence/src/image/no.png) center no-repeat;
+		background-size: contain;
+		border: none;
+		height: 100%;
+		width: 100%;
+		margin-right: 15px;
+	}
+
+/* Add Contact */
+
+.AddContact {
 	position: relative;
-	background: url(/ft_transcendence/src/image/no.png) center no-repeat;
-	background-size: contain;
-	border: none;
-	height: 100%;
-	margin-right: 10px;
+	display: flex;
+	width: 100%;
+	height: 80%;
 }
+
+.search_bar {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 15%;
+}
+
+#search_bar_contact {
+	height: 50%;
+	width: 30%;
+	border: 0px transparent;
+	border-radius: 50px;
+}
+

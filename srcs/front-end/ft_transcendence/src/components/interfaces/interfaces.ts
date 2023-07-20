@@ -1,5 +1,7 @@
 // Model interfaces
 
+import { User } from "../Interface";
+
 export interface Chanel {
 	id: number;
 	chanel_name: string;
@@ -46,6 +48,8 @@ export interface IRequestProps {
 export interface IProposContact {
 	refetchContact: () => void;
 	refetchProps: boolean;
+	user: User;
+	setSwap?: () => void;
 }
 
 export interface IRequest {

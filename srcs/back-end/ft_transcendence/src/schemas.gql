@@ -42,7 +42,7 @@ type Contact {
   user_id: Int!
   contact_id: Int!
   pending: Boolean!
-  contact: User!
+  contact(user_id: Int!): User!
 }
 
 type Query {

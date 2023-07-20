@@ -51,4 +51,15 @@ export class ContactsService {
 			}
 		})
 	}
+
+	checkExist(createContact: CreateContactInput) {
+		return this.prisma.contact.findUnique({
+			where: {
+				user_id_contact_id: {
+					user_id: createContact.contact_id,
+					contact_id: createContact.user_id
+				}
+			}
+		})
+	}
 }
