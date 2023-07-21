@@ -8,6 +8,7 @@ mutation CreateUser($input: CreateAuthenticationInput!) {
     email
     nickname
     avatar
+    tfa_code
   }
 }
 `;

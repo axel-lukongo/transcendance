@@ -34,4 +34,9 @@ export class UsersResolver {
     return this.usersService.remove(id);
   }
 
+  @Query(() => [User])
+  searchUsers(@Args("research", { type: () => String}) research: string,
+  @Args("user_id", {type: () => Int}) user_id: number) {
+    return this.usersService.researchUsers(research, user_id);
+  }
 }

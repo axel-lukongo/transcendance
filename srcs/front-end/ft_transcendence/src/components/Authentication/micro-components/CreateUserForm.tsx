@@ -7,6 +7,7 @@ interface PropsCreateUser {
   
   export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {
     const [nickname, setNickname] = useState("");
+    const [avatar, setAvatar] = useState<File | null>(null);
     const [nicknameError, setNicknameError] = useState("");
     const [avatarError, setAvatarError] = useState("");
   
@@ -22,13 +23,14 @@ interface PropsCreateUser {
         // Vérifications du format et de la taille du fichier
         if (fileType === 'image/png' || fileType === 'image/jpeg') {
           if (fileSize <= maxSize) {
-            console.log('Fichier valide :', file);
+            setAvatar(file);
+            console.log('Fichier valide :', avatar);
             setAvatarError('');
           } else {
-            setAvatarError('La taille du fichier dépasse la limite maximale.');
+            setAvatarError('Please select a PNG or JPG image File size should not exceed 2MB.');
           }
         } else {
-          setAvatarError('Le format de fichier sélectionné n\'est pas pris en charge.');
+          setAvatarError('Please select a PNG or JPG type image.');
         }
       }
     };
@@ -68,7 +70,7 @@ interface PropsCreateUser {
           <div className={`form-field ${nicknameError ? "form-field-error" : ""}`}>
             <label className="form-label">Avatar</label>
             <div className="form-input form-avatar">
-              <input type="file" accept="image/*" name="avatar"  onChange={handleAvatarOnChange} />
+              <input type="file" accept=".png,.jpg,.jpeg" name="avatar"  onChange={handleAvatarOnChange} />
             </div>
           </div>
               {avatarError && <p className="form-avatar-text-error">{avatarError}</p>}

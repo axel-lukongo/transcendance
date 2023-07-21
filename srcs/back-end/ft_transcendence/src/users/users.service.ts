@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'prisma/prisma.service';
+import { saveBase64ToFile } from 'src/utils/upload.utils';
 
 
 @Injectable()
@@ -20,15 +21,51 @@ export class UsersService {
   }
   
 
-  update(id: number, data: UpdateUserInput) {
-    return this.prisma.user.update({
-      where: { id },
-      data
-    });
-  }
+async update(id: number, data: UpdateUserInput) {
+
+  data.avatar = data.avatar ? 
+    'http://localhost:4000/uploads/' + await saveBase64ToFile(data.avatar, id) 
+    :
+    'http://localhost:4000/uploads/default_avatar.jpg';
+  
+
+  return this.prisma.user.update({
+    where: { id },
+    data
+  });
+}
+
+
 
   remove(id: number) {
     return this.prisma.user.delete({where: {id: id}});
+  }
+
+  researchUsers(research: string, user_id: number) {
+    let users =  this.prisma.user.findMany({
+      where: {
+        nickname: {
+          contains: research
+        },
+        NOT: {
+          OR: [
+            { contact: { some: {
+               OR: [
+                  {user: {id: user_id}},
+                  {contact: {id: user_id}}
+                ]
+            }}},
+            { reverse_contact: {some: {
+              OR: [
+                {user: {id: user_id}},
+                {contact: {id: user_id}}
+              ]
+            }}}
+          ]
+        }
+      }
+    })
+    return (users);
   }
 
 }

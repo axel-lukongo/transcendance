@@ -42,18 +42,20 @@ type Contact {
   user_id: Int!
   contact_id: Int!
   pending: Boolean!
-  contact: User!
+  contact(user_id: Int!): User!
 }
 
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
+  searchUsers(research: String!, user_id: Int!): [User!]!
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!
   Message_findAll_msg_chan(channelId: Int!): [Message!]!
   Message_findOne_msg(id: Int!): Message!
   contactsRequest(user_id: Int!): [Contact!]!
+  myContactRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
@@ -77,6 +79,13 @@ type Mutation {
 
 input UpdateUserInput {
   id: Int!
+  token: String
+  is_connecting: Boolean
+  tfa_code: String
+  email: String
+  intra_login: String
+  nickname: String
+  avatar: String
 }
 
 input CreateChanelInput {

@@ -1,33 +1,268 @@
+
+/* General */
+
+h2 {
+	font-weight: bold;
+	margin: 0;
+}
+
+/* Page */
+
 .Contact_pad {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: white;
+	top: 3%;
+	left: 15%;
+	width: 83%;
+	height: 95%;
+	background-position: center;
+	background-color: rgba(41, 37, 82, 0.40); 
+	border-radius: 20px;
+	overflow: hidden;
+	font-family: "Orbitron";
+}
+
+.title {
+	display: flex;
+	width: 100%;
 	height: 20%;
-	width: 20%;
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 2px 4px rgba(236, 233, 233, 0.101);
-	z-index: 7;
-	opacity: 0; /* Définissez l'opacité initiale à 0 */
+	align-items: center;
+	justify-content: center;
+}
+
+#Contact_labels {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 80%;
+	width: 100%;
+}
+	/* Swap Buttons */
+
+	#listContact_btn {
+		width: 30px;
+		height: 30px;
+		background: url("/ft_transcendence/src/image/list-interface-symbol.png") center no-repeat;
+		background-size: contain;
+		border: 0px transparent;
+		object-fit: scale-down;
+		align-items: center;
+		margin-right: 5%;
+	}
+	
+	#addContact_btn {
+		/* position: relative; */
+		width: 30px;
+		height: 30px;
+		background: url("/ft_transcendence/src/image/user.png") center no-repeat;
+		background-size: contain;
+		border: 0px transparent;
+		object-fit: scale-down;
+		align-items: center;
+		margin-right: 5%;
+	}
+
+/* Friend Request */
+
+.box_request{
+	position: relative;
+	width: 70%;
+	height: 40%;
+	margin-left: 15%;
+	margin-right: 15%;
+	border: 3px solid #ffd27d;
+	background-color: rgba(113, 67, 250, 0.20);
+	overflow: hidden;
+	border-radius: 50px;
+	margin-top: 2%;
+	margin-bottom: 5%;
+}
+
+.Friend_contact {
+	position: relative;
+	top: 0%;
+	height: 80%;
+	width: 100%;
+	display: flex;
 	overflow: auto;
-	transition: opacity 0.5s ease;
-  }
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+}
 
-  .Contact_pad.showw {
-	opacity: 1; /* Définissez l'opacité à 1 lorsque la classe 'show' est appliquée */
-  }
+.Friend_contact .card {
+	width: 170px;
+	height: 170px;
+	border: 3px solid #ffd27d;
+	border-radius: 50px;
+	text-align: center;
+	margin: 2% 0% 2% 0%;
+}
 
-  .Contact_show {
-	opacity: 1; /* Définissez l'opacité à 1 lorsque la classe 'show' est appliquée */
-  }
-  
-  @keyframes fade-in {
-	from {
-	  opacity: 0; /* Définissez l'opacité initiale à 0 */
+.Friend_contact .card .avatar {
+	position: relative;
+	margin-left: 25%;
+	margin-right: 25%;
+	margin-top: 5%;
+	height: 50%;
+	width: 50%;
+	border: 3px solid #ffd27d;
+	border-radius: 48%;
+}
+
+.Friend_contact #card_p {
+	margin-top: 6%;
+	margin-bottom: 7%;
+	font-size: 1.2em;
+}
+
+.Friend_contact .response {
+	position: relative;
+	display: flex;
+	justify-content:  space-around;
+}
+
+	/* Friend Request Btn */
+
+	#accept {
+		height: 100%;
+		background: url('/ft_transcendence/src/image/check.png') no-repeat center;
+		background-size: contain;
+		border: 0px;
 	}
-	to {
-	  opacity: 1; /* Définissez l'opacité finale à 1 */
+
+	#refuse {
+		height: 100%;
+		background: url('/ft_transcendence/src/image/cross.png') no-repeat center;
+		background-size: contain;
+		border: 10px;
 	}
-  }
+		
+/* List Contact */
+
+.box_ListContact {
+	position: relative;
+	width: 80%;
+	height: 45%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: 3px solid #ffd27d;
+	background-color: rgba(113, 67, 250, 0.20);
+	overflow: hidden;
+	border-radius: 50px;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.List_contact {
+	position: relative;
+	height: 70%;
+	width: 100%;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.List_contact .card {
+	width: 80%;
+	border: 3px solid #ffd27d;
+	display: flex;
+	justify-content: space-between;
+	border-radius: 50px;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.List_contact .avatar {
+	height: 40px;
+	width: 40px;
+	border: 3px solid #ffd27d;
+	border-radius: 50px;
+	align-self: center;
+	margin-left: 2%;
+}
+
+	/* List Contact Button */
+
+	#delete {
+		position: relative;
+		background: url(/ft_transcendence/src/image/no.png) center no-repeat;
+		background-size: contain;
+		border: none;
+		height: 100%;
+		width: 100%;
+		margin-right: 15px;
+	}
+
+/* Add Contact */
+
+.AddContact {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 80%;
+	flex-wrap: wrap;
+}
+	/* Search section */
+	.search_bar {
+		position: sticky;
+		display: flex;
+		align-items: center;
+		justify-self: left;
+		justify-content: center;
+		width: 50%;
+		height: 15%;
+		display: flex;
+	}
+
+	#search_bar_contact {
+		height: 50%;
+		width: 80%;
+		border: 0px transparent;
+		border-radius: 50px;
+		align-items: center;
+		background-color:rgba(41, 37, 82, 0.40);
+		color:	#FFFFFF;
+		text-align: center;
+	}
+
+	.research_result {
+		height: 80%;
+		width: 50%;
+		overflow: auto;
+		text-align: center;
+		border-right: 1px solid;
+	}
+
+	.research_result .card {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.research_result p {
+		margin-left: auto;
+	}
+
+		/* Search btn */
+
+		.add_btn {
+			position: relative;
+			border: 0px transparent;
+			margin-left: auto;
+			margin-right: 2%;
+		}
+
+	/* Pending Request Section */
+	
+	.pending_request {
+		position: relative;
+		width: 49%;
+		height: 100%;
+		text-align: center;
+	}
+/* Test */
+

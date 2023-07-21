@@ -1,0 +1,300 @@
+  .bg{
+	  background-image: url("/ft_transcendence/src/image/vector-back-ground-80s.jpg");
+	  width: 100%;
+	  height: 100%;
+	  background-size: cover;
+	  position: fixed;
+	  background-position: center;
+	  top: 0;
+	  left: 0;
+  }
+
+  .screen-box {
+	  position: fixed;
+	  top: 3%;
+	  left: 15%;
+	  width: 83%;
+	  height: 95%;
+	  background-position: center;
+	  background-color: rgba(41, 37, 82, 0.40); 
+	  border-radius: 20px;
+
+	}
+  
+
+	@keyframes border-color-rotation {
+		0% {
+		  border-color: #FFE15D;
+		}
+		25% {
+		  border-color: #F49D1A;
+		}
+		50% {
+		  border-color: #DC3535;
+		}
+		75% {
+		  border-color: #B01E68;
+		}
+		100% {
+		  border-color: #B100E8;
+		}
+	}
+
+	.profil-box{
+	font-size: 32px;
+	font-family: "Orbitron";
+	font-weight:bold;
+	position: fixed;
+	transition: transform 0.3s ease-in-out; 
+	border-radius: 50px;
+	background-position: center;
+	background-color: rgba(113, 67, 250, 0.20);
+	border: 3px solid #ffd27d;
+	color: #ffd27d;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+
+  .profil-box:hover{
+	transform: scale(1.1);
+	border-color: transparent; /* Bordure transparente lors du survol */
+  }
+
+  .profil-box:hover::before,
+  .profil-box:hover::after {
+	content: "";
+	position: absolute;
+	left: -0.5%;
+	top: -1%;
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	border:3px solid;
+	animation: border-color-rotation 1.5s infinite linear; /* Animation uniquement au survol */
+  }
+
+
+
+  .game-box {
+	position: fixed;
+	top: 80%;
+	left: 20%;
+	width: 50%;
+	height: 15%;
+	border-radius: 50px;
+	font-size: 500%;
+
+  }
+  
+  .game-box .movement-ball {
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #ffd27d;
+	position: absolute;
+	-webkit-animation: moveX 3.05s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
+	-moz-animation: moveX 3.05s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
+	-o-animation: moveX 3.05s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
+	animation: moveX 3.05s linear 0s infinite alternate, moveY 3.4s linear 0s infinite alternate;
+  }
+  @-webkit-keyframes moveX {
+	from { left: 0; } to { left: 20%; }
+  }
+  @-moz-keyframes moveX {
+	from { left: 0; } to { left: 20%; }
+  }
+  @-o-keyframes moveX {
+	from { left: 0; } to { left: 20%; }
+  }
+  @keyframes moveX {
+	from { left: 0; } to { left: 97%; }
+  }
+  @-webkit-keyframes moveY {
+	from { top: 0; } to { top: 90%; }
+  }
+  @-moz-keyframes moveY {
+	from { top: 0; } to { top: 90%; }
+  }
+  @-o-keyframes moveY {
+	from { top: 0; } to { top: 85%; }
+  }
+  @keyframes moveY {
+	from { top: 0; } to { top: 85%; }
+  }
+
+.history-match-box {
+	top: 40%;
+	left: 20%;
+	width: 50%;
+	height: 35%;
+	border-radius: 50px;
+	justify-content: center;
+	align-items: flex-start;
+	font-size: 390%
+  }
+
+  .rank-box {
+	  top: 8%;
+	  left: 20%;
+	  width: 50%;
+	  height: 20%;
+	  font-size: 500%
+  }
+
+  .avatar-box {
+	top: 8%;
+	left: 74%;
+	width: 20%;
+	height: 30%;
+	border-radius: 50%;
+	overflow: hidden;
+  }
+  
+  .avatar-box img {
+	width: 100%;
+	height: 100%;
+  }
+  
+ 
+  .nickname-box {
+	top: 45%;
+	left: 74%;
+	width: 22%;
+	height: 10%;
+	font-size: 250%;
+	text-align: center;
+}
+
+.editing {
+	cursor: text;
+}
+
+.editing input {
+	font-size: 50%;
+	text-align: center;
+	justify-content: center;
+	background-color: transparent;
+	font-family: "Orbitron";
+	font-weight:bold;
+	color: #ffd27d;
+  }
+  
+.email-box {
+	top: 60%;
+	left: 74%;
+	width: 20%;
+	height: 10%;
+	font-size: 140%;
+  }
+
+   .logo-box{
+ 	position: fixed;
+	left:5%;
+	width: 7%;
+ 	height: 5%;
+ 	border: none;
+ 	transition: transform 0.3s ease-in-out;
+}
+
+   .logo-box:hover{
+    transform: scale(1.2);
+}
+
+   .log-out-button{
+	top : 7%;
+	background: url('/ft_transcendence/src/image/Logout.png') no-repeat center;
+	background-size: contain;
+}
+	
+	.message-button {
+	top: 55%; 
+	background: url('/ft_transcendence/src/image/message.png') no-repeat center;
+	background-size: contain;
+
+  }
+
+  .home-button {
+	  top: 40%; 
+	  background: url('/ft_transcendence/src/image/Home.png') no-repeat center;
+	  background-size: contain;
+  }
+
+  .contact-button {
+	top: 70%; 
+	background: url('/ft_transcendence/src/image/Contact.png') no-repeat center;
+	background-size: contain;
+  }
+
+  input[type="checkbox"] {
+	display: none;
+  }
+  
+  .toggle-button-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .toggle-button {
+	cursor: pointer;
+	width: 5%;
+	height: 5%;
+	background: rgba(113, 67, 250, 0.50);
+	display: flex;
+	border-radius: 100px;
+	position: fixed;
+	top: 90%;
+	left: 82%;
+	color: #ffd27d;
+	font-size: 20px;
+	font-family: "Orbitron";
+	font-weight: bold;
+  }
+  
+  .toggle-button-text {
+	color: #ffd27d;
+	font-family: "Orbitron", sans-serif;
+	text-align: center;
+	position: absolute;
+	top: -60px; 
+	left: 50%;
+	transform: translateX(-50%);
+  }
+  .toggle-button:after {
+	content: '';
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 50%;
+	height: 90%;
+	background: #fff;
+	border-radius: 90%;
+	transition: 0.3s;
+  }
+  
+  input:checked + .toggle-button {
+	background: #ffd27d;
+  }
+  
+  input:checked + .toggle-button:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+  }
+  
+  .toggle-button:active:after {
+	width: 50%;
+  }
+  
+  .toggle-button.activated {
+	background: #ffd27d;
+	color: #FFFFFF;
+  }
+  
+  .toggle-button.deactivated {
+	background: rgba(113, 67, 250, 0.50);
+	color: #ffd27d;
+  }

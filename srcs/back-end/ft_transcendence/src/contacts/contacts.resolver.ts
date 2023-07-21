@@ -6,6 +6,7 @@ import { CreateContactInput } from './dto/create-contact.input';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { UpdateContact } from './dto/update-contact.input';
+import { response } from 'express';
 
 @Resolver(() => Contact)
 export class ContactsResolver {
@@ -14,22 +15,42 @@ export class ContactsResolver {
 				private readonly userService: UsersService) {}
 	
 	@Mutation(() => Contact, {name: "createContact"})
-	createContact(@Args("createContact") createContact: CreateContactInput) {
-	  if (createContact.user_id == createContact.contact_id)
+	async createContact(@Args("createContact") createContact: CreateContactInput) {
+
+		if (createContact.user_id == createContact.contact_id)
 		  throw new Error("Can't add your self");
-	  return this.contactService.createContact(createContact);
+		
+		try {
+			const response = await this.contactService.checkExist(createContact)
+			if (response)
+				throw new Error("impossible");
+			else
+				return this.contactService.createContact(createContact);
+		}
+		catch (error) {
+			return error;
+		}
 	}
   
 	@Query(() => [Contact], {name: 'contactsRequest'})
 	findAllContactsRequest(@Args("user_id", {type: () => Int}) id: number) {
-	  return this.contactService.findAllContactsRequest(id);
+	  return this.contactService.findContactsRequest(id);
+	}
+
+	@Query(() => [Contact], {name: "myContactRequest"})
+	findMyContactRequest(@Args("user_id", {type: () => Int}) user_id: number) {
+		return this.contactService.findMyContactRequest(user_id)
 	}
   
 	@ResolveField(() => User, {name: "contact"})
-	findContact(@Parent() contact: Contact) {
-		// Need to add check for not display is own profil
-		const {contact_id} = contact;
-		return this.userService.findUserById(contact_id);
+	findContact(@Parent() contact: Contact, @Args("user_id", {type: () => Int}) user: number) {
+		const {contact_id, user_id} = contact;
+		let id = user_id;
+
+		if (user == user_id)
+			id = contact_id; 
+
+		return this.userService.findUserById(id);
 	}
 
 	@Mutation(() => Contact, {name: "replyAddContact"}) 
@@ -46,4 +67,5 @@ export class ContactsResolver {
 	getMyContacts(@Args("user_id", {type: () => Int}) user_id: number) {
 		return this.contactService.findContacts(user_id);
 	}
+
 }

@@ -3,6 +3,7 @@ version: '3.9'
 networks:
   transcendence:
     driver: bridge
+    name: transcendence
 
 services:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -61,6 +62,7 @@ services:
     environment:
       - REACT_APP_API_42_URL=${API_42_URL}
       - REACT_APP_WEBSITE_URL=${WEBSITE_URL}
+      - REACT_APP_CLIENT_SECRET_BACKEND=${CLIENT_SECRET_BACKEND}
     ports:
       - "8080:8080"
     volumes:

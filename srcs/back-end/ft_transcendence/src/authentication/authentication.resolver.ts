@@ -2,11 +2,16 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { CreateAuthenticationInput } from './dto/create-authentication.input';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
+import { UpdateUserInput } from 'src/users/dto/update-user.input';
 import { AuthenticationService } from './authentication.service';
 import { UsersService } from 'src/users/users.service';
-import { generateTwoFactorCode} from 'src/utils/auth.utils';
-import axios, { AxiosResponse } from 'axios';
 import { MailingService } from './mailing/mailing.service';
+import { saveBase64ToFile } from 'src/utils/upload.utils';
+import { generateTwoFactorCode } from 'src/utils/auth.utils';
+import axios, { AxiosResponse } from 'axios';
+
+
+
 
 @Resolver()
 export class AuthenticationResolver {
@@ -14,16 +19,22 @@ export class AuthenticationResolver {
   private intraLogin: string;
   private email: string;
   private user: User;
+
   constructor(
     private readonly authService: AuthenticationService, 
     private readonly userService: UsersService,
     private readonly mailingService: MailingService) {}
 
+
   @Mutation(() => User)
   async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
     if (this.intraLogin && this.email) {
     try {
-        const createUserInput: CreateUserInput = { ...createAuthenticationInput, intra_login: this.intraLogin, email: this.email };
+        const createUserInput: CreateUserInput = {
+          ...createAuthenticationInput, 
+          intra_login: this.intraLogin, 
+          email: this.email,
+         };
         return await this.authService.create(createUserInput);
       } 
       catch (error) {
@@ -79,6 +90,7 @@ export class AuthenticationResolver {
   @Query(() => User)
   async checkTwoAuthenticationFactor(@Args('code') code: string) {
     if (this.user && this.user.tfa_code === code) {
+      this.user.tfa_code = "true";
       return this.user;
     } 
     else {

@@ -11,6 +11,7 @@ import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 
 import Home from '../Home/Home';
 import Chat from '../Message/message';
+import Contact from '../Contact/Contact';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -50,28 +51,73 @@ const Authentication: FC = () => {
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { nickname, avatar } = e.currentTarget;
+  
     const user_info = {
       nickname: nickname.value,
       avatar: avatar.value
     };
-
-      console.log(user_info.avatar);
-      
-    createUser({
-      variables: {
-        input: user_info
-      }
-    })
-    .then(response => {
-      sessionStorage.setItem('user', JSON.stringify(response.data.createUser));
-    })
-    .catch(error => {
-      window.alert('Nickname is already in use. Please choose a different nickname.');
-    });
-
+    
+    const reader = new FileReader();
+  
+    if (avatar && avatar.files.length > 0) {
+      const file = avatar.files[0];
+      reader.readAsDataURL(file);
+  
+      reader.onloadend = () => {
+        const avatarDataUrl = reader.result as string;
+        user_info.avatar = avatarDataUrl;
+  
+        createUser({
+          variables: {
+            input: user_info
+          }
+        })
+          .then(response => {
+            console.log('user created:', response.data.createUser);
+            const { id, token, email, nickname, avatar, tfa_code } = response.data.createUser;
+            const user = {
+              id,
+              token,
+              email,
+              nickname,
+              avatar,
+              tfa_code
+            };
+            sessionStorage.setItem('user', JSON.stringify(user));
+          })
+          .catch(error => {
+            console.log(error);
+            window.alert('Nickname is already in use. Please choose a different nickname.');
+          });
+      };
+    } else {
+      // No avatar file selected
+      createUser({
+        variables: {
+          input: user_info
+        }
+      })
+        .then(response => {
+          console.log('user created:', response.data.createUser);
+          const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
+          const user = {
+            id,
+            token,
+            email,
+            nickname,
+            avatar,
+            tfa_code
+          };
+          sessionStorage.setItem('user', JSON.stringify(user));
+        })
+        .catch(error => {
+          console.log(error);
+          window.alert('Nickname is already in use. Please choose a different nickname.');
+        });
+    }
   };
-
-
+  
+ 
   const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { code } = e.currentTarget;
@@ -100,8 +146,17 @@ const Authentication: FC = () => {
 
   useEffect(() => {
     if (AuthenticationData) {
-        setCanCheck(true);
-      sessionStorage.setItem('user', JSON.stringify(AuthenticationData));
+      const { id, token, email, nickname, avatar, tfa_code} = AuthenticationData.makeAuthentication;
+      const user = {
+        id,
+        token,
+        email,
+        nickname,
+        avatar,
+        tfa_code
+      };
+      sessionStorage.setItem('user', JSON.stringify(user));
+      setCanCheck(true);
     }
   }, [AuthenticationData]);
 
@@ -125,17 +180,15 @@ const Authentication: FC = () => {
 return (
   <div>
     {sessionStorage.getItem('user') ? (
-
-
-	<Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/message" element={<Chat />} />
-    </Routes>	
-
-  ) : (
+      <Routes>
+        <Route path="/" element={<Home  />} />
+        <Route path="/message" element={<Chat  />} />
+        <Route path='/contact' element={<Contact />} />
+      </Routes>	
+    ) : (
       <>
         {!canCheck ? (
-          <SigninButton  onClick={handleRedirect} />
+          <SigninButton onClick={handleRedirect} />
         ) : (
           <>
             {AuthenticationError && (
