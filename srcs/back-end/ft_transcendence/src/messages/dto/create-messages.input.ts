@@ -1,6 +1,4 @@
 import { InputType, Field, Int } from '@nestjs/graphql'
-import { User } from 'src/users/entities/user.entity';
-import { Chanel } from 'src/chanel/entities/chanel.entity';
 
 @InputType()
 export class CreateMessageInput {

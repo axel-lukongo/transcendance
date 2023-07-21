@@ -1,0 +1,45 @@
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { PongService } from './pong.service';
+import { Pong } from './entities/pong.entity';
+import { CreatePongInput } from './dto/create-pong.input';
+import { UpdatePongInput } from './dto/update-pong.input';
+// import { PubSub } from 'graphql-subscriptions';
+
+
+
+
+
+
+@Resolver(() => Pong)
+export class PongResolver {
+  constructor(private readonly pongService: PongService) {}
+
+  @Mutation(() => Pong)
+  createPong(@Args('createPongInput') createPongInput: CreatePongInput) {
+    return this.pongService.create(createPongInput);
+  }
+
+  @Query(() => [Pong], { name: 'pong' })
+  findAll() {
+    return this.pongService.findAll();
+  }
+
+  @Query(() => Pong, { name: 'pong' })
+  findOne(@Args('id', { type: () => Int }) id: number) {
+    return this.pongService.findOne(id);
+  }
+
+  @Mutation(() => Pong)
+  updatePong(@Args('updatePongInput') updatePongInput: UpdatePongInput) {
+    return this.pongService.update(updatePongInput.id, updatePongInput);
+  }
+
+  @Mutation(() => Pong)
+  removePong(@Args('id', { type: () => Int }) id: number) {
+    return this.pongService.remove(id);
+  }
+
+
+
+
+}

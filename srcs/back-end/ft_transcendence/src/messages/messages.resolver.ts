@@ -35,7 +35,7 @@ export class MessagesResolver {
 		pubSub.publish(NEW_MSG, {
 			addmessage: new_message,
 		});
-		return this.msgService.create(createMsgInput);
+		return new_message;
 	}
 
 	@Mutation(() => Message)

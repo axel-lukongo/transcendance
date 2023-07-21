@@ -1,9 +1,13 @@
 import React, { FC, useState } from 'react';
 import './css/Pong.css';
+import {SubscriptionClient} from 'subscriptions-transport-ws';
 
 interface PosOtherPlayer {
   greenButtonY: number;
 }
+
+const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
+
 
 const Pong: FC = () => {
   const [redButtonY, setRedButtonY] = useState(0);
