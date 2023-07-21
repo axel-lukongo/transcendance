@@ -75,20 +75,18 @@ model Pong {
 	user2				User		@relation("User2", fields: [userId2], references: [id])
 }
 
-model PositionPlayer {
+model Player {
   id				Int      @id @default(autoincrement())
   playerId          Int
-  positionX        Float
-  positionY        Float
-  width             Float
-  height            Float
+  positionX        	Float
+  positionY        	Float
 }
 
 model PositionBall {
   id				Int      @id @default(autoincrement())
   PongId            Int
-  positionX        Int
-  positionY        Int
+  positionX        	Float
+  positionY        	Float
   velocityX         Float
   velocityY         Float
 }

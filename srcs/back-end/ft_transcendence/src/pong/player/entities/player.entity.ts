@@ -2,16 +2,19 @@ import { ObjectType, Field, Int, Float} from '@nestjs/graphql';
 
 
 @ObjectType()
-export class PositionPlayer {
+export class Player {
 
-  @Field(() => Int)
-  id: number;
+  	@Field(() => Int)
+  	id: number;
 
 	@Field(() => Int)
 	playerId: number
 
 	@Field(() => Float)
-	position_y: number
+	positionY: number
+
+	@Field(() => Float)
+	positionX: number
 }
 
 

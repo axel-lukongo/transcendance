@@ -8,19 +8,19 @@ export class Pong {
 	@Field(() => Int)
 	userId1: number;
 
-  @Field(() => Int)
+  	@Field(() => Int)
 	userId2: number;
 
-  @Field(() => Int)
+  	@Field(() => Int)
 	scoreUserId1: number;
 
-  @Field(() => Int)
+  	@Field(() => Int)
 	scoreUserId2: number;
 
-  @Field(() => Int)
+  	@Field(() => Int)
 	loser_id: number;
 
-  @Field(() => Int)
+  	@Field(() => Int)
 	winner_id: number;
 
 	@Field(() => Date)

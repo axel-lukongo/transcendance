@@ -14,21 +14,21 @@
   }
   
   /* Pour que .red-button et .green-button aient une hauteur de 10% de .pong-container-box */
-  .red-button {
-	width: 2%;
-	height: 25%; /* 10% de la hauteur de .pong-container-box */
-	background-color: green; /* ou green pour le bouton vert */
-	border: none;
-	position: absolute;
-	left: 3%; /* Alignement à gauche */
-  }
-  
-  .green-button {
+  .red-stick {
 	width: 2%;
 	height: 25%; /* 10% de la hauteur de .pong-container-box */
 	background-color: red; /* ou green pour le bouton vert */
 	border: none;
 	position: absolute;
 	right: 3%; /* Alignement à droite */
-  }
+}
+
+.green-stick {
+	width: 2%;
+	height: 25%; /* 10% de la hauteur de .pong-container-box */
+	background-color: green;
+	border: none;
+	position: absolute;
+	left: 3%; /* Alignement à gauche */
+}
   

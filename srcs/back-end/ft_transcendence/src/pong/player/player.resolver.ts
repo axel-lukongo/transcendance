@@ -1,11 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int, Subscription } from '@nestjs/graphql';
-import { PositionPlayerService, PositionBallService } from './position_game.service';
-import { PositionPlayer } from './entities/position_game.entity';
-import { PositionBall } from './entities/position_game.entity';
-import { CreatePositionPlayerInput } from './dto/create-position_game.input';
-import { UpdatePositionPlayerInput } from './dto/update-position_game.input';
-import { UpdatePositionBallInput } from './dto/update-position_game.input';
-import { CreatePositionBallInput } from './dto/create-position_game.input';
+import { Player, PositionBall} from './entities/player.entity';
+import { CreatePlayerInput, CreatePositionBallInput} from './dto/create-player.input';
+import { UpdatePlayerInput, UpdatePositionBallInput} from './dto/update-player.input';
+import { PlayerService, PositionBallService } from './player.service';
 import { PubSub } from 'graphql-subscriptions';
 
 
@@ -14,45 +11,46 @@ const UpdatePosPlayer = 'updatePosPlayer';
 const UpdatePosBall = 'updatePosBall';
 
 
-@Resolver(() => PositionPlayer)
-export class PositionPlayerResolver {
-  constructor(private readonly PositionPlayerService: PositionPlayerService) {}
+@Resolver(() => Player)
+export class PlayerResolver {
+  constructor(private readonly playerService: PlayerService) {}
 
-  @Mutation(() => PositionPlayer)
-  createPositionPlayer(@Args('createPositionPlayerInput') createPositionPlayerInput: CreatePositionPlayerInput) {
-    return this.PositionPlayerService.create(createPositionPlayerInput);
+  @Mutation(() => Player)
+  createPlayer(@Args('createPlayerInput') createPlayerInput: CreatePlayerInput) {
+    return this.playerService.create(createPlayerInput);
   }
 
-  @Query(() => [PositionPlayer], { name: 'PositionPlayer' })
-  findAll() {
-    return this.PositionPlayerService.findAll();
+  // @Query(() => [PositionPlayer], { name: 'PositionPlayers' })
+  // findAll() {
+  //   return this.playerService.findAll();
+  // }
+
+  @Query(() => Player, { name: 'isPlayerInGame' })
+  isPlayerInGame(@Args('id', { type: () => Int }) id: number) {
+    return this.playerService.findUnique(id);
   }
 
-  @Query(() => PositionPlayer, { name: 'PositionPlayer' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.PositionPlayerService.findOne(id);
-  }
-
-  @Mutation(() => PositionPlayer)
-  updatePositionPlayer(@Args('updatePositionPlayerInput') updatePositionPlayerInput: UpdatePositionPlayerInput) {
-	const newposplayer = this.PositionPlayerService.update(updatePositionPlayerInput.id, updatePositionPlayerInput);
+  @Mutation(() => Player)
+  updatePlayer(@Args('updatePlayerInput') updatePlayerInput: UpdatePlayerInput) {
+	const newposplayer = this.playerService.update(updatePlayerInput.id, updatePlayerInput);
 	pubSub.publish(UpdatePosPlayer, {
 		updateposplayer: newposplayer,
 	});
 	return newposplayer;
   }
 
-  @Mutation(() => PositionPlayer)
-  removePositionPlayer(@Args('id', { type: () => Int }) id: number) {
-    return this.PositionPlayerService.remove(id);
+  @Mutation(() => Player)
+  removePlayer(@Args('id', { type: () => Int }) id: number) {
+    return this.playerService.remove(id);
   }
 
-  @Subscription(() => PositionPlayer, {
+  @Subscription(() => Player, {
 	filter: async (payload, variables) => {
 		const resolvedPayload = await payload.updateposplayer;
 		return resolvedPayload.channel_id === variables.channel_id;
 		}
 	})
+
 	updateposplayer(@Args('player_id', { type: () => Int }) player_id: number) {
 		return pubSub.asyncIterator(UpdatePosPlayer);
 	}

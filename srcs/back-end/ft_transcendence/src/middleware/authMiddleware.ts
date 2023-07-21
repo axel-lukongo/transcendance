@@ -13,7 +13,7 @@ export class AuthMiddleware implements NestMiddleware {
     const isUserCreationRequest = req.body?.operationName === 'CreateUser';
     const isMakeAuthenticationRequest = req.body?.operationName === 'MakeAuthentication';
     const isCheckTwoAuthenticationFactorRequest = req.body?.operationName === 'CheckTwoAuthenticationFactor';
-	const isGraphql = req.url === '/graphql';
+	  const isGraphql = req.url === '/graphql';
     // Vérifie si la requête doit être vérifiée avec le jeton
     const requiresTokenCheck = !(isUserCreationRequest || isMakeAuthenticationRequest || isCheckTwoAuthenticationFactorRequest);
     if (requiresTokenCheck && !isGraphql) {

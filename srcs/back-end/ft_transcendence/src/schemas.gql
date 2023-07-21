@@ -45,6 +45,33 @@ type Contact {
   contact: User!
 }
 
+type Pong {
+  id: Int!
+  userId1: Int!
+  userId2: Int!
+  scoreUserId1: Int!
+  scoreUserId2: Int!
+  loser_id: Int!
+  winner_id: Int!
+  versusDate: DateTime!
+}
+
+type Player {
+  id: Int!
+  playerId: Int!
+  positionY: Float!
+  positionX: Float!
+}
+
+type PositionBall {
+  id: Int!
+  PongId: Int!
+  positionX: Float!
+  positionY: Float!
+  velocityX: Float!
+  velocityY: Float!
+}
+
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
@@ -57,6 +84,9 @@ type Query {
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
+  pong(id: Int!): Pong!
+  isPlayerInGame(id: Int!): Player!
+  PositionBall(id: Int!): PositionBall!
 }
 
 type Mutation {
@@ -73,6 +103,15 @@ type Mutation {
   replyAddContact(reply: UpdateContact!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
+  createPong(createPongInput: CreatePongInput!): Pong!
+  updatePong(updatePongInput: UpdatePongInput!): Pong!
+  removePong(id: Int!): Pong!
+  createPlayer(createPlayerInput: CreatePlayerInput!): Player!
+  updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
+  removePlayer(id: Int!): Player!
+  createPositionBall(createPositionBallInput: CreatePositionBallInput!): PositionBall!
+  updatePositionBall(updatePositionBallInput: UpdatePositionBallInput!): PositionBall!
+  removePositionBall(id: Int!): PositionBall!
 }
 
 input UpdateUserInput {
@@ -134,6 +173,49 @@ input CreateAuthenticationInput {
   avatar: String
 }
 
+input CreatePongInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdatePongInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreatePlayerInput {
+  playerId: Int!
+  positionY: Float!
+  positionX: Float!
+}
+
+input UpdatePlayerInput {
+  playerId: Int
+  positionY: Float!
+  positionX: Float!
+  id: Int!
+}
+
+input CreatePositionBallInput {
+  PongId: Int!
+  positionX: Float!
+  positionY: Float!
+  velocityX: Float!
+  velocityY: Float!
+}
+
+input UpdatePositionBallInput {
+  PongId: Int
+  positionX: Float!
+  positionY: Float!
+  velocityX: Float!
+  velocityY: Float!
+  id: Int!
+}
+
 type Subscription {
   addmessage(channel_id: Int!): Message!
+  updateposplayer(player_id: Int!): Player!
+  updateposball(ball_id: Int!): PositionBall!
 }

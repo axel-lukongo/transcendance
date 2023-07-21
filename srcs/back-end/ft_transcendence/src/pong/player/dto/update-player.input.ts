@@ -1,10 +1,10 @@
-import { CreatePositionPlayerInput } from './create-position_game.input';
-import { CreatePositionBallInput } from './create-position_game.input';
+import { CreatePlayerInput } from './create-player.input';
+import { CreatePositionBallInput } from './create-player.input';
 import { InputType, Field, Int, PartialType, Float } from '@nestjs/graphql';
 
 
 @InputType()
-export class UpdatePositionPlayerInput extends PartialType(CreatePositionPlayerInput) {
+export class UpdatePlayerInput extends PartialType(CreatePlayerInput) {
 
 	@Field(() => Int)
 	id: number;

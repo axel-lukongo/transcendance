@@ -3,12 +3,6 @@ import { PongService } from './pong.service';
 import { Pong } from './entities/pong.entity';
 import { CreatePongInput } from './dto/create-pong.input';
 import { UpdatePongInput } from './dto/update-pong.input';
-// import { PubSub } from 'graphql-subscriptions';
-
-
-
-
-
 
 @Resolver(() => Pong)
 export class PongResolver {
@@ -38,8 +32,4 @@ export class PongResolver {
   removePong(@Args('id', { type: () => Int }) id: number) {
     return this.pongService.remove(id);
   }
-
-
-
-
 }

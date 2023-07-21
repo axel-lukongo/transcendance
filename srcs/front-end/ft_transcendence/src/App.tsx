@@ -1,5 +1,5 @@
 
-import Authentication from './components/Authentication/Authentication';
+// import Authentication from './components/Authentication/Authentication';
 import Pong from './components/Pong/Pong';
 
 const App = () => {

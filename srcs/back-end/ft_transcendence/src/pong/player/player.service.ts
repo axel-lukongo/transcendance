@@ -1,44 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePositionPlayerInput } from './dto/create-position_game.input';
-import { UpdatePositionPlayerInput } from './dto/update-position_game.input';
-import { CreatePositionBallInput } from './dto/create-position_game.input';
-import { UpdatePositionBallInput } from './dto/update-position_game.input';
+import { CreatePlayerInput, CreatePositionBallInput } from './dto/create-player.input';
+import { UpdatePlayerInput, UpdatePositionBallInput } from './dto/update-player.input';
 
 import { PrismaService } from 'prisma/prisma.service';
-// import { PositionPlayer } from './entities/position_game.entity';
-// import { PositionBall } from './entities/position_game.entity';
-
 
 @Injectable()
-export class PositionPlayerService {
+export class PlayerService {
 
 	constructor(private readonly prisma: PrismaService) {}
 
 
-  create(createPositionPlayerInput: CreatePositionPlayerInput) {
-	return this.prisma.positionPlayer.create({
-		data: createPositionPlayerInput,
+  create(createPlayerInput: CreatePlayerInput) {
+	return this.prisma.player.create({
+		data: createPlayerInput,
 	  });
 	}
 
   findAll() {
-    return this.prisma.positionPlayer.findMany();
+    return this.prisma.player.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.positionPlayer.findUnique({
+  findUnique(id: number) {
+    return this.prisma.player.findUnique({
 		where: { id },
 	  });
   }
 
-  update(id: number, updatePositionPlayerInput: UpdatePositionPlayerInput) {
-	return this.prisma.positionPlayer.update({
+  update(id: number, updatePositionPlayerInput: UpdatePlayerInput) {
+	return this.prisma.player.update({
 		where: { id: id },
 		data: updatePositionPlayerInput,
 	});  }
 
   remove(id: number) {
-	return this.prisma.positionPlayer.delete({
+	return this.prisma.player.delete({
 		where: { id: id },
 	  });  
 	}

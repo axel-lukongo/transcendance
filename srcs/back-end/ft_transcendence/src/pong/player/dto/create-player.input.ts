@@ -1,22 +1,21 @@
 import { InputType, Int, Field, Float } from '@nestjs/graphql';
 
 @InputType()
-export class CreatePositionPlayerInput {
-  @Field(() => Int)
-  playerId: number;
+export class CreatePlayerInput {
 
-  @Field(() => Float)
-  positionX:number
+	@Field(() => Int)
+	playerId: number
 
-  @Field(() => Float)
-  positionY:number
+	@Field(() => Float)
+	positionY: number
+
+	@Field(() => Float)
+	positionX: number
 }
 
 
 @InputType()
 export class CreatePositionBallInput {
-	@Field(() => Int)
-	id: number;
 
 	@Field(() => Int)
 	PongId: number;
