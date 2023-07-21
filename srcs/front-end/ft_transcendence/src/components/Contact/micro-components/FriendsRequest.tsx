@@ -8,7 +8,6 @@ import { IContacts, IProposContact } from "../../interfaces/interfaces"
 
 import "../css/Contact.css"
 
-
 export default function FriendsRequest({refetchContact, refetchProps, user}: IProposContact) {
 
 	const {data, loading, error, refetch} = useQuery(CONTACTS, {variables: {input: user.id}});
@@ -46,14 +45,14 @@ export default function FriendsRequest({refetchContact, refetchProps, user}: IPr
                     <p id="card_p">{element.contact.nickname.toString()}</p>
                     <div className="response">
                         <AccepContact 
-                        element={element}  
-                        refetchContact={refetchContact} 
-                        label="accept"
+							element={element}  
+							refetchContact={refetchContact} 
+							label="accept"
                         />
                         <RefuseContact 
-                        element={element}  
-                        refetchContact={refetchContact}
-                        label="refuse"
+							element={element}  
+							refetchContact={refetchContact}
+							label="refuse"
                         />
                     </div>
                 </div>

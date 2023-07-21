@@ -31,13 +31,31 @@ export class UsersService {
     return this.prisma.user.delete({where: {id: id}});
   }
 
-  researchUsers(research: string) {
-    return this.prisma.user.findMany({
+  researchUsers(research: string, user_id: number) {
+    let users =  this.prisma.user.findMany({
       where: {
         nickname: {
           contains: research
+        },
+        NOT: {
+          OR: [
+            { contact: { some: {
+               OR: [
+                  {user: {id: user_id}},
+                  {contact: {id: user_id}}
+                ]
+            }}},
+            { reverse_contact: {some: {
+              OR: [
+                {user: {id: user_id}},
+                {contact: {id: user_id}}
+              ]
+            }}}
+          ]
         }
       }
     })
+    return (users);
   }
+
 }

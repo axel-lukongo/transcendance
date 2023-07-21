@@ -17,13 +17,21 @@ export class ContactsService {
 		return (this.prisma.contact.delete({where: {id: contact_id}}));
 	}
 
-	findAllContactsRequest(id: number) {
+	findContactsRequest(id: number) {
 		return this.prisma.contact.findMany({
 			where: {
-				OR: [
-					{ user_id: id }, 
-					{ contact_id: id }
-				],
+				contact_id: id,
+				NOT: {
+					pending: false
+				}
+		  }
+	  })
+	}
+	
+	findMyContactRequest(id: number) {
+		return this.prisma.contact.findMany({
+			where: {
+				user_id: id,
 				NOT: {
 					pending: false
 				}

@@ -34,7 +34,12 @@ export class ContactsResolver {
   
 	@Query(() => [Contact], {name: 'contactsRequest'})
 	findAllContactsRequest(@Args("user_id", {type: () => Int}) id: number) {
-	  return this.contactService.findAllContactsRequest(id);
+	  return this.contactService.findContactsRequest(id);
+	}
+
+	@Query(() => [Contact], {name: "myContactRequest"})
+	findMyContactRequest(@Args("user_id", {type: () => Int}) user_id: number) {
+		return this.contactService.findMyContactRequest(user_id)
 	}
   
 	@ResolveField(() => User, {name: "contact"})

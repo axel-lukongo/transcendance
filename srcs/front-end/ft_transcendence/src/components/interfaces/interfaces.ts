@@ -57,3 +57,10 @@ export interface IRequest {
 	handleChanelRefecth: () => void;
 	label: string;
 }
+
+export interface IAddContact {
+	id: number;
+	nickname: string;
+	user: User;
+	refetch: () => void;
+}

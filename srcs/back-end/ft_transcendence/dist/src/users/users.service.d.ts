@@ -53,7 +53,7 @@ export declare class UsersService {
         nickname: string;
         avatar: string;
     }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
-    researchUsers(research: string): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime").GetResult<{
+    researchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;

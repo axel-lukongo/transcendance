@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import { IProposContact } from "../../interfaces/interfaces";
-import { CREATE_CONTACT } from '../graphql/MutationsContact'
 import { RESEARCH } from '../graphql/QuerysContact'
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import AddContactBtn from "./buttons/AddContactBtn";
+import MyPendingRequest from "./ListMyPendingRequest";
 
  export default function  AddContact({refetchContact, refetchProps, user, setSwap}: IProposContact) {
 
@@ -10,14 +11,14 @@ import { useMutation, useQuery } from "@apollo/client";
 	
 	const {data, loading, refetch, error} = useQuery(RESEARCH, {
 		variables: {
-			input: search
+			input: search,
+			user_id: user.id
 		}
 	});
 
 	useEffect(() => {
 		refetch();
-		console.log(data); /* a enlever */
-	}, [search, refetch]);
+	}, [search, refetch, refetchProps]);
 
 	useEffect(() => {
 		if (!loading)
@@ -37,11 +38,6 @@ import { useMutation, useQuery } from "@apollo/client";
 		setSearch(prevValue => event.target.value);
 	};
 
-	// const handleBlur = async () => {
-	// 	await refetch();
-	// 	inputRef.current?.focus();
-	// }
-
 	return ( 
 		<div className="AddContact">
 			<div className="search_bar">
@@ -52,15 +48,25 @@ import { useMutation, useQuery } from "@apollo/client";
 					value={search}
 					onChange={handleChange}
 					ref={(el) => inputRef.current = el}
-					// onBlur={handleBlur}
 				/>
 			</div>
-			<div className="test">{
-				 data.searchUsers.map((element: {nickname: string, id: number}) => (
-					<div key={element.id}>
+			<div className="research_result">
+				{data.searchUsers.map((element: {nickname: string, id: number}) => (
+					<div key={element.id} className="card">
 						<p>{element.nickname}</p>
+						<AddContactBtn 
+							user={user}
+							id={element.id}
+							nickname={element.nickname}
+							refetch={refetchContact}
+						/>
 					</div>		
 				))}
+			</div>
+			<div className="pending_request">
+				<MyPendingRequest 
+					user={user}
+				/>
 			</div>
 		</div>
 	);
