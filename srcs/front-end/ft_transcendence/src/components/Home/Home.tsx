@@ -11,6 +11,7 @@ const Home = () => {
 
   const user = JSON.parse(sessionStorage.getItem('user') || '');
 
+
   return (
     <div className='Home'>
       {user && (
@@ -25,10 +26,12 @@ const Home = () => {
           <div className='email-box profil-box'>
           {user.email}
           </div>
-          <div className='game-box profil-box'>
-            <span>PLAY</span>
-            <div className="movement-ball"></div>
-          </div>
+            <Link to='/pong'>
+              <button id="play-button" className='game-box profil-box' >
+                <span>PLAY</span>
+                <div className="movement-ball"></div>
+              </button>
+            </Link>
           <button className='log-out-button logo-box'></button>
           <Link to="/">
             <button className='home-button logo-box'></button>
