@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { User } from '../Interface';
 import { TfaToggleButton } from './micro-components/TfaToogleButton';
 
 import './css/Home.css';
+import NicknameBox from './micro-components/NicknameBox';
+import AvatarBox from './micro-components/AvatarBox';
+
 
 const Home = () => {
 
@@ -15,18 +17,14 @@ const Home = () => {
         <>
           <div className='screen-box'>
           <div className='rank-box profil-box'>RANK #?</div>
-          <div className='avatar-box profil-box'>
-            <img src={user.avatar} alt="User Avatar" />
-          </div>
+          <AvatarBox />
           <div className="history-match-box profil-box">
             MATCH HISTORY
           </div>
-          <div className='info-box profil-box'>
-          {user.nickname}
-          <br />
+          <NicknameBox/>
+          <div className='email-box profil-box'>
           {user.email}
           </div>
-
           <div className='game-box profil-box'>
             <span>PLAY</span>
             <div className="movement-ball"></div>
@@ -50,5 +48,3 @@ const Home = () => {
 }
 
 export default Home;
-
-

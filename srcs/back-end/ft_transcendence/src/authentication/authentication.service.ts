@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
-import { sign } from 'jsonwebtoken';
+import { generateAccessToken } from 'src/utils/auth.utils';
+import { saveBase64ToFile } from 'src/utils/upload.utils';
 
-const generateAccessToken = (userId: number): string => {
-  const secret = process.env.CLIENT_SECRET_BACKEND; // clé secrète pour la signature du token
-  const expiresIn = '1h'; // Durée de validité du token (1 heure dans cet exemple)
 
-  const payload = { userId };
-  return sign(payload, secret, { expiresIn });
-};
+
 
 @Injectable()
 export class AuthenticationService {
@@ -18,22 +14,24 @@ export class AuthenticationService {
 
   async create(createUserInput: CreateUserInput) {
     try {
+      let { avatar, ...rest } = createUserInput;
       const user = await this.prisma.user.create({
-        data: createUserInput
+        data: rest
       });
 
       //lors de la creation du User nous mettons a jour le token
       // et un bouleen servant a la verification de la connexion du user
+      // et la creation de l'avatr du user 
       const token = generateAccessToken(user.id);
       const is_connecting = false;
-      await this.prisma.user.update({
-        where: { id: user.id },
-        data: { token, is_connecting }
-      });
+      avatar = avatar ? 
+      'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, user.id) 
+      :
+      'http://localhost:4000/uploads/default_avatar.jpg';
 
-      // Récupérez l'utilisateur mis à jour avec le jeton d'accès
-      const updatedUser = await this.prisma.user.findUnique({
-        where: { id: user.id }
+      const updatedUser =  this.prisma.user.update({
+        where: { id: user.id },
+        data: { token, is_connecting, avatar }
       });
 
       // Retournez l'utilisateur mis à jour 

@@ -5,11 +5,9 @@ import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider} from '@apo
 import { setContext } from '@apollo/client/link/context';
 import App from './App';
 
-
-const userString = sessionStorage.getItem('user');
-const user = userString ? JSON.parse(userString) : null;
-
 const authLink = setContext((_, { headers }) => {
+  const userString = sessionStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
   const token = user? user.token : null;
   return {
     headers: {

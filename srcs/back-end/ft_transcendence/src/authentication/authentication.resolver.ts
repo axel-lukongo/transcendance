@@ -2,36 +2,16 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { CreateAuthenticationInput } from './dto/create-authentication.input';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
+import { UpdateUserInput } from 'src/users/dto/update-user.input';
 import { AuthenticationService } from './authentication.service';
 import { UsersService } from 'src/users/users.service';
-import axios, { AxiosResponse } from 'axios';
 import { MailingService } from './mailing/mailing.service';
-
-import * as fs from 'fs';
-import * as crypto from 'crypto';
-import * as path from 'path'
-import { UpdateUserInput } from 'src/users/dto/update-user.input';
+import { saveBase64ToFile } from 'src/utils/upload.utils';
+import { generateTwoFactorCode } from 'src/utils/auth.utils';
+import axios, { AxiosResponse } from 'axios';
 
 
-const generateTwoFactorCode = (): string => {
-  const code = crypto.randomBytes(3).toString('hex').toUpperCase();
-  return code;
-};
 
-async function saveBase64ToFile(base64Link: string, userId: number): Promise<string> {
-  const base64Data = base64Link.split(';base64,').pop() || '';
-  const binaryData = Buffer.from(base64Data, 'base64');
-  
-  const fileExtension = base64Link.split('/')[1].split(';')[0]; // Obtenez l'extension du fichier à partir du lien base64
-  
-  const fileName = `avatar_${userId}.${fileExtension}`; // Nom du fichier avec l'identifiant de l'utilisateur et l'extension
-  const uploadPath = '/ft_transcendence/src/uploads';
-  const filePath = path.join(uploadPath, fileName);
-  
-  fs.writeFileSync(filePath, binaryData);
-  
-  return fileName;
-}
 
 @Resolver()
 export class AuthenticationResolver {
@@ -39,6 +19,7 @@ export class AuthenticationResolver {
   private intraLogin: string;
   private email: string;
   private user: User;
+
   constructor(
     private readonly authService: AuthenticationService, 
     private readonly userService: UsersService,
@@ -49,20 +30,12 @@ export class AuthenticationResolver {
   async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
     if (this.intraLogin && this.email) {
     try {
-      const { avatar, ...rest } = createAuthenticationInput;
-      
-      const createUserInput: CreateUserInput = { ...rest, intra_login: this.intraLogin, email: this.email };
-      let  userCreated = await this.authService.create(createUserInput);
-      
-      const fileName = avatar ? 'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, userCreated.id) 
-                              : 'http://localhost:4000/uploads/default_avatar.jpg'
-      
-      const updateData: UpdateUserInput = { 
-        id : userCreated.id,
-        avatar: fileName 
-      };
-      return await this.userService.update(userCreated.id, updateData);
-
+        const createUserInput: CreateUserInput = {
+          ...createAuthenticationInput, 
+          intra_login: this.intraLogin, 
+          email: this.email,
+         };
+        return await this.authService.create(createUserInput);
       } 
       catch (error) {
         throw new Error("createUser Error: " + error);
@@ -103,7 +76,7 @@ export class AuthenticationResolver {
       throw new Error("This user does not exist yet");
       // return { message: "This user does not exist yet" };
     } 
-    else if (this.user.tfa_code === "true") {
+    else if (this.user.tfa_code) {
       const tfa_code = generateTwoFactorCode();
       const updatedUser = await this.userService.update(this.user.id, {id : this.user.id, tfa_code });
       this.mailingService.sendMail(this.user.email, tfa_code);
@@ -117,6 +90,7 @@ export class AuthenticationResolver {
   @Query(() => User)
   async checkTwoAuthenticationFactor(@Args('code') code: string) {
     if (this.user && this.user.tfa_code === code) {
+      this.user.tfa_code = "true";
       return this.user;
     } 
     else {
