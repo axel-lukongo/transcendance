@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { REQUEST } from '../graphql/QuerysContact'
+import { REQUEST } from '../graphql/Querys'
 import { User } from "../../Interface";
 import { IContacts } from '../../interfaces/interfaces'
 

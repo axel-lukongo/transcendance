@@ -6,7 +6,7 @@ import './css/messages.css';
 import {Link} from 'react-router-dom';
 import ChatBox from './micro-components/ChatBox';
 import { Chanel } from '../interfaces/interfaces';
-import ListChanel from './micro-components/ListChanels';
+import ListChanel from './micro-components/ListChanel';
 import HeaderChanel from './micro-components/HeaderChanel';
 
 //je me connect a mon server via le protocol websocket
@@ -73,7 +73,10 @@ const Message = () => {
 		  <div className="row clearfix">
 			<div className="col-lg-12">
 			  <div className="screen-box chat-app">
-				<ListChanel />
+				<ListChanel 
+					refetchChanels={refetchChat}
+					handleChanelRefetch={handleRefetch} 
+				/>
 				<div className="chat"> 
 				  <HeaderChanel />
 				  <div className="chat-history">

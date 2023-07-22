@@ -42,17 +42,18 @@ async update(id: number, data: UpdateUserInput) {
   }
 
   researchUsers(research: string, user_id: number) {
-    let users =  this.prisma.user.findMany({
+    let users = this.prisma.user.findMany({
       where: {
         nickname: {
           contains: research
         },
         NOT: {
           OR: [
+            { id: user_id },
             { contact: { some: {
                OR: [
-                  {user: {id: user_id}},
-                  {contact: {id: user_id}}
+                  {user: { id: user_id }},
+                  {contact: { id: user_id }}
                 ]
             }}},
             { reverse_contact: {some: {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { IRequestProps } from "../../../interfaces/interfaces"
-import { ACCEPTE_CONTACT } from "../../graphql/MutationsContact";
+import { ACCEPTE_CONTACT } from "../../graphql/Mutations";
 
 export default function AcceptContact({element, refetchContact, label}: IRequestProps) {
 		

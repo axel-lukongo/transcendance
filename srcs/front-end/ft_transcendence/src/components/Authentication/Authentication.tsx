@@ -12,7 +12,6 @@ import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 import Home from '../Home/Home';
 import Message from '../Message/message';
 import Contact from '../Contact/Contact';
-import Chanel from '../Message/Chanel/Chanel';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 

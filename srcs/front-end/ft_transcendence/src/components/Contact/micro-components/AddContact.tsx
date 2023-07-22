@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import { IProposContact } from "../../interfaces/interfaces";
-import { RESEARCH } from '../graphql/QuerysContact'
+import { RESEARCH } from '../graphql/Querys'
 import { useQuery } from "@apollo/client";
 import AddContactBtn from "./buttons/AddContactBtn";
 import MyPendingRequest from "./ListMyPendingRequest";
