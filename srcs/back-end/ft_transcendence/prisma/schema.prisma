@@ -26,6 +26,7 @@ model User {
 	contact				Contact[]		@relation("contactRef")
 	reverse_contact		Contact[]		@relation("reverseContactRef")
 	sender				Message[]       @relation("Send")
+	player            	Player?         @relation("Player")
 }
 
 model Contact {
@@ -76,10 +77,11 @@ model Pong {
 }
 
 model Player {
-  id				Int      @id @default(autoincrement())
-  playerId          Int
-  positionX        	Float
-  positionY        	Float
+  	id					Int				@id @default(autoincrement())
+  	userId          	Int				@unique
+  	positionX       	Float
+  	positionY       	Float
+	user              	User            @relation("Player",fields: [userId], references: [id])
 }
 
 model PositionBall {

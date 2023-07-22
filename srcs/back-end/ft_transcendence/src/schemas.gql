@@ -58,7 +58,7 @@ type Pong {
 
 type Player {
   id: Int!
-  playerId: Int!
+  userId: Int!
   positionY: Float!
   positionX: Float!
 }
@@ -85,6 +85,7 @@ type Query {
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
   pong(id: Int!): Pong!
+  Players: [Player!]!
   isPlayerInGame(id: Int!): Player!
   PositionBall(id: Int!): PositionBall!
 }
@@ -185,13 +186,13 @@ input UpdatePongInput {
 }
 
 input CreatePlayerInput {
-  playerId: Int!
+  userId: Int!
   positionY: Float!
   positionX: Float!
 }
 
 input UpdatePlayerInput {
-  playerId: Int
+  userId: Int
   positionY: Float!
   positionX: Float!
   id: Int!

@@ -183,7 +183,7 @@ return (
       <Routes>
         <Route path="/" element={<Home  />} />
         <Route path="/message" element={<Chat  />} />
-        <Route path="/game" element={<Pong  />} />
+        <Route path="/pong" element={<Pong  />} />
       </Routes>	
     ) : (
       <>

@@ -7,7 +7,9 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid black;
+	border-radius: 20px;
+	border: 9px solid #ffd27d;
+	background-color: rgba(41, 37, 82, 0.40); 
 	position: absolute;
 	top: 25vh; /* Centrage vertical de .pong-container-box */
 	left: 25vw; /* Centrage horizontal de .pong-container-box */

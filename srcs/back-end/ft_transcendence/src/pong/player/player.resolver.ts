@@ -20,10 +20,10 @@ export class PlayerResolver {
     return this.playerService.create(createPlayerInput);
   }
 
-  // @Query(() => [PositionPlayer], { name: 'PositionPlayers' })
-  // findAll() {
-  //   return this.playerService.findAll();
-  // }
+  @Query(() => [Player], { name: 'Players' })
+  findAll() {
+    return this.playerService.findAll();
+  }
 
   @Query(() => Player, { name: 'isPlayerInGame' })
   isPlayerInGame(@Args('id', { type: () => Int }) id: number) {

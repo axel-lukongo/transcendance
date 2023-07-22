@@ -8,7 +8,7 @@ export class Player {
   	id: number;
 
 	@Field(() => Int)
-	playerId: number
+	userId: number
 
 	@Field(() => Float)
 	positionY: number

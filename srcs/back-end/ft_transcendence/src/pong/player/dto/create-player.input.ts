@@ -4,7 +4,7 @@ import { InputType, Int, Field, Float } from '@nestjs/graphql';
 export class CreatePlayerInput {
 
 	@Field(() => Int)
-	playerId: number
+	userId: number
 
 	@Field(() => Float)
 	positionY: number

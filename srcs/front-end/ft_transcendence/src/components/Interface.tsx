@@ -6,3 +6,10 @@ export interface User {
     token: string;
     tfa_code?: string
   }
+
+export interface Player {
+  id: number;
+  userId: number;
+  positionX: number;
+  positionY: number;
+}
