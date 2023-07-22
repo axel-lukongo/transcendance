@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useQuery } from "@apollo/client";
+import {  useQuery } from "@apollo/client";
 import { IPropsChanel } from "../../interfaces/interfaces";
 import { UserChanels } from "../../interfaces/interfaces";
 import QuiteChanel from "./QuitChanel";
@@ -26,6 +26,9 @@ export default function ChanelList({refetchChanels, handleChanelRefetch}: IProps
 	if (!data)
 		return (<div>nothing to see her</div>)
 
+	if (data)
+		console.log(data);
+
 	return (
 		
 		<div id="plist" className="people-list">
@@ -37,8 +40,7 @@ export default function ChanelList({refetchChanels, handleChanelRefetch}: IProps
 						<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}>
 						<li >
 							{/* <CardChanel /> */}
-							<div>chanel_name: <b>{chanel.chanels.chanel_name}</b></div>
-							<div>pending: {chanel.pending.toString()}</div>
+							<div><b>{chanel.chanels.chanel_name}</b></div>
 							<QuiteChanel
 								label="Quite"
 								element={chanel}
