@@ -23,7 +23,7 @@ export declare class UsersResolver {
         nickname: string;
         avatar: string;
     }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
-    updateUser(updateUserInput: UpdateUserInput): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
+    updateUser(updateUserInput: UpdateUserInput): Promise<import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -32,7 +32,7 @@ export declare class UsersResolver {
         intra_login: string;
         nickname: string;
         avatar: string;
-    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
+    }, unknown> & {}>;
     removeUser(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
         id: number;
         token: string;

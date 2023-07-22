@@ -12,7 +12,7 @@ export class ChanelService {
 
   async create(createChanelInput: CreateChanelInput) {
     return this.prisma.chanel.create({
-		data: createChanelInput
+      data: createChanelInput
 	  })
   }
 

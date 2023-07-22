@@ -10,8 +10,9 @@ import { CreateUserForm } from './micro-components/CreateUserForm';
 import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 
 import Home from '../Home/Home';
-import Chat from '../Message/message';
+import Message from '../Message/message';
 import Contact from '../Contact/Contact';
+import Chanel from '../Message/Chanel/Chanel';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -182,7 +183,7 @@ return (
     {sessionStorage.getItem('user') ? (
       <Routes>
         <Route path="/" element={<Home  />} />
-        <Route path="/message" element={<Chat  />} />
+        <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>	
     ) : (

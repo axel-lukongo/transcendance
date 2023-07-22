@@ -45,6 +45,13 @@ type Contact {
   contact(user_id: Int!): User!
 }
 
+type UsersChanels {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean!
+  chanels: Chanel!
+}
+
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
@@ -59,6 +66,8 @@ type Query {
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
+  chanelsRequest(user_id: Int!): [UsersChanels!]!
+  myChanels(user_id: Int!): [UsersChanels!]!
 }
 
 type Mutation {
@@ -75,6 +84,9 @@ type Mutation {
   replyAddContact(reply: UpdateContact!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
+  addUser(addUserChanel: AddUserChanel!): UsersChanels!
+  acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
+  deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
 }
 
 input UpdateUserInput {
@@ -134,6 +146,18 @@ input UpdateContact {
 input CreateAuthenticationInput {
   nickname: String!
   avatar: String
+}
+
+input AddUserChanel {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean
+}
+
+input UpdateChanelUserInput {
+  user_id: Int!
+  chanel_id: Int!
+  pending: Boolean
 }
 
 type Subscription {

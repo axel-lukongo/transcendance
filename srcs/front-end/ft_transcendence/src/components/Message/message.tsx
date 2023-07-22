@@ -4,6 +4,10 @@ import {SubscriptionClient} from 'subscriptions-transport-ws';
 import CreateMsg from './micro-components/createMessage'
 import './css/messages.css';
 import {Link} from 'react-router-dom';
+import ChatBox from './micro-components/ChatBox';
+import { Chanel } from '../interfaces/interfaces';
+import ListChanel from './micro-components/ListChanels';
+import HeaderChanel from './micro-components/HeaderChanel';
 
 //je me connect a mon server via le protocol websocket
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -32,41 +36,32 @@ type Message = {
 	content: string;
 };
 
-/**
- * @returns dans mon return j'affiche tout les nouveaux messages qui seront crée et destiné a un chanel en particulier
-*/
+const Message = () => {
 
-const Chat = () => {
-	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [chanel_focus, setChanelFocus] = useState({
+		id: "",
+		chanel_name: "",
+		chanel_size: "",
+		max_users: "",
+		logo: "",
+	});
 
-	useEffect(() => {
-		if (data && data.Message_findAll_msg_chan) {
-		  refetch();
-		  setMessages(data.Message_findAll_msg_chan);
-	  }
-	}, [data]);
+	const [refetchChat, setRefetchChat] = useState(false);
 
-	useEffect(() => {
-		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: 1 }}).subscribe({
-			next(response) {
-				// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
-				// reponse c'est la ou les reponse de notre server est stocker.
-				if (response.data) {
-					const newMessage = response.data.addmessage;
-					setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedent et on rajoute newMessage
-				}
-			},
-			error(error) {
-				console.error('WebSocket error:', error);
-			},
+	const handleChange = (element: Chanel) => {
+
+		setChanelFocus({
+			id: element.id.toString(),
+			chanel_name: element.chanel_name,
+			chanel_size: element.chanel_size.toString(),
+			max_users: element.max_users.toString(),
+			logo: element.logo
 		});
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, []);
-	// Le [] c'est le tableau de dependance, lorsque il est vide ca signifie que on execute notre useEffect que 1 fois
+	}
 
+	const handleRefetch = () => {
+		setRefetchChat(prevValue => !prevValue);
+	}
 
 	  return (
 
@@ -78,50 +73,11 @@ const Chat = () => {
 		  <div className="row clearfix">
 			<div className="col-lg-12">
 			  <div className="screen-box chat-app">
-				<div id="plist" className="people-list">
-
-				  <ul className="list-unstyled chat-list mt-2 mb-0">
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
-					  <div className="about">
-						<div className="name"> nickname</div>
-						<div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
-					  </div>
-					</li>
-					
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar" /> {/**afficher avatar */}
-					  <div className="about">
-						<div className="name">nickname</div>
-						<div className="status"> <i className="fa fa-circle offline"></i> offline since Oct 28 </div>
-					  </div>
-					</li>
-				  </ul>
-				</div>
+				<ListChanel />
 				<div className="chat"> 
-				  <div className="chat-header">
-					<div className="row">
-					  <div className="col-lg-6">
-						<a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-						  <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar" />{/**afficher avatar */}
-						</a>
-
-
-
-						{/* ici on affichera un point vers si le user est connecter ou sinon vert si il est connecter*/ }
-						<div className="chat-about">
-						  <h6 className="m-b-0"> nickname </h6>
-						  <small>Last seen: 2 hours ago</small>
-						</div>
-					  </div>
-
-					</div>
-				  </div>
+				  <HeaderChanel />
 				  <div className="chat-history">
-		
-						{messages.map(message => (
-							<div key={message.id}> {message.content}</div>
-						))}
+					<ChatBox chan={chanel_focus} />
 				  </div>
 				  <div className="chat-message ">
 
@@ -139,4 +95,4 @@ const Chat = () => {
 	  );
 };
 
-export default Chat;
+export default Message;
