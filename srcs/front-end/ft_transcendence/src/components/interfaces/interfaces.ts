@@ -33,6 +33,8 @@ export interface IContacts {
 export interface IPropsChanel {
 	refetchChanels?: boolean;
 	handleChanelRefetch: () => void;
+	user: User;
+	handleChange: (element: Chanel) => void;
 }
 
 export interface IRequestProps {

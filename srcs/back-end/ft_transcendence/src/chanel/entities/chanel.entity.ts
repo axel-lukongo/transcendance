@@ -17,6 +17,9 @@ export class Chanel {
 
 	@Field({nullable: true})
 	max_users: number;
+
+	@Field({nullable: true})
+	logo: string;
   
 }
 

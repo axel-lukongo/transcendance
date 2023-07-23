@@ -18,6 +18,9 @@ export const CHANELS_LIST = gql`query GetChanelList($input: Int!) {
 		chanels {
 			chanel_name
 			id
+			chanel_size
+			max_users
+			logo
 		}
 	}
 }`

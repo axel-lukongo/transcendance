@@ -19,6 +19,7 @@ type Chanel {
   chanel_name: String
   chanel_size: Float
   max_users: Float
+  logo: String
   messages: [Message!]!
 }
 

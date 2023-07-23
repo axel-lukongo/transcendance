@@ -38,6 +38,8 @@ type Message = {
 
 const Message = () => {
 
+	const user = JSON.parse(sessionStorage.getItem('user') || '');
+
 	const [chanel_focus, setChanelFocus] = useState({
 		id: "",
 		chanel_name: "",
@@ -75,7 +77,9 @@ const Message = () => {
 			  <div className="screen-box chat-app">
 				<ListChanel 
 					refetchChanels={refetchChat}
-					handleChanelRefetch={handleRefetch} 
+					handleChanelRefetch={handleRefetch}
+					user={user}
+					handleChange={handleChange}
 				/>
 				<div className="chat"> 
 				  <HeaderChanel />
