@@ -12,11 +12,11 @@ export class UsersResolver {
   @Query(() => [User], { name: 'findAllUsers' })
   findAllUsers(@Context() context: any) {
 
-    const {token} = context; 
-    console.log('dans le resolveur', token);
-    if (!token || !this.usersService.findUserByToken(token)) {
-      throw new ForbiddenException('Invalid token');
-    }
+    // const {token} = context; 
+    // console.log('dans le resolveur', token);
+    // if (!token || !this.usersService.findUserByToken(token)) {
+    //   throw new ForbiddenException('Invalid token');
+    // }
     return this.usersService.findAll();
   }
 
@@ -34,4 +34,9 @@ export class UsersResolver {
     return this.usersService.remove(id);
   }
 
+  @Query(() => [User])
+  searchUsers(@Args("research", { type: () => String}) research: string,
+  @Args("user_id", {type: () => Int}) user_id: number) {
+    return this.usersService.researchUsers(research, user_id);
+  }
 }

@@ -9,33 +9,32 @@ export class PlayerService {
 
 	constructor(private readonly prisma: PrismaService) {}
 
-
-	async create(createPlayerInput: CreatePlayerInput) {
-		const newPlayer = await this.prisma.player.create({
-		  data: createPlayerInput, // Transmettez directement createPlayerInput
+	create(createPlayerInput: CreatePlayerInput) {
+		const newPlayer = this.prisma.player.create({
+		  data: createPlayerInput,
 		});
-	
 		return newPlayer;
 	}
 
-  findAll() {
-    return this.prisma.player.findMany();
-  }
+  	findAll() {
+    	return this.prisma.player.findMany();
+  	}
 
-   findUnique(id: number) {
-	return this.prisma.player.findUnique({
+   	findUnique(id: number) {
+		return this.prisma.player.findUnique({
 		where: { userId: id },
 	  });
 	}
 
-  update(id: number, updatePlayerInput: UpdatePlayerInput) {
-	return this.prisma.player.update({
+  	update(id: number, updatePlayerInput: UpdatePlayerInput) {
+		return this.prisma.player.update({
 		where: { id: id },
 		data: updatePlayerInput,
-	});  }
+		});  
+	}
 
-  remove(id: number) {
-	return this.prisma.player.delete({
+  	remove(id: number) {
+		return this.prisma.player.delete({
 		where: { id: id },
 	  });  
 	}

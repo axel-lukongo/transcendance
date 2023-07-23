@@ -13,3 +13,10 @@ export interface Player {
   positionX: number;
   positionY: number;
 }
+
+export interface OtherPlayer {
+  id: number;
+  userId: number;
+  positionX: number;
+  positionY: number;
+}

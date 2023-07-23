@@ -28,5 +28,3 @@ const Pong: FC = () => {
 };
 export default Pong;
 
-// import {SubscriptionClient} from 'subscriptions-transport-ws';
-// const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});

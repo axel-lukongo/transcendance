@@ -12,10 +12,10 @@ export class Pong {
 	userId2: number;
 
   	@Field(() => Int)
-	scoreUserId1: number;
+	scoreUser1: number;
 
   	@Field(() => Int)
-	scoreUserId2: number;
+	scoreUser2: number;
 
   	@Field(() => Int)
 	loser_id: number;

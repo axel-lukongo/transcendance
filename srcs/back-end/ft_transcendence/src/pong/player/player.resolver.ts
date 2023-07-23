@@ -5,11 +5,8 @@ import { UpdatePlayerInput, UpdatePositionBallInput} from './dto/update-player.i
 import { PlayerService, PositionBallService } from './player.service';
 import { PubSub } from 'graphql-subscriptions';
 
-
 const pubSub = new PubSub();
-const UpdatePosPlayer = 'updatePosPlayer';
-const UpdatePosBall = 'updatePosBall';
-
+const PLAYER_UPDATED_EVENT = 'playerUp';
 
 @Resolver(() => Player)
 export class PlayerResolver {
@@ -21,7 +18,7 @@ export class PlayerResolver {
   }
 
   @Query(() => [Player], { name: 'Players' })
-  findAll() {
+  findAllPlayers() {
     return this.playerService.findAll();
   }
 
@@ -31,12 +28,13 @@ export class PlayerResolver {
   }
 
   @Mutation(() => Player)
-  updatePlayer(@Args('updatePlayerInput') updatePlayerInput: UpdatePlayerInput) {
-	const newposplayer = this.playerService.update(updatePlayerInput.id, updatePlayerInput);
-	pubSub.publish(UpdatePosPlayer, {
-		updateposplayer: newposplayer,
-	});
-	return newposplayer;
+  async updatePlayer(@Args('updatePlayerInput') updatePlayerInput: UpdatePlayerInput) {
+    const newPlayer = await this.playerService.update(updatePlayerInput.id, updatePlayerInput);
+      
+    pubSub.publish(PLAYER_UPDATED_EVENT, {
+      playerUpdated: newPlayer,
+    });
+    return newPlayer;
   }
 
   @Mutation(() => Player)
@@ -45,16 +43,15 @@ export class PlayerResolver {
   }
 
   @Subscription(() => Player, {
-	filter: async (payload, variables) => {
-		const resolvedPayload = await payload.updateposplayer;
-		return resolvedPayload.channel_id === variables.channel_id;
-		}
-	})
+    filter: async (payload, variables) => {
+      const resolvedPayload = await payload.playerUpdated;
+      return resolvedPayload.id === variables.id;
+    }
+  })
 
-	updateposplayer(@Args('player_id', { type: () => Int }) player_id: number) {
-		return pubSub.asyncIterator(UpdatePosPlayer);
-	}
-
+  playerUpdated(@Args('id', { type: () => Int }) id: number) {
+    return  pubSub.asyncIterator(PLAYER_UPDATED_EVENT);
+  }
 }
 
 
@@ -63,47 +60,47 @@ export class PlayerResolver {
 
 @Resolver(() => PositionBall)
 export class PositionBallResolver {
-  constructor(private readonly PositionBallService: PositionBallService) {}
+  // constructor(private readonly PositionBallService: PositionBallService) {}
 
-  @Mutation(() => PositionBall)
-  createPositionBall(@Args('createPositionBallInput') createPositionBallInput: CreatePositionBallInput) {
-    return this.PositionBallService.create(createPositionBallInput);
-  }
+  // @Mutation(() => PositionBall)
+  // createPositionBall(@Args('createPositionBallInput') createPositionBallInput: CreatePositionBallInput) {
+  //   return this.PositionBallService.create(createPositionBallInput);
+  // }
 
-  @Query(() => [PositionBall], { name: 'PositionBall' })
-  findAll() {
-    return this.PositionBallService.findAll();
-  }
+  // @Query(() => [PositionBall], { name: 'PositionBall' })
+  // findAll() {
+  //   return this.PositionBallService.findAll();
+  // }
 
-  @Query(() => PositionBall, { name: 'PositionBall' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.PositionBallService.findOne(id);
-  }
+  // @Query(() => PositionBall, { name: 'PositionBall' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.PositionBallService.findOne(id);
+  // }
 
-  @Mutation(() => PositionBall)
-  updatePositionBall(@Args('updatePositionBallInput') updatePositionBallInput: UpdatePositionBallInput) {
-	const newposball = this.PositionBallService.update(updatePositionBallInput.id, updatePositionBallInput);
+  // @Mutation(() => PositionBall)
+  // updatePositionBall(@Args('updatePositionBallInput') updatePositionBallInput: UpdatePositionBallInput) {
+	// const newposball = this.PositionBallService.update(updatePositionBallInput.id, updatePositionBallInput);
 
-	pubSub.publish(UpdatePosBall, {
-		updateposball: newposball,
-	});
+	// pubSub.publish(UpdatePosBall, {
+	// 	updateposball: newposball,
+	// });
 
-	return newposball;
-  }
+	// return newposball;
+  // }
 
-  @Mutation(() => PositionBall)
-  removePositionBall(@Args('id', { type: () => Int }) id: number) {
-    return this.PositionBallService.remove(id);
-  }
+  // @Mutation(() => PositionBall)
+  // removePositionBall(@Args('id', { type: () => Int }) id: number) {
+  //   return this.PositionBallService.remove(id);
+  // }
 
 
-  @Subscription(() => PositionBall, {
-	filter: async (payload, variables) => {
-		const resolvedPayload = await payload.updateposball;
-		return resolvedPayload.channel_id === variables.channel_id;
-		}
-	})
-	updateposball(@Args('ball_id', { type: () => Int }) ball_id: number) {
-		return pubSub.asyncIterator(UpdatePosBall);
-	}
+  // @Subscription(() => PositionBall, {
+	// filter: async (payload, variables) => {
+	// 	const resolvedPayload = await payload.updateposball;
+	// 	return resolvedPayload.channel_id === variables.channel_id;
+	// 	}
+	// })
+	// updateposball(@Args('ball_id', { type: () => Int }) ball_id: number) {
+	// 	return pubSub.asyncIterator(UpdatePosBall);
+	// }
 }

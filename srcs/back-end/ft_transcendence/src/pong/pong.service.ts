@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePongInput } from './dto/create-pong.input';
 import { UpdatePongInput } from './dto/update-pong.input';
+import { PrismaService } from 'prisma/prisma.service';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class PongService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createPongInput: CreatePongInput) {
-    return 'This action adds a new pong';
+    return this.prisma.pong.create({
+      data: createPongInput
+     });
   }
 
   findAll() {

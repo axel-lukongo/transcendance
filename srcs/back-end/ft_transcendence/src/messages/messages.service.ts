@@ -10,8 +10,6 @@ export class MessagesService {
 	constructor(private readonly prisma: PrismaService) {}
 
 
-
-
 	async findAll_msg() { 
 		return this.prisma.message.findMany({});
 	}

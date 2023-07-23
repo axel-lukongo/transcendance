@@ -10,3 +10,28 @@ export const CREATE_PLAYER = gql`
     }
   }
 `;
+
+export const UPDATE_PLAYER = gql `
+  mutation UpdatePlayer($input: UpdatePlayerInput!) {
+    updatePlayer(updatePlayerInput: $input) {
+      id
+      userId
+      positionX
+      positionY
+    }
+  }
+`;
+
+export const PLAYER_UPDATED = gql`
+  subscription PlayerUpdated($id: Int!) {
+    playerUpdated(id: $id) {
+      id
+      userId
+      positionX
+      positionY
+    }
+  }
+`;
+
+export const CreatePong = 
+

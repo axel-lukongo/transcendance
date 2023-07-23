@@ -1,4 +1,3 @@
-import React from 'react';
 import {Link} from 'react-router-dom';
 import { TfaToggleButton } from './micro-components/TfaToogleButton';
 
@@ -16,7 +15,7 @@ const Home = () => {
     <div className='Home'>
       {user && (
         <>
-          <div className='screen-box'></div>
+          <div className='screen-box'>
           <div className='rank-box profil-box'>RANK #?</div>
           <AvatarBox />
           <div className="history-match-box profil-box">
@@ -43,6 +42,7 @@ const Home = () => {
             <button className='contact-button logo-box'></button>
           </Link>
           <TfaToggleButton userId={user.id} tfaCode={user.tfa_code} />
+          </div>
         </>
       )}
     </div>
