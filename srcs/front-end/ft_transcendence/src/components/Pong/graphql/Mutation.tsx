@@ -7,6 +7,7 @@ export const CREATE_PLAYER = gql`
       userId
       positionX
       positionY
+      waitingRoomId
     }
   }
 `;
@@ -33,5 +34,5 @@ export const PLAYER_UPDATED = gql`
   }
 `;
 
-export const CreatePong = 
+
 

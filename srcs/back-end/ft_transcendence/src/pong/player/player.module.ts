@@ -6,4 +6,4 @@ import { PrismaService } from 'prisma/prisma.service';
 @Module({
   providers: [PlayerResolver, PositionBallResolver, PlayerService, PositionBallService, PrismaService]
 })
-export class GameModule {}
+export class PlayerModule {}

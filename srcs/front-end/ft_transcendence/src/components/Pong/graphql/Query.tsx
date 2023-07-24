@@ -7,6 +7,7 @@ export const IS_PLAYER_IN_GAME = gql`
       userId
       positionX
       positionY
+      waitingRoomId
     }
   }
 `;

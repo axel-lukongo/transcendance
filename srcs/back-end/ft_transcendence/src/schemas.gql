@@ -42,15 +42,15 @@ type Contact {
   user_id: Int!
   contact_id: Int!
   pending: Boolean!
-  contact: User!
+  contact(user_id: Int!): User!
 }
 
 type Pong {
   id: Int!
   userId1: Int!
   userId2: Int!
-  scoreUserId1: Int!
-  scoreUserId2: Int!
+  scoreUser1: Int!
+  scoreUser2: Int!
   loser_id: Int!
   winner_id: Int!
   versusDate: DateTime!
@@ -59,35 +59,36 @@ type Pong {
 type Player {
   id: Int!
   userId: Int!
-  positionY: Float!
   positionX: Float!
+  positionY: Float!
+  waitingRoomId: Int!
 }
 
-type PositionBall {
+type WaitingRoom {
   id: Int!
-  PongId: Int!
-  positionX: Float!
-  positionY: Float!
-  velocityX: Float!
-  velocityY: Float!
+  waitingList: [Player!]
 }
 
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
+  searchUsers(research: String!, user_id: Int!): [User!]!
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!
   Message_findAll_msg_chan(channelId: Int!): [Message!]!
   Message_findOne_msg(id: Int!): Message!
   contactsRequest(user_id: Int!): [Contact!]!
+  myContactRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
   pong(id: Int!): Pong!
   Players: [Player!]!
   isPlayerInGame(id: Int!): Player!
-  PositionBall(id: Int!): PositionBall!
+  findWaitingRoomPlayer: [Player!]!
+  findWaitingRooms: [WaitingRoom!]!
+  findWaitingRoom(id: Int!): WaitingRoom!
 }
 
 type Mutation {
@@ -110,9 +111,8 @@ type Mutation {
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!
   updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
   removePlayer(id: Int!): Player!
-  createPositionBall(createPositionBallInput: CreatePositionBallInput!): PositionBall!
-  updatePositionBall(updatePositionBallInput: UpdatePositionBallInput!): PositionBall!
-  removePositionBall(id: Int!): PositionBall!
+  createWaitingRoom: WaitingRoom!
+  removeWaitingRoom(id: Int!): WaitingRoom!
 }
 
 input UpdateUserInput {
@@ -175,48 +175,36 @@ input CreateAuthenticationInput {
 }
 
 input CreatePongInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  userId1: Int!
+  userId2: Int!
 }
 
 input UpdatePongInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  userId1: Int
+  userId2: Int
   id: Int!
+  scoreUser1: Int!
+  scoreUser2: Int!
+  loser_id: Int!
+  winner_id: Int!
 }
 
 input CreatePlayerInput {
   userId: Int!
   positionY: Float!
   positionX: Float!
+  waitingRoomId: Int!
 }
 
 input UpdatePlayerInput {
-  userId: Int
-  positionY: Float!
-  positionX: Float!
   id: Int!
-}
-
-input CreatePositionBallInput {
-  PongId: Int!
+  userId: Int!
   positionX: Float!
   positionY: Float!
-  velocityX: Float!
-  velocityY: Float!
-}
-
-input UpdatePositionBallInput {
-  PongId: Int
-  positionX: Float!
-  positionY: Float!
-  velocityX: Float!
-  velocityY: Float!
-  id: Int!
+  waitingRoomId: Int!
 }
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
-  updateposplayer(player_id: Int!): Player!
-  updateposball(ball_id: Int!): PositionBall!
+  playerUpdated(id: Int!): Player!
 }

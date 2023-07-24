@@ -65,48 +65,51 @@ model Users_Chanels {
 	@@id([user_id, chanel_id])
 }
 
-// model WaitingRoom {
-// 	id           Int      @id @default(autoincrement())
-// 	waitingList Player[]
-// }
 
 model Pong {
-  id           Int      @id @default(autoincrement())
-  userId1      Int
-  userId2      Int
-  scoreUser1   Int?		@default(0)
-  scoreUser2   Int?		@default(0)
-  loser_id     Int?
-  winner_id    Int?
-  Versus_date  DateTime @default(now())
+  id           			Int      @id @default(autoincrement())
+  userId1      			Int
+  userId2      			Int
+  scoreUser1   			Int?		@default(0)
+  scoreUser2   			Int?		@default(0)
+  loser_id     			Int?
+  winner_id    			Int?
+  Versus_date  			DateTime @default(now())
 
-  user1        User     @relation("User1", fields: [userId1], references: [id])
-  user2        User     @relation("User2", fields: [userId2], references: [id])
+  user1        			User     @relation("User1", fields: [userId1], references: [id])
+  user2        			User     @relation("User2", fields: [userId2], references: [id])
 }
-
 
 model Player {
-  	id					Int				@id @default(autoincrement())
-  	userId          	Int				@unique
-  	positionX       	Float
-  	positionY       	Float
+  id            Int @id @default(autoincrement())
+  userId        Int @unique
+  positionX     Float
+  positionY     Float
+  waitingRoomId Int  
+  waitingRoom   WaitingRoom? @relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
 
+model WaitingRoom {
+	id            Int @id @default(autoincrement()) 
+	waitingList   Player[] @relation("PlayerWaitingList")    
+}
+
+
 model PositionBall {
-  id				Int      @id @default(autoincrement())
-  PongId            Int
-  positionX        	Float
-  positionY        	Float
-  velocityX         Float
-  velocityY         Float
+  id					Int      @id @default(autoincrement())
+  PongId            	Int
+  positionX        		Float
+  positionY        		Float
+  velocityX         	Float
+  velocityY         	Float
 }
 
 model Message {
-  id				Int      @id @default(autoincrement())
-  sender_id			Int
-  channel_id		Int?
-  content			String
-  sent_at			DateTime @default(now())
-  sender			User     @relation("Send", fields: [sender_id], references: [id])
-  channel			Chanel?  @relation("ChanelMessages", fields: [channel_id], references: [id])
+  id					Int      @id @default(autoincrement())
+  sender_id				Int
+  channel_id			Int?
+  content				String
+  sent_at				DateTime @default(now())
+  sender				User     @relation("Send", fields: [sender_id], references: [id])
+  channel				Chanel?  @relation("ChanelMessages", fields: [channel_id], references: [id])
 }

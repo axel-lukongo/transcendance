@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { PongService } from './pong.service';
 import { PongResolver } from './pong.resolver';
-import { GameModule } from './player/player.module';
+import { PlayerModule } from './player/player.module';
 import { PrismaService } from 'prisma/prisma.service';
+import { WaitingRoomModule } from './waiting-room/waiting-room.module';
 
 @Module({
   providers: [PongResolver, PongService, PrismaService],
-  imports: [GameModule]
+  imports: [PlayerModule, WaitingRoomModule]
 })
 export class PongModule {}

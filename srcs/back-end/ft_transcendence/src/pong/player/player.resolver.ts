@@ -4,6 +4,8 @@ import { CreatePlayerInput, CreatePositionBallInput} from './dto/create-player.i
 import { UpdatePlayerInput, UpdatePositionBallInput} from './dto/update-player.input';
 import { PlayerService, PositionBallService } from './player.service';
 import { PubSub } from 'graphql-subscriptions';
+import { query } from 'express';
+import { WaitingRoom } from '@prisma/client';
 
 const pubSub = new PubSub();
 const PLAYER_UPDATED_EVENT = 'playerUp';
@@ -52,9 +54,12 @@ export class PlayerResolver {
   playerUpdated(@Args('id', { type: () => Int }) id: number) {
     return  pubSub.asyncIterator(PLAYER_UPDATED_EVENT);
   }
+
+  @Query(() => [Player])
+    async findWaitingRoomPlayer(waitingRoom: WaitingRoom) {
+      return this.playerService.findWaitingRoomPlayer(waitingRoom.id)
+    }
 }
-
-
 
 
 

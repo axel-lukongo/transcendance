@@ -11,6 +11,9 @@ export class CreatePlayerInput {
 
 	@Field(() => Float)
 	positionX: number
+
+	@Field(() => Int)
+	waitingRoomId: number
 }
 
 

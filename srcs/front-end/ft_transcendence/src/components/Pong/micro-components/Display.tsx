@@ -60,26 +60,28 @@ export const Display: FC<DisplayProps> = ({ player, setPlayer }) => {
           console.error('Error updating player:', error);
         });
     }
-  }, [player]);
+  }, [player, updatePlayer]);
 
   useEffect(() => {
-    console.log('other player id tbale:', otherPlayer?.id)
-    const subscription = wsClient.request({ query: PLAYER_UPDATED, variables: { id: otherPlayer?.id } }).subscribe({
-      next(response) {
-        if (response.data) {
-          const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdated as OtherPlayer;
-          setOtherPlayer(updatedOtherPlayer); 
-        }
-      },
-      error(error) {
-        console.error('WebSocket error:', error);
-      },
-    });
-    return () => {
-      subscription.unsubscribe();
-    };
+    if (otherPlayer?.id) {
+      const subscription = wsClient.request({ query: PLAYER_UPDATED, variables: { id: otherPlayer?.id } }).subscribe({
+        next(response) {
+          if (response.data) {
+            const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdated as OtherPlayer;
+            setOtherPlayer(updatedOtherPlayer);
+          }
+        },
+        error(error) {
+          console.error('WebSocket error:', error);
+        },
+      });
 
-  }, []);
+      // Fonction de retour pour annuler l'abonnement lors du démontage du composant
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [otherPlayer?.id]);
   
   return (
       <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>

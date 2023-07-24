@@ -9,12 +9,28 @@ export class PlayerService {
 
 	constructor(private readonly prisma: PrismaService) {}
 
-	create(createPlayerInput: CreatePlayerInput) {
-		const newPlayer = this.prisma.player.create({
-		  data: createPlayerInput,
-		});
-		return newPlayer;
-	}
+	async create(createPlayerInput: CreatePlayerInput) {
+		const newPlayer =  this.prisma.player.create({
+			data: createPlayerInput,
+		  });
+	  
+		  // Check if the player has a valid waitingRoomId
+		//   if (createPlayerInput.waitingRoomId) {
+		// 	// Connect the newly created Player to the waitingList of the associated WaitingRoom
+		// 	 this.prisma.waitingRoom.update({
+		// 	  where: { id: createPlayerInput.waitingRoomId },
+		// 	  data: {
+		// 		waitingList: {
+		// 		  connect: {
+		// 			id: (await newPlayer).id
+		// 		  },
+		// 		},
+		// 	  },
+		// 	});
+		//   }
+	  
+		  return newPlayer;
+	};
 
   	findAll() {
     	return this.prisma.player.findMany();
@@ -22,7 +38,8 @@ export class PlayerService {
 
    	findUnique(id: number) {
 		return this.prisma.player.findUnique({
-		where: { userId: id },
+		where: {id },
+		include : {waitingRoom: true}
 	  });
 	}
 
@@ -38,6 +55,12 @@ export class PlayerService {
 		where: { id: id },
 	  });  
 	}
+
+	findWaitingRoomPlayer(id: number) {
+		return this.prisma.player.findMany({
+			where : {waitingRoomId : id}
+		})
+	};
 }
 
 @Injectable()
