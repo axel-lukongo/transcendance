@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import {  UserChanels, IPropsChanel } from "../../../interfaces/interfaces";
-import AcceptChanel from '../buttons/AcceptChanel'
 import {USER_CHANEL_LIST} from '../../graphql/QueryChanel'
+import AcceptChanel from '../buttons/AcceptChanel'
+import QuiteChanel from "../buttons/QuitChanel";
+import { User } from "../../../Interface";
 
+interface ITmpProps {
+	user: User;
+}
 
-
-export default function UserChanelsRequests({refetchChanels, handleChanelRefetch}: IPropsChanel) {
+export default function ChanelRequests(/* {refetchChanels, handleChanelRefetch}: IPropsChanel */{user}: ITmpProps) {
 
 	const {data, loading, refetch, error} = useQuery(USER_CHANEL_LIST, {
 		variables: {
-			input: 1
+			input: user.id
 		}
 	});
 
-	useEffect(() => {
-		refetch();
-	}, [refetchChanels])
+	// useEffect(() => {
+	// 	refetch();
+	// }, [refetchChanels])
 
 	if (loading)
 		return (<div>Loading...</div>)
@@ -26,7 +30,6 @@ export default function UserChanelsRequests({refetchChanels, handleChanelRefetch
 
 	if (!data)
 		return (<div>nothing to see her yet</div>)
-
 
 		return (
 			<div><h3>Chanel Request</h3>{
@@ -38,7 +41,16 @@ export default function UserChanelsRequests({refetchChanels, handleChanelRefetch
 						<li >
 							<div>chanel_name: <b>{chanel.chanels.chanel_name}</b></div>
 							<div>pending: {chanel.pending.toString()}</div>
-							<AcceptChanel element={chanel} label="Join" handleChanelRefecth={handleChanelRefetch}/>
+							<AcceptChanel 
+								element={chanel} 
+								label="Join" 
+								// handleChanelRefecth={handleChanelRefetch}
+							/>
+							<QuiteChanel 
+								element={chanel}
+								label="refuse"
+								// handleChanelRefecth={handleChanelRefetch}
+							/>
 						</li>
 					</ul>
 					);

@@ -58,7 +58,7 @@ export interface IProposContact {
 
 export interface IRequest {
 	element: UserChanels;
-	handleChanelRefecth: () => void;
+	handleChanelRefecth?: () => void;
 	label: string;
 }
 

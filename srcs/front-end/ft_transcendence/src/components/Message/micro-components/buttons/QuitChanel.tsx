@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { IRequest } from '../../../interfaces/interfaces'
 import { QUITE_CHANEL } from '../../graphql/MutationsChanel'
 
-export default function QuiteChanel({handleChanelRefecth, element, label}: IRequest) {
+export default function QuiteChanel({/* handleChanelRefecth, */ element, label}: IRequest) {
 
 	
 	const [delContact] = useMutation(QUITE_CHANEL);
@@ -17,7 +17,7 @@ export default function QuiteChanel({handleChanelRefecth, element, label}: IRequ
 				}
 			}
 		}).then(() => {
-			handleChanelRefecth();
+			// handleChanelRefecth();
 		})
 		.catch((error) => {
 			console.log("Graphql error: ", error);

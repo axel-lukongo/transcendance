@@ -4,9 +4,10 @@ import {SubscriptionClient} from 'subscriptions-transport-ws';
 import {Link} from 'react-router-dom';
 import { Chanel } from '../interfaces/interfaces';
 import Chanels from './micro-components/Chanels';
-import PublicChanel from './micro-components/PublicChanel';
+import ChanelRequest from './micro-components/requests/ChanelsRequests';
 
 import './css/messages.css';
+import ChanelRequests from './micro-components/requests/ChanelsRequests';
 
 //je me connect a mon server via le protocol websocket
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -111,13 +112,11 @@ const Message = () => {
 						private_chan={false}
 					/>
 				);
-			break;
+				break;
 			}
 			case 4: {
 				return (
-					<div>
-						{/* Add request her */}
-					</div>
+					<ChanelRequests user={user}/>
 				);
 				break;
 			}

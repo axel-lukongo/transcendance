@@ -3,7 +3,7 @@ import React from "react";
 import { IRequest } from "../../../interfaces/interfaces";
 import { ACCEPT_CHANEL } from '../../graphql/MutationsChanel'
 
-export default function AcceptChanel({element, handleChanelRefecth, label}: IRequest ) {
+export default function AcceptChanel({element, /* handleChanelRefecth, */ label}: IRequest ) {
 
 
 	const [acceptChanel] = useMutation(ACCEPT_CHANEL)
@@ -17,7 +17,7 @@ export default function AcceptChanel({element, handleChanelRefecth, label}: IReq
 					}
 				}
 			}).then((response) => {
-				handleChanelRefecth();
+				// handleChanelRefecth();
 			}).catch((error) => {
 				console.log("Error: ", error.networkError.result);
 			})
