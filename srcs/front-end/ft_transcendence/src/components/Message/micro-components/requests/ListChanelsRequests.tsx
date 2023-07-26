@@ -10,7 +10,7 @@ interface ITmpProps {
 	user: User;
 }
 
-export default function ChanelRequests(/* {refetchChanels, handleChanelRefetch}: IPropsChanel */{user}: ITmpProps) {
+export default function ListChanelRequests(/* {refetchChanels, handleChanelRefetch}: IPropsChanel */{user}: ITmpProps) {
 
 	const {data, loading, refetch, error} = useQuery(USER_CHANEL_LIST, {
 		variables: {
@@ -32,15 +32,16 @@ export default function ChanelRequests(/* {refetchChanels, handleChanelRefetch}:
 		return (<div>nothing to see her yet</div>)
 
 		return (
-			<div><h3>Chanel Request</h3>{
+			
+			<div id="plist" className="people-list">
+			<h3>Chanel Request</h3>{
 				data.chanelsRequest.map((chanel: UserChanels, index: number) => {
 					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`
 
 					return (
-					<ul key={unique_key}>
+					<ul key={unique_key} className="list-unstyled chat-list mt-2 mb-0">
 						<li >
-							<div>chanel_name: <b>{chanel.chanels.chanel_name}</b></div>
-							<div>pending: {chanel.pending.toString()}</div>
+							<div><b>{chanel.chanels.chanel_name}</b></div>
 							<AcceptChanel 
 								element={chanel} 
 								label="Join" 
