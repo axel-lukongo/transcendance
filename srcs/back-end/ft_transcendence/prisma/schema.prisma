@@ -22,7 +22,7 @@ model User {
 	userPong			Pong[]          @relation("User1")
 	userPong2			Pong[]          @relation("User2")
 	chanels				Users_Chanels[]
-	own_chan			Chanel[]
+	own_chan			Chanel[]		@relation("Owner")
 	contact				Contact[]		@relation("contactRef")
 	reverse_contact		Contact[]		@relation("reverseContactRef")
 	sender				Message[]       @relation("Send")
@@ -56,7 +56,8 @@ model Chanel {
 	chanel_size			Int
 	max_users			Int
 	logo				String?
-	owner				User		@relation(fields: [owner_id], references: [id])
+	private				Boolean		@default(true)
+	owner				User		@relation("Owner", fields: [owner_id], references: [id])
 	users				Users_Chanels[]
 	messages			Message[]	@relation("ChanelMessages")
 }

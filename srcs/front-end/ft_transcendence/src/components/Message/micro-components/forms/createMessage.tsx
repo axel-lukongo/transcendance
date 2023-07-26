@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 
 import {useMutation} from '@apollo/client';
-import { CREATE_MSG } from '../graphql/Mutation';
+import { CREATE_MSG } from '../../graphql/Mutation';
 
 
 const CreateMsg = () => {

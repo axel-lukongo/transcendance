@@ -7,37 +7,41 @@ export declare class ChanelService {
     private readonly prisma;
     private readonly user;
     constructor(prisma: PrismaService, user: UsersService);
-    create(createChanelInput: CreateChanelInput): Promise<import("@prisma/client/runtime").GetResult<{
+    create(createChanelInput: CreateChanelInput): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
-    }, unknown> & {}>;
-    findOne(id: number): Promise<import("@prisma/client/runtime").GetResult<{
+        private: boolean;
+    }, unknown> & {}) | Error>;
+    findOne(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
+        private: boolean;
     }, unknown> & {}>;
     update(id: number, data: UpdateChanelInput): Promise<Chanel>;
-    remove(id: number): Promise<import("@prisma/client/runtime").GetResult<{
+    remove(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
+        private: boolean;
     }, unknown> & {}>;
-    getOwnChanels(user_id: number): Promise<(import("@prisma/client/runtime").GetResult<{
+    getOwnChanels(user_id: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
+        private: boolean;
     }, unknown> & {})[]>;
 }

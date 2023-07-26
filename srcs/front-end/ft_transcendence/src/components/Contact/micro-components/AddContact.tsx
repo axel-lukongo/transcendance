@@ -42,7 +42,7 @@ import MyPendingRequest from "./ListMyPendingRequest";
 		<div className="AddContact">
 			<div className="search_bar">
 				<input 
-					type="text"
+					type="search"
 					name="search_bar"
 					id="search_bar_contact"
 					value={search}

@@ -16,10 +16,11 @@ type User {
 type Chanel {
   id: Int!
   owner_id: Int!
-  chanel_name: String
+  chanel_name: String!
   chanel_size: Float
-  max_users: Float
+  max_users: Float!
   logo: String
+  private: Boolean!
   messages: [Message!]!
 }
 
@@ -102,18 +103,22 @@ input UpdateUserInput {
 }
 
 input CreateChanelInput {
+  private: Boolean!
+  owner_id: Int!
+  chanel_name: String!
+  chanel_size: Int!
+  max_users: Int!
+  logo: String
+}
+
+input UpdateChanelInput {
+  private: Boolean
   owner_id: Int
   chanel_name: String
   chanel_size: Int
   max_users: Int
   logo: String
-}
-
-input UpdateChanelInput {
   id: Int!
-  chanel_name: String
-  chanel_size: Float
-  max_users: Float
 }
 
 input CreateMessageInput {

@@ -11,7 +11,13 @@
     left: 0;
     top: 0;
     padding: 20px;
-    z-index: 7
+    z-index: 7;
+    overflow: auto;
+    height: 94%;
+}
+
+.chat-app .people-list::-webkit-scrollbar {
+    display: none;
 }
 
 .chat-app .chat {
@@ -39,6 +45,7 @@
     list-style: none;
     border-radius: 3px
 }
+
 
 .people-list .chat-list li:hover {
     background: rgba(21, 39, 174, 0.186);

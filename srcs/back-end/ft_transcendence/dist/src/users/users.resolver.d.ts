@@ -3,7 +3,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 export declare class UsersResolver {
     private readonly usersService;
     constructor(usersService: UsersService);
-    findAllUsers(context: any): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime").GetResult<{
+    findAllUsers(context: any): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -13,7 +13,7 @@ export declare class UsersResolver {
         nickname: string;
         avatar: string;
     }, unknown> & {})[]>;
-    findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
+    findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -22,8 +22,8 @@ export declare class UsersResolver {
         intra_login: string;
         nickname: string;
         avatar: string;
-    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
-    updateUser(updateUserInput: UpdateUserInput): Promise<import("@prisma/client/runtime").GetResult<{
+    }, unknown> & {}, null, import("@prisma/client/runtime/library").DefaultArgs>;
+    updateUser(updateUserInput: UpdateUserInput): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -33,7 +33,7 @@ export declare class UsersResolver {
         nickname: string;
         avatar: string;
     }, unknown> & {}>;
-    removeUser(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime").GetResult<{
+    removeUser(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;
@@ -42,8 +42,8 @@ export declare class UsersResolver {
         intra_login: string;
         nickname: string;
         avatar: string;
-    }, unknown> & {}, never, import("@prisma/client/runtime").DefaultArgs>;
-    searchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime").GetResult<{
+    }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    searchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         is_connecting: boolean;

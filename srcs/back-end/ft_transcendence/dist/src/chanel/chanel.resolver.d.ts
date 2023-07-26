@@ -7,40 +7,44 @@ export declare class ChanelResolver {
     private readonly chanelService;
     private readonly messagesResolver;
     constructor(chanelService: ChanelService, messagesResolver: MessagesResolver);
-    createChanel(createChanelInput: CreateChanelInput): Promise<import("@prisma/client/runtime").GetResult<{
+    createChanel(createChanelInput: CreateChanelInput): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
-    }, unknown> & {}>;
-    findOne(id: number): Promise<import("@prisma/client/runtime").GetResult<{
+        private: boolean;
+    }, unknown> & {}) | Error>;
+    findOne(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
+        private: boolean;
     }, unknown> & {}>;
     updateChanel(_updateArgs: UpdateChanelInput): Promise<Chanel>;
-    removeChanel(id: number): Promise<import("@prisma/client/runtime").GetResult<{
+    removeChanel(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
+        private: boolean;
     }, unknown> & {}>;
-    myChanels(user_id: number): Promise<(import("@prisma/client/runtime").GetResult<{
+    myChanels(user_id: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
         chanel_size: number;
         max_users: number;
         logo: string;
+        private: boolean;
     }, unknown> & {})[]>;
-    messages(chanel: Chanel): Promise<(import("@prisma/client/runtime").GetResult<{
+    messages(chanel: Chanel): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         sender_id: number;
         channel_id: number;

@@ -35,6 +35,7 @@ export interface IPropsChanel {
 	handleChanelRefetch: () => void;
 	user: User;
 	handleChange: (element: Chanel) => void;
+	handleAddChanel: () => void;
 }
 
 export interface IRequestProps {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { CHANELS_LIST } from "../graphql/QueryChanel";
-import { UserChanels } from "../../interfaces/interfaces";
+import { CHANELS_LIST } from "../../graphql/QueryChanel";
+import { UserChanels } from "../../../interfaces/interfaces";
 
 export interface TMP {
 	chanel_id: number;

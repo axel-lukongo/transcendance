@@ -1,13 +1,12 @@
 import {useEffect, useState, useContext} from 'react';
 import {gql, useQuery} from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
-import CreateMsg from './micro-components/createMessage'
-import './css/messages.css';
 import {Link} from 'react-router-dom';
-import ChatBox from './micro-components/ChatBox';
 import { Chanel } from '../interfaces/interfaces';
-import ListChanel from './micro-components/ListChanel';
-import HeaderChanel from './micro-components/HeaderChanel';
+import PrivateChanels from './micro-components/PrivateChanels';
+import PublicChanel from './micro-components/PublicChanel';
+
+import './css/messages.css';
 
 //je me connect a mon server via le protocol websocket
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -48,9 +47,11 @@ const Message = () => {
 		logo: "",
 	});
 
+	const [side_bar_focus, setSideBarFocus] = useState(1);
+
 	const [refetchChat, setRefetchChat] = useState(false);
 
-	const handleChange = (element: Chanel) => {
+	const handleChange = async (element: Chanel) => {
 
 		setChanelFocus({
 			id: element.id.toString(),
@@ -61,8 +62,63 @@ const Message = () => {
 		});
 	}
 
+	const handleChangeOnglet = (id: number) => {
+		try {
+			if (id < 1 || id > 4)
+				throw new Error("Id should be between 1 & 4");
+			setSideBarFocus(id);
+		}
+		catch (e) {
+			console.log("Error Nav: ", e);
+		}
+	}
+
 	const handleRefetch = () => {
 		setRefetchChat(prevValue => !prevValue);
+	}
+
+	const renderSwitch = (id: number) => {
+		switch(id) {
+			case 1: {
+				return (
+					<div>
+						{/* Direct Message her */}
+					</div>
+				);
+				break;
+			}
+			case 2: {
+				return (
+					<PrivateChanels 
+						refetchChat={refetchChat}
+						handleChange={handleChange}
+						handleRefetch={handleRefetch}
+						user={user}
+						chanel_focus={chanel_focus}
+					/>
+				);
+					break;
+			}
+			case 3: {
+				return (
+					<div>
+						<PublicChanel/>
+					</div>
+				);
+			break;
+			}
+			case 4: {
+				return (
+					<div>
+						{/* Add request her */}
+					</div>
+				);
+				break;
+			}
+			default: {
+				break;
+			}
+		}
 	}
 
 	  return (
@@ -74,31 +130,20 @@ const Message = () => {
 
 		  <div className="row clearfix">
 			<div className="col-lg-12">
-			  <div className="screen-box chat-app">
-				<ListChanel 
-					refetchChanels={refetchChat}
-					handleChanelRefetch={handleRefetch}
-					user={user}
-					handleChange={handleChange}
-				/>
-				<div className="chat"> 
-				  <HeaderChanel />
-				  <div className="chat-history">
-					<ChatBox chan={chanel_focus} />
-				  </div>
-				  <div className="chat-message ">
-
-					<div className="input-group mb-0">
-						<CreateMsg />
-					</div>
-
-
-				  </div>
+				<div>
+					<button onClick={() => handleChangeOnglet(1)}>1</button>
+					<button onClick={() => handleChangeOnglet(2)}>2</button>
+					<button onClick={() => handleChangeOnglet(3)}>3</button>
+					<button onClick={() => handleChangeOnglet(4)}>4</button>
 				</div>
+
+			  <div className="screen-box chat-app">
+				{ renderSwitch(side_bar_focus) }
 			  </div>
+			  
 			 </div> 
 		  </div>
-		// </div>
+		</div>
 	  );
 };
 

@@ -11,9 +11,25 @@ export class ChanelService {
               private readonly user: UsersService) {}
 
   async create(createChanelInput: CreateChanelInput) {
-    return this.prisma.chanel.create({
-      data: createChanelInput
-	  })
+    try{
+
+      let chanelRes = await this.prisma.chanel.create({
+        data: createChanelInput,
+      })
+
+      let user_chanel = await this.prisma.users_Chanels.create({
+        data: {
+          chanel_id: chanelRes.id,
+          user_id: chanelRes.owner_id,
+          pending: false
+        }
+      })
+      
+      return chanelRes;
+    }
+    catch (e){
+      return new Error("Error during chanel creation: " +  e);
+    }
   }
 
   async findOne(id: number) {

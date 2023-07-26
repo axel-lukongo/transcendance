@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import {  useQuery } from "@apollo/client";
-import { IPropsChanel } from "../../interfaces/interfaces";
-import { UserChanels } from "../../interfaces/interfaces";
-import QuiteChanel from "./QuitChanel";
-import { CHANELS_LIST } from '../graphql/QueryChanel'
+import { IPropsChanel } from "../../../interfaces/interfaces";
+import { UserChanels } from "../../../interfaces/interfaces";
+import QuiteChanel from "../buttons/QuitChanel";
+import { CHANELS_LIST } from '../../graphql/QueryChanel'
+import CardChanel from "../Box/CardChanel";
 
-export default function ChanelList({refetchChanels, handleChanelRefetch, user, handleChange}: IPropsChanel) {
+export default function ChanelList({refetchChanels, handleChanelRefetch, user, handleChange, handleAddChanel}: IPropsChanel) {
 
 	const {data, loading, refetch, error} = useQuery(CHANELS_LIST, {
 		variables: {
@@ -26,26 +27,22 @@ export default function ChanelList({refetchChanels, handleChanelRefetch, user, h
 	if (!data)
 		return (<div>nothing to see her</div>)
 
-	if (data)
-		console.log(data);
+	const handleClic = () => {
+		handleAddChanel();
+	}
 
 	return (
 		
 		<div id="plist" className="people-list">
-			<h3>My Chanels</h3>{
+			<h3>Private Chanels<button onClick={handleClic}>+</button></h3>
+			{
 				data.myChanels.map((chanel: UserChanels, index: number) => {
 					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`;
 					return (<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}>
-					<li >
-						{/* <CardChanel /> */}
-						<div><b>{chanel.chanels.chanel_name}</b></div>
-						<button onClick={() => handleChange(chanel.chanels)}>her</button>
-						<QuiteChanel
-							label="Quite"
-							element={chanel}
-							handleChanelRefecth={handleChanelRefetch}
-							/>
-					</li>
+						<CardChanel 
+							chanel={chanel}
+							handleChange={handleChange}
+						/>
 				</ul>);
 			})
 		}</div>
