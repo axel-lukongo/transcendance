@@ -3,7 +3,7 @@ import {gql, useQuery} from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import {Link} from 'react-router-dom';
 import { Chanel } from '../interfaces/interfaces';
-import PrivateChanels from './micro-components/PrivateChanels';
+import Chanels from './micro-components/Chanels';
 import PublicChanel from './micro-components/PublicChanel';
 
 import './css/messages.css';
@@ -89,21 +89,27 @@ const Message = () => {
 			}
 			case 2: {
 				return (
-					<PrivateChanels 
+					<Chanels 
 						refetchChat={refetchChat}
 						handleChange={handleChange}
 						handleRefetch={handleRefetch}
 						user={user}
 						chanel_focus={chanel_focus}
+						private_chan={true}
 					/>
 				);
 					break;
 			}
 			case 3: {
 				return (
-					<div>
-						<PublicChanel/>
-					</div>
+					<Chanels 
+						refetchChat={refetchChat}
+						handleChange={handleChange}
+						handleRefetch={handleRefetch}
+						user={user}
+						chanel_focus={chanel_focus}
+						private_chan={false}
+					/>
 				);
 			break;
 			}

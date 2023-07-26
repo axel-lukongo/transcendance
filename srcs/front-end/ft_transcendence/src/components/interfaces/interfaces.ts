@@ -36,6 +36,7 @@ export interface IPropsChanel {
 	user: User;
 	handleChange: (element: Chanel) => void;
 	handleAddChanel: () => void;
+	private_chan: boolean;
 }
 
 export interface IRequestProps {

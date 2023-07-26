@@ -28,7 +28,7 @@ export default function ListAddContact({ chanel_id, user_id }: TMP) {
 			return (
 				<div>
 				{
-					data.myChanels.map((element: UserChanels) => {
+					data.myPrivChanels.map((element: UserChanels) => {
 						const composite_key = `${element.user_id}_${element.chanels.id}`;
 						<ul key={composite_key}>
 							<div> {element.chanels.chanel_name}</div>

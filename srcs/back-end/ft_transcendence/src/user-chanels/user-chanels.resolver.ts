@@ -5,6 +5,7 @@ import { UserChanelsService } from './user-chanels.service';
 import { AddUserChanel } from './dto/add-user-chanel.input';
 import { Chanel } from 'src/chanel/entities/chanel.entity';
 import {  UpdateChanelUserInput } from './dto/update-chanel-user.input';
+import { type } from 'os';
 
 @Resolver(() => UsersChanels)
 export class UserChanelsResolver {
@@ -33,8 +34,9 @@ export class UserChanelsResolver {
 	}
 
 	@Query(() => [UsersChanels], { name: 'myChanels' })
-	findMyChanels(@Args("user_id", {type: () => Int}) user_id: number) {
-	  return this.userChanelService.findMyChanels(user_id);
+	findMyChanels(@Args("user_id", {type: () => Int}) user_id: number,
+	@Args("private_chan", {type: () => Boolean}) private_chan: boolean) {
+	  return this.userChanelService.findMyChanels(user_id, private_chan);
 	}
 
 	@Mutation(() => UsersChanels, {name: "deleteChanelUser"})

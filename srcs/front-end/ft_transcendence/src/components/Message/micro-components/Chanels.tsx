@@ -15,6 +15,7 @@ export interface IPrivateMessageProps {
 	user: User;
 	handleChange: (element: Chanel) => void;
 	chanel_focus: channelfocus;
+	private_chan: boolean;
 }
 
 export interface channelfocus  {
@@ -25,11 +26,12 @@ export interface channelfocus  {
 	logo: string,
 }
 
-export default function PrivateChanels({ refetchChat,
+export default function Chanels({ refetchChat,
 										handleRefetch,
 										user,
 										handleChange,
-										chanel_focus }:
+										chanel_focus,
+										private_chan }:
 										IPrivateMessageProps) {
 
 	const [addChanel, setAddChanel] = useState(false);
@@ -83,6 +85,7 @@ export default function PrivateChanels({ refetchChat,
 				user={user}
 				handleChange={handleChange}
 				handleAddChanel={handleAddChanel}
+				private_chan={private_chan}
 			/>
 			{ renderSwitchAddChanel(addChanel) }
 		</div>

@@ -69,7 +69,7 @@ type Query {
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
-  myChanels(user_id: Int!): [UsersChanels!]!
+  myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
 }
 
 type Mutation {

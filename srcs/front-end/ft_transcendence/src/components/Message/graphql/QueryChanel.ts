@@ -11,8 +11,8 @@ export const USER_CHANEL_LIST = gql`query UserChanelList($input: Int!) {
 	}
 }`
 
-export const CHANELS_LIST = gql`query GetChanelList($input: Int!) {
-	myChanels(user_id: $input) {
+export const CHANELS_LIST = gql`query GetChanelList($input: Int!, $private_chan: Boolean!) {
+	myChanels(user_id: $input, private_chan: $private_chan) {
 		pending
 		user_id
 		chanels {
