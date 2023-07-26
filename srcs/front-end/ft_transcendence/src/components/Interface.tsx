@@ -12,6 +12,7 @@ export interface Player {
   userId: number;
   positionX: number;
   positionY: number;
+  waitingRoomId: number;
 }
 
 export interface OtherPlayer {
@@ -19,4 +20,5 @@ export interface OtherPlayer {
   userId: number;
   positionX: number;
   positionY: number;
+  waitingRoomId: number;
 }

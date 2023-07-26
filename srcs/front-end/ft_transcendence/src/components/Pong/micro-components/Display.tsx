@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useState  } from 'react';
+import React, { FC, useEffect  } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { Player, OtherPlayer } from '../../Interface';
-import { UPDATE_PLAYER, PLAYER_UPDATED } from '../graphql/Mutation';
+import { UPDATE_PLAYER} from '../graphql/Mutation';
+import { PLAYER_UPDATED_SUBSCRIPTION } from '../graphql/Query';
 import '../css/Pong.css'
 import { useMutation } from '@apollo/client';
 
@@ -10,11 +11,12 @@ const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
 interface DisplayProps {
   player: Player | null;
+  otherPlayer: OtherPlayer | null;
   setPlayer: (player: Player | null) => void;
+  setOtherPlayer: (player: OtherPlayer | null) => void;
 }
-export const Display: FC<DisplayProps> = ({ player, setPlayer }) => {
+export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setOtherPlayer  }) => {
 
-  const [otherPlayer, setOtherPlayer] =useState<OtherPlayer | null>(null);
   const [updatePlayer] = useMutation(UPDATE_PLAYER);
     
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -38,33 +40,29 @@ export const Display: FC<DisplayProps> = ({ player, setPlayer }) => {
       positionY: updatedPositionY,
     };
     setPlayer(updatedPlayer);
+    updatePlayer({
+      variables: {
+        input: {
+          id: player.id,
+          userId: player.userId,
+          positionY: player.positionY,
+          positionX: player.positionX,
+          waitingRoomId: player.waitingRoomId
+        },
+      },
+    })
+      .then((response) => {
+        console.log('player has been updated:', response.data.updatePlayer);
+      })
+      .catch((error) => {
+        console.error('Error updating player:', error);
+      });
     sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
   }
 
   useEffect(() => {
-    if (player) {
-      updatePlayer({
-        variables: {
-          input: {
-            id: player.id,
-            userId: player.userId,
-            positionY: player.positionY,
-            positionX: player.positionX
-          },
-        },
-      })
-        .then((response) => {
-          console.log('player has been updated:', response.data.updatePlayer);
-        })
-        .catch((error) => {
-          console.error('Error updating player:', error);
-        });
-    }
-  }, [player, updatePlayer]);
-
-  useEffect(() => {
-    if (otherPlayer?.id) {
-      const subscription = wsClient.request({ query: PLAYER_UPDATED, variables: { id: otherPlayer?.id } }).subscribe({
+    if (otherPlayer) {
+      const subscription = wsClient.request({ query: PLAYER_UPDATED_SUBSCRIPTION, }).subscribe({
         next(response) {
           if (response.data) {
             const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdated as OtherPlayer;
@@ -81,7 +79,7 @@ export const Display: FC<DisplayProps> = ({ player, setPlayer }) => {
         subscription.unsubscribe();
       };
     }
-  }, [otherPlayer?.id]);
+  }, [otherPlayer, setOtherPlayer]);
   
   return (
       <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>

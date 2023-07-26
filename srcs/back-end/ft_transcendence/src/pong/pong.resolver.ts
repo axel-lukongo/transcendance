@@ -13,14 +13,19 @@ export class PongResolver {
     return this.pongService.create(createPongInput);
   }
 
-  @Query(() => [Pong], { name: 'pong' })
+  @Query(() => [Pong], { name: 'Pongs' })
   findAll() {
     return this.pongService.findAll();
   }
 
-  @Query(() => Pong, { name: 'pong' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.pongService.findOne(id);
+  @Query(() => Pong, { name: 'Pong' })
+  findUnique(@Args('id', { type: () => Int }) id: number) {
+    return this.pongService.findUnique(id);
+  }
+
+  @Query(() => Pong, { name: 'findMyOpponent' })
+  findMyOpponent(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.findMyOpponent(userId);
   }
 
   @Mutation(() => Pong)

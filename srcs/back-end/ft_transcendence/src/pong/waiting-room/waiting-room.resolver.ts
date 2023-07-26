@@ -26,11 +26,10 @@ export class WaitingRoomResolver {
     return this.waitingRoomService.findUnique(id);
   }
 
-  @ResolveField(() =>[Player])
-    async waitingList(@Parent() waitingRoon: WaitingRoom) {
-      return this.playerResolver.findWaitingRoomPlayer(waitingRoon);
-    }
-
+  // @ResolveField(() =>[Player])
+  //   async waitingList(@Parent() waitingRoon: WaitingRoom) {
+  //     return this.playerResolver.findWaitingRoomPlayer(waitingRoon.id);
+  //   }
 
 
   // @Mutation(() => WaitingRoom)

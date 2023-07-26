@@ -20,7 +20,7 @@ export class UpdatePlayerInput extends PartialType(Player) {
 	positionY?:number
 
 	@Field(() => Int)
-	waitingRoomId: number
+	waitingRoomId?: number
 }
 
 

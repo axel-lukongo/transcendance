@@ -9,56 +9,78 @@ import { WaitingRoom } from '@prisma/client';
 
 const pubSub = new PubSub();
 const PLAYER_UPDATED_EVENT = 'playerUp';
+const PLAYER_CREATE_EVENT = 'playercCreated';
 
 @Resolver(() => Player)
 export class PlayerResolver {
   constructor(private readonly playerService: PlayerService) {}
 
-  @Mutation(() => Player)
-  createPlayer(@Args('createPlayerInput') createPlayerInput: CreatePlayerInput) {
-    return this.playerService.create(createPlayerInput);
-  }
-
+  
   @Query(() => [Player], { name: 'Players' })
   findAllPlayers() {
     return this.playerService.findAll();
   }
-
+  
   @Query(() => Player, { name: 'isPlayerInGame' })
   isPlayerInGame(@Args('id', { type: () => Int }) id: number) {
     return this.playerService.findUnique(id);
   }
-
-  @Mutation(() => Player)
-  async updatePlayer(@Args('updatePlayerInput') updatePlayerInput: UpdatePlayerInput) {
-    const newPlayer = await this.playerService.update(updatePlayerInput.id, updatePlayerInput);
-      
-    pubSub.publish(PLAYER_UPDATED_EVENT, {
-      playerUpdated: newPlayer,
-    });
-    return newPlayer;
-  }
-
+  
+  
   @Mutation(() => Player)
   removePlayer(@Args('id', { type: () => Int }) id: number) {
     return this.playerService.remove(id);
   }
+  
 
-  @Subscription(() => Player, {
+  /* WHEN A PLAYER IS CREATED.
+    WE RETURN IN THE WS ALL PLAYER IN THE FIRST WAINTINGROOM  */
+  @Query(() => [Player])
+  async findWaitingRoomPlayer(@Args('id', { type: () => Int }) id: number) {
+    return this.playerService.findWaitingRoomPlayers(id);
+  }
+
+  @Mutation(() => Player)
+  async createPlayer(@Args('createPlayerInput') createPlayerInput: CreatePlayerInput) {
+    const newPlayer =  this.playerService.create(createPlayerInput);
+
+    pubSub.publish(PLAYER_CREATE_EVENT, {
+      listPlayerSubscription : this.findWaitingRoomPlayer((await newPlayer).waitingRoomId)
+    })
+    return newPlayer;
+  }
+  @Subscription(() => [Player],  {
     filter: async (payload, variables) => {
-      const resolvedPayload = await payload.playerUpdated;
+      const resolvedPayload = await payload.listPlayerSubscription;
       return resolvedPayload.id === variables.id;
     }
   })
+  listPlayerSubscription() {
+    return pubSub.asyncIterator(PLAYER_CREATE_EVENT);
+  }
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
-  playerUpdated(@Args('id', { type: () => Int }) id: number) {
+
+  @Mutation(() => Player)
+   updatePlayer(@Args('updatePlayerInput') updatePlayerInput: UpdatePlayerInput) {
+    const newPlayer =  this.playerService.update(updatePlayerInput.id, updatePlayerInput);
+      
+    pubSub.publish(PLAYER_UPDATED_EVENT, {
+      playerUpdatedSubscription: newPlayer,
+    });
+    return newPlayer;
+  }
+  @Subscription(() => Player, {
+    filter: async (payload, variables) => {
+      const resolvedPayload = await payload.playerUpdatedSubscription;
+      return resolvedPayload.id === variables.id;
+    }
+  })
+  playerUpdatedSubscription() {
     return  pubSub.asyncIterator(PLAYER_UPDATED_EVENT);
   }
 
-  @Query(() => [Player])
-    async findWaitingRoomPlayer(waitingRoom: WaitingRoom) {
-      return this.playerService.findWaitingRoomPlayer(waitingRoom.id)
-    }
+
 }
 
 

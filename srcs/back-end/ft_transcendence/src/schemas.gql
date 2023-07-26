@@ -83,10 +83,12 @@ type Query {
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
-  pong(id: Int!): Pong!
+  Pongs: [Pong!]!
+  Pong(id: Int!): Pong!
+  findMyOpponent(userId: Int!): Pong!
   Players: [Player!]!
   isPlayerInGame(id: Int!): Player!
-  findWaitingRoomPlayer: [Player!]!
+  findWaitingRoomPlayer(id: Int!): [Player!]!
   findWaitingRooms: [WaitingRoom!]!
   findWaitingRoom(id: Int!): WaitingRoom!
 }
@@ -108,9 +110,9 @@ type Mutation {
   createPong(createPongInput: CreatePongInput!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
   removePong(id: Int!): Pong!
+  removePlayer(id: Int!): Player!
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!
   updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
-  removePlayer(id: Int!): Player!
   createWaitingRoom: WaitingRoom!
   removeWaitingRoom(id: Int!): WaitingRoom!
 }
@@ -206,5 +208,6 @@ input UpdatePlayerInput {
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
-  playerUpdated(id: Int!): Player!
+  listPlayerSubscription: [Player!]!
+  playerUpdatedSubscription: Player!
 }

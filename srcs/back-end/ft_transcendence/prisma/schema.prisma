@@ -85,13 +85,13 @@ model Player {
   userId        Int @unique
   positionX     Float
   positionY     Float
-  waitingRoomId Int  
+  waitingRoomId Int
   waitingRoom   WaitingRoom? @relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
 
 model WaitingRoom {
 	id            Int @id @default(autoincrement()) 
-	waitingList   Player[] @relation("PlayerWaitingList")    
+	waitingList   Player[] @relation("PlayerWaitingList")
 }
 
 
