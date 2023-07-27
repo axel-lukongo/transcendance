@@ -86,6 +86,7 @@ model Player {
   positionX     Float
   positionY     Float
   waitingRoomId Int
+  opponentPlayerId Int @default(0)
   waitingRoom   WaitingRoom? @relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
 

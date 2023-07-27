@@ -8,6 +8,7 @@ export const CREATE_PLAYER = gql`
       positionX
       positionY
       waitingRoomId
+      opponentPlayerId
     }
   }
 `;
@@ -16,8 +17,11 @@ export const CREATE_PONG = gql`
   mutation CreatePong($input: CreatePongInput!) {
     createPong(createPongInput: $input) {
       id
-      userId1
-      userId2
+      userId
+      positionX
+      positionY
+      waitingRoomId
+      opponentPlayerId
     }
   }
 `;
@@ -30,6 +34,7 @@ export const UPDATE_PLAYER = gql `
       positionX
       positionY
       waitingRoomId
+      opponentPlayerId
     }
   }
 `;

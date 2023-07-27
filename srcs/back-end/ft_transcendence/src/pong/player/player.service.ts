@@ -3,6 +3,7 @@ import { CreatePlayerInput, CreatePositionBallInput } from './dto/create-player.
 import { UpdatePlayerInput, UpdatePositionBallInput } from './dto/update-player.input';
 
 import { PrismaService } from 'prisma/prisma.service';
+import { Player } from './entities/player.entity';
 
 @Injectable()
 export class PlayerService {
@@ -23,9 +24,41 @@ export class PlayerService {
    	findUnique(id: number) {
 		return this.prisma.player.findUnique({
 		where: {id },
-		include : {waitingRoom: true}
+		// include : {waitingRoom: true}
 	  });
 	}
+
+	async findMyGame(userId: number) {
+		try {
+		  // Récupérer toutes les instances de la table Pong impliquant l'utilisateur
+		  const pong =  this.prisma.pong.findFirst({
+			where: {
+				userId2: userId,
+			},
+			// orderBy: {
+			//   Versus_date: 'desc', // Trier par ordre décroissant de versusDate
+			// },
+		  });
+	  
+		  // Si la liste est vide, cela signifie qu'il n'y a pas d'instances de Pong pour l'utilisateur
+		  if (!pong) {
+			console.log('rien')
+			return null;
+		  }
+	  
+		  // Récupérer l'ID de l'autre joueur dans la dernière partie (Pong)
+		  const otherPlayerId = (await pong).userId1 === userId ? 
+		  	(await pong).userId2 
+			: 
+			(await pong).userId1;
+	  
+		  // Retourner le joueur correspondant à l'ID de l'autre joueur
+		  return this.findUnique(otherPlayerId);
+		} catch (error) {
+		  console.error('Error finding opponent:', error);
+		  throw error;
+		}
+	  }
 
   	update(id: number, updatePlayerInput: UpdatePlayerInput) {
 		return this.prisma.player.update({

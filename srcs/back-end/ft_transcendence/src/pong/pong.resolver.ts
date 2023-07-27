@@ -3,12 +3,13 @@ import { PongService } from './pong.service';
 import { Pong } from './entities/pong.entity';
 import { CreatePongInput } from './dto/create-pong.input';
 import { UpdatePongInput } from './dto/update-pong.input';
+import { Player } from './player/entities/player.entity';
 
 @Resolver(() => Pong)
 export class PongResolver {
   constructor(private readonly pongService: PongService) {}
 
-  @Mutation(() => Pong)
+  @Mutation(() => [Player])
   createPong(@Args('createPongInput') createPongInput: CreatePongInput) {
     return this.pongService.create(createPongInput);
   }
@@ -23,10 +24,6 @@ export class PongResolver {
     return this.pongService.findUnique(id);
   }
 
-  @Query(() => Pong, { name: 'findMyOpponent' })
-  findMyOpponent(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.findMyOpponent(userId);
-  }
 
   @Mutation(() => Pong)
   updatePong(@Args('updatePongInput') updatePongInput: UpdatePongInput) {

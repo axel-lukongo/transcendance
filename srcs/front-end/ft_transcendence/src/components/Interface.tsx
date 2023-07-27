@@ -13,6 +13,7 @@ export interface Player {
   positionX: number;
   positionY: number;
   waitingRoomId: number;
+  opponentPlayerId :number;
 }
 
 export interface OtherPlayer {
@@ -21,4 +22,5 @@ export interface OtherPlayer {
   positionX: number;
   positionY: number;
   waitingRoomId: number;
+  opponentPlayerId : number;
 }

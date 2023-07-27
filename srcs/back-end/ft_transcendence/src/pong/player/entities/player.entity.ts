@@ -1,6 +1,4 @@
 import { ObjectType, Field, Int, Float} from '@nestjs/graphql';
-import { WaitingRoom } from '@prisma/client';
-
 
 @ObjectType()
 export class Player {
@@ -19,7 +17,9 @@ export class Player {
 
 	@Field(() => Int)
 	waitingRoomId: number
- 
+
+	@Field(() => Int)
+	opponentPlayerId: number
 }
 
 

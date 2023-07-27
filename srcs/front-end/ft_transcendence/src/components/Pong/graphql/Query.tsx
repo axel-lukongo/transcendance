@@ -1,20 +1,21 @@
 import {gql} from '@apollo/client';
 
-export const IS_PLAYER_IN_GAME = gql`
-  query IsPlayerInGame($id: Int!) {
-    isPlayerInGame(id: $id) {
+export const FIND_PLAYER = gql`
+  query FindPlayer($id: Int!) {
+    findPlayer(id: $id) {
       id
       userId
       positionX
       positionY
       waitingRoomId
+      opponentPlayerId
     }
   }
 `;
 
-export const FIND_MY_OPPONENT = gql`
-  query FindMyOpponent($userId: Int!) {
-    findMyOpponent(userId: $userId) {
+export const FIND_MY_GAME = gql`
+  query FindMyGame($userId: Int!) {
+    findMyGame(userId: $userId) {
       id
       userId
       positionX
@@ -25,13 +26,14 @@ export const FIND_MY_OPPONENT = gql`
 `;
 
 export const PLAYER_UPDATED_SUBSCRIPTION = gql`
-  subscription PlayerUpdated {
-    playerUpdated {
+  subscription PlayerUpdatedSubscription($id: Int!) {
+    playerUpdatedSubscription(id: $id) {
       id
       userId
       positionX
       positionY
       waitingRoomId
+      opponentPlayerId
     }
   }
 `;

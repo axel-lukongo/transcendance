@@ -20,12 +20,17 @@ export class PlayerResolver {
   findAllPlayers() {
     return this.playerService.findAll();
   }
+
   
-  @Query(() => Player, { name: 'isPlayerInGame' })
-  isPlayerInGame(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Player, { name: 'findPlayer' })
+  findPlayer(@Args('id', { type: () => Int }) id: number) {
     return this.playerService.findUnique(id);
   }
-  
+
+  @Query(() => [Player], { name: 'findMyGame' })
+  findMyGame(@Args('userId', { type: () => Int }) userId: number) {
+    return this.playerService.findMyGame(userId);
+  }
   
   @Mutation(() => Player)
   removePlayer(@Args('id', { type: () => Int }) id: number) {
@@ -76,14 +81,11 @@ export class PlayerResolver {
       return resolvedPayload.id === variables.id;
     }
   })
-  playerUpdatedSubscription() {
+  playerUpdatedSubscription(@Args('id', { type: () => Int }) id: number) {
     return  pubSub.asyncIterator(PLAYER_UPDATED_EVENT);
   }
 
-
 }
-
-
 
 @Resolver(() => PositionBall)
 export class PositionBallResolver {

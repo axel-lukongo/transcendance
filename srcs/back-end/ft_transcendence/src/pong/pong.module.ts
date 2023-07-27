@@ -5,9 +5,10 @@ import { PlayerModule } from './player/player.module';
 import { PrismaService } from 'prisma/prisma.service';
 import { WaitingRoomModule } from './waiting-room/waiting-room.module';
 import { PlayerService } from './player/player.service';
+import { PlayerResolver } from './player/player.resolver';
 
 @Module({
-  providers: [PongResolver, PongService, PlayerService, PrismaService],
+  providers: [PongResolver, PongService, PlayerResolver, PlayerService, PrismaService],
   imports: [PlayerModule, WaitingRoomModule]
 })
 export class PongModule {}

@@ -40,6 +40,8 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       positionY: updatedPositionY,
     };
     setPlayer(updatedPlayer);
+    sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
+    console.log("player is update:", player);
     updatePlayer({
       variables: {
         input: {
@@ -47,7 +49,8 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
           userId: player.userId,
           positionY: player.positionY,
           positionX: player.positionX,
-          waitingRoomId: player.waitingRoomId
+          waitingRoomId: player.waitingRoomId,
+          opponentPlayerId: player.opponentPlayerId
         },
       },
     })
@@ -62,11 +65,12 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
 
   useEffect(() => {
     if (otherPlayer) {
-      const subscription = wsClient.request({ query: PLAYER_UPDATED_SUBSCRIPTION, }).subscribe({
+      const subscription = wsClient.request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: {id : otherPlayer.id} }).subscribe({
         next(response) {
           if (response.data) {
-            const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdated as OtherPlayer;
+            const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdatedSubscription as OtherPlayer;
             setOtherPlayer(updatedOtherPlayer);
+            sessionStorage.setItem('otherPlayer', JSON.stringify(updatedOtherPlayer));
           }
         },
         error(error) {

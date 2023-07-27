@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { useLazyQuery, useMutation, useQuery} from '@apollo/client';
 import { OtherPlayer, Player } from '../../Interface';
 import { CREATE_PLAYER, CREATE_PONG } from '../graphql/Mutation';
-import {FIND_MY_OPPONENT, IS_PLAYER_IN_GAME, LIST_PLAYER_SUBCRIPTION } from '../graphql/Query';
+import {PLAYER_UPDATED_SUBSCRIPTION, FIND_PLAYER, LIST_PLAYER_SUBCRIPTION } from '../graphql/Query';
 
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -12,29 +12,29 @@ const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
 interface MatchMakingProps {
   player: Player | null;
+  otherPlayer: OtherPlayer | null;
   setPlayer: (player: Player | null) => void;
   setOtherPlayer: (player: OtherPlayer | null) => void;
 }
 
-export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer  }) => {
+export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer, otherPlayer  }) => {
 
   const userFromStorageString = sessionStorage.getItem('user');
   const userFromStorage = userFromStorageString ? JSON.parse(userFromStorageString) : null;
   const userId = userFromStorage?.id;
 
-  const { data: dataIsPlayerInGame, error: errorIsPlayerInGame } = useQuery(IS_PLAYER_IN_GAME, {
+  const { data: dataIsPlayerInGame, error: errorIsPlayerInGame } = useQuery(FIND_PLAYER, {
     variables: { id: userId },
     skip: !userId,
   });
 
-  const [actif,setActif]= useState(false);
-
   const [createPlayer] = useMutation(CREATE_PLAYER);
   const [createPong] = useMutation(CREATE_PONG);
-  const [findMyOpponent] = useLazyQuery(FIND_MY_OPPONENT);
+  const [findPlayer] = useLazyQuery(FIND_PLAYER);
+  // const [findMyGame] = useLazyQuery(FIND_MY_GAME);
 
   useEffect(() => {
-    if (errorIsPlayerInGame) {
+    if (errorIsPlayerInGame && !player) {
       createPlayer({
         variables: {
           input: {
@@ -49,20 +49,22 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
           if (response?.data?.createPlayer) {
             console.log('Player created:', response.data.createPlayer);
             setPlayer(response.data.createPlayer);
+            sessionStorage.setItem('player', JSON.stringify(response.data.createPlayer));
           }
         })
         .catch((error) => {
           console.error('Error creating player:', error);
         });
     }
-  }, [errorIsPlayerInGame, createPlayer, userId, setPlayer]);
+  }, [errorIsPlayerInGame, createPlayer, userId, player, setPlayer]);
 
   useEffect(() => {
     if (dataIsPlayerInGame?.isPlayerInGame) {
       setPlayer(dataIsPlayerInGame.isPlayerInGame);
+      sessionStorage.setItem('player', JSON.stringify(dataIsPlayerInGame.isPlayerInGame));
       console.log('Player found:', dataIsPlayerInGame.isPlayerInGame);
     }
-  }, [dataIsPlayerInGame, setPlayer]);
+  }, [dataIsPlayerInGame, player, setPlayer]);
 
   useEffect(() => {
     if (player) {
@@ -70,21 +72,24 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         next(response) {
           if (response.data) {
             const players = response.data.listPlayerSubscription;
-            // const otherPlayer = players[1];
             if (Array.isArray(players) && players.length > 1) {
-              setActif(true);
               createPong({
                 variables: {
                   input: {
-                    userId1: player.id,
-                    userId2: players[1].id,
+                    userId1: players[0].userId,
+                    userId2: players[1].userId,
+                    playerId1: players[0].id,
+                    playerId2: players[1].id,
                   },
                 },
               })
-                .then((response) => {
-                  console.log('Pong game created:', response.data);
-                  setOtherPlayer(players[1]);
-                })
+              .then((response) => {
+                console.log('Pong game created:', response.data);
+                setPlayer(response.data.createPong[0]);
+                setOtherPlayer(response.data.createPong[1]);
+                sessionStorage.setItem('player', JSON.stringify(response.data.createPong[0]));
+                sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.createPong[1]));
+              })
                 .catch((error) => {
                   console.error('Error creating Pong:', error);
                 });
@@ -100,27 +105,42 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         subscription.unsubscribe();
       };
     }
-  }, [player, createPong, setOtherPlayer, findMyOpponent]);
+  }, [player, createPong, setOtherPlayer, setPlayer]);
 
   useEffect(() => {
-    if (actif === false && player)
-    {
-      console.log(actif);
-      findMyOpponent({
-        variables: {
-          userId: player.id
-        }
-        })
-          .then((response) => {
-            console.log('Other Player found:', response.data);
-            setOtherPlayer(response.data.findMyOpponent);
-        })
-          .catch((error) => {
-          console.error('Error finding Pong:', error);
+    if (!otherPlayer) {
+      const subscription = wsClient.request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: {id :player?.id} }).subscribe({
+        next(response) {
+          if (response.data) {
+            const updatedPlayer: Player = response.data.playerUpdatedSubscription as Player;
+            console.log('otherPlayer in ws:', updatedPlayer);
+            sessionStorage.setItem('otherPlayer', JSON.stringify(updatedPlayer));
+            setPlayer(updatedPlayer);
+            findPlayer({
+              variables: {
+                id : updatedPlayer.opponentPlayerId
+              }
+            })
+            .then((response) => {
+              console.log('otherPlayer is set', response.data.findPlayer);
+              setOtherPlayer(response.data.findPlayer);
+              sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.findPlayer));
+            })
+              .catch((error) => {
+                console.error('Error seted otherPlayer:', error);
+              });
+          } 
+        },
+        error(error) {
+          console.error('WebSocket error:', error);
+        },
       });
+      // Fonction de retour pour annuler l'abonnement lors du démontage du composant
+      return () => {
+        subscription.unsubscribe();
+      };
     }
-  }, [actif, player, setOtherPlayer, findMyOpponent]);
-
+  }, [player, otherPlayer, setOtherPlayer, findPlayer ]);
   
   return (
     <div>
@@ -128,21 +148,3 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
     </div>
   )
 };
-
-  // findOpponent(response.data.createPlayer);
-
-  // const findOpponent = (player : Player) => {
-  //   const waitingRoomId = 1;
-
-  //   const { data, error } = useQuery(SHOW_WAITING_LIST, {
-  //     variables: { id: waitingRoomId },
-  //   });
-
-  //   if (error) {
-  //     console.error('Error fetching waiting list:', error);
-  //     return;
-  //   }
-
-  // }
-// sessionStorage.setItem('player', JSON.stringify(dataIsPlayerInGame.isPlayerInGame));
-// setPlayer(dataIsPlayerInGame.isPlayerInGame);

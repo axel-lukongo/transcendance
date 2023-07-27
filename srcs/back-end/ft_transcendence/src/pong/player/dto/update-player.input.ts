@@ -21,6 +21,9 @@ export class UpdatePlayerInput extends PartialType(Player) {
 
 	@Field(() => Int)
 	waitingRoomId?: number
+
+	@Field(() => Int)
+	opponentPlayerId?: number
 }
 
 
