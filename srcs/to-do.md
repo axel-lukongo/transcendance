@@ -3,17 +3,14 @@
 <!-- CHANEL -->
 ## | CHANEL
 
-- Create the page for the form crea chanel
 - Make the header a link for profil / chanel page
 - settings on chanel
 - ban on user
 - Rights on user <!-- Optionel -->
-- Create onglets for Public / Add request / Private / Direct Message
 
 ### | PUBLIC CHANEL
 
-- put a boolean for public / private
-	=> set it on crea form
+- make toggle button for private
 
 ### | PRIVATE CHANEL
 
@@ -30,6 +27,8 @@
 - Rajouter un boolean pour si c'est un direct message
 
 ### | ADD REQUEST CHANEL
+
+- Faire le recap des demandes envoyes
 
 ### | PROFILE PAGE
 

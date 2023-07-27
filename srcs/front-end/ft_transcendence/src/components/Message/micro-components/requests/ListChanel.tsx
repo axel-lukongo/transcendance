@@ -6,28 +6,26 @@ import QuiteChanel from "../buttons/QuitChanel";
 import { CHANELS_LIST } from '../../graphql/QueryChanel'
 import CardChanel from "../Box/CardChanel";
 
-export default function ChanelList({refetchChanels,
-										handleChanelRefetch,
-										user,
-										handleChange,
-										handleAddChanel,
-										private_chan}:
-										IPropsChanel) {
+export default function ChanelList(props: IPropsChanel) {
 
-
-	const {data, loading, refetch, error} = useQuery(CHANELS_LIST, {
+	/* //////////////////////////////////////////////////////// */
+	/* State */
+	const {data, refetch, error} = useQuery(CHANELS_LIST, {
 		variables: {
-			input: user.id,
-			private_chan: private_chan
+			input: props.user.id,
+			private_chan: props.private_chan
 		}
 	})
 
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effects */
+
 	useEffect(() => {
 		refetch();
-	}, [refetchChanels, refetch])
+	}, [props.refetchChanels, refetch])
 
-	if (loading)
-		return (<div>Loading</div>)
+	/* //////////////////////////////////////////////////////// */
+	/* Querry Error */
 
 	if (error)
 		return (<div>An Error as occured her</div>)
@@ -35,14 +33,20 @@ export default function ChanelList({refetchChanels,
 	if (!data)
 		return (<div>nothing to see her</div>)
 
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
+
 	const handleClic = () => {
-		handleAddChanel();
+		props.handleAddChanel();
 	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* JSX.Element return  */
 
 	return (
 		
 		<div id="plist" className="people-list">
-			<div className="position: sticky">{private_chan ? 
+			<div className="position: sticky">{props.private_chan ? 
 			<h3>Private Chanels<button onClick={handleClic}>+</button></h3>
 			: <h3>Public Chanels<button onClick={handleClic}>+</button></h3>
 			}</div>
@@ -53,7 +57,7 @@ export default function ChanelList({refetchChanels,
 					return (<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}>
 						<CardChanel 
 							chanel={chanel}
-							handleChange={handleChange}
+							handleChanelFocus={props.handleChanelFocus}
 						/>
 				</ul>);
 			})

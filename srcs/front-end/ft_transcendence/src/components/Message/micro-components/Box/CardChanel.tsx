@@ -1,13 +1,8 @@
 import React from "react";
-import { UserChanels } from "../../../interfaces/interfaces";
-import { Chanel } from "../../../interfaces/interfaces";
+import { ICardChanelProps } from '../../../interfaces/interfaces'
 
-export interface ICardChanelProps {
-	handleChange: (element: Chanel) => void;
-	chanel: UserChanels;
-}
 
-export default function CardChanel({handleChange, chanel}: ICardChanelProps) {
+export default function CardChanel({handleChanelFocus, chanel}: ICardChanelProps) {
 
 	return (
 		<li className="clearfix">
@@ -15,7 +10,7 @@ export default function CardChanel({handleChange, chanel}: ICardChanelProps) {
 			<div className="about">
 			<div className="name"> { chanel.chanels.chanel_name }</div>
 			<div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
-			<button onClick={() => handleChange(chanel.chanels)}>her</button>
+			<button onClick={() => handleChanelFocus(chanel.chanels)}>her</button>
 			</div>
 		</li>
 	);

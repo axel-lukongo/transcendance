@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { CREATE_CHANEL } from '../../graphql/MutationsChanel'
-import { User } from "../../../Interface";
+import { ICreateChanelFormProps } from '../../../interfaces/interfaces'
 
-export interface ICreateChanelForm {
-	user: User;
-}
 
-export default function CreateChanelForm({user}: ICreateChanelForm) {
+export default function CreateChanelForm({user, handleChanelRefetch}: ICreateChanelFormProps) {
+
+	/* //////////////////////////////////////////////////////// */
+	/* States */
 
 	const [createChanel] = useMutation(CREATE_CHANEL);
 
@@ -19,6 +19,9 @@ export default function CreateChanelForm({user}: ICreateChanelForm) {
 		logo: "",
 		private: true
 	});
+
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -31,7 +34,9 @@ export default function CreateChanelForm({user}: ICreateChanelForm) {
 				logo: chanel.logo,
 				private: chanel.private
 			}
-		}}).catch((error) => {
+		}}).then(() => {
+			handleChanelRefetch();
+		}).catch((error) => {
 			console.log("Html: ", error.networkError.result);
 		})
 	}
@@ -41,6 +46,8 @@ export default function CreateChanelForm({user}: ICreateChanelForm) {
 		})
 	}
 
+	/* //////////////////////////////////////////////////////// */
+	/* JSX.Element return */
 
 	return (
 		<div>

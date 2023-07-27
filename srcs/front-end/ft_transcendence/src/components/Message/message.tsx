@@ -1,44 +1,21 @@
-import {useEffect, useState, useContext} from 'react';
-import {gql, useQuery} from '@apollo/client';
-import {SubscriptionClient} from 'subscriptions-transport-ws';
+import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { Chanel } from '../interfaces/interfaces';
 import Chanels from './micro-components/Chanels';
 import ChanelsRequest from './micro-components/ChanelsRequests';
 
+/* CSS */
 import './css/messages.css';
-import ChanelRequests from './micro-components/requests/ListChanelsRequests';
-
-//je me connect a mon server via le protocol websocket
-const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
-
-const NewMessageSubscription = gql`
-  subscription ($input: Int!) {
-	addmessage(channel_id: $input) {
-		id
-		content
-		sender_id
-	}
-	}
-`;
-
-const GET_MESSAGES_BY_CHANNEL = gql`
-  query GetMessagesByChannel($channelId: Int!) {
-    Message_findAll_msg_chan(channelId: $channelId) {
-      content
-    }
-  }
-`;
-
-type Message = {
-	id: number;
-	sender_id: number;
-	content: string;
-};
 
 const Message = () => {
 
+	/* //////////////////////////////////////////////////////// */
+	/* User from sessionStorage */
+	
 	const user = JSON.parse(sessionStorage.getItem('user') || '');
+
+	/* //////////////////////////////////////////////////////// */
+	/* States */
 
 	const [chanel_focus, setChanelFocus] = useState({
 		id: "",
@@ -48,11 +25,16 @@ const Message = () => {
 		logo: "",
 	});
 
+	const [refecthChanels, setRefetchChanel] = useState(false);
+
 	const [side_bar_focus, setSideBarFocus] = useState(1);
 
 	const [refetchChat, setRefetchChat] = useState(false);
 
-	const handleChange = async (element: Chanel) => {
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
+
+	const handleChanelFocus = async (element: Chanel) => {
 
 		setChanelFocus({
 			id: element.id.toString(),
@@ -66,7 +48,7 @@ const Message = () => {
 	const handleChangeOnglet = (id: number) => {
 		try {
 			if (id < 1 || id > 4)
-				throw new Error("Id should be between 1 & 4");
+				throw new Error("ID should be between 1 & 4");
 			setSideBarFocus(id);
 		}
 		catch (e) {
@@ -74,9 +56,16 @@ const Message = () => {
 		}
 	}
 
-	const handleRefetch = () => {
+	const handleChatRefetch = () => {
 		setRefetchChat(prevValue => !prevValue);
 	}
+
+	const handleChanelReftch = () => {
+		setRefetchChanel(prevValue => !prevValue);
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Switch */
 
 	const renderSwitch = (id: number) => {
 		switch(id) {
@@ -91,32 +80,40 @@ const Message = () => {
 			case 2: {
 				return (
 					<Chanels 
-						refetchChat={refetchChat}
-						handleChange={handleChange}
-						handleRefetch={handleRefetch}
 						user={user}
-						chanel_focus={chanel_focus}
 						private_chan={true}
+						refetchChat={refetchChat}
+						chanel_focus={chanel_focus}
+						refetchChanel={refecthChanels}
+						handleChanelFocus={handleChanelFocus}
+						handleChanelRefetch={handleChanelReftch}
+						handleChatRefetch={handleChatRefetch}
 					/>
 				);
-					break;
+				break;
 			}
 			case 3: {
 				return (
 					<Chanels 
-						refetchChat={refetchChat}
-						handleChange={handleChange}
-						handleRefetch={handleRefetch}
 						user={user}
-						chanel_focus={chanel_focus}
 						private_chan={false}
+						refetchChat={refetchChat}
+						chanel_focus={chanel_focus}
+						refetchChanel={refecthChanels}
+						handleChanelFocus={handleChanelFocus}
+						handleChanelRefetch={handleChanelReftch}
+						handleChatRefetch={handleChatRefetch}
 					/>
 				);
 				break;
 			}
 			case 4: {
 				return (
-					<ChanelsRequest user={user}/>
+					<ChanelsRequest 
+						user={user}
+						handleChanelRefetch={handleChanelReftch}
+						refetchChanel={refecthChanels}
+					/>
 				);
 				break;
 			}
@@ -126,8 +123,10 @@ const Message = () => {
 		}
 	}
 
-	  return (
+	/* //////////////////////////////////////////////////////// */
+	/* JSX.Element return */
 
+	return (
 		<div className="container">
         <Link to="/">
           <button className='home-button logo-box'></button>

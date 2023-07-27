@@ -7,6 +7,8 @@ import MyPendingRequest from "./ListMyPendingRequest";
 
  export default function  AddContact({refetchContact, refetchProps, user, setSwap}: IProposContact) {
 
+	/* States */
+
 	const [search, setSearch] = useState("");
 	
 	const {data, loading, refetch, error} = useQuery(RESEARCH, {
@@ -15,6 +17,9 @@ import MyPendingRequest from "./ListMyPendingRequest";
 			user_id: user.id
 		}
 	});
+
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effect */
 
 	useEffect(() => {
 		refetch();
@@ -27,16 +32,23 @@ import MyPendingRequest from "./ListMyPendingRequest";
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
-	if (loading)
-		return ( <div>Loading...</div> );
-		
+	/* //////////////////////////////////////////////////////// */
+	/* Querry error */
+
 	if (error)
 		return (<div>An Error as occured</div>);
+	
+	if (!data)
+		return (<div>Nothing to see her</div>)
 		
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
+	
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
 		setSearch(prevValue => event.target.value);
 	};
+	
 
 	return ( 
 		<div className="AddContact">

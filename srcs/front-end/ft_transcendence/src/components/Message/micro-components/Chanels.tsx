@@ -1,45 +1,35 @@
 import {useEffect, useState, useContext} from 'react';
-import {gql, useQuery} from '@apollo/client';
 import CreateMsg from './forms/createMessage'
 import ChatBox from './requests/ChatBox';
-import { Chanel } from '../../interfaces/interfaces';
 import ListChanel from './requests/ListChanel';
 import HeaderChanel from './Box/HeaderChanel';
-import { User } from '../../Interface';
 import CreateChanelForm from './forms/CreateChanelForm';
+import {IPrivateMessageProps} from '../../interfaces/interfaces'
 
 
-export interface IPrivateMessageProps {
-	refetchChat: boolean;
-	handleRefetch: () => void; 
-	user: User;
-	handleChange: (element: Chanel) => void;
-	chanel_focus: channelfocus;
-	private_chan: boolean;
-}
+export default function Chanels(props: IPrivateMessageProps) {
 
-export interface channelfocus  {
-	id: string,
-	chanel_name: string,
-	chanel_size: string,
-	max_users: string,
-	logo: string,
-}
-
-export default function Chanels({ refetchChat,
-										handleRefetch,
-										user,
-										handleChange,
-										chanel_focus,
-										private_chan }:
-										IPrivateMessageProps) {
+	/* //////////////////////////////////////////////////////// */
+	/* States */
 
 	const [addChanel, setAddChanel] = useState(false);
 
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
 
 	const handleAddChanel = () => {
 		setAddChanel(prevValue => !prevValue);
 	}
+	
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effect */
+
+	useEffect(() => {
+		props.handleChanelRefetch();
+	}, [props.refetchChanel])
+	
+	/* //////////////////////////////////////////////////////// */
+	/* Switch */
 
 	const renderSwitchAddChanel = (addChanel: boolean) => {
 		switch(addChanel) {
@@ -48,7 +38,10 @@ export default function Chanels({ refetchChat,
 					<div className='chat'>
 						<HeaderChanel />
 						<div className='chat-history'>
-							<CreateChanelForm user={user} />
+							<CreateChanelForm
+								user={props.user}
+								handleChanelRefetch={props.handleChanelRefetch}
+							/>
 						</div>
 					</div>
 				);
@@ -59,7 +52,7 @@ export default function Chanels({ refetchChat,
 					<div className="chat"> 
 						<HeaderChanel />
 						<div className="chat-history">
-							<ChatBox chan={chanel_focus} />
+							<ChatBox chan={props.chanel_focus} />
 						</div>
 						<div className="chat-message ">
 							<div className="input-group mb-0">
@@ -77,17 +70,21 @@ export default function Chanels({ refetchChat,
 		}
 	}
 	
+	/* //////////////////////////////////////////////////////// */
+	/* JSX.Element return */
+
 	return (
 		<div>
 			<ListChanel 
-				refetchChanels={refetchChat}
-				handleChanelRefetch={handleRefetch}
-				user={user}
-				handleChange={handleChange}
+				user={props.user}
+				private_chan={props.private_chan}
+				refetchChanels={props.refetchChanel}
+				handleChanelRefetch={props.handleChanelRefetch}
 				handleAddChanel={handleAddChanel}
-				private_chan={private_chan}
+				handleChanelFocus={props.handleChanelFocus}
 			/>
 			{ renderSwitchAddChanel(addChanel) }
 		</div>
 	);
+
 }

@@ -1,35 +1,44 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import {  UserChanels, IPropsChanel } from "../../../interfaces/interfaces";
+import { UserChanels, IPropsChanel } from "../../../interfaces/interfaces";
+import { User } from "../../../Interface";
 import {USER_CHANEL_LIST} from '../../graphql/QueryChanel'
 import AcceptChanel from '../buttons/AcceptChanel'
 import QuiteChanel from "../buttons/QuitChanel";
-import { User } from "../../../Interface";
+import { IListChanelRequestProps } from '../../../interfaces/interfaces'
 
-interface ITmpProps {
-	user: User;
-}
+export default function ListChanelRequests(props: IListChanelRequestProps) {
 
-export default function ListChanelRequests(/* {refetchChanels, handleChanelRefetch}: IPropsChanel */{user}: ITmpProps) {
+	/* //////////////////////////////////////////////////////// */
+	/* States */
 
-	const {data, loading, refetch, error} = useQuery(USER_CHANEL_LIST, {
+	const {data, refetch, error} = useQuery(USER_CHANEL_LIST, {
 		variables: {
-			input: user.id
+			input: props.user.id
 		}
 	});
 
-	// useEffect(() => {
-	// 	refetch();
-	// }, [refetchChanels])
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effect */
 
-	if (loading)
-		return (<div>Loading...</div>)
+	useEffect(() => {
+		refetch();
+	}, [props.refetchChanel, refetch])
+		
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
+
+	/* //////////////////////////////////////////////////////// */
+	/* Querry Errors */
 
 	if (error)
 		return (<div>An error as occured!</div>)
 
 	if (!data)
 		return (<div>nothing to see her yet</div>)
+
+	/* //////////////////////////////////////////////////////// */
+	/* Jsx.Element return  */
 
 		return (
 			
@@ -39,21 +48,21 @@ export default function ListChanelRequests(/* {refetchChanels, handleChanelRefet
 					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`
 
 					return (
-					<ul key={unique_key} className="list-unstyled chat-list mt-2 mb-0">
-						<li >
-							<div><b>{chanel.chanels.chanel_name}</b></div>
-							<AcceptChanel 
-								element={chanel} 
-								label="Join" 
-								// handleChanelRefecth={handleChanelRefetch}
-							/>
-							<QuiteChanel 
-								element={chanel}
-								label="refuse"
-								// handleChanelRefecth={handleChanelRefetch}
-							/>
-						</li>
-					</ul>
+						<ul key={unique_key} className="list-unstyled chat-list mt-2 mb-0">
+							<li >
+								<div><b>{chanel.chanels.chanel_name}</b></div>
+								<AcceptChanel 
+									element={chanel} 
+									label="Join" 
+									handleChanelRefetch={props.handleChanelRefetch}
+								/>
+								<QuiteChanel 
+									element={chanel}
+									label="refuse"
+									handleChanelRefetch={props.handleChanelRefetch}
+								/>
+							</li>
+						</ul>
 					);
 				})
 			}</div>

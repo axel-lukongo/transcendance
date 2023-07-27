@@ -1,4 +1,5 @@
-// Model interfaces
+/* //////////////////////////////////////////////////////// */
+/* Model */
 
 import { User } from "../Interface";
 
@@ -28,15 +29,14 @@ export interface IContacts {
 	contact: IContact
 }
 
-// Props 
+/* //////////////////////////////////////////////////////// */
+/* Contact */
 
-export interface IPropsChanel {
-	refetchChanels?: boolean;
-	handleChanelRefetch: () => void;
+export interface IProposContact {
 	user: User;
-	handleChange: (element: Chanel) => void;
-	handleAddChanel: () => void;
-	private_chan: boolean;
+	refetchProps: boolean;
+	refetchContact: () => void;
+	setSwap?: () => void;
 }
 
 export interface IRequestProps {
@@ -45,21 +45,8 @@ export interface IRequestProps {
 		contact_id?: number,
 		user_id?: number
 	};
-	refetchContact: () => void;
 	label: string;
-}
-
-export interface IProposContact {
 	refetchContact: () => void;
-	refetchProps: boolean;
-	user: User;
-	setSwap?: () => void;
-}
-
-export interface IRequest {
-	element: UserChanels;
-	handleChanelRefecth?: () => void;
-	label: string;
 }
 
 export interface IAddContact {
@@ -68,3 +55,73 @@ export interface IAddContact {
 	user: User;
 	refetch: () => void;
 }
+
+/* //////////////////////////////////////////////////////// */
+/* Chanel */
+
+export interface IPropsChanel {
+	user: User;
+	private_chan: boolean;
+	refetchChanels?: boolean;
+	refetchChat?: boolean;
+	handleAddChanel: () => void;
+	handleChatRefetch?: () => void;
+	handleChanelRefetch: () => void;
+	handleChanelFocus: (element: Chanel) => void;
+}
+
+export interface channelfocus  {
+	id: string,
+	chanel_name: string,
+	chanel_size: string,
+	max_users: string,
+	logo: string,
+}
+
+export interface IRequest {
+	label: string;
+	element: UserChanels;
+	handleChanelRefetch: () => void;
+}
+
+export interface ICardChanelProps {
+	handleChanelFocus: (element: Chanel) => void;
+	chanel: UserChanels;
+}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Private Msg */
+
+	export interface IPrivateMessageProps {
+		user: User;
+		chanel_focus: channelfocus;
+		private_chan: boolean;
+		refetchChat: boolean;
+		refetchChanel: boolean;
+		handleChatRefetch: () => void; 
+		handleChanelRefetch: () => void;
+		handleChanelFocus: (element: Chanel) => void;
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Create Chanel */
+
+	export interface ICreateChanelFormProps {
+		user: User;
+		handleChanelRefetch: () => void;
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Chanel Request */
+
+	export interface IChanelRequest {
+		user: User;
+		refetchChanel: boolean;
+		handleChanelRefetch: () => void;
+	}
+
+	export interface IListChanelRequestProps {
+		user: User;
+		refetchChanel: boolean;
+		handleChanelRefetch: () => void;
+	}

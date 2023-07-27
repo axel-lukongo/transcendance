@@ -5,11 +5,19 @@ import AddContact from "./micro-components/AddContact";
 import './css/Contact.css'
 
 
-const Contact = () => {
+export default function Contact() {
+
+    const user = JSON.parse(sessionStorage.getItem('user') || "");
+
+    /* //////////////////////////////////////////////////////// */
+    /* States */
 
 	const [refetchProp, setRefetch] = useState(false);
 
     const [swap, setSwap] = useState(true);
+
+    /* //////////////////////////////////////////////////////// */
+    /* Handlers */
 
 	const handleRefetch = () => {
 		setRefetch(prevValue => !prevValue);
@@ -19,8 +27,9 @@ const Contact = () => {
         setSwap(prevValue => !prevValue);
     }
 
-    const user = JSON.parse(sessionStorage.getItem('user') || "");
-
+    /* //////////////////////////////////////////////////////// */
+    /* JSX.Element return */
+    
 	return (
 	<div className="Contact_pad">
 			<React.Fragment>
@@ -63,5 +72,3 @@ const Contact = () => {
 			</React.Fragment>
 	</div>);
 }
-
-export default Contact;

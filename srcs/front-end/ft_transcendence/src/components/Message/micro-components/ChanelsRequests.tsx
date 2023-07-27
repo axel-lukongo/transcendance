@@ -1,19 +1,18 @@
 import React from "react";
 import ListChanelRequests from "./requests/ListChanelsRequests";
-import { ITmpProps } from "./buttons/AddContact";
 import HeaderChanel from "./Box/HeaderChanel";
-import {User} from '../../Interface'
-
-interface IUse {
-	user: User;
-}
+import { IChanelRequest } from "../../interfaces/interfaces";
 
 
-export default function ChanelRequest({user}: IUse ) {
+export default function ChanelRequest({user, handleChanelRefetch, refetchChanel}: IChanelRequest) {
 
 	return (
 		<div>
-			<ListChanelRequests user={user}/>
+			<ListChanelRequests
+				user={user}
+				refetchChanel={refetchChanel}
+				handleChanelRefetch={handleChanelRefetch}
+			/>
 			<div className='chat'>
 				<HeaderChanel />
 				<div className='chat-history'>
