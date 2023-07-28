@@ -15,9 +15,14 @@ interface DisplayProps {
   setPlayer: (player: Player | null) => void;
   setOtherPlayer: (player: OtherPlayer | null) => void;
 }
+
 export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setOtherPlayer  }) => {
 
   const [updatePlayer] = useMutation(UPDATE_PLAYER);
+  const containerHeight = document.querySelector('.pong-container-box')?.clientHeight  || 0;
+  console.log('container, height',containerHeight);
+  const stickHeight = 0.25 * containerHeight;
+  const maxHeight = containerHeight - stickHeight;
     
   const handleKeyDown = (e: React.KeyboardEvent) => {
     const step = 10; // Ajustez la vitesse de déplacement ici
@@ -27,10 +32,11 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     let updatedPositionY = player.positionY;
     switch (e.key) {
       case 'a':
-        updatedPositionY -= step;
+        updatedPositionY = Math.max(updatedPositionY - step, 0); 
         break;
       case 'q':
-        updatedPositionY += step;
+        console.log(containerHeight);
+        updatedPositionY = Math.min(updatedPositionY + step, maxHeight);
         break;
       default:
         break;
@@ -41,25 +47,24 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     };
     setPlayer(updatedPlayer);
     sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
-    console.log("player is update:", player);
     updatePlayer({
       variables: {
         input: {
           id: player.id,
           userId: player.userId,
-          positionY: player.positionY,
+          positionY: (player.positionY / containerHeight) * 100,
           positionX: player.positionX,
           waitingRoomId: player.waitingRoomId,
           opponentPlayerId: player.opponentPlayerId
         },
       },
     })
-      .then((response) => {
-        console.log('player has been updated:', response.data.updatePlayer);
-      })
-      .catch((error) => {
-        console.error('Error updating player:', error);
-      });
+    .then((response) => {
+      console.log('player has been updated:', response.data.updatePlayer);
+    })
+    .catch((error) => {
+      console.error('Error updating player:', error);
+    });
     sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
   }
 
@@ -69,6 +74,8 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         next(response) {
           if (response.data) {
             const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdatedSubscription as OtherPlayer;
+            updatedOtherPlayer.positionY = (updatedOtherPlayer.positionY / 100) * containerHeight;
+            updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, maxHeight);
             setOtherPlayer(updatedOtherPlayer);
             sessionStorage.setItem('otherPlayer', JSON.stringify(updatedOtherPlayer));
           }
