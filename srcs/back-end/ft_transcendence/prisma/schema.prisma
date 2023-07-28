@@ -81,13 +81,15 @@ model Pong {
 }
 
 model Player {
-  id            Int @id @default(autoincrement())
-  userId        Int @unique
-  positionX     Float
-  positionY     Float
-  waitingRoomId Int
-  opponentPlayerId Int @default(0)
-  waitingRoom   WaitingRoom? @relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
+  id            	Int @id @default(autoincrement())
+  userId        	Int @unique
+  positionX     	Float
+  positionY     	Float
+  waitingRoomId 	Int
+  opponentPlayerId	Int @default(0)
+  BallId 			Int ?
+  positionBall		PositionBall? @relation("Ball", fields: [BallId], references: [id])
+  waitingRoom   	WaitingRoom? @relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
 
 model WaitingRoom {
@@ -98,11 +100,11 @@ model WaitingRoom {
 
 model PositionBall {
   id					Int      @id @default(autoincrement())
-  PongId            	Int
   positionX        		Float
   positionY        		Float
   velocityX         	Float
   velocityY         	Float
+  players				Player[] @relation("Ball")
 }
 
 model Message {

@@ -84,7 +84,6 @@ export class PlayerResolver {
   playerUpdatedSubscription(@Args('id', { type: () => Int }) id: number) {
     return  pubSub.asyncIterator(PLAYER_UPDATED_EVENT);
   }
-
 }
 
 @Resolver(() => PositionBall)

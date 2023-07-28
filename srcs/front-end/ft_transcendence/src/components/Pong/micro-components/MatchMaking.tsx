@@ -39,8 +39,8 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         variables: {
           input: {
             userId: userId,
-            positionX: 4,
-            positionY: 200,
+            positionX: 10,
+            positionY: 50,
             waitingRoomId: 1,  
           },
         },

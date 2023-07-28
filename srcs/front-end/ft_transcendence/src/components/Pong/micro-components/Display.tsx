@@ -18,14 +18,13 @@ interface DisplayProps {
 
 export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setOtherPlayer  }) => {
 
-  const [updatePlayer] = useMutation(UPDATE_PLAYER);
   const containerHeight = document.querySelector('.pong-container-box')?.clientHeight  || 0;
-  console.log('container, height',containerHeight);
   const stickHeight = 0.25 * containerHeight;
   const maxHeight = containerHeight - stickHeight;
+  const [updatePlayer] = useMutation(UPDATE_PLAYER);
     
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    const step = 10; // Ajustez la vitesse de déplacement ici
+    const step = 5; // Ajustez la vitesse de déplacement ici
     if (!player) {
       return; 
     }
@@ -35,8 +34,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         updatedPositionY = Math.max(updatedPositionY - step, 0); 
         break;
       case 'q':
-        console.log(containerHeight);
-        updatedPositionY = Math.min(updatedPositionY + step, maxHeight);
+        updatedPositionY = Math.min(updatedPositionY + step, 75);
         break;
       default:
         break;
@@ -52,7 +50,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         input: {
           id: player.id,
           userId: player.userId,
-          positionY: (player.positionY / containerHeight) * 100,
+          positionY: player.positionY,
           positionX: player.positionX,
           waitingRoomId: player.waitingRoomId,
           opponentPlayerId: player.opponentPlayerId
@@ -60,7 +58,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       },
     })
     .then((response) => {
-      console.log('player has been updated:', response.data.updatePlayer);
+      // console.log('player has been updated:', response.data.updatePlayer);
     })
     .catch((error) => {
       console.error('Error updating player:', error);
@@ -74,8 +72,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         next(response) {
           if (response.data) {
             const updatedOtherPlayer: OtherPlayer = response.data?.playerUpdatedSubscription as OtherPlayer;
-            updatedOtherPlayer.positionY = (updatedOtherPlayer.positionY / 100) * containerHeight;
-            updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, maxHeight);
+            updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
             setOtherPlayer(updatedOtherPlayer);
             sessionStorage.setItem('otherPlayer', JSON.stringify(updatedOtherPlayer));
           }
@@ -94,8 +91,8 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
   
   return (
       <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
-          <div className="green-stick" style={{ top: `${player?.positionY}px` }} />
-          <div className="red-stick" style={{ top: `${otherPlayer?.positionY}px` }} />
+          <div className="green-stick" style={{ top: `${player?.positionY}%` }} />
+          <div className="red-stick" style={{ top: `${otherPlayer?.positionY}%` }} />
       </div>
   )
 }
