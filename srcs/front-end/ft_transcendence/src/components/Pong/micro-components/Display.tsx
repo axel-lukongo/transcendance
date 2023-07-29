@@ -131,11 +131,13 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         // Mettre à jour la direction de la balle pour le prochain mouvement
         updateBall({
           variables: {
-            id: ball.id,
+            input: {
+            id: player?.BallId,
             positionX : ball.positionX,
             positionY: ball.directionY,
             directionX: ball.directionX,
             directionY: ball.directionY,
+            },
           },
         })
         .then((response) => {
@@ -148,7 +150,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       };
 
       // Mettre à jour la position de la balle à intervalles réguliers (par exemple, toutes les 50 ms)
-      const updateInterval = setInterval(updateBallPosition, 500000);
+      const updateInterval = setInterval(updateBallPosition, 5000);
 
       // Nettoyer l'intervalle lorsque le composant est démonté
       return () => clearInterval(updateInterval);
