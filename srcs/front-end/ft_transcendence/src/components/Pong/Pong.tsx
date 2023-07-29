@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { MatchMaking } from './micro-components/MatchMaking';
 import { Display } from './micro-components/Display';
-import { Player, OtherPlayer } from '../Interface';
+import { Player  } from '../Interface';
 
 
 
@@ -20,7 +20,7 @@ const Pong: FC = () => {
     otherPlayerFromStrorage = JSON.parse(otherPlayerFromStorageString);
 
   const [player, setPlayer] = useState<Player | null>(playerFromStorage);
-  const [otherPlayer, setOtherPlayer] =useState<OtherPlayer | null>(otherPlayerFromStrorage);
+  const [otherPlayer, setOtherPlayer] =useState<Player | null>(otherPlayerFromStrorage);
   
   // console.log('player at racine',player);
   // console.log('otherPlayer at racine',otherPlayer);

@@ -52,6 +52,20 @@ type Player {
   positionY: Float!
   waitingRoomId: Int!
   opponentPlayerId: Int!
+  BallId: Float
+}
+
+type Ball {
+  id: Int!
+  positionX: Float!
+  positionY: Float!
+  directionX: Float!
+  directionY: Float!
+}
+
+type WaitingRoom {
+  id: Int!
+  waitingList: [Player!]
 }
 
 type Pong {
@@ -63,11 +77,6 @@ type Pong {
   loser_id: Int!
   winner_id: Int!
   versusDate: DateTime!
-}
-
-type WaitingRoom {
-  id: Int!
-  waitingList: [Player!]
 }
 
 type Query {
@@ -88,10 +97,11 @@ type Query {
   Pong(id: Int!): Pong!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
-  findMyGame(userId: Int!): [Player!]!
   findWaitingRoomPlayer(id: Int!): [Player!]!
   findWaitingRooms: [WaitingRoom!]!
   findWaitingRoom(id: Int!): WaitingRoom!
+  Ball: [Ball!]!
+  Balls(id: Int!): Ball!
 }
 
 type Mutation {
@@ -116,6 +126,9 @@ type Mutation {
   updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
   createWaitingRoom: WaitingRoom!
   removeWaitingRoom(id: Int!): WaitingRoom!
+  createBall: Ball!
+  removeBall(id: Int!): Ball!
+  updateBall(updateBallInput: UpdateBallInput!): Ball!
 }
 
 input UpdateUserInput {
@@ -210,10 +223,20 @@ input UpdatePlayerInput {
   positionY: Float!
   waitingRoomId: Int!
   opponentPlayerId: Int!
+  BallId: Float
+}
+
+input UpdateBallInput {
+  id: Int!
+  positionX: Float!
+  positionY: Float!
+  directionX: Float!
+  directionY: Float!
 }
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
   listPlayerSubscription: [Player!]!
   playerUpdatedSubscription(id: Int!): Player!
+  ballUpdatedSubscription(id: Int!): Ball!
 }

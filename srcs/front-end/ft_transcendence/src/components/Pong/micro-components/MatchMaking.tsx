@@ -1,20 +1,18 @@
 import { FC, useEffect } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { useLazyQuery, useMutation, useQuery} from '@apollo/client';
-import { OtherPlayer, Player } from '../../Interface';
+import {  Player } from '../../Interface';
 import { CREATE_PLAYER, CREATE_PONG } from '../graphql/Mutation';
 import {PLAYER_UPDATED_SUBSCRIPTION, FIND_PLAYER, LIST_PLAYER_SUBCRIPTION } from '../graphql/Query';
 
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
-
-
 interface MatchMakingProps {
   player: Player | null;
-  otherPlayer: OtherPlayer | null;
+  otherPlayer: Player | null;
   setPlayer: (player: Player | null) => void;
-  setOtherPlayer: (player: OtherPlayer | null) => void;
+  setOtherPlayer: (player: Player | null) => void;
 }
 
 export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer, otherPlayer  }) => {
@@ -31,7 +29,6 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
   const [createPlayer] = useMutation(CREATE_PLAYER);
   const [createPong] = useMutation(CREATE_PONG);
   const [findPlayer] = useLazyQuery(FIND_PLAYER);
-  // const [findMyGame] = useLazyQuery(FIND_MY_GAME);
 
   useEffect(() => {
     if (errorIsPlayerInGame && !player) {
@@ -47,9 +44,9 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
       })
         .then((response) => {
           if (response?.data?.createPlayer) {
-            console.log('Player created:', response.data.createPlayer);
             setPlayer(response.data.createPlayer);
             sessionStorage.setItem('player', JSON.stringify(response.data.createPlayer));
+            console.log('Player created:', response.data.createPlayer);
           }
         })
         .catch((error) => {
@@ -84,11 +81,11 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
                 },
               })
               .then((response) => {
-                console.log('Pong game created:', response.data);
-                setPlayer(response.data.createPong[0]);
-                setOtherPlayer(response.data.createPong[1]);
+                setPlayer(response.data.createPong[0]); //UPDATE ACTIF PLAYER
+                setOtherPlayer(response.data.createPong[1]); //UPDATE PASSIF PLAYER
                 sessionStorage.setItem('player', JSON.stringify(response.data.createPong[0]));
                 sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.createPong[1]));
+                console.log('Pong game created:', response.data);
               })
                 .catch((error) => {
                   console.error('Error creating Pong:', error);
@@ -113,18 +110,16 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         next(response) {
           if (response.data) {
             const updatedPlayer: Player = response.data.playerUpdatedSubscription as Player;
-            console.log('otherPlayer in ws:', updatedPlayer);
-            sessionStorage.setItem('otherPlayer', JSON.stringify(updatedPlayer));
-            setPlayer(updatedPlayer);
+            setPlayer(updatedPlayer); //UPDATE PASSIF PLAYER 
             findPlayer({
               variables: {
                 id : updatedPlayer.opponentPlayerId
               }
             })
             .then((response) => {
-              console.log('otherPlayer is set', response.data.findPlayer);
-              setOtherPlayer(response.data.findPlayer);
+              setOtherPlayer(response.data.findPlayer); // UPDATE ACTIF PLAYER
               sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.findPlayer));
+              console.log('otherPlayer is set', response.data.findPlayer);
             })
               .catch((error) => {
                 console.error('Error seted otherPlayer:', error);
@@ -140,7 +135,7 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         subscription.unsubscribe();
       };
     }
-  }, [player, otherPlayer, setOtherPlayer, findPlayer ]);
+  }, [player, otherPlayer, setPlayer, setOtherPlayer, findPlayer ]);
   
   return (
     <div>

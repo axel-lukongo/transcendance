@@ -22,6 +22,7 @@ export const CREATE_PONG = gql`
       positionY
       waitingRoomId
       opponentPlayerId
+      BallId
     }
   }
 `;
@@ -35,6 +36,19 @@ export const UPDATE_PLAYER = gql `
       positionY
       waitingRoomId
       opponentPlayerId
+      BallId
+    }
+  }
+`;
+
+export const UPDATE_BALL = gql `
+  mutation UpdateBall($input: UpdateBallInput!) {
+    updateBall(updateBallInput: $input) {
+      id
+      positionX
+      positionY
+      directionX
+      directionY
     }
   }
 `;

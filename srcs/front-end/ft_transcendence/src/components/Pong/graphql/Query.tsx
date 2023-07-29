@@ -9,21 +9,11 @@ export const FIND_PLAYER = gql`
       positionY
       waitingRoomId
       opponentPlayerId
+      BallId
     }
   }
 `;
 
-export const FIND_MY_GAME = gql`
-  query FindMyGame($userId: Int!) {
-    findMyGame(userId: $userId) {
-      id
-      userId
-      positionX
-      positionY
-      waitingRoomId
-    }
-  }
-`;
 
 export const PLAYER_UPDATED_SUBSCRIPTION = gql`
   subscription PlayerUpdatedSubscription($id: Int!) {
@@ -34,6 +24,19 @@ export const PLAYER_UPDATED_SUBSCRIPTION = gql`
       positionY
       waitingRoomId
       opponentPlayerId
+      BallId
+    }
+  }
+`;
+
+export const BALL_UPDATED_SUBSCRIPTION = gql`
+  subscription BallUpdatedSubscription($id: Int!) {
+    ballUpdatedSubscription(id: $id) {
+      id
+      positionX
+      positionY
+      velocityX
+      velocityY
     }
   }
 `;

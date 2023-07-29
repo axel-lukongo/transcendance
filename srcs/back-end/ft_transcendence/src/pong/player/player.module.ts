@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PlayerService, PositionBallService } from './player.service';
-import { PlayerResolver, PositionBallResolver } from './player.resolver';
+import { PlayerService } from './player.service';
+import { PlayerResolver,  } from './player.resolver';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Module({
-  providers: [PlayerResolver, PositionBallResolver, PlayerService, PositionBallService, PrismaService]
+  providers: [PlayerResolver, PlayerService, PrismaService]
 })
 export class PlayerModule {}

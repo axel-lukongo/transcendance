@@ -14,13 +14,13 @@ export interface Player {
   positionY: number;
   waitingRoomId: number;
   opponentPlayerId :number;
+  BallId?: number;
 }
 
-export interface OtherPlayer {
+export interface Ball {
   id: number;
-  userId: number;
   positionX: number;
   positionY: number;
-  waitingRoomId: number;
-  opponentPlayerId : number;
+  directionX: number;
+  directionY: number;
 }
