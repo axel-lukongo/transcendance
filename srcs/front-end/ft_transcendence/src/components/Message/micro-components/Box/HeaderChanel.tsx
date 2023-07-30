@@ -1,7 +1,15 @@
 import React from "react";
+import { User } from "../../../Interface";
+import { Chanel } from "../../../interfaces/interfaces";
+import { IHeaderProps } from '../../../interfaces/interfaces'
+import { ADD_USER_IN_CHANEL } from "../../../Contact/graphql/Mutations";
 
-export default function HeaderChanel() {
+export default function HeaderChanel({chanel_focus, user}: IHeaderProps) {
 
+	const handelClick = () => {
+			
+	}
+	
 	return (
 		<div className="chat-header">
 			<div className="row">
@@ -11,9 +19,10 @@ export default function HeaderChanel() {
 				</a>
 				{/* ici on affichera un point vers si le user est connecter ou sinon vert si il est connecter*/ }
 				<div className="chat-about">
-					<h6 className="m-b-0"> nickname </h6>
+					<h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
 					<small>Last seen: 2 hours ago</small>
 				</div>
+				<div><button onClick={handelClick}>+</button></div> {/* btn pour l'ajout de users dans un chanel */}
 				</div>
 
 			</div>

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { UserChanels, IPropsChanel } from "../../../interfaces/interfaces";
-import { User } from "../../../Interface";
+import { UserChanels } from "../../../interfaces/interfaces";
 import {USER_CHANEL_LIST} from '../../graphql/QueryChanel'
 import AcceptChanel from '../buttons/AcceptChanel'
 import QuiteChanel from "../buttons/QuitChanel";

@@ -1,11 +1,24 @@
-import {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Chanel } from '../interfaces/interfaces';
 import Chanels from './micro-components/Chanels';
 import ChanelsRequest from './micro-components/ChanelsRequests';
+import HeaderChanel from './micro-components/Box/HeaderChanel';
+import CreateChanelForm from './micro-components/forms/CreateChanelForm';
+import ChatBox from './micro-components/requests/ChatBox';
+import CreateMsg from './micro-components/forms/createMessage';
 
 /* CSS */
 import './css/messages.css';
+
+export const __CREATE_CHANEL__ = 1;
+export const __ADD_USER__ = 2;
+export const __CHAT__ = 3;
+
+export const __DIRECT_MESSAGE__ = 1;
+export const __PRIVATE_CHANEL__ = 2;
+export const __PUBLIC_CHANEL__ = 3;
+export const __CHANEL_REQUEST__ = 4;
 
 const Message = () => {
 
@@ -30,6 +43,10 @@ const Message = () => {
 	const [side_bar_focus, setSideBarFocus] = useState(1);
 
 	const [refetchChat, setRefetchChat] = useState(false);
+
+	const [chatBox, setChatBox] = useState(__CHAT__);
+
+	const [is_chanel, setIsChanel] = useState(true);
 
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
@@ -64,12 +81,18 @@ const Message = () => {
 		setRefetchChanel(prevValue => !prevValue);
 	}
 
+
+	const handleChatBox = (switch_id: number) => {
+		setChatBox(switch_id);
+	}
+	
+
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
 
 	const renderSwitch = (id: number) => {
 		switch(id) {
-			case 1: {
+			case __DIRECT_MESSAGE__: {
 				return (
 					<div>
 						{/* Direct Message her */}
@@ -77,7 +100,7 @@ const Message = () => {
 				);
 				break;
 			}
-			case 2: {
+			case __PRIVATE_CHANEL__: {
 				return (
 					<Chanels 
 						user={user}
@@ -88,11 +111,12 @@ const Message = () => {
 						handleChanelFocus={handleChanelFocus}
 						handleChanelRefetch={handleChanelReftch}
 						handleChatRefetch={handleChatRefetch}
+						handleChatBox={handleChatBox}
 					/>
 				);
 				break;
 			}
-			case 3: {
+			case __PUBLIC_CHANEL__: {
 				return (
 					<Chanels 
 						user={user}
@@ -103,16 +127,19 @@ const Message = () => {
 						handleChanelFocus={handleChanelFocus}
 						handleChanelRefetch={handleChanelReftch}
 						handleChatRefetch={handleChatRefetch}
+						handleChatBox={handleChatBox}
 					/>
 				);
 				break;
 			}
-			case 4: {
+			case __CHANEL_REQUEST__: {
 				return (
 					<ChanelsRequest 
 						user={user}
 						handleChanelRefetch={handleChanelReftch}
 						refetchChanel={refecthChanels}
+						chanel_focus={chanel_focus}
+						handleChatBox={handleChatBox}
 					/>
 				);
 				break;
@@ -122,6 +149,77 @@ const Message = () => {
 			}
 		}
 	}
+
+	const renderSwitchChatBox = (switch_id: number) => {
+		switch(chatBox) {
+			case __CREATE_CHANEL__: {
+				return (
+					<div className='chat'>
+						<HeaderChanel 
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className='chat-history'>
+							<CreateChanelForm
+								user={user}
+								handleChanelRefetch={handleChanelReftch}
+							/>
+						</div>
+					</div>
+				);
+				break;
+			}
+			case __CHAT__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+							<ChatBox chan={chanel_focus} />
+						</div>
+						<div className="chat-message ">
+							<div className="input-group mb-0">
+								<CreateMsg />
+							</div>
+						</div>
+					</div>
+				);
+
+				break;
+			}
+			case __ADD_USER__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+							<ChatBox chan={chanel_focus} />
+						</div>
+						<div className="chat-message ">
+							<div className="input-group mb-0">
+								<CreateMsg />
+							</div>
+						</div>
+					</div>
+				);
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+	}
+	
 
 	/* //////////////////////////////////////////////////////// */
 	/* JSX.Element return */
@@ -135,14 +233,15 @@ const Message = () => {
 		  <div className="row clearfix">
 			<div className="col-lg-12">
 				<div>
-					<button onClick={() => handleChangeOnglet(1)}>1</button>
-					<button onClick={() => handleChangeOnglet(2)}>2</button>
-					<button onClick={() => handleChangeOnglet(3)}>3</button>
-					<button onClick={() => handleChangeOnglet(4)}>4</button>
+					<button onClick={() => handleChangeOnglet(__DIRECT_MESSAGE__)}>1</button>
+					<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)}>2</button>
+					<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)}>3</button>
+					<button onClick={() => handleChangeOnglet(__CHANEL_REQUEST__)}>4</button>
 				</div>
 
 			  <div className="screen-box chat-app">
 				{ renderSwitch(side_bar_focus) }
+				{ renderSwitchChatBox(chatBox) }
 			  </div>
 			  
 			 </div> 

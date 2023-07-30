@@ -20,3 +20,10 @@ export const QUITE_CHANEL = gql`mutation QuiteChanel($input: UpdateChanelUserInp
 		user_id
 	}
 }`
+
+export const ADD_CHANEL = gql`mutation AddChanel($input: AddUserChanel!) {
+	addUser(addUserChanel: $input) {
+		id
+		pending
+	}
+}`

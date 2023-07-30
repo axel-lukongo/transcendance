@@ -64,7 +64,7 @@ export interface IPropsChanel {
 	private_chan: boolean;
 	refetchChanels?: boolean;
 	refetchChat?: boolean;
-	handleAddChanel: () => void;
+	handleChatBox: (switch_id: number) => void;
 	handleChatRefetch?: () => void;
 	handleChanelRefetch: () => void;
 	handleChanelFocus: (element: Chanel) => void;
@@ -85,6 +85,7 @@ export interface IRequest {
 }
 
 export interface ICardChanelProps {
+	handleChatBox: (switch_id: number) => void
 	handleChanelFocus: (element: Chanel) => void;
 	chanel: UserChanels;
 }
@@ -98,6 +99,7 @@ export interface ICardChanelProps {
 		private_chan: boolean;
 		refetchChat: boolean;
 		refetchChanel: boolean;
+		handleChatBox: (switch_id: number) => void;
 		handleChatRefetch: () => void; 
 		handleChanelRefetch: () => void;
 		handleChanelFocus: (element: Chanel) => void;
@@ -118,10 +120,22 @@ export interface ICardChanelProps {
 		user: User;
 		refetchChanel: boolean;
 		handleChanelRefetch: () => void;
+		chanel_focus: channelfocus;
+		handleChatBox: (switch_id: number) => void
 	}
 
 	export interface IListChanelRequestProps {
 		user: User;
 		refetchChanel: boolean;
 		handleChanelRefetch: () => void;
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Header */
+
+	export interface IHeaderProps {
+		user: User;
+		chanel_focus: channelfocus;
+		is_chanel: boolean;
+		handleChatBox: (switch_id: number) => void;
 	}

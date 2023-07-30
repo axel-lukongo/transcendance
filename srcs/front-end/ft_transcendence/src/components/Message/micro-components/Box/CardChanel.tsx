@@ -1,8 +1,15 @@
 import React from "react";
 import { ICardChanelProps } from '../../../interfaces/interfaces'
+import { __CHAT__ } from "../../message";
 
 
-export default function CardChanel({handleChanelFocus, chanel}: ICardChanelProps) {
+export default function CardChanel({handleChanelFocus, chanel, handleChatBox}: ICardChanelProps) {
+
+
+	const handleClick = () => {
+		handleChanelFocus(chanel.chanels);
+		handleChatBox(__CHAT__);
+	}
 
 	return (
 		<li className="clearfix">
@@ -10,7 +17,7 @@ export default function CardChanel({handleChanelFocus, chanel}: ICardChanelProps
 			<div className="about">
 			<div className="name"> { chanel.chanels.chanel_name }</div>
 			<div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
-			<button onClick={() => handleChanelFocus(chanel.chanels)}>her</button>
+			<button onClick={handleClick }>her</button>
 			</div>
 		</li>
 	);

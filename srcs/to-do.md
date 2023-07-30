@@ -1,9 +1,11 @@
 # | TO DO
 
-<!-- CHANEL -->
+<!-- //////////////////////////////////////////////////////// -->
 ## | CHANEL
 
+- savoir si un user est en ligne ou non 
 - Make the header a link for profil / chanel page
+
 - settings on chanel
 - ban on user
 - Rights on user <!-- Optionel -->
@@ -12,15 +14,18 @@
 
 - make toggle button for private
 
+> Header :
+- logo du chanel
+- nom du Chanel
+- nombre de personne en lignes <!-- clicable pour details ?-->
+
 ### | PRIVATE CHANEL
 
-### | HEADER
-
-- Prend:
-	=> nom du chanel 
-	=> logo
-	=> si il est prive / public / direct / request
-
+> Header :
+- Logo du chan
+- Nom du chan 
+- Nombre de personne en ligne 
+- liste des membres du chanx§
 
 ### | DIRECT MESSAGE
 
@@ -32,11 +37,12 @@
 
 ### | PROFILE PAGE
 
+- create profil page 
+
 <!-- LEADER BOARD -->
 
 ## | LEADER BOARD
 
-- create profil page 
 
 
 <!-- OTHER -->

@@ -6,6 +6,8 @@ import QuiteChanel from "../buttons/QuitChanel";
 import { CHANELS_LIST } from '../../graphql/QueryChanel'
 import CardChanel from "../Box/CardChanel";
 
+import { __CREATE_CHANEL__ } from "../../message";
+
 export default function ChanelList(props: IPropsChanel) {
 
 	/* //////////////////////////////////////////////////////// */
@@ -37,7 +39,7 @@ export default function ChanelList(props: IPropsChanel) {
 	/* Handlers */
 
 	const handleClic = () => {
-		props.handleAddChanel();
+		props.handleChatBox(__CREATE_CHANEL__);
 	}
 
 	/* //////////////////////////////////////////////////////// */
@@ -58,6 +60,7 @@ export default function ChanelList(props: IPropsChanel) {
 						<CardChanel 
 							chanel={chanel}
 							handleChanelFocus={props.handleChanelFocus}
+							handleChatBox={props.handleChatBox}
 						/>
 				</ul>);
 			})
