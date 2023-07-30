@@ -29,7 +29,7 @@ export class PongService {
           id : createPongInput.userId1,
           opponentPlayerId: createPongInput.playerId2,
           waitingRoomId: newWaitingRoom.id,
-          BallId: newBall.id,
+          ballId: newBall.id,
         }
       const player = this.player.updatePlayer(playerData);
 
@@ -37,7 +37,7 @@ export class PongService {
         id : createPongInput.userId2,
         opponentPlayerId: createPongInput.playerId1,
         waitingRoomId: newWaitingRoom.id,
-        BallId: newBall.id,
+        ballId: newBall.id,
       }
     const otherPlayer = this.player.updatePlayer(otherPlayerData);
       

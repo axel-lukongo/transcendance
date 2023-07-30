@@ -52,7 +52,7 @@ type Player {
   positionY: Float!
   waitingRoomId: Int!
   opponentPlayerId: Int!
-  BallId: Float
+  ballId: Float
 }
 
 type Ball {
@@ -223,7 +223,7 @@ input UpdatePlayerInput {
   positionY: Float!
   waitingRoomId: Int!
   opponentPlayerId: Int!
-  BallId: Float
+  ballId: Float
 }
 
 input UpdateBallInput {

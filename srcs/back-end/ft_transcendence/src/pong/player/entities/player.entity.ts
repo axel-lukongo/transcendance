@@ -22,5 +22,5 @@ export class Player {
 	opponentPlayerId?: number
 
 	@Field({ nullable: true })
-	BallId?: number
+	ballId?: number
 }

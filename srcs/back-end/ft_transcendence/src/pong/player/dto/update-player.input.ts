@@ -23,5 +23,5 @@ export class UpdatePlayerInput extends PartialType(Player) {
 	opponentPlayerId?: number
 
 	@Field({ nullable: true })
-	BallId?: number
+	ballId?: number
 }

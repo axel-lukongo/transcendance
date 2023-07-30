@@ -86,8 +86,8 @@ model Player {
   positionY     	Float
   opponentPlayerId	Int?			@default(0)
   waitingRoomId 	Int
-  BallId 			Int ?
-  positionBall		Ball? 			@relation("Ball", fields: [BallId], references: [id])
+  ballId 			Int ?
+  positionBall		Ball? 			@relation("Ball", fields: [ballId], references: [id])
   waitingRoom   	WaitingRoom? 	@relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
 

@@ -9,7 +9,7 @@ export const FIND_PLAYER = gql`
       positionY
       waitingRoomId
       opponentPlayerId
-      BallId
+      ballId
     }
   }
 `;
@@ -24,7 +24,7 @@ export const PLAYER_UPDATED_SUBSCRIPTION = gql`
       positionY
       waitingRoomId
       opponentPlayerId
-      BallId
+      ballId
     }
   }
 `;

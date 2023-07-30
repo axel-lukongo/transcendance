@@ -22,7 +22,7 @@ export const CREATE_PONG = gql`
       positionY
       waitingRoomId
       opponentPlayerId
-      BallId
+      ballId
     }
   }
 `;
@@ -36,7 +36,7 @@ export const UPDATE_PLAYER = gql `
       positionY
       waitingRoomId
       opponentPlayerId
-      BallId
+      ballId
     }
   }
 `;

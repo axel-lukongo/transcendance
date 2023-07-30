@@ -14,7 +14,7 @@ export interface Player {
   positionY: number;
   waitingRoomId: number;
   opponentPlayerId :number;
-  BallId?: number;
+  ballId?: number;
 }
 
 export interface Ball {
