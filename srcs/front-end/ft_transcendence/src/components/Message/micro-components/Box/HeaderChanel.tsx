@@ -3,11 +3,13 @@ import { User } from "../../../Interface";
 import { Chanel } from "../../../interfaces/interfaces";
 import { IHeaderProps } from '../../../interfaces/interfaces'
 import { ADD_USER_IN_CHANEL } from "../../../Contact/graphql/Mutations";
+import { __ADD_USER__ } from "../../message";
 
-export default function HeaderChanel({chanel_focus, user}: IHeaderProps) {
+export default function HeaderChanel({chanel_focus, user, is_chanel, handleChatBox}: IHeaderProps) {
 
 	const handelClick = () => {
-			
+		console.log("dev log | in add user in chanel ");
+		handleChatBox(__ADD_USER__);
 	}
 	
 	return (
@@ -22,7 +24,7 @@ export default function HeaderChanel({chanel_focus, user}: IHeaderProps) {
 					<h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
 					<small>Last seen: 2 hours ago</small>
 				</div>
-				<div><button onClick={handelClick}>+</button></div> {/* btn pour l'ajout de users dans un chanel */}
+				<div>{is_chanel ? <button onClick={handelClick}>++</button> : null}</div> {/* btn pour l'ajout de users dans un chanel */}
 				</div>
 
 			</div>

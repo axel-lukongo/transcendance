@@ -86,6 +86,9 @@ const Message = () => {
 		setChatBox(switch_id);
 	}
 	
+	const handleIsChanel = () => {
+		setIsChanel(prevValue => !prevValue);
+	}
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
