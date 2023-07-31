@@ -129,6 +129,7 @@ type Mutation {
   createBall: Ball!
   removeBall(id: Int!): Ball!
   updateBall(updateBallInput: UpdateBallInput!): Ball!
+  ballMove(id: Int!, playerId: Int!, otherPlayerId: Int!): Ball!
 }
 
 input UpdateUserInput {

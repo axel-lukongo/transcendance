@@ -41,17 +41,52 @@ export const UPDATE_PLAYER = gql `
   }
 `;
 
-export const UPDATE_BALL = gql `
-  mutation UpdateBall($input: UpdateBallInput!) {
-    updateBall(updateBallInput: $input) {
+export const BALL_MOVE = gql`
+mutation BallMove($id: Int!, $playerId: Int!, $otherPlayerId: Int!) {
+  ballMove(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId) {
+    id
+    positionX
+    positionY
+    directionX
+    directionY
+  }
+}
+`;
+
+export const PLAYER_UPDATED_SUBSCRIPTION = gql`
+  subscription PlayerUpdatedSubscription($id: Int!) {
+    playerUpdatedSubscription(id: $id) {
       id
+      userId
       positionX
       positionY
-      directionX
-      directionY
+      waitingRoomId
+      opponentPlayerId
+      ballId
     }
   }
 `;
 
+export const BALL_UPDATED_SUBSCRIPTION = gql`
+  subscription BallUpdatedSubscription($id: Int!) {
+    ballUpdatedSubscription(id: $id) {
+      id
+      positionX
+      positionY
+      velocityX
+      velocityY
+    }
+  }
+`;
 
-
+export const LIST_PLAYER_SUBCRIPTION = gql`
+subscription ListPlayerSubscription {
+  listPlayerSubscription {
+    id
+    userId
+    positionX
+    positionY
+    waitingRoomId
+  }
+}
+`;
