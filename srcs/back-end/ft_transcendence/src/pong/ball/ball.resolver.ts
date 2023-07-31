@@ -72,7 +72,8 @@ export class BallResolver {
     const ball  = await this.findUnique(id);
     const player = await this.player.findPlayer(playerId);
     const otherPlayer = await this.player.findPlayer(otherPlayerId);
-  
+    otherPlayer.positionX += 80;
+    
     console.log('current ball directionX: ' , ball.directionX);
     console.log('current ball directionY: ' , ball.directionY);
     const newPotentialX = ball.positionX + (ball.directionX * speed) /100;
@@ -91,8 +92,8 @@ export class BallResolver {
     const hitRedStickPosY = newPontantialY >= otherPlayer.positionY && newPontantialY <= otherPlayer.positionY + 25; // 25% de la taille de l'écran
     
     //position retenu au final
-    const newX=  HitWallX || (hitGreenStickPosX && hitGreenStickPosY) /*|| (hitRedStickPosX && hitRedStickPosY)*/ ? ball.positionX : newPotentialX;
-    const newY=  HitWallY || (hitGreenStickPosX && hitGreenStickPosY) /*|| (hitRedStickPosX && hitRedStickPosY)*/ ? ball.positionY : newPontantialY;
+    const newX = HitWallX || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionX : newPotentialX;
+    const newY = HitWallY || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionY : newPontantialY;
       
     //TOUCH A WALL
     if (HitWallX || HitWallY) { 
