@@ -35,7 +35,7 @@
   .ball {
 	width: 3%; /* Définir la largeur de la balle */
 	height: 4%; /* Définir la hauteur de la balle */
-	position: relative;
+	position: absolute;
 	border-radius: 50%; /* Rendre la balle circulaire en utilisant un rayon de 50% */
 	background-color: yellow; /* Définir la couleur de fond de la balle (jaune) */
   }
