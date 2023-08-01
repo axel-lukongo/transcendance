@@ -46,6 +46,14 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 		})
 	}
 
+	const handleSelect = (e: any) => {
+		if (e.target.value == "true")
+			setChanel({...chanel, private: true});
+		else
+			setChanel({...chanel, private: false});
+		// console.log(e);
+	}
+
 	/* //////////////////////////////////////////////////////// */
 	/* JSX.Element return */
 
@@ -96,6 +104,10 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				<label htmlFor="private">
 					private
 				</label>
+					<label htmlFor="">| yes</label><input type="radio" onClick={handleSelect} value={"true"} name="private"/>
+				<label htmlFor="public">
+				</label>No
+					<input type="radio" onClick={handleSelect} value={"false"} name="private"/>
 				<br />
 				{/* need to add a toggle btn her */}
 				<button>Create +</button>

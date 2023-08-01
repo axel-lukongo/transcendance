@@ -32,8 +32,6 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 	if (data)
 		console.log(data);
 
-	// const list = data;
-
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		setUsersList(e.target.value)
