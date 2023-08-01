@@ -105,7 +105,7 @@ export class BallResolver {
       const otherPlayer = await this.player.findPlayer(otherPlayerId);
       otherPlayer.positionX += 80;
       await this.ballMove(ball, player, otherPlayer);
-    }, 80);
+    }, 50);
     return true;
 
   }
@@ -120,7 +120,7 @@ export class BallResolver {
     const HitWallY = newPontantialY > this.maxY || newPontantialY < this.minY;
 
     // Gérer les rebonds en inversant la direction lorsque la balle atteint player 
-    const hitGreenStickPosX = newPotentialX <= player.positionX -5;
+    const hitGreenStickPosX = newPotentialX <= player.positionX -3;
     const hitGreenStickPosY = newPontantialY >= player.positionY && newPontantialY <= player.positionY + 25; // 25% de la taille de l'écran
     
     // Gérer les rebonds en inversant la direction lorsque la balle atteint otherPlayer

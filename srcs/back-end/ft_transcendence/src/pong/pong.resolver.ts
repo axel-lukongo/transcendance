@@ -24,6 +24,11 @@ export class PongResolver {
   }
 
 
+  @Query(() => Pong, )
+  findGame(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.findGame(userId);
+  }
+
   @Mutation(() => Pong)
   updatePong(@Args('updatePongInput') updatePongInput: UpdatePongInput) {
     return this.pongService.update(updatePongInput.id, updatePongInput);

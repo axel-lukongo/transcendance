@@ -57,6 +57,28 @@ export class PongService {
     return this.prisma.pong.findUnique({ where : {id}})
   }
 
+  async findGame(userId: number) {
+    try {
+      const games = await this.prisma.pong.findMany({
+        where: {
+          OR: [
+            { userId1: userId },
+            { userId2: userId },
+          ],
+        },
+        orderBy: {
+          versusDate: 'desc', // Tri par date en ordre décroissant
+        },
+      });
+      if (games.length === 0) {
+        throw new Error('No game found for the given userId.');
+      }
+      return games[0];
+    } 
+    catch (error) {
+      throw new Error(`Error fetching game: ${error.message}`);
+    }
+  }
   update(id: number, updatePongInput: UpdatePongInput) {
     return `This action updates a #${id} pong`;
   }

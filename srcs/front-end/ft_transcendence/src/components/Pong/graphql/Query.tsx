@@ -13,3 +13,14 @@ export const FIND_PLAYER = gql`
     }
   }
 `;
+
+export const FIND_GAME = gql`
+  query FindGame($userId: Int!) {
+    findGame(userId: $userId) {
+      id
+      userId1
+      userId2
+      versusDate
+    }
+  }
+`; 

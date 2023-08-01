@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { useLazyQuery, useMutation, useQuery} from '@apollo/client';
-import {  Player, PongI } from '../../Interface';
+import {  Player } from '../../Interface';
 import { CREATE_PLAYER, CREATE_PONG, PLAYER_UPDATED_SUBSCRIPTION, LIST_PLAYER_SUBCRIPTION} from '../graphql/Mutation';
 import { FIND_PLAYER  } from '../graphql/Query';
 

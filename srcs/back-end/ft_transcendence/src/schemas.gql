@@ -95,6 +95,7 @@ type Query {
   checkTwoAuthenticationFactor(code: String!): User!
   Pongs: [Pong!]!
   Pong(id: Int!): Pong!
+  findGame(userId: Int!): Pong!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
   findWaitingRoomPlayer(id: Int!): [Player!]!

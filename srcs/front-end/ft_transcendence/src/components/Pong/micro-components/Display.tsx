@@ -2,8 +2,9 @@ import React, { FC, useEffect, useState  } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { Ball, Player, PongI } from '../../Interface';
 import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_BALL_MOVE} from '../graphql/Mutation';
+import { FIND_GAME } from '../graphql/Query';
 import '../css/Pong.css'
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
@@ -26,14 +27,36 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     directionX: -50,
     directionY: 50,
   };
-  
-  const [ball, setBall]= useState<Ball | null>(default_ball);
   const [pong, setPong] = useState<PongI | null>(null);
-  
+  const [ball, setBall]= useState<Ball | null>(default_ball);
+  const [mirror, setMirror] = useState(false);
+  const [mount, setMount] = useState(false);
+
   const [updatePlayer] = useMutation(UPDATE_PLAYER);
   const [startBallMove] = useMutation(START_BALL_MOVE);
-  const activeMirror = pong?.userId2 === player?.userId;
-    
+  const [findGame] = useLazyQuery(FIND_GAME);
+
+  useEffect(() => {
+    if (!mount && player?.userId) {
+      findGame({
+        variables: {
+          userId: player.userId,
+        },
+      })
+        .then((response) => {
+          if (response.data && response.data.findGame) {
+            const gameData = response.data.findGame;
+            setPong(gameData);
+            setMirror(gameData.userId2 === player.userId);
+          }
+        })
+        .catch((error) => {
+          console.error('Error getting game:', error);
+        });
+    }
+  }, [mount, player, pong, setPong, setMirror, findGame]);
+  
+  
   const handleKeyDown = (e: React.KeyboardEvent) => {
     const speed = 5; // Ajustez la vitesse de déplacement en %
     if (!player) {
@@ -50,12 +73,15 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       default:
         break;
     }
+
     const updatedPlayer: Player = {
       ...player,
       positionY: updatedPositionY,
     };
+
     setPlayer(updatedPlayer);
     sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
+
     updatePlayer({
       variables: {
         input: {
@@ -75,11 +101,14 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     .catch((error) => {
       console.error('Error updating player:', error);
     });
-    sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
   }
 
+
+
   useEffect(() => {
-    if (player && otherPlayer && ball) {
+    if (player && otherPlayer && ball && !mount) {
+      setMount(true);
+
       startBallMove({
         variables: {
           id: ball.id,
@@ -95,7 +124,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
           console.error('Error calling startBallMove mutation:', error);
         });
     }
-  }, [player, otherPlayer, ball, startBallMove]); // Le tableau de dépendances est vide, ce qui signifie que ce useEffect ne s'exécutera qu'une seule fois après le premier rendu
+  }, [player, otherPlayer, ball, mount, setMount, startBallMove]);
 
   //OTHER PLAYER MOVE
   useEffect(() => {
@@ -129,16 +158,6 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         next(response) {
           if (response.data) {
             const updatedBall: Ball = response.data?.ballUpdatedSubscription as Ball;
-            if (activeMirror) {
-              // Inversion en miroir
-              const tempDirectionX = updatedBall.directionX;
-              updatedBall.directionX = -updatedBall.directionY;
-              updatedBall.directionY = -tempDirectionX;
-            
-              const tempPositionX = updatedBall.positionX;
-              updatedBall.positionX = -updatedBall.positionY;
-              updatedBall.positionY = -tempPositionX;
-            }
             setBall(updatedBall);
             sessionStorage.setItem('ball', JSON.stringify(ball));
           }
@@ -153,13 +172,13 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         subscription.unsubscribe();
       };
     }
-  }, [ball, player, setBall, activeMirror]);
+  }, [ball, player, setBall, mirror]);
 
   
   return (
       <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
-          <div className="green-stick" style={{ top: `${player?.positionY}%` }} />
-          <div className="red-stick" style={{ top: `${otherPlayer?.positionY}%` }} />
+      <div className={mirror ? "red-stick" : "green-stick"} style={{ top: `${player?.positionY}%` }} />
+      <div className={mirror ? "green-stick" : "red-stick"} style={{ top: `${otherPlayer?.positionY}%` }} />
           <div className='ball'
           style={{ 
             top: `${ball?.positionY}%` ,

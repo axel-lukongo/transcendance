@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { MatchMaking } from './micro-components/MatchMaking';
 import { Display } from './micro-components/Display';
-import { Player, PongI  } from '../Interface';
+import { Player } from '../Interface';
 
 
 
@@ -31,8 +31,6 @@ const Pong: FC = () => {
         <Display
           player={player}
           otherPlayer={otherPlayer}
-          setPong={setPong}
-          pong={pong}
           setPlayer={setPlayer}
           setOtherPlayer={setOtherPlayer}
         />
