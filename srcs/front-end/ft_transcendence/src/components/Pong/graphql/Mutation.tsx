@@ -16,13 +16,10 @@ export const CREATE_PLAYER = gql`
 export const CREATE_PONG = gql`
   mutation CreatePong($input: CreatePongInput!) {
     createPong(createPongInput: $input) {
-      id
-      userId
-      positionX
-      positionY
-      waitingRoomId
-      opponentPlayerId
-      ballId
+    id
+    userId1
+    userId2
+    versusDate
     }
   }
 `;
@@ -41,17 +38,12 @@ export const UPDATE_PLAYER = gql `
   }
 `;
 
-export const BALL_MOVE = gql`
-mutation BallMove($id: Int!, $playerId: Int!, $otherPlayerId: Int!) {
-  ballMove(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId) {
-    id
-    positionX
-    positionY
-    directionX
-    directionY
+export const START_BALL_MOVE = gql`
+  mutation StartBallMove($id: Int!, $playerId: Int!, $otherPlayerId: Int!) {
+    startBallMove(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId)
   }
-}
 `;
+
 
 export const PLAYER_UPDATED_SUBSCRIPTION = gql`
   subscription PlayerUpdatedSubscription($id: Int!) {
@@ -73,8 +65,8 @@ export const BALL_UPDATED_SUBSCRIPTION = gql`
       id
       positionX
       positionY
-      velocityX
-      velocityY
+      directionX
+      directionY
     }
   }
 `;

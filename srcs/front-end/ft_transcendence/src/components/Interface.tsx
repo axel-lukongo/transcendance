@@ -24,3 +24,14 @@ export interface Ball {
   directionX: number;
   directionY: number;
 }
+
+export interface PongI {
+  id: number;
+  userId1: number;
+  userId2: number;
+  scoreUser1?: number;
+  scoreUser2?: number;
+  loser_id?: number | null;
+  winner_id?: number | null;
+  Versus_date: string;
+}

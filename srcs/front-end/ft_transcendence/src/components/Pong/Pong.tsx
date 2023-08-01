@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { MatchMaking } from './micro-components/MatchMaking';
 import { Display } from './micro-components/Display';
-import { Player  } from '../Interface';
+import { Player, PongI  } from '../Interface';
 
 
 
@@ -22,16 +22,17 @@ const Pong: FC = () => {
   const [player, setPlayer] = useState<Player | null>(playerFromStorage);
   const [otherPlayer, setOtherPlayer] =useState<Player | null>(otherPlayerFromStrorage);
   
-  // console.log('player at racine',player);
-  // console.log('otherPlayer at racine',otherPlayer);
+  
   
 
   return (
     <div>
-      {player && otherPlayer ? (
+      {player && otherPlayer ?(
         <Display
           player={player}
           otherPlayer={otherPlayer}
+          setPong={setPong}
+          pong={pong}
           setPlayer={setPlayer}
           setOtherPlayer={setOtherPlayer}
         />

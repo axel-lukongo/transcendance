@@ -17,32 +17,35 @@ export class PongService {
   async create(createPongInput: CreatePongInput) {
     return this.prisma.$transaction(async (prisma) => {
       
+      // Nouvelle instance de pong
       const { playerId1, playerId2, ...dataWithoutPlayerIds } = createPongInput;
-      await prisma.pong.create({
+      const pong = await prisma.pong.create({
         data: dataWithoutPlayerIds
       });
   
+      //Nouvelle instance de la waintingRoom des Players
       const newWaitingRoom = await this.waitingRoom.createWaitingRoom();
+
+      //Nouvelle instance d'un balle pour le Pong 
       const newBall = await this.ball.createBall();
   
-        const playerData : UpdatePlayerInput ={
-          id : createPongInput.userId1,
-          opponentPlayerId: createPongInput.playerId2,
-          waitingRoomId: newWaitingRoom.id,
-          ballId: newBall.id,
-        }
-      const player = this.player.updatePlayer(playerData);
-
-      const otherPlayerData : UpdatePlayerInput ={
-        id : createPongInput.userId2,
-        opponentPlayerId: createPongInput.playerId1,
+      const playerData : UpdatePlayerInput ={
+        id : createPongInput.userId1,
+        opponentPlayerId: playerId2,
         waitingRoomId: newWaitingRoom.id,
         ballId: newBall.id,
       }
-    const otherPlayer = this.player.updatePlayer(otherPlayerData);
-      
-  
-      return [player, otherPlayer];
+      this.player.updatePlayer(playerData);
+
+      const otherPlayerData : UpdatePlayerInput ={
+        id : createPongInput.userId2,
+        opponentPlayerId: playerId1,
+        waitingRoomId: newWaitingRoom.id,
+        ballId: newBall.id,
+      }
+      this.player.updatePlayer(otherPlayerData);
+
+      return pong;
     });
   }
   

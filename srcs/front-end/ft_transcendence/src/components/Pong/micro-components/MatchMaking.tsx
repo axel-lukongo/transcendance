@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { useLazyQuery, useMutation, useQuery} from '@apollo/client';
-import {  Player } from '../../Interface';
+import {  Player, PongI } from '../../Interface';
 import { CREATE_PLAYER, CREATE_PONG, PLAYER_UPDATED_SUBSCRIPTION, LIST_PLAYER_SUBCRIPTION} from '../graphql/Mutation';
 import { FIND_PLAYER  } from '../graphql/Query';
 
@@ -13,9 +13,10 @@ interface MatchMakingProps {
   otherPlayer: Player | null;
   setPlayer: (player: Player | null) => void;
   setOtherPlayer: (player: Player | null) => void;
+  
 }
 
-export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer, otherPlayer  }) => {
+export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer, otherPlayer,  }) => {
 
   const userFromStorageString = sessionStorage.getItem('user');
   const userFromStorage = userFromStorageString ? JSON.parse(userFromStorageString) : null;
@@ -81,16 +82,12 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
                 },
               })
               .then((response) => {
-                setPlayer(response.data.createPong[0]); //UPDATE ACTIF PLAYER
-                setOtherPlayer(response.data.createPong[1]); //UPDATE PASSIF PLAYER
-                sessionStorage.setItem('player', JSON.stringify(response.data.createPong[0]));
-                sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.createPong[1]));
                 console.log('Pong game created:', response.data);
               })
-                .catch((error) => {
-                  console.error('Error creating Pong:', error);
+              .catch((error) => {
+                console.error('Error creating Pong:', error);
                 });
-            }
+              }
           } 
         },
         error(error) {
@@ -105,12 +102,14 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
   }, [player, createPong, setOtherPlayer, setPlayer]);
 
   useEffect(() => {
-    if (!otherPlayer) {
+    if (player) {
       const subscription = wsClient.request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: {id :player?.id} }).subscribe({
         next(response) {
           if (response.data) {
             const updatedPlayer: Player = response.data.playerUpdatedSubscription as Player;
+            console.log('ws', updatedPlayer);
             setPlayer(updatedPlayer); //UPDATE PASSIF PLAYER 
+            sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
             findPlayer({
               variables: {
                 id : updatedPlayer.opponentPlayerId

@@ -11,6 +11,7 @@ import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
 import { PongModule } from './pong/pong.module';
+
 @Module({
 	imports: [
 		GraphQLModule.forRootAsync<ApolloDriverConfig>({

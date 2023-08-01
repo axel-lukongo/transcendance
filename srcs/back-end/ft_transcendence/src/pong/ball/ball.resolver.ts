@@ -13,8 +13,26 @@ const BALL_UPDATE_EVENT = 'ballUp';
 export class BallResolver {
 
   private start : boolean;
+  private  interval : NodeJS.Timer | null;
+
+  // Vérifier les limites de l'environnement pour gérer les rebonds
+  private maxX: number;  // Valeur maximale de la coordonnée X (par exemple, 100%)
+  private maxY: number;  // Valeur maximale de la coordonnée Y (par exemple, 100%)
+  private minX: number;  // Valeur minimale de la coordonnée X (par exemple, 0%)
+  private minY: number;  // Valeur minimale de la coordonnée Y (par exemple, 0%)  
+
+  // vitesse de deplacement en %
+  private speed: number;  
+
   constructor(private readonly ballService: BallService,
-              private readonly player : PlayerResolver) {}
+              private readonly player : PlayerResolver) {
+              this.start = false;
+              this.maxX = 100;
+              this.maxY = 100;
+              this.minX = 0;
+              this.minY = 0;
+              this.speed = 5;
+              }
 
   @Mutation(() => Ball)
   createBall() {
@@ -55,34 +73,52 @@ export class BallResolver {
     return pubSub.asyncIterator(BALL_UPDATE_EVENT);
   }
 
+  @Mutation(() => Boolean)
+  stopBallMove() {
+    if (this.start && this.interval) {
+      this.start = false;
+      clearInterval(this.interval);
+      this.interval = null;
+      return true;
+    }
 
-  @Mutation(() => Ball)
-  async ballMove( @Args('id', { type: () => Int }) id: number,
-                  @Args('playerId', { type: () => Int }) playerId: number,
-                  @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number) {
+    return false; // Renvoyer false si l'appel périodique n'était pas en cours
+  }
 
-    // Vérifier les limites de l'environnement pour gérer les rebonds
-    const maxX = 100; // Valeur maximale de la coordonnée X (par exemple, 100%)
-    const maxY = 100; // Valeur maximale de la coordonnée Y (par exemple, 100%)
-    const minX = 0; // Valeur minimale de la coordonnée X (par exemple, 0%)
-    const minY = 0; // Valeur minimale de la coordonnée Y (par exemple, 0%)  
+  @Mutation(() => Boolean)
+  async startBallMove(  @Args('id', { type: () => Int }) id: number,
+                        @Args('playerId', { type: () => Int }) playerId: number,
+                        @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number) 
+  {
+
+    if (this.start === true) {
+      return false;
+    }
+    this.start = true;
+
     
-    const speed = 1 ; // vitesse de deplacement en %
-    
-    const ball  = await this.findUnique(id);
-    const player = await this.player.findPlayer(playerId);
-    const otherPlayer = await this.player.findPlayer(otherPlayerId);
-    otherPlayer.positionX += 80;
-    
-    console.log('current ball directionX: ' , ball.directionX);
-    console.log('current ball directionY: ' , ball.directionY);
-    const newPotentialX = ball.positionX + (ball.directionX * speed) /100;
-    const newPontantialY = ball.positionY + (ball.directionY * speed) /100;
-      
+    setInterval(async () => {
+      const ball  = await this.findUnique(id);
+        
+      const player = await this.player.findPlayer(playerId);
+        
+      const otherPlayer = await this.player.findPlayer(otherPlayerId);
+      otherPlayer.positionX += 80;
+      await this.ballMove(ball, player, otherPlayer);
+    }, 80);
+    return true;
+
+  }
+
+  private async  ballMove(  ball: Ball, player: Player,otherPlayer: Player) {
+
+    const newPotentialX = ball.positionX + (ball.directionX * this.speed) /100;
+    const newPontantialY = ball.positionY + (ball.directionY * this.speed) /100;
+  
     // Gérer les rebonds en inversant la direction lorsque la balle atteint les bords
-    const HitWallX = newPotentialX > maxX || newPotentialX < minX;
-    const HitWallY = newPontantialY > maxY || newPontantialY < minY;
-    
+    const HitWallX = newPotentialX > this.maxX || newPotentialX < this.minX;
+    const HitWallY = newPontantialY > this.maxY || newPontantialY < this.minY;
+
     // Gérer les rebonds en inversant la direction lorsque la balle atteint player 
     const hitGreenStickPosX = newPotentialX <= player.positionX -5;
     const hitGreenStickPosY = newPontantialY >= player.positionY && newPontantialY <= player.positionY + 25; // 25% de la taille de l'écran
@@ -94,13 +130,11 @@ export class BallResolver {
     //position retenu au final
     const newX = HitWallX || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionX : newPotentialX;
     const newY = HitWallY || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionY : newPontantialY;
-      
+
     //TOUCH A WALL
     if (HitWallX || HitWallY) { 
       const newDirectionX = HitWallX ? -ball.directionX : ball.directionX;
       const newDirectionY = HitWallY ? -ball.directionY : ball.directionY;
-      console.log('wall was hit new dirX: ', newDirectionX);
-      console.log('wall was hit new dirY: ', newDirectionY);
 
       const DataUpdateBall : UpdateBallInput = {
         ...ball,
@@ -110,13 +144,12 @@ export class BallResolver {
         directionY : newDirectionY,
       }
 
-      return  this.updateBall(DataUpdateBall);
+      this.updateBall(DataUpdateBall);
     }
     // TOUCH THE PLAYER 
     else if (hitGreenStickPosX && hitGreenStickPosY) {
       const newDirectionX = (hitGreenStickPosX && hitGreenStickPosY) ? -ball.directionX : ball.directionX;
-      console.log('player was hit, new dirX: ', newDirectionX);
-
+      
       const DataUpdateBall : UpdateBallInput = {
         ...ball,
         positionX : newX,
@@ -124,12 +157,11 @@ export class BallResolver {
         directionX : newDirectionX,
       }
 
-      return this.updateBall(DataUpdateBall);
+      this.updateBall(DataUpdateBall);
     }
     //TOUCH THE OTHER PLAYER
     else if (hitRedStickPosX && hitRedStickPosY) {
       const newDirectionX = (hitRedStickPosX && hitRedStickPosY) ? -ball.directionX : ball.directionX;
-      console.log('other player was hit, new dirX: ', newDirectionX);
 
       const DataUpdateBall : UpdateBallInput = {
         ...ball,
@@ -138,21 +170,17 @@ export class BallResolver {
         directionX : newDirectionX,
       }
 
-      return this.updateBall(DataUpdateBall);
+      this.updateBall(DataUpdateBall);
     }
     //TOUCH ANYTHING BUT UPDATE THE BALL POSITION
     else {
-      console.log('no hit dirX: ', ball.directionX);
-      console.log('no hit dirY: ', ball.directionY);
-
+      
       const DataUpdateBall : UpdateBallInput = {
         ...ball,
         positionX : newX,
         positionY : newY,
       }
-
-      return this.updateBall(DataUpdateBall);
+      const updateball = this.updateBall(DataUpdateBall);
     }
-    // await new Promise((resolve) => setTimeout(resolve, 50));  
   }
 }

@@ -18,10 +18,10 @@ export class Pong {
 	scoreUser2: number;
 
   	@Field(() => Int)
-	loser_id: number;
+	loserId: number;
 
   	@Field(() => Int)
-	winner_id: number;
+	winnerId: number;
 
 	@Field(() => Date)
 	versusDate: Date;
