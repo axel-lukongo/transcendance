@@ -1,6 +1,5 @@
 import React from "react";
-import { User } from "../../../Interface";
-import { Chanel } from "../../../interfaces/interfaces";
+import { Chanel, User } from "../../../interfaces/interfaces";
 import { IHeaderProps } from '../../../interfaces/interfaces'
 import { ADD_USER_IN_CHANEL } from "../../../Contact/graphql/Mutations";
 import { __ADD_USER__ } from "../../message";

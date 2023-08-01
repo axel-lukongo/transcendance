@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { CREATE_CHANEL } from '../../graphql/MutationsChanel'
+import { CREATE_CHANEL } from '../../graphql/Mutation'
 import { ICreateChanelFormProps } from '../../../interfaces/interfaces'
 
 

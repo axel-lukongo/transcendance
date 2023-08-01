@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { IRequest } from '../../../interfaces/interfaces'
-import { QUITE_CHANEL } from '../../graphql/MutationsChanel'
+import { QUITE_CHANEL } from '../../graphql/Mutation'
 
 export default function QuiteChanel({handleChanelRefetch,  element, label}: IRequest) {
 

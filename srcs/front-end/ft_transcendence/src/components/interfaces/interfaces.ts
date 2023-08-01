@@ -1,7 +1,14 @@
 /* //////////////////////////////////////////////////////// */
 /* Model */
 
-import { User } from "../Interface";
+export interface User {
+	id: number;
+	nickname: string;
+	avatar: string;
+	email: string;
+	token: string;
+	tfa_code?: string
+}
 
 export interface Chanel {
 	id: number;

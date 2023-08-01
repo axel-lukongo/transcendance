@@ -1,8 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { REQUEST } from '../graphql/Querys'
-import { User } from "../../Interface";
-import { IContacts } from '../../interfaces/interfaces'
+import { IContacts, User } from '../../interfaces/interfaces'
 
 export interface IMyPendingRequest {
 	user: User;

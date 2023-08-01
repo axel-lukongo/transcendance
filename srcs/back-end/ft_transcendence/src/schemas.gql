@@ -58,6 +58,7 @@ type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
   searchUsers(research: String!, user_id: Int!): [User!]!
+  searchUserForChan(user_id: Int!, chanel_id: Int!): [User!]!
   Channel_findOne(id: Int!): Chanel!
   chanels(user_id: Int!): [Chanel!]!
   Message_findAll_msg: [Message!]!

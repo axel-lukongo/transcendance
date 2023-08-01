@@ -16,7 +16,7 @@ export class UsersService {
     return this.prisma.user.findUnique({where: {id}});
   }
 
-    findUserByToken(token: string) {
+  findUserByToken(token: string) {
     return this.prisma.user.findUnique({where: {token}});
   }
   
@@ -67,6 +67,22 @@ async update(id: number, data: UpdateUserInput) {
       }
     })
     return (users);
+  }
+
+  researchUsersForAddChanel(user_id: number, chan_id: number) {
+    return this.prisma.user.findMany({
+      where: {
+        nickname: { contains: "" },
+        NOT: {
+          OR: [
+            { id: user_id },
+            { chanels: {
+              some: { chanel_id: chan_id }
+            }}
+          ]
+        }
+      }
+    })
   }
 
 }
