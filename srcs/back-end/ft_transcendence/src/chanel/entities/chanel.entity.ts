@@ -23,5 +23,7 @@ export class Chanel {
 
 	@Field(() => Boolean)
 	private: boolean;
-  
+
+	@Field({nullable: true})
+	interlocutor_id: number;
 }

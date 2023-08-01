@@ -11,6 +11,11 @@ export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInpu
 		id
 		owner_id
 		chanel_name
+		chanel_size
+		max_users
+		logo
+		interlocutor_id
+		private
 	}
 }`
 
@@ -21,9 +26,10 @@ export const QUITE_CHANEL = gql`mutation QuiteChanel($input: UpdateChanelUserInp
 	}
 }`
 
-export const ADD_CHANEL = gql`mutation AddChanel($input: AddUserChanel!) {
-	addUser(addUserChanel: $input) {
-		id
-		pending
-	}
-}`
+// export const ADD_CHANEL = gql`
+//   mutation AddChanel($input: AddUserChanel!) {
+// 	addUser(addUserChanel: $input) {
+// 		id
+// 		pending
+// 	}
+// }`

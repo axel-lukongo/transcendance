@@ -15,6 +15,8 @@ export declare class ChanelService {
         max_users: number;
         logo: string;
         private: boolean;
+        interlocutor_id: number;
+        directMsg: boolean;
     }, unknown> & {}) | Error>;
     findOne(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -24,6 +26,8 @@ export declare class ChanelService {
         max_users: number;
         logo: string;
         private: boolean;
+        interlocutor_id: number;
+        directMsg: boolean;
     }, unknown> & {}>;
     update(id: number, data: UpdateChanelInput): Promise<Chanel>;
     remove(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
@@ -34,6 +38,8 @@ export declare class ChanelService {
         max_users: number;
         logo: string;
         private: boolean;
+        interlocutor_id: number;
+        directMsg: boolean;
     }, unknown> & {}>;
     getOwnChanels(user_id: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -43,5 +49,8 @@ export declare class ChanelService {
         max_users: number;
         logo: string;
         private: boolean;
+        interlocutor_id: number;
+        directMsg: boolean;
     }, unknown> & {})[]>;
+    getChannelByOwnersAndInterlocutor(userId1: number, userId2: number): Promise<Chanel | null>;
 }

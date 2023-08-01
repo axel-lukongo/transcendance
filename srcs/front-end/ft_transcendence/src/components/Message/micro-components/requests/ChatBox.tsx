@@ -29,8 +29,9 @@ interface ChatBoxProps{
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
-	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: chan.id}});
+	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: +chan.id}});
 	const [messages, setMessages] = useState<Message[]>([]);
+	// console.log('le channel_id: ====>>> ' +chan.id);
 
 	useEffect(() => {
 		if (data && data.Message_findAll_msg_chan) {
@@ -40,7 +41,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 	}, [data]);
 
 	useEffect(() => {
-		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: chan.id }}).subscribe({
+		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: +chan.id }}).subscribe({
 			next(response) {
 				// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
 				// reponse c'est la ou les reponse de notre server est stocker.

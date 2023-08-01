@@ -42,7 +42,7 @@ export class ChanelService {
       data,
     });
   }
-  
+
   async remove(id: number) {
     return this.prisma.chanel.delete({where: {id: id}});
   }
@@ -51,4 +51,20 @@ export class ChanelService {
     return this.prisma.chanel.findMany({where: {owner_id: user_id}});
   }
 
+  async getChannelByOwnersAndInterlocutor(userId1: number, userId2: number): Promise<Chanel | null> {
+    return this.prisma.chanel.findFirst({
+      where: {
+        OR: [
+          {
+            owner_id: userId1,
+            interlocutor_id: userId2,
+          },
+          {
+            owner_id: userId2,
+            interlocutor_id: userId1,
+          },
+        ],
+      },
+    });
+  }
 }

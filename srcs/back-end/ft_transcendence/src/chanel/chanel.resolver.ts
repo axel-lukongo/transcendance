@@ -50,29 +50,12 @@ export class ChanelResolver {
     return this.messagesResolver.findAll_msg(); // Utilisez la méthode appropriée pour récupérer les messages associés au canal à partir de MessagesResolver
   }
 
-
-
-
-/** ici je vais cree une mutation pour cree un message en etant dans un chanel.
- * je vais ensuite y mettre une subscription afin de surveiller les messages qui seront cree via le chanel
- * et dans mon front j'aurais un abonnement qui m'affichera tous les messages de un chanel specifique
- */
-//   @Mutation(() => [Message])
-//   async createMessageChan(
-// 	@Args('chanelId', { type: () => Int }) chanelId: number,
-// 	@Args('createMessageInput') createMessageInput: CreateMessageInput) {
-// 	const new_msg = this.messagesResolver.createMessage(createMessageInput);
-// 	pubSub.publish(NEW_MSG, {
-// 		AddMessageChan: new_msg,
-// 	});
-//     return new_msg; 
-//   } 
-
-
-// @Subscription(() => Message)
-// 	AddMessageChan(){
-// 	  return pubSub.asyncIterator(NEW_MSG);
-// 	}
-
+  @Query(() => Chanel, { name: 'getChannelByOwnersAndInterlocutor' })
+  async getChannelByOwnersAndInterlocutor(
+	  @Args('userId1', { type: () => Int }) userId1: number,
+	  @Args('userId2', { type: () => Int }) userId2: number,
+	  ) {
+	return this.chanelService.getChannelByOwnersAndInterlocutor(userId1, userId2);
+  }
 
 }

@@ -7,6 +7,7 @@ import HeaderChanel from './micro-components/Box/HeaderChanel';
 import CreateChanelForm from './micro-components/forms/CreateChanelForm';
 import ChatBox from './micro-components/requests/ChatBox';
 import CreateMsg from './micro-components/forms/createMessage';
+import Direct_message from './micro-components/direct-message';
 
 /* CSS */
 import './css/messages.css';
@@ -92,13 +93,25 @@ const Message = () => {
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
+	console.log('dans les message ====>>>>   ',chanel_focus );
 
 	const renderSwitch = (id: number) => {
 		switch(id) {
 			case __DIRECT_MESSAGE__: {
 				return (
 					<div>
-						{/* Direct Message her */}
+						
+						<Direct_message
+						user={user}
+						private_chan={true}
+						refetchChat={refetchChat}
+						chanel_focus={chanel_focus}
+						refetchChanel={refecthChanels}
+						handleChanelFocus={handleChanelFocus}
+						handleChanelRefetch={handleChanelReftch}
+						handleChatRefetch={handleChatRefetch}
+						handleChatBox={handleChatBox}
+						/>
 					</div>
 				);
 				break;

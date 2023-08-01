@@ -9,6 +9,8 @@ export interface Chanel {
 	chanel_size: number;
 	max_users: number;
 	logo: string;
+	interlocutor_id: number;
+
 }
 
 export interface UserChanels {
