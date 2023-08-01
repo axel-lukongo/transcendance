@@ -1,8 +1,10 @@
 import { Resolver, Query, Mutation, Args, Int, Context} from '@nestjs/graphql';
-import { ForbiddenException, Req, Res, Request, Response } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UpdateUserInput } from './dto/update-user.input';
+import { Req } from '@nestjs/common';
+import { AuthenticatedRequest } from 'src/middleware/authMiddleware';
 
 
 @Resolver(() => User)
@@ -13,7 +15,7 @@ export class UsersResolver {
   findAllUsers(@Context() context: any) {
 
     // const {token} = context;
-    // console.log(context);
+    console.log(context);
     // if (!token || !this.usersService.findUserByToken(token)) {
     //   throw new ForbiddenException('Invalid token');
     // }
@@ -41,8 +43,8 @@ export class UsersResolver {
   }
 
   @Query(() => [User], {name: "searchUserForChan"})
-  searchUserForChanel(@Args("user_id", {type: () => Int}) user_id: number,
-  @Args("chanel_id", {type: () => Int}) chanel_id: number) {
+  searchUserForChanel(@Args("user_id", { type: () => Int }) user_id: number,
+  @Args("chanel_id", { type: () => Int }) chanel_id: number) {
     return this.usersService.researchUsersForAddChanel(user_id, chanel_id);
   }
 }
