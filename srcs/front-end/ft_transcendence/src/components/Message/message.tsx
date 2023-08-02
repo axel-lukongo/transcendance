@@ -8,6 +8,7 @@ import CreateChanelForm from './micro-components/forms/CreateChanelForm';
 import ChatBox from './micro-components/requests/ChatBox';
 import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
+import AddUserInChan from './micro-components/forms/AddUserInChan'
 
 /* CSS */
 import './css/messages.css';
@@ -84,7 +85,10 @@ const Message = () => {
 
 
 	const handleChatBox = (switch_id: number) => {
-		setChatBox(switch_id);
+		if (switch_id < 1 || switch_id > 4)
+			throw new Error("Bad ID");
+		else
+			setChatBox(switch_id);
 	}
 	
 	const handleIsChanel = () => {
@@ -114,7 +118,6 @@ const Message = () => {
 						/>
 					</div>
 				);
-				break;
 			}
 			case __PRIVATE_CHANEL__: {
 				return (
@@ -130,7 +133,6 @@ const Message = () => {
 						handleChatBox={handleChatBox}
 					/>
 				);
-				break;
 			}
 			case __PUBLIC_CHANEL__: {
 				return (
@@ -146,7 +148,6 @@ const Message = () => {
 						handleChatBox={handleChatBox}
 					/>
 				);
-				break;
 			}
 			case __CHANEL_REQUEST__: {
 				return (
@@ -158,7 +159,6 @@ const Message = () => {
 						handleChatBox={handleChatBox}
 					/>
 				);
-				break;
 			}
 			default: {
 				break;
@@ -185,7 +185,6 @@ const Message = () => {
 						</div>
 					</div>
 				);
-				break;
 			}
 			case __CHAT__: {
 				return (
@@ -206,8 +205,6 @@ const Message = () => {
 						</div>
 					</div>
 				);
-
-				break;
 			}
 			case __ADD_USER__: {
 				return (
@@ -219,16 +216,15 @@ const Message = () => {
 							is_chanel={is_chanel}
 						/>
 						<div className="chat-history">
-							<ChatBox chan={chanel_focus} />
+						<AddUserInChan 
+							user={user}
+							chanel_focus={chanel_focus}
+						/>
 						</div>
 						<div className="chat-message ">
-							<div className="input-group mb-0">
-								<CreateMsg />
-							</div>
 						</div>
 					</div>
 				);
-				break;
 			}
 			default: {
 				break;

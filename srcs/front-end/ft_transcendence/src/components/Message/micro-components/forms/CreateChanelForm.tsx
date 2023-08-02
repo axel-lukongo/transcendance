@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { CREATE_CHANEL } from '../../graphql/MutationsChanel'
+import { CREATE_CHANEL } from '../../graphql/Mutation'
 import { ICreateChanelFormProps } from '../../../interfaces/interfaces'
 
 
@@ -44,6 +44,14 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setChanel({...chanel, [event.target.name]: event?.target.value
 		})
+	}
+
+	const handleSelect = (e: any) => {
+		if (e.target.value == "true")
+			setChanel({...chanel, private: true});
+		else
+			setChanel({...chanel, private: false});
+		// console.log(e);
 	}
 
 	/* //////////////////////////////////////////////////////// */
@@ -96,6 +104,10 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				<label htmlFor="private">
 					private
 				</label>
+					<label htmlFor="">| yes</label><input type="radio" onClick={handleSelect} value={"true"} name="private"/>
+				<label htmlFor="public">
+				</label>No
+					<input type="radio" onClick={handleSelect} value={"false"} name="private"/>
 				<br />
 				{/* need to add a toggle btn her */}
 				<button>Create +</button>

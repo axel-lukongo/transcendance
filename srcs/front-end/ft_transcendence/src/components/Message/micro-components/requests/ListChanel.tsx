@@ -3,7 +3,7 @@ import {  useQuery } from "@apollo/client";
 import { IPropsChanel } from "../../../interfaces/interfaces";
 import { UserChanels } from "../../../interfaces/interfaces";
 import QuiteChanel from "../buttons/QuitChanel";
-import { CHANELS_LIST } from '../../graphql/QueryChanel'
+import { CHANELS_LIST } from '../../graphql/Query'
 import CardChanel from "../Box/CardChanel";
 
 import { __CREATE_CHANEL__ } from "../../message";

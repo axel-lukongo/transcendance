@@ -1,6 +1,5 @@
 import React from "react";
-import { User } from "../../../Interface";
-import { Chanel } from "../../../interfaces/interfaces";
+import { Chanel, User } from "../../../interfaces/interfaces";
 import { IHeaderProps } from '../../../interfaces/interfaces'
 import { ADD_USER_IN_CHANEL } from "../../../Contact/graphql/Mutations";
 import { __ADD_USER__ } from "../../message";
@@ -24,7 +23,7 @@ export default function HeaderChanel({chanel_focus, user, is_chanel, handleChatB
 					<h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
 					<small>Last seen: 2 hours ago</small>
 				</div>
-				<div>{is_chanel ? <button onClick={handelClick}>++</button> : null}</div> {/* btn pour l'ajout de users dans un chanel */}
+				<div>{chanel_focus.id != "" ? <button onClick={handelClick}>++</button> : null}</div> {/* btn pour l'ajout de users dans un chanel */}
 				</div>
 
 			</div>
