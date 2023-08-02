@@ -2,13 +2,13 @@
 /* Model */
 
 export interface User {
-	id: number;
-	nickname: string;
-	avatar: string;
-	email: string;
-	token: string;
-	tfa_code?: string
-}
+    avatar: string;
+    email: string;
+    id: number;
+    nickname: string;
+    token: string;
+    tfa_code?: string
+  }
 
 export interface Chanel {
 	id: number;
@@ -37,6 +37,37 @@ export interface IContacts {
 	pending: boolean;
 	contact: IContact
 }
+
+export interface Player {
+	id: number;
+	userId: number;
+	positionX: number;
+	positionY: number;
+	waitingRoomId: number;
+	opponentPlayerId :number;
+	ballId?: number;
+	pongId?: number;
+	host: boolean;
+  }
+  
+  export interface Ball {
+	id: number;
+	positionX: number;
+	positionY: number;
+	directionX: number;
+	directionY: number;
+  }
+  
+  export interface PongI {
+	id: number;
+	userId1: number;
+	userId2: number;
+	scoreUser1?: number;
+	scoreUser2?: number;
+	loserId?: number | null;
+	winnerId?: number | null;
+	VersusDate: string;
+  }
 
 /* //////////////////////////////////////////////////////// */
 /* Contact */

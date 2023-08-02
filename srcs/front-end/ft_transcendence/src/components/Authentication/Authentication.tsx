@@ -10,6 +10,7 @@ import { CreateUserForm } from './micro-components/CreateUserForm';
 import {TwoFactorAuthForm} from './micro-components/TwoFactorAuthForm'
 
 import Home from '../Home/Home';
+import Pong from '../Pong/Pong';
 import Message from '../Message/message';
 import Contact from '../Contact/Contact';
 
@@ -182,6 +183,7 @@ return (
     {sessionStorage.getItem('user') ? (
       <Routes>
         <Route path="/" element={<Home  />} />
+        <Route path="/pong" element={<Pong  />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>	

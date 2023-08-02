@@ -11,16 +11,18 @@ datasource db {
 }
 
 model User {
-	id					Int             @id @default(autoincrement())
-	token				String?         @unique
-	is_connecting		Boolean?		@default(true)
+	id					Int         @id @default(autoincrement())
+	token				String?		@unique
+	is_connecting		Boolean?	@default(true)
 	tfa_code			String?
-	email				String          @unique
-	intra_login			String			@unique
-	nickname			String          @unique
+	email				String		@unique
+	intra_login			String		@unique
+	nickname			String		@unique
 	avatar				String?
-	userPong			Pong[]          @relation("User1")
-	userPong2			Pong[]          @relation("User2")
+	rank				String		@default("Bronze")
+	level 				Float 		@default(0)
+	userPong			Pong[]		@relation("User1")
+	userPong2			Pong[]		@relation("User2")
 	chanels				Users_Chanels[]
 	own_chan			Chanel[]		@relation("Owner")
 	contact				Contact[]		@relation("contactRef")
@@ -29,25 +31,15 @@ model User {
 }
 
 model Contact {
-	id					Int				@default(autoincrement())@id
+	id					Int			@default(autoincrement())@id
 	user_id				Int				
 	contact_id			Int				
-	pending				Boolean?		@default(true)
-	contact				User			@relation("contactRef", fields: [user_id], references: [id])
-	user				User			@relation("reverseContactRef", fields: [contact_id], references: [id])
+	pending				Boolean?	@default(true)
+	contact				User		@relation("contactRef", fields: [user_id], references: [id])
+	user				User		@relation("reverseContactRef", fields: [contact_id], references: [id])
 	@@unique([user_id, contact_id])
 }
 
-model Pong {
-	id					Int			@id @default(autoincrement())
-	userId1				Int
-	userId2				Int
-	scoreUser1			Int
-	scoreUser2			Int
-	Versus_date			DateTime	@default(now())
-	user1				User		@relation("User1", fields: [userId1], references: [id])
-	user2				User		@relation("User2", fields: [userId2], references: [id])
-}
 
 model Chanel {
 	id					Int			@id @default(autoincrement())
@@ -75,6 +67,49 @@ model Users_Chanels {
 	@@id([user_id, chanel_id])
 }
 
+model Pong {
+  id           			Int      	@id @default(autoincrement())
+  userId1      			Int
+  userId2      			Int
+  scoreUser1   			Int?		@default(0)
+  scoreUser2   			Int?		@default(0)
+  loserId     			Int?
+  winnerId    			Int?
+  versusDate  			DateTime 	@default(now())
+
+  user1        			User     	@relation("User1", fields: [userId1], references: [id])
+  user2        			User     	@relation("User2", fields: [userId2], references: [id])
+}
+
+model Player {
+  id            	Int 			@id @default(autoincrement())
+  userId        	Int 			@unique
+  positionX     	Float
+  positionY     	Float
+  host				Boolean?		@default(false)
+  opponentPlayerId	Int				@default(0)
+  waitingRoomId 	Int
+  pongId			Int?
+  ballId 			Int ?
+  positionBall		Ball? 			@relation("Ball", fields: [ballId], references: [id])
+  waitingRoom   	WaitingRoom? 	@relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
+}
+
+model WaitingRoom {
+	id            Int 				@id @default(autoincrement()) 
+	waitingList   Player[] 			@relation("PlayerWaitingList")
+}
+
+
+model Ball {
+  id					Int      	@id @default(autoincrement())
+  positionX        		Float 		@default(50)
+  positionY        		Float 		@default(50)
+  directionX         	Float 		@default(20)
+  directionY         	Float 		@default(10)
+  players				Player[] 	@relation("Ball")
+}
+
 model ToBloc{
 	id					Int			@id @default(autoincrement())
 	blocker_id			Int
@@ -82,11 +117,11 @@ model ToBloc{
 }
 
 model Message {
-  id				Int      @id @default(autoincrement())
-  sender_id			Int
-  channel_id		Int?
-  content			String
-  sent_at			DateTime @default(now())
-  sender			User     @relation("Send", fields: [sender_id], references: [id])
-  channel			Chanel?  @relation("ChanelMessages", fields: [channel_id], references: [id])
+  id					Int      	@id @default(autoincrement())
+  sender_id				Int
+  channel_id			Int?
+  content				String
+  sent_at				DateTime 	@default(now())
+  sender				User     	@relation("Send", fields: [sender_id], references: [id])
+  channel				Chanel?  	@relation("ChanelMessages", fields: [channel_id], references: [id])
 }

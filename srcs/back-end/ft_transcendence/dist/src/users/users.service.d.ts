@@ -12,6 +12,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {})[]>;
     findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -22,6 +24,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {}, null, import("@prisma/client/runtime/library").DefaultArgs>;
     findUserByToken(token: string): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -32,6 +36,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {}, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: number, data: UpdateUserInput): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -42,6 +48,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {}>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -52,6 +60,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
     researchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -62,6 +72,8 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {})[]>;
     researchUsersForAddChanel(user_id: number, chan_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -72,5 +84,7 @@ export declare class UsersService {
         intra_login: string;
         nickname: string;
         avatar: string;
+        rank: string;
+        level: number;
     }, unknown> & {})[]>;
 }

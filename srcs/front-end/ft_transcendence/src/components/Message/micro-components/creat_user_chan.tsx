@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useMutation } from '@apollo/client';
 // import { CREATE_MUTATION_1, CREATE_MUTATION_2 } from '../graphql/mutations';
 import { ADD_USER_IN_CHANEL } from '../../Contact/graphql/Mutations';
-import { Chanel, ICardChanelProps } from '../../interfaces/interfaces';
+import { Chanel  } from '../../interfaces/interfaces';
 import { __CHAT__ } from '../message';
 
 interface MyComponentProps {
@@ -19,9 +19,6 @@ const CreatUserChan = ({ chan, hasFetchedData, handleChange }: MyComponentProps)
 
 
   useEffect(() => {
-
-
-
 
 	if (hasFetchedData && !isConditionExecuted.current){
 
@@ -43,22 +40,15 @@ const CreatUserChan = ({ chan, hasFetchedData, handleChange }: MyComponentProps)
     return <div>Loading...</div>;
   }
 
-
-
   if ( error2) {
     return <div>Error: in the double mutation</div>;
   }
-
-
 
 //   if(hasFetchedData){
 // 		handleChange(hasFetchedData)
 // 		handleChanelFocus(chanel.chanels)
 // 		handleChatBox(__CHAT__);
 // 	}
-
-
-
 
   return (
     <div>

@@ -5,8 +5,6 @@ import { generateAccessToken } from 'src/utils/auth.utils';
 import { saveBase64ToFile } from 'src/utils/upload.utils';
 
 
-
-
 @Injectable()
 export class AuthenticationService {
 

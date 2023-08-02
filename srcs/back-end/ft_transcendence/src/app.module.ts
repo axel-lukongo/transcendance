@@ -10,7 +10,7 @@ import 	{AuthMiddleware} from './middleware/authMiddleware'
 import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
-import { MulterModule } from '@nestjs/platform-express';
+import { PongModule } from './pong/pong.module';
 import { UserChanelsModule } from './user-chanels/user-chanels.module';
 import { ToblocModule } from './tobloc/tobloc.module';
 
@@ -31,6 +31,7 @@ import { ToblocModule } from './tobloc/tobloc.module';
 		MessagesModule,
 		ContactsModule,
 		AuthenticationModule,
+		PongModule,
 		UserChanelsModule,
 		ToblocModule
 	],

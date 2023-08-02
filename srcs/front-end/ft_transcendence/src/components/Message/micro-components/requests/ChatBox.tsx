@@ -1,9 +1,7 @@
 import React from "react";
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState} from 'react';
 import {gql, useQuery} from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
-import CreateMsg from '../forms/createMessage'
-import {Link} from 'react-router-dom';
 import { GET_MESSAGES_BY_CHANNEL } from "../../graphql/Query";
 import { NewMessageSubscription } from "../../graphql/souscription.ws";
 

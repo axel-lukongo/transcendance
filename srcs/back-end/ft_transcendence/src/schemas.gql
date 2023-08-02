@@ -48,6 +48,42 @@ type Contact {
   contact(user_id: Int!): User!
 }
 
+type Player {
+  id: Int!
+  userId: Int!
+  positionX: Float!
+  positionY: Float!
+  host: Boolean!
+  waitingRoomId: Int!
+  opponentPlayerId: Int!
+  ballId: Float
+  pongId: Float
+}
+
+type Ball {
+  id: Int!
+  positionX: Float!
+  positionY: Float!
+  directionX: Float!
+  directionY: Float!
+}
+
+type WaitingRoom {
+  id: Int!
+  waitingList: [Player!]
+}
+
+type Pong {
+  id: Int!
+  userId1: Int!
+  userId2: Int!
+  scoreUser1: Int!
+  scoreUser2: Int!
+  loserId: Int!
+  winnerId: Int!
+  versusDate: DateTime!
+}
+
 type UsersChanels {
   user_id: Int!
   chanel_id: Int!
@@ -77,6 +113,16 @@ type Query {
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
+  Pongs: [Pong!]!
+  Pong(id: Int!): Pong!
+  findGame(userId: Int!): Pong!
+  Players: [Player!]!
+  findPlayer(id: Int!): Player!
+  findWaitingRoomPlayer(id: Int!): [Player!]!
+  findWaitingRooms: [WaitingRoom!]!
+  findWaitingRoom(id: Int!): WaitingRoom!
+  Ball: [Ball!]!
+  Balls(id: Int!): Ball!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
   myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
   tobloc(id: Int!): Tobloc!
@@ -97,6 +143,19 @@ type Mutation {
   replyAddContact(reply: UpdateContact!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
+  createPong(createPongInput: CreatePongInput!): Pong!
+  removePong(id: Int!): Pong!
+  updatePong(updatePongInput: UpdatePongInput!): Pong!
+  stopPong: Boolean!
+  startPong(id: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
+  removePlayer(id: Int!): Player!
+  createPlayer(createPlayerInput: CreatePlayerInput!): Player!
+  updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
+  createWaitingRoom: WaitingRoom!
+  removeWaitingRoom(id: Int!): WaitingRoom!
+  createBall: Ball!
+  removeBall(id: Int!): Ball!
+  updateBall(updateBallInput: UpdateBallInput!): Ball!
   addUser(addUserChanel: AddUserChanel!): UsersChanels!
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
   deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
@@ -171,6 +230,52 @@ input CreateAuthenticationInput {
   avatar: String
 }
 
+input CreatePongInput {
+  userId1: Int!
+  userId2: Int!
+  playerId1: Int!
+  playerId2: Int!
+}
+
+input UpdatePongInput {
+  userId1: Int
+  userId2: Int
+  playerId1: Int
+  playerId2: Int
+  id: Int!
+  scoreUser1: Int!
+  scoreUser2: Int!
+  loserId: Int!
+  winnerId: Int!
+}
+
+input CreatePlayerInput {
+  userId: Int!
+  positionY: Float!
+  positionX: Float!
+  waitingRoomId: Int!
+}
+
+input UpdatePlayerInput {
+  id: Int!
+  userId: Int!
+  positionX: Float!
+  positionY: Float!
+  host: Boolean!
+  waitingRoomId: Int!
+  opponentPlayerId: Int!
+  ballId: Float
+  pongId: Float
+}
+
+input UpdateBallInput {
+  id: Int!
+  positionX: Float!
+  positionY: Float!
+  directionX: Float!
+  directionY: Float!
+}
+
 input AddUserChanel {
   user_id: Int!
   chanel_id: Int!
@@ -185,4 +290,8 @@ input UpdateChanelUserInput {
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
+  pongUpdatedSubscription(id: Int!): Pong!
+  listPlayerSubscription: [Player!]!
+  playerUpdatedSubscription(id: Int!): Player!
+  ballUpdatedSubscription(id: Int!): Ball!
 }

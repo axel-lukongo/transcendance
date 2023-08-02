@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_CONTACT } from "../../graphql/Mutations";
-import { IAddContact, User } from '../../../interfaces/interfaces'
+import { IAddContact } from '../../../interfaces/interfaces'
 
 export default function AddContactBtn({id, nickname, user, refetch}: IAddContact) {
 

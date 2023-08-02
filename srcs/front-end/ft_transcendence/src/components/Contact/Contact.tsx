@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState,} from "react"
 import FriendsRequest from "./micro-components/FriendsRequest"
 import ListContact from "./micro-components/ListContact";
 import AddContact from "./micro-components/AddContact";
