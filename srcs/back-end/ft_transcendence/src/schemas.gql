@@ -79,8 +79,8 @@ type Pong {
   userId2: Int!
   scoreUser1: Int!
   scoreUser2: Int!
-  loserId: Int!
-  winnerId: Int!
+  loserId: Int
+  winnerId: Int
   versusDate: DateTime!
 }
 
@@ -245,8 +245,8 @@ input UpdatePongInput {
   id: Int!
   scoreUser1: Int!
   scoreUser2: Int!
-  loserId: Int!
-  winnerId: Int!
+  loserId: Int
+  winnerId: Int
 }
 
 input CreatePlayerInput {

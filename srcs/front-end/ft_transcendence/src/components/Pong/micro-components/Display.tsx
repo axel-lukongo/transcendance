@@ -24,13 +24,17 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     directionY: 50,
   };
 
-  const host = player?.host === true;
 
-  const playerStickClass = host ? "green-stick" : "red-stick";
-  const playerScoreClass = host ? "green-stick-score" : "red-stick-score";
+  const playerStickClass = player?.host ? "green-stick" : "red-stick";
+  const playerScoreClass = player?.host ? "green-stick-score-host" : "green-stick-score-not-host";
+  
+  const otherPlayerStickClass = player?.host ? "red-stick" : "green-stick";
+  const otherPlayerScoreClass = player?.host ? "red-stick-score-host" : "red-stick-score-not-host";
+  
+  // ... rest of your code ...
+  
+  
 
-  const otherPlayerStickClass = !host ? "green-stick" : "red-stick";
-  const otherPlayerScoreClass = !host ? "green-stick-score" : "red-stick-score";
 
   const [ball, setBall]= useState<Ball | null>(default_ball);
   const [mount, setMount] = useState(false);
@@ -174,8 +178,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       const subscription = wsClient.request({ query: PONG_UPDATED_SUBSCRIPTION, variables: {id : player.pongId} }).subscribe({
         next(response) {
           if (response.data) {
-            const updatedPong: PongI = response.data?.playerUpdatedSubscription as PongI;
-            console.log('pong update', updatedPong);
+            const updatedPong: PongI = response.data?.pongUpdatedSubscription as PongI;
             if (updatedPong.scoreUser1 && updatedPong.scoreUser1 !== playerScore)
               setPlayerScore(updatedPong.scoreUser1);
             else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore)
@@ -194,14 +197,17 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
   }, [player, otherPlayer, playerScore, otherPlayerScore, setPlayerScore, setOtherPlayerScore]);
 
   return (
-    <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
-      <div className={playerStickClass} style={{ top: `${player?.positionY}%` }} />
-      {/* <div className={playerScoreClass}> {playerScore} </div> */}
-    
-      <div className={otherPlayerStickClass} style={{ top: `${otherPlayer?.positionY}%` }} />
-      {/* <div className={otherPlayerScoreClass}> {otherPlayerScore} </div> */}
-    
-      <div className='ball' style={{ top: `${ball?.positionY}%` , left: `${ball?.positionX}%`, }} /> 
+    <div>
+      <div className="score-container-box">
+        <div className={playerScoreClass}>{playerScore} </div>
+        <div className="score-separator" />
+        <div className={otherPlayerScoreClass}>{otherPlayerScore}   </div>
+      </div>
+      <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
+        <div className={playerStickClass} style={{ top: `${player?.positionY}%` }} />
+        <div className={otherPlayerStickClass} style={{ top: `${otherPlayer?.positionY}%` }} />
+        <div className='ball' style={{ top: `${ball?.positionY}%`, left: `${ball?.positionX}%` }} /> 
+      </div>
     </div>
-  )
+  );
 }

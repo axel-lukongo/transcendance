@@ -64,8 +64,8 @@ export interface Player {
 	userId2: number;
 	scoreUser1?: number;
 	scoreUser2?: number;
-	loserId?: number | null;
-	winnerId?: number | null;
+	loserId?: number ;
+	winnerId?: number;
 	VersusDate: string;
   }
 

@@ -74,6 +74,7 @@ export class PongResolver {
     pubSub.publish(PONG_UPDATE_EVENT, {
       pongUpdatedSubscription : pongUp,
     });
+    
     return pongUp;
   }
   @Subscription(() => Pong, {
@@ -158,7 +159,7 @@ export class PongResolver {
         if (rightWall)
         {
           currentPong.scoreUser1 += 1;
-          if (currentPong.scoreUser1 == 5)
+          if (currentPong.scoreUser1 == 10000)
           {
             currentPong.winnerId = player.userId;
             currentPong.loserId = otherPlayer.userId;
@@ -167,30 +168,19 @@ export class PongResolver {
         else
         {
           currentPong.scoreUser2 += 1;
-          if (currentPong.scoreUser2 == 5)
+          if (currentPong.scoreUser2 == 10000)
           {
             currentPong.winnerId = otherPlayer.userId;
             currentPong.loserId = player.userId;
           }
         }
         const DataUpdatePong : UpdatePongInput = {
-          id : currentPong.id,
-          scoreUser1 : currentPong.scoreUser1 + 1,
-          scoreUser2 : currentPong.scoreUser2 + 1,
-          winnerId : currentPong.winnerId,
-          loserId : currentPong.loserId,
+          ...currentPong
         }
-        try {
-          const test = this.updatePong(DataUpdatePong);
-          console.log(test);
-          
-        } catch (error) {
-          console.log(error);
-        }
-        
+          this.updatePong(DataUpdatePong);
         if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
-          console.log('ici');
+          console.log('final');
           this.stopPong();
         }
         const DataUpdateBall : UpdateBallInput = {

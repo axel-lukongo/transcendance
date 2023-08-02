@@ -83,7 +83,10 @@ export class PongService {
     }
   }
   update(id: number, updatePongInput: UpdatePongInput) {
-    return `This action updates a #${id} pong`;
+    return this.prisma.pong.update({
+      where : {id},
+      data : updatePongInput
+    })
   }
 
   remove(id: number) {

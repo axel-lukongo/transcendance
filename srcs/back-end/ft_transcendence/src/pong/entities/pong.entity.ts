@@ -17,10 +17,10 @@ export class Pong {
   	@Field(() => Int)
 	scoreUser2: number;
 
-  	@Field(() => Int)
+ 	@Field(() => Int, {nullable: true})
 	loserId: number;
 
-  	@Field(() => Int)
+ 	@Field(() => Int, {nullable: true})
 	winnerId: number;
 
 	@Field(() => Date)

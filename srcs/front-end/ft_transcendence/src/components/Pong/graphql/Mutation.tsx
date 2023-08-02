@@ -77,13 +77,14 @@ export const BALL_UPDATED_SUBSCRIPTION = gql`
 `;
 
 export const PONG_UPDATED_SUBSCRIPTION = gql`
-  subscription PongUpdatedSubscription($id: Int!) {
+subscription PongUpdatedSubscription($id: Int!) {
     pongUpdatedSubscription(id: $id) {
       id
       scoreUser1
       scoreUser2
       loserId
       winnerId
+      
     }
   }
 `;

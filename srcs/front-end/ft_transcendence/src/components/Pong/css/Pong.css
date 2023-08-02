@@ -9,6 +9,7 @@
 	top: 25%; 
 	left: 25%; 
 }
+
   
   /* Utiliser des pourcentages pour la position des sticks */
 .red-stick {
@@ -29,29 +30,56 @@
 	left: 4%; 
  }
 
+ .score-container-box {
+	width: 50%;
+	height: 10%;
+	display: flex;
+	justify-content: space-between; /* Espacement uniforme entre les éléments */
+	align-items: center; /* Centrage vertical des éléments */
+	border-radius: 20px;
+	border: 9px solid #ffd27d;
+	background-color: rgba(41, 37, 82, 0.40);
+	position: absolute;
+	top: 12%;
+	left: 25%;
+  }
+  
+  .score-separator {
+	width: 2%;
+	height: 80%;
+	border-left: 5px dotted #ffd27d;
+  }
 
- .red-stick-score {
-	position: relative;
-	text-align: center;
-	font-size: 200%;
-	top: 1%;
-	font-family: "Orbitron";
-	font-weight: bold;
-	color: #ffd27d; 
+  .green-stick-score-host,
+  .green-stick-score-not-host,
+  .red-stick-score-host,
+  .red-stick-score-not-host {
+	  position: relative;
+	  text-align: center;
+	  font-size: 300%;
+	  font-family: "Orbitron";
+	  font-weight: bold;
+  }
+  
+  .green-stick-score-host {
+	  color: #ffd27d;
+	  left: 30%;
+  }
+  
+  .red-stick-score-host {
+	  color: #ffd27d;
+	  right: 30%;
+  }
+
+  .green-stick-score-not-host {
+	color: #ffd27d;
 	left: 30%;
 }
-
- .green-stick-score {
-	position: relative;
-	text-align: center;
-	font-size: 200%;
-	top: 1%;
-	font-family: "Orbitron";
-	font-weight: bold;
-	color: #ffd27d; 
-	left: 50%;
-}
-
+  .red-stick-score-not-host {
+	  color: #ffd27d;
+	  right: 30%;
+	}
+	
 .ball {
 	width: 3%; /* Définir la largeur de la balle */
 	height: 4%; /* Définir la hauteur de la balle */
