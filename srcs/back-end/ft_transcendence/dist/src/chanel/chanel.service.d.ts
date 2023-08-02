@@ -53,4 +53,5 @@ export declare class ChanelService {
         directMsg: boolean;
     }, unknown> & {})[]>;
     getChannelByOwnersAndInterlocutor(userId1: number, userId2: number): Promise<Chanel | null>;
+    removeDirectMsg(userId1: number, userId2: number): Promise<Chanel | null>;
 }

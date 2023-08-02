@@ -6,6 +6,7 @@ import { CREATE_CHANEL } from "../graphql/MutationsChanel";
 import {useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
+import Tobloc from "./Tobloc";
 
 export default function Direct_message(props: IPrivateMessageProps) {
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
@@ -56,9 +57,12 @@ export default function Direct_message(props: IPrivateMessageProps) {
 						interlocutor={contact.contact}
 						handleChanelRefecth={props.handleChanelRefetch} />}
 						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
+						<button onClick={() => handleNewDirectMsg()}>message</button>
 					</ul>
 				);
 			})}
+
+
 		</div>
 	);
 }

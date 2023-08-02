@@ -67,4 +67,32 @@ export class ChanelService {
       },
     });
   }
+
+
+  async removeDirectMsg(userId1: number, userId2: number): Promise<Chanel | null> {
+	const chan = await this.prisma.chanel.findFirst({
+	  where: {
+		OR: [
+		  {
+			owner_id: userId1,
+			interlocutor_id: userId2,
+		  },
+		  {
+			owner_id: userId2,
+			interlocutor_id: userId1,
+		  },
+		],
+	  },
+	});
+  
+	if (chan) {
+	  return this.prisma.chanel.delete({ where: { id: chan.id } });
+	} else {
+	  return null;
+	}
+  }
+  
 }
+
+
+

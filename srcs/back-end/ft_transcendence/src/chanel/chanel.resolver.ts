@@ -58,4 +58,12 @@ export class ChanelResolver {
 	return this.chanelService.getChannelByOwnersAndInterlocutor(userId1, userId2);
   }
 
+
+  @Mutation(() => Chanel, { name: 'removeDirectMsg' })
+  async removeDirectMsg(
+	  @Args('userId1', { type: () => Int }) userId1: number,
+	  @Args('userId2', { type: () => Int }) userId2: number,
+	  ) {
+	return this.chanelService.removeDirectMsg(userId1, userId2);
+  }
 }

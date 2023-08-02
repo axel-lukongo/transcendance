@@ -75,11 +75,11 @@ model Users_Chanels {
 	@@id([user_id, chanel_id])
 }
 
-// model ToBloc{
-// 	id					Int			@id @default(autoincrement())
-// 	blocker_id			Int
-// 	blocked_id			Int
-// }
+model ToBloc{
+	id					Int			@id @default(autoincrement())
+	blocker_id			Int
+	blocked_id			Int
+}
 
 model Message {
   id				Int      @id @default(autoincrement())

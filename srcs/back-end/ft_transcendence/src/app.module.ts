@@ -12,6 +12,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { UserChanelsModule } from './user-chanels/user-chanels.module';
+import { ToblocModule } from './tobloc/tobloc.module';
 
 @Module({
 	imports: [
@@ -30,7 +31,8 @@ import { UserChanelsModule } from './user-chanels/user-chanels.module';
 		MessagesModule,
 		ContactsModule,
 		AuthenticationModule,
-		UserChanelsModule
+		UserChanelsModule,
+		ToblocModule
 	],
 })
 export class AppModule {

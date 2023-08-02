@@ -55,6 +55,12 @@ type UsersChanels {
   chanels: Chanel!
 }
 
+type Tobloc {
+  id: Int!
+  blocker_id: Int!
+  blocked_id: Int!
+}
+
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
@@ -72,6 +78,7 @@ type Query {
   checkTwoAuthenticationFactor(code: String!): User!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
   myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
+  tobloc(id: Int!): Tobloc!
 }
 
 type Mutation {
@@ -81,6 +88,7 @@ type Mutation {
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
   Channel_update(updateChanelInput: UpdateChanelInput!): Chanel!
   removeChanel(id: Int!): Chanel!
+  removeDirectMsg(userId1: Int!, userId2: Int!): Chanel!
   createMessage(createMsgInput: CreateMessageInput!): Message!
   updateMessage(updateMsgInput: UpdateMessageInput!): Message!
   deleteMessage: Message!
@@ -91,6 +99,8 @@ type Mutation {
   addUser(addUserChanel: AddUserChanel!): UsersChanels!
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
   deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
+  createToBloc(blockerId: Int!, blockedId: Int!): Tobloc!
+  removeTobloc(id: Int!): Tobloc!
 }
 
 input UpdateUserInput {

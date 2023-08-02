@@ -60,4 +60,5 @@ export declare class ChanelResolver {
         sent_at: Date;
     }, unknown> & {})[]>;
     getChannelByOwnersAndInterlocutor(userId1: number, userId2: number): Promise<Chanel>;
+    removeDirectMsg(userId1: number, userId2: number): Promise<Chanel>;
 }

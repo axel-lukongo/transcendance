@@ -16,7 +16,7 @@ export class MessagesService {
 		return this.prisma.message.findMany({});
 	}
 
-	  async findOne_msg(id: number) {
+	async findOne_msg(id: number) {
 		return this.prisma.message.findUnique({where: {id: id}});
 	}
 
