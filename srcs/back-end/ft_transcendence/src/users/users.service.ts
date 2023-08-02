@@ -16,7 +16,7 @@ export class UsersService {
     return this.prisma.user.findUnique({where: {id}});
   }
 
-    findUserByToken(token: string) {
+  findUserByToken(token: string) {
     return this.prisma.user.findUnique({where: {token}});
   }
   
@@ -42,17 +42,18 @@ async update(id: number, data: UpdateUserInput) {
   }
 
   researchUsers(research: string, user_id: number) {
-    let users =  this.prisma.user.findMany({
+    let users = this.prisma.user.findMany({
       where: {
         nickname: {
           contains: research
         },
         NOT: {
           OR: [
+            { id: user_id },
             { contact: { some: {
                OR: [
-                  {user: {id: user_id}},
-                  {contact: {id: user_id}}
+                  {user: { id: user_id }},
+                  {contact: { id: user_id }}
                 ]
             }}},
             { reverse_contact: {some: {
@@ -66,6 +67,22 @@ async update(id: number, data: UpdateUserInput) {
       }
     })
     return (users);
+  }
+
+  researchUsersForAddChanel(user_id: number, chan_id: number) {
+    return this.prisma.user.findMany({
+      where: {
+        nickname: { contains: "" },
+        NOT: {
+          OR: [
+            { id: user_id },
+            { chanels: {
+              some: { chanel_id: chan_id }
+            }}
+          ]
+        }
+      }
+    })
   }
 
 }

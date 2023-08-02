@@ -2,30 +2,29 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateChanelInput {
-//   @Field(() => Int, { description: 'Example field (placeholder)' })
-  @Field(() => Int, {nullable: true})
+
+  @Field(() => Boolean)
+  private: boolean;
+
+  @Field(() => Int)
   owner_id: number;
   
-  @Field(() => String, {nullable: true})
+  @Field(() => String)
   chanel_name: string;
 
-  @Field(() => Int, {nullable: true})
+  @Field(() => Int)
   chanel_size: number;
 
-  @Field(() => Int, {nullable: true})
+  @Field(() => Boolean, {nullable: true})
+  privmsg?: boolean;
+
+  @Field(() => Int)
   max_users: number;
 
   @Field(() => String, {nullable: true})
   logo: string;
-}
 
-// model Chanel {
-// 	id          Int             @id @default(autoincrement())
-// 	owner_id    Int
-// 	chanel_name String
-// 	chanel_size Int
-// 	max_users   Int
-// 	owner       User            @relation(fields: [owner_id], references: [id])
-// 	users       Users_Chanels[]
-// 	messages    Message[]
-//   }
+  @Field(() => Int, {nullable: true})
+  interlocutor_id: number;
+
+}

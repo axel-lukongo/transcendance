@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { MatchMaking } from './micro-components/MatchMaking';
 import { Display } from './micro-components/Display';
-import { Player } from '../Interface';
+import { Player } from '../interfaces/interfaces';
 
 
 

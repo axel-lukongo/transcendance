@@ -8,9 +8,13 @@ export class UserChanelsService {
 
 	constructor(private readonly prisma: PrismaService) {}
 
-	async findMyChanels(user_id: number) { 
+	async findMyChanels(user_id: number, private_chan: boolean) { 
 		return this.prisma.users_Chanels.findMany({
-			where: { user_id, pending: false } 
+			where: { 
+				user_id,
+				pending: false,
+				chanel: { private: private_chan }
+			} 
 		});
 	}
 

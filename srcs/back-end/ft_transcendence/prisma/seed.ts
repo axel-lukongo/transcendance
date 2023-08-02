@@ -9,7 +9,7 @@ async function main() {
 
 	const N_USER = 10; // Number of User created
 	const N_CONTACT = 10; // Number of Contact created 
-	const N_CHANEL = 7; // Number of Chanel created
+	const N_CHANEL = 10; // Number of Chanel created
 	const N_CHANEL_USER = 10; // Number of Chanel created
 
 	
@@ -56,10 +56,10 @@ async function main() {
 			where: { id: i },
 			update: {},
 			create: {
-				owner_id: i,
 				chanel_name: "toto_" + i,
 				chanel_size: i * 2,
-				max_users: i * 4
+				max_users: i * 4,
+				owner_id: i
 			}
 		})
 	}

@@ -1,76 +1,242 @@
-import {useEffect, useState} from 'react';
-import {gql, useQuery} from '@apollo/client';
-import {SubscriptionClient} from 'subscriptions-transport-ws';
-import CreateMsg from './micro-components/createMessage'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Chanel } from '../interfaces/interfaces';
+import Chanels from './micro-components/Chanels';
+import ChanelsRequest from './micro-components/ChanelsRequests';
+import HeaderChanel from './micro-components/Box/HeaderChanel';
+import CreateChanelForm from './micro-components/forms/CreateChanelForm';
+import ChatBox from './micro-components/requests/ChatBox';
+import CreateMsg from './micro-components/forms/createMessage';
+import Direct_message from './micro-components/direct-message';
+import AddUserInChan from './micro-components/forms/AddUserInChan'
+
+/* CSS */
 import './css/messages.css';
-import {Link} from 'react-router-dom';
 
-//je me connect a mon server via le protocol websocket
-const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
+export const __CREATE_CHANEL__ = 1;
+export const __ADD_USER__ = 2;
+export const __CHAT__ = 3;
 
-const NewMessageSubscription = gql`
-  subscription ($input: Int!) {
-	addmessage(channel_id: $input) {
-		id
-		content
-		sender_id
-	}
-	}
-`;
+export const __DIRECT_MESSAGE__ = 1;
+export const __PRIVATE_CHANEL__ = 2;
+export const __PUBLIC_CHANEL__ = 3;
+export const __CHANEL_REQUEST__ = 4;
 
-const GET_MESSAGES_BY_CHANNEL = gql`
-  query GetMessagesByChannel($channelId: Int!) {
-    Message_findAll_msg_chan(channelId: $channelId) {
-      content
-	  sender_id
-    }
-  }
-`;
+const Message = () => {
 
-type Message = {
-	id: number;
-	sender_id: number;
-	content: string;  
-};
+	/* //////////////////////////////////////////////////////// */
+	/* User from sessionStorage */
+	
+	const user = JSON.parse(sessionStorage.getItem('user') || '');
 
-/**
- * @returns dans mon return j'affiche tout les nouveaux messages qui seront crée et destiné a un chanel en particulier
-*/
+	/* //////////////////////////////////////////////////////// */
+	/* States */
 
-const Chat = () => {
-	const { loading, error, data } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: 1}});
-	const [messages, setMessages] = useState<Message[]>([]);
-	// Si il y avais des chose dans intialMessages alors je le met dans mon useState
+	const [chanel_focus, setChanelFocus] = useState({
+		id: "",
+		chanel_name: "",
+		chanel_size: "",
+		max_users: "",
+		logo: "",
+	});
 
-	useEffect(() => {
-	  if (data && data.Message_findAll_msg_chan) {
-		setMessages(data.Message_findAll_msg_chan);
-	  }
-	}, [data]);
+	const [refecthChanels, setRefetchChanel] = useState(false);
 
-	useEffect(() => {
-		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: 2 }}).subscribe({
-			next(response) {
-				// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
-				// reponse c'est la ou les reponse de notre server est stocker.
-				if (response.data) {
-					const newMessage = response.data.addmessage;
-					setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedent et on rajoute newMessage
-				}
-			},
-			error(error) {
-				console.error('WebSocket error:', error);
-			},
+	const [side_bar_focus, setSideBarFocus] = useState(1);
+
+	const [refetchChat, setRefetchChat] = useState(false);
+
+	const [chatBox, setChatBox] = useState(__CHAT__);
+
+	const [is_chanel, setIsChanel] = useState(true);
+
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
+
+	const handleChanelFocus = async (element: Chanel) => {
+
+		setChanelFocus({
+			id: element.id.toString(),
+			chanel_name: element.chanel_name,
+			chanel_size: element.chanel_size.toString(),
+			max_users: element.max_users.toString(),
+			logo: element.logo
 		});
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, []);
-	// Le [] c'est le tableau de dependance, lorsque il est vide ca signifie que on execute notre useEffect que 1 fois
+	}
+
+	const handleChangeOnglet = (id: number) => {
+		try {
+			if (id < 1 || id > 4)
+				throw new Error("ID should be between 1 & 4");
+			setSideBarFocus(id);
+		}
+		catch (e) {
+			console.log("Error Nav: ", e);
+		}
+	}
+
+	const handleChatRefetch = () => {
+		setRefetchChat(prevValue => !prevValue);
+	}
+
+	const handleChanelReftch = () => {
+		setRefetchChanel(prevValue => !prevValue);
+	}
 
 
-	  return (
+	const handleChatBox = (switch_id: number) => {
+		if (switch_id < 1 || switch_id > 4)
+			throw new Error("Bad ID");
+		else
+			setChatBox(switch_id);
+	}
+	
+	const handleIsChanel = () => {
+		setIsChanel(prevValue => !prevValue);
+	}
 
+	/* //////////////////////////////////////////////////////// */
+	/* Switch */
+	console.log('dans les message ====>>>>   ',chanel_focus );
+
+	const renderSwitch = (id: number) => {
+		switch(id) {
+			case __DIRECT_MESSAGE__: {
+				return (
+					<div>
+						
+						<Direct_message
+						user={user}
+						private_chan={true}
+						refetchChat={refetchChat}
+						chanel_focus={chanel_focus}
+						refetchChanel={refecthChanels}
+						handleChanelFocus={handleChanelFocus}
+						handleChanelRefetch={handleChanelReftch}
+						handleChatRefetch={handleChatRefetch}
+						handleChatBox={handleChatBox}
+						/>
+					</div>
+				);
+			}
+			case __PRIVATE_CHANEL__: {
+				return (
+					<Chanels 
+						user={user}
+						private_chan={true}
+						refetchChat={refetchChat}
+						chanel_focus={chanel_focus}
+						refetchChanel={refecthChanels}
+						handleChanelFocus={handleChanelFocus}
+						handleChanelRefetch={handleChanelReftch}
+						handleChatRefetch={handleChatRefetch}
+						handleChatBox={handleChatBox}
+					/>
+				);
+			}
+			case __PUBLIC_CHANEL__: {
+				return (
+					<Chanels 
+						user={user}
+						private_chan={false}
+						refetchChat={refetchChat}
+						chanel_focus={chanel_focus}
+						refetchChanel={refecthChanels}
+						handleChanelFocus={handleChanelFocus}
+						handleChanelRefetch={handleChanelReftch}
+						handleChatRefetch={handleChatRefetch}
+						handleChatBox={handleChatBox}
+					/>
+				);
+			}
+			case __CHANEL_REQUEST__: {
+				return (
+					<ChanelsRequest 
+						user={user}
+						handleChanelRefetch={handleChanelReftch}
+						refetchChanel={refecthChanels}
+						chanel_focus={chanel_focus}
+						handleChatBox={handleChatBox}
+					/>
+				);
+			}
+			default: {
+				break;
+			}
+		}
+	}
+
+	const renderSwitchChatBox = (switch_id: number) => {
+		switch(chatBox) {
+			case __CREATE_CHANEL__: {
+				return (
+					<div className='chat'>
+						<HeaderChanel 
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className='chat-history'>
+							<CreateChanelForm
+								user={user}
+								handleChanelRefetch={handleChanelReftch}
+							/>
+						</div>
+					</div>
+				);
+			}
+			case __CHAT__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+							<ChatBox chan={chanel_focus} />
+						</div>
+						<div className="chat-message ">
+							<div className="input-group mb-0">
+								<CreateMsg />
+							</div>
+						</div>
+					</div>
+				);
+			}
+			case __ADD_USER__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+						<AddUserInChan 
+							user={user}
+							chanel_focus={chanel_focus}
+						/>
+						</div>
+						<div className="chat-message ">
+						</div>
+					</div>
+				);
+			}
+			default: {
+				break;
+			}
+		}
+	}
+	
+
+	/* //////////////////////////////////////////////////////// */
+	/* JSX.Element return */
+
+	return (
 		<div className="container">
         <Link to="/">
           <button className='home-button logo-box'></button>
@@ -78,93 +244,22 @@ const Chat = () => {
 
 		  <div className="row clearfix">
 			<div className="col-lg-12">
+				<div>
+					<button onClick={() => handleChangeOnglet(__DIRECT_MESSAGE__)}>1</button>
+					<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)}>2</button>
+					<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)}>3</button>
+					<button onClick={() => handleChangeOnglet(__CHANEL_REQUEST__)}>4</button>
+				</div>
+
 			  <div className="screen-box chat-app">
-				<div id="plist" className="people-list">
-
-				  <ul className="list-unstyled chat-list mt-2 mb-0">
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
-					  <div className="about">
-						<div className="name"> nickname</div>
-						<div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
-					  </div>
-					</li>
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar" />{/**afficher avatar */}
-					  <div className="about">
-						<div className="name">nickname</div>
-						<div className="status"> <i className="fa fa-circle online"></i> online </div>
-					  </div>
-					</li>
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar" />{/**afficher avatar */}
-					  <div className="about">
-						<div className="name">nickname</div>
-						<div className="status"> <i className="fa fa-circle online"></i> online </div>
-					  </div>
-					</li>
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar" />{/**afficher avatar */}
-					  <div className="about">
-						<div className="name">nickname</div>
-						<div className="status"> <i className="fa fa-circle offline"></i> left 10 hours ago </div>
-					  </div>
-					</li>
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar" /> {/**afficher avatar */}
-					  <div className="about">
-						<div className="name">nickname</div>
-						<div className="status"> <i className="fa fa-circle online"></i> online </div>
-					  </div>
-					</li>
-					<li className="clearfix">
-					  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar" /> {/**afficher avatar */}
-					  <div className="about">
-						<div className="name">nickname</div>
-						<div className="status"> <i className="fa fa-circle offline"></i> offline since Oct 28 </div>
-					  </div>
-					</li>
-				  </ul>
-				</div>
-				<div className="chat"> 
-				  <div className="chat-header">
-					<div className="row">
-					  <div className="col-lg-6">
-						<a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-						  <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar" />{/**afficher avatar */}
-						</a>
-
-
-
-						{/* ici on affichera un point vers si le user est connecter ou sinon vert si il est connecter*/ }
-						<div className="chat-about">
-						  <h6 className="m-b-0"> nickname </h6>
-						  <small>Last seen: 2 hours ago</small>
-						</div>
-					  </div>
-
-					</div>
-				  </div>
-				  <div className="chat-history">
-		
-						{messages.map(message => (
-							<div key={message.id}> {message.content}</div>
-						))}
-				  </div>
-				  <div className="chat-message ">
-
-					<div className="input-group mb-0">
-						<CreateMsg />
-					</div>
-
-
-				  </div>
-				</div>
+				{ renderSwitch(side_bar_focus) }
+				{ renderSwitchChatBox(chatBox) }
 			  </div>
+			  
 			 </div> 
 		  </div>
-		// </div>
+		</div>
 	  );
 };
 
-export default Chat;
+export default Message;

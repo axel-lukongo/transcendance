@@ -9,23 +9,21 @@ export class Chanel {
 	@Field(() => Int)
 	owner_id: number;
 	
-	@Field({nullable: true})
+	@Field()
 	chanel_name: string;
 
 	@Field({nullable: true})
 	chanel_size: number;
 
-	@Field({nullable: true})
+	@Field()
 	max_users: number;
-  
+
+	@Field({nullable: true})
+	logo: string;
+
+	@Field(() => Boolean)
+	private: boolean;
+
+	@Field({nullable: true})
+	interlocutor_id: number;
 }
-
-
-// id          Int             @id @default(autoincrement())
-// owner_id    Int
-// chanel_name String
-// chanel_size Int
-// max_users   Int
-// owner       User            @relation(fields: [owner_id], references: [id])
-// users       Users_Chanels[]
-// messages    Message[]

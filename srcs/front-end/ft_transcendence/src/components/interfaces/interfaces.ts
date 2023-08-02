@@ -1,6 +1,14 @@
-// Model interfaces
+/* //////////////////////////////////////////////////////// */
+/* Model */
 
-import { User } from "../Interface";
+export interface User {
+    avatar: string;
+    email: string;
+    id: number;
+    nickname: string;
+    token: string;
+    tfa_code?: string
+  }
 
 export interface Chanel {
 	id: number;
@@ -8,6 +16,8 @@ export interface Chanel {
 	chanel_size: number;
 	max_users: number;
 	logo: string;
+	interlocutor_id: number;
+
 }
 
 export interface UserChanels {
@@ -28,11 +38,45 @@ export interface IContacts {
 	contact: IContact
 }
 
-// Props 
+export interface Player {
+	id: number;
+	userId: number;
+	positionX: number;
+	positionY: number;
+	waitingRoomId: number;
+	opponentPlayerId :number;
+	ballId?: number;
+	pongId?: number;
+	host: boolean;
+  }
+  
+  export interface Ball {
+	id: number;
+	positionX: number;
+	positionY: number;
+	directionX: number;
+	directionY: number;
+  }
+  
+  export interface PongI {
+	id: number;
+	userId1: number;
+	userId2: number;
+	scoreUser1?: number;
+	scoreUser2?: number;
+	loserId?: number | null;
+	winnerId?: number | null;
+	VersusDate: string;
+  }
 
-export interface IPropsChanel {
-	refetchChanels?: boolean;
-	handleChanelRefetch: () => void;
+/* //////////////////////////////////////////////////////// */
+/* Contact */
+
+export interface IProposContact {
+	user: User;
+	refetchProps: boolean;
+	refetchContact: () => void;
+	setSwap?: () => void;
 }
 
 export interface IRequestProps {
@@ -41,21 +85,8 @@ export interface IRequestProps {
 		contact_id?: number,
 		user_id?: number
 	};
-	refetchContact: () => void;
 	label: string;
-}
-
-export interface IProposContact {
 	refetchContact: () => void;
-	refetchProps: boolean;
-	user: User;
-	setSwap?: () => void;
-}
-
-export interface IRequest {
-	element: UserChanels;
-	handleChanelRefecth: () => void;
-	label: string;
 }
 
 export interface IAddContact {
@@ -64,3 +95,87 @@ export interface IAddContact {
 	user: User;
 	refetch: () => void;
 }
+
+/* //////////////////////////////////////////////////////// */
+/* Chanel */
+
+export interface IPropsChanel {
+	user: User;
+	private_chan: boolean;
+	refetchChanels?: boolean;
+	refetchChat?: boolean;
+	handleChatBox: (switch_id: number) => void;
+	handleChatRefetch?: () => void;
+	handleChanelRefetch: () => void;
+	handleChanelFocus: (element: Chanel) => void;
+}
+
+export interface channelfocus  {
+	id: string,
+	chanel_name: string,
+	chanel_size: string,
+	max_users: string,
+	logo: string,
+}
+
+export interface IRequest {
+	label: string;
+	element: UserChanels;
+	handleChanelRefetch: () => void;
+}
+
+export interface ICardChanelProps {
+	handleChatBox: (switch_id: number) => void
+	handleChanelFocus: (element: Chanel) => void;
+	chanel: UserChanels;
+}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Private Msg */
+
+	export interface IPrivateMessageProps {
+		user: User;
+		chanel_focus: channelfocus;
+		private_chan: boolean;
+		refetchChat: boolean;
+		refetchChanel: boolean;
+		handleChatBox: (switch_id: number) => void;
+		handleChatRefetch: () => void; 
+		handleChanelRefetch: () => void;
+		handleChanelFocus: (element: Chanel) => void;
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Create Chanel */
+
+	export interface ICreateChanelFormProps {
+		user: User;
+		handleChanelRefetch: () => void;
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Chanel Request */
+
+	export interface IChanelRequest {
+		user: User;
+		refetchChanel: boolean;
+		handleChanelRefetch: () => void;
+		chanel_focus: channelfocus;
+		handleChatBox: (switch_id: number) => void
+	}
+
+	export interface IListChanelRequestProps {
+		user: User;
+		refetchChanel: boolean;
+		handleChanelRefetch: () => void;
+	}
+
+	/* //////////////////////////////////////////////////////// */
+	/* Header */
+
+	export interface IHeaderProps {
+		user: User;
+		chanel_focus: channelfocus;
+		is_chanel: boolean;
+		handleChatBox: (switch_id: number) => void;
+	}

@@ -1,22 +1,48 @@
-# TO DO
+# | TO DO
 
-## CHANEL
+<!-- //////////////////////////////////////////////////////// -->
+## | CHANEL
 
-### ROUTES
+- savoir si un user est en ligne ou non 
+- Make the header a link for profil / chanel page
 
-- new (create a new chanel)
-- add (add someone to chanel)
-- list (list all chanels)
+- settings on chanel
+- ban on user
+- Rights on user <!-- Optionel -->
+
+### | PUBLIC CHANEL
+
+- make toggle button for private
+
+> Header :
+- logo du chanel
+- nom du Chanel
+- nombre de personne en lignes <!-- clicable pour details ?-->
+
+### | PRIVATE CHANEL
+
+> Header :
+- Logo du chan
+- Nom du chan 
+- Nombre de personne en ligne 
+- liste des membres du chanx§
+
+### | DIRECT MESSAGE
+
+- Rajouter un boolean pour si c'est un direct message
+
+### | ADD REQUEST CHANEL
+
+- Faire le recap des demandes envoyes
+
+### | PROFILE PAGE
+
+- create profil page 
+
+<!-- LEADER BOARD -->
+
+## | LEADER BOARD
 
 
-- create player 
-  -> add player in wainting list
-- create a subscription for the update of Wainting room 
-  -> if the result of wainting room update has 2 players
-    -> try to create a pong instance with my info and the other players
-        -> if the pong instance is created , 
-            -> delete name in wainting list 
-            -> update succed state to pass to the rest
-        -> if the request fail
-            -> make a query to check if my info are registrer
-                -> if the query successed , update succed state to pass to the rest
+
+<!-- OTHER -->

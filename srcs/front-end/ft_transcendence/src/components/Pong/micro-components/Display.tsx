@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState  } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
-import { Ball, Player, PongI } from '../../Interface';
+import { Ball, Player, PongI } from '../../interfaces/interfaces';
 import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_PONG, PONG_UPDATED_SUBSCRIPTION} from '../graphql/Mutation';
 import '../css/Pong.css'
 import { useMutation } from '@apollo/client';

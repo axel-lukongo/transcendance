@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { IProposContact, IContacts } from "../../interfaces/interfaces";
 import RefuseContact from "./buttons/RefuseContact"
-import { LIST_CONTACT } from '../graphql/QuerysContact'
+import { LIST_CONTACT } from '../graphql/Querys'
 
 import "../css/Contact.css"
 

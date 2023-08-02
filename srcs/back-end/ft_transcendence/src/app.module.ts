@@ -11,6 +11,8 @@ import { join } from 'path';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
 import { PongModule } from './pong/pong.module';
+import { UserChanelsModule } from './user-chanels/user-chanels.module';
+import { ToblocModule } from './tobloc/tobloc.module';
 
 @Module({
 	imports: [
@@ -22,14 +24,16 @@ import { PongModule } from './pong/pong.module';
 				context: ({ req, res }) => ({ req, res }),
 				installSubscriptionHandlers: true, 
 			})
-        }),
+		}),
 		MailingModule,
 		UsersModule,
 		ChanelModule,
 		MessagesModule,
 		ContactsModule,
 		AuthenticationModule,
-		PongModule
+		PongModule,
+		UserChanelsModule,
+		ToblocModule
 	],
 })
 export class AppModule {

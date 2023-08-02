@@ -1,8 +1,6 @@
 import { useQuery } from "@apollo/client";
-import React from "react";
-import { REQUEST } from '../graphql/QuerysContact'
-import { User } from "../../Interface";
-import { IContacts } from '../../interfaces/interfaces'
+import { REQUEST } from '../graphql/Querys'
+import { IContacts, User } from '../../interfaces/interfaces'
 
 export interface IMyPendingRequest {
 	user: User;
@@ -10,7 +8,7 @@ export interface IMyPendingRequest {
 
 export default function MyPendingRequest({user}: IMyPendingRequest) {
 
-	const {data, refetch, error, loading } = useQuery(REQUEST, {
+	const {data, error, loading } = useQuery(REQUEST, {
 		variables: {
 			input: user.id
 		}
