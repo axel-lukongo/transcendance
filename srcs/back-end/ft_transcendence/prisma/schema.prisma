@@ -84,8 +84,10 @@ model Player {
   userId        	Int 			@unique
   positionX     	Float
   positionY     	Float
-  opponentPlayerId	Int?			@default(0)
+  host				Boolean?		@default(false)
+  opponentPlayerId	Int				@default(0)
   waitingRoomId 	Int
+  pongId			Int?
   ballId 			Int ?
   positionBall		Ball? 			@relation("Ball", fields: [ballId], references: [id])
   waitingRoom   	WaitingRoom? 	@relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
@@ -101,8 +103,8 @@ model Ball {
   id					Int      	@id @default(autoincrement())
   positionX        		Float 		@default(50)
   positionY        		Float 		@default(50)
-  directionX         	Float 		@default(-50)
-  directionY         	Float 		@default(50)
+  directionX         	Float 		@default(20)
+  directionY         	Float 		@default(10)
   players				Player[] 	@relation("Ball")
 }
 

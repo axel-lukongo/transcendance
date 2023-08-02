@@ -16,6 +16,9 @@ export class UpdatePlayerInput extends PartialType(Player) {
 	@Field(() => Float)
 	positionY?:number
 
+	@Field(() => Boolean)
+	host?: boolean
+
 	@Field(() => Int)
 	waitingRoomId?: number
 
@@ -24,4 +27,8 @@ export class UpdatePlayerInput extends PartialType(Player) {
 
 	@Field({ nullable: true })
 	ballId?: number
+
+	@Field({ nullable: true })
+	pongId?: number
+
 }

@@ -9,6 +9,7 @@ export const CREATE_PLAYER = gql`
       positionY
       waitingRoomId
       opponentPlayerId
+      host
     }
   }
 `;
@@ -31,16 +32,18 @@ export const UPDATE_PLAYER = gql `
       userId
       positionX
       positionY
+      host
       waitingRoomId
       opponentPlayerId
       ballId
+      pongId
     }
   }
 `;
 
-export const START_BALL_MOVE = gql`
-  mutation StartBallMove($id: Int!, $playerId: Int!, $otherPlayerId: Int!) {
-    startBallMove(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId)
+export const START_PONG = gql`
+  mutation StartPong($id: Int!, $playerId: Int!, $otherPlayerId: Int!, $pongId: Int!) {
+    startPong(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId, pongId: $pongId)
   }
 `;
 
@@ -52,9 +55,11 @@ export const PLAYER_UPDATED_SUBSCRIPTION = gql`
       userId
       positionX
       positionY
+      host
       waitingRoomId
       opponentPlayerId
       ballId
+      pongId
     }
   }
 `;
@@ -67,6 +72,18 @@ export const BALL_UPDATED_SUBSCRIPTION = gql`
       positionY
       directionX
       directionY
+    }
+  }
+`;
+
+export const PONG_UPDATED_SUBSCRIPTION = gql`
+  subscription PongUpdatedSubscription($id: Int!) {
+    pongUpdatedSubscription(id: $id) {
+      id
+      scoreUser1
+      scoreUser2
+      loserId
+      winnerId
     }
   }
 `;

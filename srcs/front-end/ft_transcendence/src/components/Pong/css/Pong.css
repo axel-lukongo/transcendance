@@ -2,42 +2,62 @@
 	width: 50%; /* 50% de la largeur de l'écran */
 	height: 50%; /* 50% de la hauteur de l'écran */
 	display: flex;
-	/* justify-content: center; */
-	/* align-items: center; */
 	border-radius: 20px;
 	border: 9px solid #ffd27d;
 	background-color: rgba(41, 37, 82, 0.40);
 	position: absolute;
-	top: 25%; /* Centrage vertical de .pong-container-box */
-	left: 25%; /* Centrage horizontal de .pong-container-box */
-	/* overflow: hidden; */
+	top: 25%; 
+	left: 25%; 
 }
   
   /* Utiliser des pourcentages pour la position des sticks */
-  .red-stick {
+.red-stick {
 	width: 2%;
-	height: 25%; /* 10% de la hauteur de .pong-container-box */
-	background-color: red; /* ou green pour le bouton vert */
+	height: 25%; 
+	background-color: red; 
 	border: none;
 	position: relative;
-	left: 92%; /*Alignement à gauche*/
+	left: 92%;
 }
 
-  .green-stick {
-	  width: 2%;
-	  height: 25%; /* 10% de la hauteur de .pong-container-box */
-	  background-color: green;
-	  border: none;
-	  position: relative;
-	  left: 4%; 
-  }
+.green-stick {
+	width: 2%;
+	height: 25%; 
+	background-color: green;
+	border: none;
+	position: relative;
+	left: 4%; 
+ }
 
-  .ball {
+
+ .red-stick-score {
+	position: relative;
+	text-align: center;
+	font-size: 200%;
+	top: 1%;
+	font-family: "Orbitron";
+	font-weight: bold;
+	color: #ffd27d; 
+	left: 30%;
+}
+
+ .green-stick-score {
+	position: relative;
+	text-align: center;
+	font-size: 200%;
+	top: 1%;
+	font-family: "Orbitron";
+	font-weight: bold;
+	color: #ffd27d; 
+	left: 50%;
+}
+
+.ball {
 	width: 3%; /* Définir la largeur de la balle */
 	height: 4%; /* Définir la hauteur de la balle */
 	position: absolute;
 	border-radius: 50%; /* Rendre la balle circulaire en utilisant un rayon de 50% */
-	background-color: yellow; /* Définir la couleur de fond de la balle (jaune) */
-  }
+	background-color: #ffd27d; /* Définir la couleur de fond de la balle (jaune) */
+}
   
   

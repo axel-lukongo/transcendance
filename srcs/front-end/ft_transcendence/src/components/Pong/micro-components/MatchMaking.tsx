@@ -107,8 +107,7 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         next(response) {
           if (response.data) {
             const updatedPlayer: Player = response.data.playerUpdatedSubscription as Player;
-            console.log('ws', updatedPlayer);
-            setPlayer(updatedPlayer); //UPDATE PASSIF PLAYER 
+            setPlayer(updatedPlayer); //UPDATE PLAYER
             sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
             findPlayer({
               variables: {
@@ -116,7 +115,7 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
               }
             })
             .then((response) => {
-              setOtherPlayer(response.data.findPlayer); // UPDATE ACTIF PLAYER
+              setOtherPlayer(response.data.findPlayer); // UPDATE OTHER PLAYER
               sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.findPlayer));
               console.log('otherPlayer is set', response.data.findPlayer);
             })

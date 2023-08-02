@@ -1,11 +1,9 @@
 import React, { FC, useEffect, useState  } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { Ball, Player, PongI } from '../../Interface';
-import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_BALL_MOVE} from '../graphql/Mutation';
-import { FIND_GAME } from '../graphql/Query';
+import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_PONG, PONG_UPDATED_SUBSCRIPTION} from '../graphql/Mutation';
 import '../css/Pong.css'
-import { useMutation, useLazyQuery } from '@apollo/client';
-
+import { useMutation } from '@apollo/client';
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
@@ -16,8 +14,6 @@ interface DisplayProps {
   setOtherPlayer: (player: Player | null) => void;
 }
 
-
-
 export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setOtherPlayer }) => {
   
   const default_ball: Ball = {
@@ -27,36 +23,81 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     directionX: -50,
     directionY: 50,
   };
-  const [pong, setPong] = useState<PongI | null>(null);
+
+  const host = player?.host === true;
+
+  const playerStickClass = host ? "green-stick" : "red-stick";
+  const playerScoreClass = host ? "green-stick-score" : "red-stick-score";
+
+  const otherPlayerStickClass = !host ? "green-stick" : "red-stick";
+  const otherPlayerScoreClass = !host ? "green-stick-score" : "red-stick-score";
+
   const [ball, setBall]= useState<Ball | null>(default_ball);
-  const [mirror, setMirror] = useState(false);
   const [mount, setMount] = useState(false);
-
+  const [playerScore, setPlayerScore] = useState(0);
+  const [otherPlayerScore, setOtherPlayerScore] = useState(0);
   const [updatePlayer] = useMutation(UPDATE_PLAYER);
-  const [startBallMove] = useMutation(START_BALL_MOVE);
-  const [findGame] = useLazyQuery(FIND_GAME);
+  const [startPong] = useMutation(START_PONG);
 
+/*
+*   SET GAME 
+*/
+
+// START GAME
   useEffect(() => {
-    if (!mount && player?.userId) {
-      findGame({
+    if (player && otherPlayer && !mount) {
+      
+      setMount(true);
+
+      startPong({
         variables: {
-          userId: player.userId,
+          id: ball?.id,
+          playerId: player.id,
+          otherPlayerId: otherPlayer.id,
+          pongId: player.pongId
         },
       })
-        .then((response) => {
-          if (response.data && response.data.findGame) {
-            const gameData = response.data.findGame;
-            setPong(gameData);
-            setMirror(gameData.userId2 === player.userId);
-          }
+      .then((response) => {
+        // Appel réussi, le démarrage de ballMove est activé côté serveur
+          console.log(response.data.startPong);
         })
         .catch((error) => {
-          console.error('Error getting game:', error);
+          console.error('Error calling startPong mutation:', error);
         });
+      }
+    }, [player, otherPlayer, ball, mount, setMount, startPong]);
+    
+/*
+*   BALL ACTION     
+*/
+
+// BALL MOVE
+  useEffect(() => {
+    if (player) {
+      const subscription = wsClient.request({ query: BALL_UPDATED_SUBSCRIPTION, variables: {id : ball?.id} }).subscribe({
+        next(response) {
+          if (response.data) {
+            const updatedBall: Ball = response.data?.ballUpdatedSubscription as Ball;
+            setBall(updatedBall);
+            sessionStorage.setItem('ball', JSON.stringify(ball));
+          }
+        },
+        error(error) {
+          console.error('WebSocket error:', error);
+        },
+      });
+      // Fonction de retour pour annuler l'abonnement lors du démontage du composant
+      return () => {
+        subscription.unsubscribe();
+      };
     }
-  }, [mount, player, pong, setPong, setMirror, findGame]);
-  
-  
+  }, [ball, player, setBall,]);
+
+/*
+*     PLAYER / OTHER PLAYER MOVE
+*/
+
+  //PLAYER MOVE
   const handleKeyDown = (e: React.KeyboardEvent) => {
     const speed = 5; // Ajustez la vitesse de déplacement en %
     if (!player) {
@@ -89,9 +130,10 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
           userId: player.userId,
           positionY: player.positionY,
           positionX: player.positionX,
+          host: player.host,
           waitingRoomId: player.waitingRoomId,
           opponentPlayerId: player.opponentPlayerId,
-          ballId: player.ballId
+          ballId: player.ballId,
         },
       },
     })
@@ -102,29 +144,6 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       console.error('Error updating player:', error);
     });
   }
-
-
-
-  useEffect(() => {
-    if (player && otherPlayer && ball && !mount) {
-      setMount(true);
-
-      startBallMove({
-        variables: {
-          id: ball.id,
-          playerId: player.id,
-          otherPlayerId: otherPlayer.id,
-        },
-      })
-        .then((response) => {
-          // Appel réussi, le démarrage de ballMove est activé côté serveur
-          console.log(response.data.startBallMove);
-        })
-        .catch((error) => {
-          console.error('Error calling startBallMove mutation:', error);
-        });
-    }
-  }, [player, otherPlayer, ball, mount, setMount, startBallMove]);
 
   //OTHER PLAYER MOVE
   useEffect(() => {
@@ -143,47 +162,46 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
           console.error('WebSocket error:', error);
         },
       });
-
       // Fonction de retour pour annuler l'abonnement lors du démontage du composant
       return () => {
         subscription.unsubscribe();
       };
     }
   }, [otherPlayer, setOtherPlayer]);
-  
-  // BALL MOVE
+
   useEffect(() => {
-    if (player) {
-      const subscription = wsClient.request({ query: BALL_UPDATED_SUBSCRIPTION, variables: {id : ball?.id} }).subscribe({
+    if (player && otherPlayer) {
+      const subscription = wsClient.request({ query: PONG_UPDATED_SUBSCRIPTION, variables: {id : player.pongId} }).subscribe({
         next(response) {
           if (response.data) {
-            const updatedBall: Ball = response.data?.ballUpdatedSubscription as Ball;
-            setBall(updatedBall);
-            sessionStorage.setItem('ball', JSON.stringify(ball));
+            const updatedPong: PongI = response.data?.playerUpdatedSubscription as PongI;
+            console.log('pong update', updatedPong);
+            if (updatedPong.scoreUser1 && updatedPong.scoreUser1 !== playerScore)
+              setPlayerScore(updatedPong.scoreUser1);
+            else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore)
+              setOtherPlayerScore(updatedPong.scoreUser2);
           }
         },
         error(error) {
           console.error('WebSocket error:', error);
         },
       });
-
       // Fonction de retour pour annuler l'abonnement lors du démontage du composant
       return () => {
         subscription.unsubscribe();
       };
     }
-  }, [ball, player, setBall, mirror]);
+  }, [player, otherPlayer, playerScore, otherPlayerScore, setPlayerScore, setOtherPlayerScore]);
 
-  
   return (
-      <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
-      <div className={mirror ? "red-stick" : "green-stick"} style={{ top: `${player?.positionY}%` }} />
-      <div className={mirror ? "green-stick" : "red-stick"} style={{ top: `${otherPlayer?.positionY}%` }} />
-          <div className='ball'
-          style={{ 
-            top: `${ball?.positionY}%` ,
-            left: `${ball?.positionX}%`,
-          }} />
-      </div>
+    <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
+      <div className={playerStickClass} style={{ top: `${player?.positionY}%` }} />
+      {/* <div className={playerScoreClass}> {playerScore} </div> */}
+    
+      <div className={otherPlayerStickClass} style={{ top: `${otherPlayer?.positionY}%` }} />
+      {/* <div className={otherPlayerScoreClass}> {otherPlayerScore} </div> */}
+    
+      <div className='ball' style={{ top: `${ball?.positionY}%` , left: `${ball?.positionX}%`, }} /> 
+    </div>
   )
 }

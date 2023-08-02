@@ -4,8 +4,10 @@ import { BallResolver } from './ball.resolver';
 import { PrismaService } from 'prisma/prisma.service';
 import { PlayerResolver } from '../player/player.resolver';
 import { PlayerService } from '../player/player.service';
+import { PongResolver } from '../pong.resolver';
+import { PongService } from '../pong.service';
 
 @Module({
-  providers: [BallResolver, BallService, PlayerResolver, PlayerService, PrismaService]
+  providers: [BallResolver, BallService, PrismaService]
 })
 export class BallModule {}

@@ -15,6 +15,8 @@ export interface Player {
   waitingRoomId: number;
   opponentPlayerId :number;
   ballId?: number;
+  pongId?: number;
+  host: boolean;
 }
 
 export interface Ball {
@@ -31,7 +33,7 @@ export interface PongI {
   userId2: number;
   scoreUser1?: number;
   scoreUser2?: number;
-  loser_id?: number | null;
-  winner_id?: number | null;
-  Versus_date: string;
+  loserId?: number | null;
+  winnerId?: number | null;
+  VersusDate: string;
 }

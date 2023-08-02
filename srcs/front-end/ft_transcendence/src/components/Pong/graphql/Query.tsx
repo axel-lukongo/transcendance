@@ -7,20 +7,11 @@ export const FIND_PLAYER = gql`
       userId
       positionX
       positionY
+      host
       waitingRoomId
       opponentPlayerId
       ballId
+      pongId
     }
   }
 `;
-
-export const FIND_GAME = gql`
-  query FindGame($userId: Int!) {
-    findGame(userId: $userId) {
-      id
-      userId1
-      userId2
-      versusDate
-    }
-  }
-`; 

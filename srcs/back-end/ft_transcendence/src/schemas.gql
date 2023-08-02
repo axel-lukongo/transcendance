@@ -50,9 +50,11 @@ type Player {
   userId: Int!
   positionX: Float!
   positionY: Float!
+  host: Boolean!
   waitingRoomId: Int!
   opponentPlayerId: Int!
   ballId: Float
+  pongId: Float
 }
 
 type Ball {
@@ -120,8 +122,10 @@ type Mutation {
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
-  updatePong(updatePongInput: UpdatePongInput!): Pong!
   removePong(id: Int!): Pong!
+  updatePong(updatePongInput: UpdatePongInput!): Pong!
+  stopPong: Boolean!
+  startPong(id: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
   removePlayer(id: Int!): Player!
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!
   updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
@@ -130,8 +134,6 @@ type Mutation {
   createBall: Ball!
   removeBall(id: Int!): Ball!
   updateBall(updateBallInput: UpdateBallInput!): Ball!
-  stopBallMove: Boolean!
-  startBallMove(id: Int!, playerId: Int!, otherPlayerId: Int!): Boolean!
 }
 
 input UpdateUserInput {
@@ -224,9 +226,11 @@ input UpdatePlayerInput {
   userId: Int!
   positionX: Float!
   positionY: Float!
+  host: Boolean!
   waitingRoomId: Int!
   opponentPlayerId: Int!
   ballId: Float
+  pongId: Float
 }
 
 input UpdateBallInput {
@@ -239,6 +243,7 @@ input UpdateBallInput {
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
+  pongUpdatedSubscription(id: Int!): Pong!
   listPlayerSubscription: [Player!]!
   playerUpdatedSubscription(id: Int!): Player!
   ballUpdatedSubscription(id: Int!): Ball!
