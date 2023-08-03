@@ -89,7 +89,7 @@ export class PongResolver {
 
   @Mutation(() => Boolean)
   stopPong() {
-    if (this.start && this.interval) {
+    if (this.start) {
       this.start = false;
       clearInterval(this.interval);
       this.interval = null;
@@ -110,7 +110,7 @@ export class PongResolver {
     }
     this.start = true;
     
-    setInterval(async () => {
+    this.interval = setInterval(async () => {
 
       const currentPong = await this.findUnique(pongId);
 
@@ -180,7 +180,6 @@ export class PongResolver {
           this.updatePong(DataUpdatePong);
         if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
-          console.log('final');
           this.stopPong();
         }
         const DataUpdateBall : UpdateBallInput = {
@@ -242,5 +241,4 @@ export class PongResolver {
       this.ball.updateBall(DataUpdateBall);
     }
   }
-
 }
