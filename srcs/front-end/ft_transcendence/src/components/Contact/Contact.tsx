@@ -3,7 +3,7 @@ import FriendsRequest from "./micro-components/FriendsRequest"
 import ListContact from "./micro-components/ListContact";
 import AddContact from "./micro-components/AddContact";
 import './css/Contact.css'
-
+import { MyBlockedList } from "./micro-components/ListBlocked";
 
 export default function Contact() {
 
@@ -16,6 +16,8 @@ export default function Contact() {
 
     const [swap, setSwap] = useState(true);
 
+	const [showBlockedPlayers, setShowBlockedPlayers] = useState(false);
+
     /* //////////////////////////////////////////////////////// */
     /* Handlers */
 
@@ -26,6 +28,10 @@ export default function Contact() {
     const handleSwap = () => {
         setSwap(prevValue => !prevValue);
     }
+
+	const handleShowBlockedPlayers = () => {
+		setShowBlockedPlayers(prevValue => !prevValue);
+	  }
 
     /* //////////////////////////////////////////////////////// */
     /* JSX.Element return */
@@ -43,6 +49,19 @@ export default function Contact() {
                         user={user}
 					/>
 				</div>
+					{/* Nouveau bouton pour afficher la liste des joueurs bloqués */}
+					<button id="showBlockedPlayers_btn" onClick={handleShowBlockedPlayers}>
+				player blocked
+				</button>
+
+				{/* Affichage conditionnel de la liste des joueurs bloqués */}
+				{showBlockedPlayers && (
+				<div className="blockedPlayersList">
+					<MyBlockedList/>
+					{/* Afficher la liste des joueurs bloqués ici */}
+					{/* ... */}
+				</div>
+				)} 
                 {swap ?
                     <div className="box_ListContact">
                         <div className="title">
@@ -71,6 +90,7 @@ export default function Contact() {
 					// je vais rajouter les ban ici
 					
                 }
+			
 			</React.Fragment>
 	</div>);
 }

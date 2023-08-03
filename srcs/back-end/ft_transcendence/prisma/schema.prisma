@@ -28,6 +28,7 @@ model User {
 	contact				Contact[]		@relation("contactRef")
 	reverse_contact		Contact[]		@relation("reverseContactRef")
 	sender				Message[]       @relation("Send")
+	blocked				ToBloc[]		@relation("Blocked")
 }
 
 model Contact {
@@ -114,6 +115,7 @@ model ToBloc{
 	id					Int			@id @default(autoincrement())
 	blocker_id			Int
 	blocked_id			Int
+	blocked				User		@relation("Blocked", fields: [blocked_id], references: [id])
 }
 
 model Message {

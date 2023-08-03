@@ -5,11 +5,14 @@ import { CreateToblocInput } from './dto/create-tobloc.input';
 import { UpdateToblocInput } from './dto/update-tobloc.input';
 import { ChanelService } from 'src/chanel/chanel.service';
 import { ContactsService } from 'src/contacts/contacts.service';
+import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 @Resolver(() => Tobloc)
 export class ToblocResolver {
   constructor(private readonly toblocService: ToblocService,
 	private readonly chanelService: ChanelService,
-	private readonly contactService: ContactsService) {}
+	private readonly contactService: ContactsService,
+	private readonly usersService: UsersService) {}
 
 //   @Mutation(() => Tobloc)
 //   createTobloc(@Args('createToblocInput') createToblocInput: CreateToblocInput) {
@@ -37,16 +40,23 @@ async createToBloc(
 
 
 
-  @Query(() => [Tobloc], { name: 'tobloc' })
-  findAll() {
-    return this.toblocService.findAll();
+  @Query(() => [Tobloc], { name: 'person_blocked' })
+  findAll( @Args('id', {type: () => Int}) id: number) {
+    return this.toblocService.findAll(id);
   }
+
+
 
   @Query(() => Tobloc, { name: 'tobloc' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.toblocService.findOne(id);
   }
 
+
+//   @Query(() => User, { name: 'findUserById' })
+//   findUserById(@Args('id', { type: () => Int }) id: number) {
+//     return this.usersService.findUserById(id);
+//   }
 
 
   @Mutation(() => Tobloc)

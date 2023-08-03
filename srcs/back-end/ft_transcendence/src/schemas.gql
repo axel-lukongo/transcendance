@@ -95,6 +95,7 @@ type Tobloc {
   id: Int!
   blocker_id: Int!
   blocked_id: Int!
+  blocked: User
 }
 
 type Query {
@@ -125,6 +126,7 @@ type Query {
   Balls(id: Int!): Ball!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
   myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
+  person_blocked(id: Int!): [Tobloc!]!
   tobloc(id: Int!): Tobloc!
 }
 

@@ -43,3 +43,14 @@ export const RESEARCH = gql`query ResearchContact($input: String!, $user_id: Int
 		id
 	}
 }`
+
+export const MY_BLOCKED_LIST = gql`query ResearchBlocked($id: Int!){
+	person_blocked(id: $id){
+		id
+		blocker_id
+		blocked_id
+		blocked{
+			nickname
+		}
+	}
+}`

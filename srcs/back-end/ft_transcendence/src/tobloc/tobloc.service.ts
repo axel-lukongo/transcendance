@@ -7,8 +7,10 @@ import { PrismaService } from 'prisma/prisma.service';
 export class ToblocService {
 	constructor(private readonly prisma: PrismaService) {}
 
-async findAll() { 
-	return this.prisma.toBloc.findMany({});
+async findAll(id: number){ 
+	return this.prisma.toBloc.findMany({where: {blocker_id: id},
+	include: { blocked: true }
+	});
 }
 
   async findOne(id: number) {
