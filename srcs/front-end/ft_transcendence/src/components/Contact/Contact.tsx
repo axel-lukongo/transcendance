@@ -68,6 +68,8 @@ export default function Contact() {
                             setSwap={handleSwap}
                         />
                     </div>
+					// je vais rajouter les ban ici
+					
                 }
 			</React.Fragment>
 	</div>);

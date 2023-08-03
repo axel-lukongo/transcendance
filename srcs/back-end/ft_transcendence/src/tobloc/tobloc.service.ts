@@ -25,4 +25,19 @@ remove(id: number) {
 	return this.prisma.toBloc.delete({ where: { id: id } });
 }
 
+async YourBloc(blockerId: number, blockedId: number){
+	return await this.prisma.toBloc.findFirst({
+		where: {
+		  OR: [
+			{
+				blocker_id: blockerId,
+				blocked_id: blockedId,
+			},
+			{
+				blocker_id: blockedId,
+				blocked_id: blockerId,
+			},
+		  ],
+		},
+	  });}
 }

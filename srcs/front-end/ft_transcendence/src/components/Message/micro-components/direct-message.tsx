@@ -6,7 +6,7 @@ import { CREATE_CHANEL } from "../graphql/MutationsChanel";
 import {useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
-// import Tobloc from "./Tobloc";
+import Tobloc from "./Tobloc";
 
 export default function Direct_message(props: IPrivateMessageProps) {
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
@@ -23,6 +23,7 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		setSelectedContactId(contactId);
 	}
 
+	const [handleTobloc, setHandleTobloc] = useState(false);
 
 	// console.log('je test ici: ', data)
 
@@ -38,7 +39,10 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		return <p>No contacts available.</p>;
 	}
 	
-
+	// setHandleTobloc(true);
+	// const handleTobloc = (blockerId: number, blockedId: number) => {
+	// 	Tobloc({blockerId, blockedId});
+	//   };
 
 
 	return(
@@ -54,10 +58,13 @@ export default function Direct_message(props: IPrivateMessageProps) {
 					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
 						<p>{contact.contact.nickname}</p>
 						{selectedContactId === contact.contact.id && < Creat_direct_msg handleChange={props.handleChanelFocus}
+
 						interlocutor={contact.contact}
 						handleChanelRefecth={props.handleChanelRefetch} />}
+						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
+
 						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
-						{/* <button onClick={() => handleNewDirectMsg()}>message</button> */}
+						<button onClick={() => setHandleTobloc(true)}>block</button>
 					</ul>
 				);
 			})}

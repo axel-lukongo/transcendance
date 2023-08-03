@@ -141,6 +141,7 @@ type Mutation {
   deleteMessage: Message!
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
+  deletecontact(user1: Float!, user2: Float!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
   createPong(createPongInput: CreatePongInput!): Pong!

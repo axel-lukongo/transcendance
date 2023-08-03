@@ -12,9 +12,9 @@ export const CREATE_MSG = gql`
 
 export const CREATE_TOBLOC_MUTATION = gql`
   mutation createTobloc($blockerId: Int!, $blockedId: Int!) {
-    createToblocInput(blocker_id: $blockerId, blocked_id: $blockedId) {
+    createToBloc(blockerId: $blockerId, blockedId: $blockedId) {
       id
-      blocker_id
+	  blocker_id
       blocked_id
     }
   }

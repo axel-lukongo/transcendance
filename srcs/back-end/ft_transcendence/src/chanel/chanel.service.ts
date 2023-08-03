@@ -69,6 +69,7 @@ export class ChanelService {
   }
 
 
+ 
   async removeDirectMsg(userId1: number, userId2: number): Promise<Chanel | null> {
 	const chan = await this.prisma.chanel.findFirst({
 	  where: {
@@ -84,12 +85,20 @@ export class ChanelService {
 		],
 	  },
 	});
-  
+	//after creating a bloc table, we suppress the discussion betweenthe both users
 	if (chan) {
-	  return this.prisma.chanel.delete({ where: { id: chan.id } });
-	} else {
+		await this.prisma.users_Chanels.deleteMany({
+			where: {
+			  chanel_id: chan.id,
+			},
+		  });
+		return this.prisma.chanel.delete({ where: { id: chan.id } });
+	}
+	else {
 	  return null;
 	}
+	//now we suppres them of the friend list
+
   }
   
 }

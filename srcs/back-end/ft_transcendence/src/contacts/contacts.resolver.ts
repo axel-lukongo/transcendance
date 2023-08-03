@@ -7,23 +7,31 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { UpdateContact } from './dto/update-contact.input';
 import { response } from 'express';
-
+import { ToblocService } from 'src/tobloc/tobloc.service';
 @Resolver(() => Contact)
 export class ContactsResolver {
 
 	constructor(private readonly contactService: ContactsService,
-				private readonly userService: UsersService) {}
+				private readonly userService: UsersService,
+				private readonly toblocService: ToblocService
+				) {}
 	
 	@Mutation(() => Contact, {name: "createContact"})
 	async createContact(@Args("createContact") createContact: CreateContactInput) {
 
 		if (createContact.user_id == createContact.contact_id)
 		  throw new Error("Can't add your self");
-		
+
 		try {
 			const response = await this.contactService.checkExist(createContact)
+
+			const blocked = await this.toblocService.YourBloc(createContact.user_id, createContact.contact_id); 
+
 			if (response)
 				throw new Error("impossible");
+			else if (blocked){
+				throw new Error("this user blocked you");
+			}
 			else
 				return this.contactService.createContact(createContact);
 		}
@@ -56,6 +64,13 @@ export class ContactsResolver {
 	@Mutation(() => Contact, {name: "replyAddContact"}) 
 	replyInviteContact(@Args("reply") reply: UpdateContact) {
 		return (this.contactService.replyAddContact(reply));
+	}
+
+	@Mutation(() => Contact, {name: "deletecontact"})
+	async deletecontact(
+	@Args("user1") user1: number,
+	@Args("user2") user2: number) {
+		return (this.contactService.deleteContact(user1, user2));
 	}
 
 	@Mutation(() => Contact, {name: "deleteContact"})
