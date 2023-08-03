@@ -40,6 +40,8 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
   const [mount, setMount] = useState(false);
   const [playerScore, setPlayerScore] = useState(0);
   const [otherPlayerScore, setOtherPlayerScore] = useState(0);
+  const [victory, setVictory] = useState<Boolean | null>(null);
+
   const [updatePlayer] = useMutation(UPDATE_PLAYER);
   const [startPong] = useMutation(START_PONG);
 
@@ -183,6 +185,14 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
               setPlayerScore(updatedPong.scoreUser1);
             else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore)
               setOtherPlayerScore(updatedPong.scoreUser2);
+            if (updatedPong.winnerId !== null)
+            {
+              console.log ('you win or lose');
+              if (updatedPong.winnerId === player.id)
+                setVictory(true);
+              else
+                setVictory(false);
+            }
           }
         },
         error(error) {
@@ -197,17 +207,27 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
   }, [player, otherPlayer, playerScore, otherPlayerScore, setPlayerScore, setOtherPlayerScore]);
 
   return (
+<div>
+  <div className="score-container-box">
+    <div className={playerScoreClass}>{playerScore} </div>
+    <div className="score-separator" />
+    <div className={otherPlayerScoreClass}>{otherPlayerScore}   </div>
+  </div>
+  {victory !== null ? (
     <div>
-      <div className="score-container-box">
-        <div className={playerScoreClass}>{playerScore} </div>
-        <div className="score-separator" />
-        <div className={otherPlayerScoreClass}>{otherPlayerScore}   </div>
-      </div>
-      <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
-        <div className={playerStickClass} style={{ top: `${player?.positionY}%` }} />
-        <div className={otherPlayerStickClass} style={{ top: `${otherPlayer?.positionY}%` }} />
-        <div className='ball' style={{ top: `${ball?.positionY}%`, left: `${ball?.positionX}%` }} /> 
-      </div>
+      {victory ? (
+        <div>Victory for Player</div>
+      ) : (
+        <div>Victory for Other Player</div>
+      )}
     </div>
+  ) : (
+    <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
+      <div className={playerStickClass} style={{ top: `${player?.positionY}%` }} />
+      <div className={otherPlayerStickClass} style={{ top: `${otherPlayer?.positionY}%` }} />
+      <div className='ball' style={{ top: `${ball?.positionY}%`, left: `${ball?.positionX}%` }} /> 
+    </div>
+  )}
+</div>
   );
 }

@@ -159,7 +159,7 @@ export class PongResolver {
         if (rightWall)
         {
           currentPong.scoreUser1 += 1;
-          if (currentPong.scoreUser1 == 10000)
+          if (currentPong.scoreUser1 == 5)
           {
             currentPong.winnerId = player.userId;
             currentPong.loserId = otherPlayer.userId;
@@ -168,7 +168,7 @@ export class PongResolver {
         else
         {
           currentPong.scoreUser2 += 1;
-          if (currentPong.scoreUser2 == 10000)
+          if (currentPong.scoreUser2 == 5)
           {
             currentPong.winnerId = otherPlayer.userId;
             currentPong.loserId = player.userId;
