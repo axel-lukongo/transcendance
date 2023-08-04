@@ -4,6 +4,7 @@ import { Ball, Player, PongI } from '../../interfaces/interfaces';
 import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_PONG, PONG_UPDATED_SUBSCRIPTION} from '../graphql/Mutation';
 import '../css/Pong.css'
 import { useMutation } from '@apollo/client';
+import Xp from './Xp';
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
@@ -40,7 +41,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
   const [mount, setMount] = useState(false);
   const [playerScore, setPlayerScore] = useState(0);
   const [otherPlayerScore, setOtherPlayerScore] = useState(0);
-  const [victory, setVictory] = useState<Boolean | null>(null);
+  const [victory, setVictory] = useState<Boolean | null>(false);
 
   const [updatePlayer] = useMutation(UPDATE_PLAYER);
   const [startPong] = useMutation(START_PONG);
@@ -71,7 +72,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
           console.error('Error calling startPong mutation:', error);
         });
       }
-    }, [player, otherPlayer, ball, mount, setMount, startPong]);
+    }, [player, otherPlayer, ball, mount, victory, setMount, startPong]);
     
 /*
 *   BALL ACTION     
@@ -100,7 +101,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         subscription.unsubscribe();
       };
     }
-  }, [ball, player, setBall,]);
+  }, [ball, player, victory, setBall]);
 
 /*
 *     PLAYER / OTHER PLAYER MOVE
@@ -179,7 +180,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         subscription.unsubscribe();
       };
     }
-  }, [otherPlayer, setOtherPlayer]);
+  }, [otherPlayer, victory, setOtherPlayer]);
 
   useEffect(() => {
     if (player && otherPlayer && victory === null) {
@@ -213,22 +214,21 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
         subscription.unsubscribe();
       };
     }
-  }, [player, otherPlayer, playerScore, otherPlayerScore, setPlayerScore, setOtherPlayerScore]);
+  }, [player, otherPlayer, playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
 
   return (
 <div>
   <div className="score-container-box">
-    <div className={playerScoreClass}>{playerScore} </div>
+    <div className={playerScoreClass}>{playerScore}</div>
     <div className="score-separator" />
-    <div className={otherPlayerScoreClass}>{otherPlayerScore}   </div>
+    <div className={otherPlayerScoreClass}>{otherPlayerScore}</div>
   </div>
   {victory !== null ? (
-    <div>
-      {victory ? (
-        <div>Victory for Player</div>
-      ) : (
-        <div>Victory for Other Player</div>
-      )}
+    <div className="pong-container-result-box">
+      <div className="result-text">
+        <h1>{victory ? 'YOU WIN 🏆' : 'YOU LOSE 😓'}</h1>
+      </div>
+      <Xp level={2} victory={victory}  />
     </div>
   ) : (
     <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
