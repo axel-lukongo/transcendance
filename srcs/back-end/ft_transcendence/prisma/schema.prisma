@@ -61,7 +61,8 @@ model Users_Chanels {
 	user_id				Int
 	chanel_id			Int
 	pending				Boolean?	@default(true)
-					
+	is_muted			Boolean?	@default(false)
+	is_admin			Boolean?	@default(false)
 	user				User		@relation(fields: [user_id], references: [id])
 	chanel				Chanel		@relation(fields: [chanel_id], references: [id])
 

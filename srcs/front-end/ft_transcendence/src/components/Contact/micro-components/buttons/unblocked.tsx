@@ -16,6 +16,10 @@ export function Unblocked({id}: { id: number}){
 	// isConditionExecuted.current = true;
 	}, [Unblocked, id]);
 
+	if (!data){
+		return <div> nothing here </div>;
+	}
+
 	if (loading) {
 		return <div>Loading...</div>;
 	}
@@ -26,8 +30,6 @@ export function Unblocked({id}: { id: number}){
 	
 	return (
 		<div>
-		  {/* Affichez les données renvoyées par la mutation si nécessaire */}
-		  {/* {data && <div>Unblock successful! ID: {data.unblockUser.id}</div>} */}
 		</div>
 	  );
 }

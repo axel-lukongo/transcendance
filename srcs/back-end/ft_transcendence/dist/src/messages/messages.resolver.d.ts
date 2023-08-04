@@ -25,13 +25,13 @@ export declare class MessagesResolver {
         content: string;
         sent_at: Date;
     }, unknown> & {}>;
-    createMessage(createMsgInput: CreateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime/library").GetResult<{
+    createMessage(createMsgInput: CreateMessageInput, context: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         sender_id: number;
         channel_id: number;
         content: string;
         sent_at: Date;
-    }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }, unknown> & {}) | " you are muted">;
     updateMessage(MsgInput: UpdateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         sender_id: number;

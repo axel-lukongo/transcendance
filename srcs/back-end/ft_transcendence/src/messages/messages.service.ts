@@ -21,6 +21,7 @@ export class MessagesService {
 	async findAll_msg_chan(channelId: number) {
 		return this.prisma.message.findMany({
 		  where: {
+			//il faudra peut etre que on rajoute un filtre pour ne pas retourner les message des personne bloquer par ce user
 			channel_id: channelId // Utilisation de la variable channelId pour filtrer les messages
 		  }
 		});
@@ -39,6 +40,25 @@ export class MessagesService {
 
 	delete(id: number) {
 		return this.prisma.message.delete({ where: { id: id } });
+	}
+
+
+	async isUserMutedInChannel(userId: number, channelId: number): Promise<boolean>{
+		const userChannel = await this.prisma.users_Chanels.findFirst({
+		  where: {
+			user_id: userId,
+			chanel_id: channelId,
+			pending: false, // Vérifier si l'utilisateur est approuvé dans le canal
+		  },
+		});
+	
+		// console.log('dans le service:  ====>>>>  ',userChannel)
+		if(userChannel?.is_muted === true){
+			return true;
+		}
+		else{
+			return false;
+		} // Vérifier si l'utilisateur est en mode "muted"
 	}
 
 }

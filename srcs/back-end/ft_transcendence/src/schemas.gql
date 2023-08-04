@@ -88,6 +88,8 @@ type UsersChanels {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean!
+  is_muted: Boolean!
+  is_admin: Boolean!
   chanels: Chanel!
 }
 

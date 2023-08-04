@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Subscription } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Subscription, Context } from '@nestjs/graphql';
 import { Message } from './entities/messages.entity';
 import { MessagesService } from './messages.service';
 import { CreateMessageInput } from './dto/create-messages.input';
@@ -29,14 +29,28 @@ export class MessagesResolver {
 		return this.msgService.findOne_msg(id);
 	}
 
+
+
 	@Mutation(() => Message)
-	createMessage(@Args('createMsgInput') createMsgInput: CreateMessageInput) {
+	async createMessage(@Args('createMsgInput') createMsgInput: CreateMessageInput, @Context() context) {
+
+		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
+		console.log('userId ===>>>  ', userId);
+		const isMuted = await this.msgService.isUserMutedInChannel(userId, createMsgInput.channel_id);
+
+		if (isMuted === true) {
+			return (' you are muted');
+		}
+		// console.log('je passe ici', isMuted)
+		
 		const new_message = this.msgService.create(createMsgInput);
 		pubSub.publish(NEW_MSG, {
 			addmessage: new_message,
 		});
 		return new_message;
 	}
+
+
 
 	@Mutation(() => Message)
 	updateMessage(@Args("updateMsgInput") MsgInput: UpdateMessageInput) {

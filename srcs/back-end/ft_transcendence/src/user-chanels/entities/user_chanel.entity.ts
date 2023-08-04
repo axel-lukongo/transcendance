@@ -11,4 +11,10 @@ export class UsersChanels {
 
 	@Field(() => Boolean)
 	pending: boolean;
+
+	@Field(() => Boolean)
+	is_muted: boolean;
+
+	@Field(() => Boolean)
+	is_admin: boolean;
 }

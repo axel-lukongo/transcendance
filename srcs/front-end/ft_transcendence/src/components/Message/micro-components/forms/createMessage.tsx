@@ -5,7 +5,7 @@ import { CREATE_MSG } from '../../graphql/Mutation';
 
 
 const CreateMsg = () => {
-	// const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
+	const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
 	const userNickname = JSON.parse(sessionStorage.getItem('user') || '')?.nickname;
 	const [Content, setContent] = useState('');
 	const [ChanId, setChanId] = useState('');
@@ -16,7 +16,7 @@ const CreateMsg = () => {
 			const response = await createMessage({
 				variables: {
 					createMsgInput: {
-						sender_id: 1,
+						sender_id: userId,
 						content: userNickname + ": " + Content,
 						channel_id: 1,
 					},
