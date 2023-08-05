@@ -75,14 +75,15 @@ const Authentication: FC = () => {
         })
           .then(response => {
             console.log('user created:', response.data.createUser);
-            const { id, token, email, nickname, avatar, tfa_code } = response.data.createUser;
+            const { id, token, email, nickname, avatar, tfa_code, level } = response.data.createUser;
             const user = {
               id,
               token,
               email,
               nickname,
               avatar,
-              tfa_code
+              tfa_code,
+              level
             };
             sessionStorage.setItem('user', JSON.stringify(user));
           })
@@ -100,14 +101,15 @@ const Authentication: FC = () => {
       })
         .then(response => {
           console.log('user created:', response.data.createUser);
-          const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
+          const { id, token, email, nickname, avatar, tfa_code, level} = response.data.createUser;
           const user = {
             id,
             token,
             email,
             nickname,
             avatar,
-            tfa_code
+            tfa_code,
+            level
           };
           sessionStorage.setItem('user', JSON.stringify(user));
         })
@@ -147,14 +149,15 @@ const Authentication: FC = () => {
 
   useEffect(() => {
     if (AuthenticationData) {
-      const { id, token, email, nickname, avatar, tfa_code} = AuthenticationData.makeAuthentication;
+      const { id, token, email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
       const user = {
         id,
         token,
         email,
         nickname,
         avatar,
-        tfa_code
+        tfa_code,
+        level
       };
       sessionStorage.setItem('user', JSON.stringify(user));
       setCanCheck(true);

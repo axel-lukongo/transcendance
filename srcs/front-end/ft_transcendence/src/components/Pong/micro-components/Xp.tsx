@@ -18,7 +18,7 @@ enum Rank {
 
   interface XpProps {
     level: number;
-    victory: Boolean
+    victory: boolean | null
   }
   
   export const findRank = (level: number): Rank | null => {

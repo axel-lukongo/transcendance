@@ -11,16 +11,15 @@ const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 interface MatchMakingProps {
   player: Player | null;
   otherPlayer: Player | null;
+  id: number | undefined;
   setPlayer: (player: Player | null) => void;
   setOtherPlayer: (player: Player | null) => void;
   
 }
 
-export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer, otherPlayer,  }) => {
+export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherPlayer, otherPlayer, id  }) => {
 
-  const userFromStorageString = sessionStorage.getItem('user');
-  const userFromStorage = userFromStorageString ? JSON.parse(userFromStorageString) : null;
-  const userId = userFromStorage?.id;
+  const userId = id;
 
   const { data: dataIsPlayerInGame, error: errorIsPlayerInGame } = useQuery(FIND_PLAYER, {
     variables: { id: userId },
@@ -46,7 +45,6 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
         .then((response) => {
           if (response?.data?.createPlayer) {
             setPlayer(response.data.createPlayer);
-            sessionStorage.setItem('player', JSON.stringify(response.data.createPlayer));
             console.log('Player created:', response.data.createPlayer);
           }
         })
@@ -59,7 +57,6 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
   useEffect(() => {
     if (dataIsPlayerInGame?.isPlayerInGame) {
       setPlayer(dataIsPlayerInGame.isPlayerInGame);
-      sessionStorage.setItem('player', JSON.stringify(dataIsPlayerInGame.isPlayerInGame));
       console.log('Player found:', dataIsPlayerInGame.isPlayerInGame);
     }
   }, [dataIsPlayerInGame, player, setPlayer]);
@@ -108,7 +105,6 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
           if (response.data) {
             const updatedPlayer: Player = response.data.playerUpdatedSubscription as Player;
             setPlayer(updatedPlayer); //UPDATE PLAYER
-            sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
             findPlayer({
               variables: {
                 id : updatedPlayer.opponentPlayerId
@@ -116,7 +112,6 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
             })
             .then((response) => {
               setOtherPlayer(response.data.findPlayer); // UPDATE OTHER PLAYER
-              sessionStorage.setItem('otherPlayer', JSON.stringify(response.data.findPlayer));
               console.log('otherPlayer is set', response.data.findPlayer);
             })
               .catch((error) => {

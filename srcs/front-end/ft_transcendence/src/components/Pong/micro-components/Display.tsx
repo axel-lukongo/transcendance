@@ -1,75 +1,76 @@
-import React, { FC, useEffect, useState  } from 'react';
+import React, { FC, useEffect,   } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
+import { useMutation } from '@apollo/client';
 import { Ball, Player, PongI } from '../../interfaces/interfaces';
 import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_PONG, PONG_UPDATED_SUBSCRIPTION} from '../graphql/Mutation';
-import '../css/Pong.css'
-import { useMutation } from '@apollo/client';
 import Xp from './Xp';
+import '../css/Pong.css'
 
 const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
 interface DisplayProps {
-  player: Player | null;
-  otherPlayer: Player | null;
-  setPlayer: (player: Player | null) => void;
-  setOtherPlayer: (player: Player | null) => void;
+  player:               Player | null;
+  otherPlayer:          Player | null;
+  ball:                 Ball | null;
+  level:                number;
+  playerScore:          number | undefined;
+  otherPlayerScore:     number | undefined;
+  victory:              boolean | null;
+  setPlayer:            (player: Player | null) => void;
+  setOtherPlayer:       (player: Player | null) => void;
+  setBall:              (ball: Ball | null) => void;
+  setPlayerScore:       (playerScore: number | undefined) => void;
+  setOtherPlayerScore:  (otherPlayerScore: number | undefined) => void;
+  setVictory:           (victory: boolean | null) =>void;
 }
 
-export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setOtherPlayer }) => {
-  
-  const default_ball: Ball = {
-    id: player?.ballId  || 0,
-    positionX: 44,
-    positionY: 44,
-    directionX: -50,
-    directionY: 50,
-  };
+export const Display: FC<DisplayProps> = ({ player,
+                                            otherPlayer,
+                                            ball,
+                                            level,
+                                            playerScore,
+                                            otherPlayerScore,
+                                            victory,
+                                            setPlayer,
+                                            setOtherPlayer,
+                                            setBall,
+                                            setPlayerScore,
+                                            setOtherPlayerScore,
+                                            setVictory}) => {
 
+  const [updatePlayer] = useMutation(UPDATE_PLAYER);
+  const [startPong] = useMutation(START_PONG);
 
+  //POSITION OF THE STICK AND SCORE  IN SCREEN
   const playerStickClass = player?.host ? "green-stick" : "red-stick";
   const playerScoreClass = player?.host ? "green-stick-score-host" : "green-stick-score-not-host";
   
   const otherPlayerStickClass = player?.host ? "red-stick" : "green-stick";
   const otherPlayerScoreClass = player?.host ? "red-stick-score-host" : "red-stick-score-not-host";
-  
-
-  const [ball, setBall]= useState<Ball | null>(default_ball);
-  const [mount, setMount] = useState(false);
-  const [playerScore, setPlayerScore] = useState(0);
-  const [otherPlayerScore, setOtherPlayerScore] = useState(0);
-  const [victory, setVictory] = useState<Boolean | null>(false);
-
-  const [updatePlayer] = useMutation(UPDATE_PLAYER);
-  const [startPong] = useMutation(START_PONG);
-
+                        
 /*
 *   SET GAME 
 */
-
-// START GAME
   useEffect(() => {
-    if (player && otherPlayer && !mount && victory === null) {
-      
-      setMount(true);
 
+      // START PONG
       startPong({
         variables: {
-          id: ball?.id,
-          playerId: player.id,
-          otherPlayerId: otherPlayer.id,
-          pongId: player.pongId
+          id: player?.ballId,
+          playerId: player?.id,
+          otherPlayerId: otherPlayer?.id,
+          pongId: player?.pongId
         },
       })
       .then((response) => {
         // Appel réussi, le démarrage de ballMove est activé côté serveur
-          console.log(response.data.startPong);
+          console.log('game start',);
         })
         .catch((error) => {
           console.error('Error calling startPong mutation:', error);
         });
-      }
-    }, [player, otherPlayer, ball, mount, victory, setMount, startPong]);
-    
+  }, []); 
+
 /*
 *   BALL ACTION     
 */
@@ -77,15 +78,14 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
 // BALL MOVE
   useEffect(() => {
     if (player && victory === null) {
-      const subscription = wsClient.request({ query: BALL_UPDATED_SUBSCRIPTION, variables: {id : ball?.id} }).subscribe({
+      const subscription = wsClient.request({ query: BALL_UPDATED_SUBSCRIPTION, variables: {id : player.ballId} }).subscribe({
         next(response) {
           if (victory !== null) {
             subscription.unsubscribe()
           }
-          else if (response.data) {
+          if (response.data) {
             const updatedBall: Ball = response.data?.ballUpdatedSubscription as Ball;
             setBall(updatedBall);
-            sessionStorage.setItem('ball', JSON.stringify(ball));
           }
         },
         error(error) {
@@ -127,7 +127,6 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
     };
 
     setPlayer(updatedPlayer);
-    sessionStorage.setItem('player', JSON.stringify(updatedPlayer));
 
     updatePlayer({
       variables: {
@@ -164,7 +163,6 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
             updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
             updatedOtherPlayer.positionX += 80;
             setOtherPlayer(updatedOtherPlayer);
-            sessionStorage.setItem('otherPlayer', JSON.stringify(updatedOtherPlayer));
           }
         },
         error(error) {
@@ -224,7 +222,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       <div className="result-text">
         <h1>{victory ? 'YOU WIN 🏆' : 'YOU LOSE 😓'}</h1>
       </div>
-      <Xp level={29} victory={victory}  />
+      <Xp level={level} victory={victory}  />
     </div>
   ) : (
     <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>

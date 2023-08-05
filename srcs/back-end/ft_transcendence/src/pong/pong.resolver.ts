@@ -4,7 +4,6 @@ import { Pong } from './entities/pong.entity';
 import { CreatePongInput } from './dto/create-pong.input';
 import { UpdatePongInput } from './dto/update-pong.input';
 import { PubSub } from 'graphql-subscriptions';
-import { pubsub } from 'googleapis/build/src/apis/pubsub';
 import { PlayerResolver } from './player/player.resolver';
 import { BallResolver } from './ball/ball.resolver';
 import { Ball } from './ball/entities/ball.entity';
@@ -18,6 +17,7 @@ const PONG_UPDATE_EVENT = 'PongUp';
 export class PongResolver {
 
   private start : boolean;
+  private stop : boolean;
   private  interval : NodeJS.Timer | null;
 
   // Vérifier les limites de l'environnement pour gérer les rebonds
@@ -32,6 +32,7 @@ export class PongResolver {
               private readonly player: PlayerResolver,
               private readonly ball: BallResolver) {
                 this.start = false;
+                this.stop = false;
                 this.interval = null;
                 this.maxX = 100;
                 this.maxY = 100;
@@ -45,21 +46,21 @@ export class PongResolver {
     return this.pongService.create(createPongInput);
   }
 
-  @Query(() => [Pong], { name: 'Pongs' })
+  @Query(() => [Pong], { name: 'findPongs' })
   findAll() {
     return this.pongService.findAll();
   }
 
-  @Query(() => Pong, { name: 'Pong' })
+  @Query(() => Pong, { name: 'findPong' })
   findUnique(@Args('id', { type: () => Int }) id: number) {
     return this.pongService.findUnique(id);
   }
 
 
-  @Query(() => Pong, )
-  findGame(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.findGame(userId);
-  }
+  // @Query(() => Pong, )
+  // findGame(@Args('userId', { type: () => Int }) userId: number) {
+  //   return this.pongService.findGame(userId);
+  // }
 
   
   @Mutation(() => Pong)
@@ -70,7 +71,6 @@ export class PongResolver {
   @Mutation(() => Pong)
   updatePong(@Args('updatePongInput') updatePongInput: UpdatePongInput) {
     const pongUp =  this.pongService.update(updatePongInput.id, updatePongInput);
-
     pubSub.publish(PONG_UPDATE_EVENT, {
       pongUpdatedSubscription : pongUp,
     });
@@ -89,8 +89,9 @@ export class PongResolver {
 
   @Mutation(() => Boolean)
   stopPong() {
-    if (this.start) {
+    if (this.start === true) {
       this.start = false;
+      this.stop = true;
       clearInterval(this.interval);
       this.interval = null;
       return true;
@@ -105,7 +106,7 @@ export class PongResolver {
                         @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
                         @Args('pongId', { type: () => Int }) pongId: number) {
 
-    if (this.start === true) {
+    if (this.start === true || this.stop === true) {
       return false;
     }
     this.start = true;
@@ -178,7 +179,7 @@ export class PongResolver {
           ...currentPong
         }
           this.updatePong(DataUpdatePong);
-        if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
+        if (currentPong.scoreUser1 >= 5 || currentPong.scoreUser2 >= 5)
         {
           this.stopPong();
         }

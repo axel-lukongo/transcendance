@@ -20,7 +20,7 @@ model User {
 	nickname			String		@unique
 	avatar				String?
 	rank				String?		@default("Bronze")
-	level 				Float 		@default(0)
+	level 				Float 		@default(1)
 	userPong			Pong[]		@relation("User1")
 	userPong2			Pong[]		@relation("User2")
 	chanels				Users_Chanels[]

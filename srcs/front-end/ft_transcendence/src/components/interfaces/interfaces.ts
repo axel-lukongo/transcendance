@@ -8,6 +8,7 @@ export interface User {
     nickname: string;
     token: string;
     tfa_code?: string
+	level: number;
   }
 
 export interface Chanel {

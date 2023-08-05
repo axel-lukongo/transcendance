@@ -25,4 +25,8 @@ export class User {
 
   @Field({ nullable: true })
   avatar?: string;
+
+  @Field(() => Int)
+  level: number;
+  
 }

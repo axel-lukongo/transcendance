@@ -11,6 +11,7 @@ type User {
   intra_login: String!
   nickname: String!
   avatar: String
+  level: Int!
 }
 
 type Chanel {
@@ -113,16 +114,15 @@ type Query {
   myContacts(user_id: Int!): [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
-  Pongs: [Pong!]!
-  Pong(id: Int!): Pong!
-  findGame(userId: Int!): Pong!
+  findPongs: [Pong!]!
+  findPong(id: Int!): Pong!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
   findWaitingRoomPlayer(id: Int!): [Player!]!
   findWaitingRooms: [WaitingRoom!]!
   findWaitingRoom(id: Int!): WaitingRoom!
-  Ball: [Ball!]!
-  Balls(id: Int!): Ball!
+  findBalls: [Ball!]!
+  findBall(id: Int!): Ball!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
   myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
   tobloc(id: Int!): Tobloc!
@@ -172,6 +172,7 @@ input UpdateUserInput {
   intra_login: String
   nickname: String
   avatar: String
+  level: Int!
 }
 
 input CreateChanelInput {
