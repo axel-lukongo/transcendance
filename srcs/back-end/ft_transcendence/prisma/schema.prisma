@@ -19,15 +19,15 @@ model User {
 	intra_login			String		@unique
 	nickname			String		@unique
 	avatar				String?
-	rank				Int?		@default(0)
+	rank				String?		@default("Bronze")
 	level 				Float 		@default(0)
 	userPong			Pong[]		@relation("User1")
 	userPong2			Pong[]		@relation("User2")
 	chanels				Users_Chanels[]
-	own_chan			Chanel[]		@relation("Owner")
-	contact				Contact[]		@relation("contactRef")
-	reverse_contact		Contact[]		@relation("reverseContactRef")
-	sender				Message[]       @relation("Send")
+	own_chan			Chanel[]	@relation("Owner")
+	contact				Contact[]	@relation("contactRef")
+	reverse_contact		Contact[]	@relation("reverseContactRef")
+	sender				Message[]	@relation("Send")
 }
 
 model Contact {

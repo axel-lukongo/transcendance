@@ -32,10 +32,6 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
   const otherPlayerStickClass = player?.host ? "red-stick" : "green-stick";
   const otherPlayerScoreClass = player?.host ? "red-stick-score-host" : "red-stick-score-not-host";
   
-  // ... rest of your code ...
-  
-  
-
 
   const [ball, setBall]= useState<Ball | null>(default_ball);
   const [mount, setMount] = useState(false);
@@ -228,7 +224,7 @@ export const Display: FC<DisplayProps> = ({ player, otherPlayer, setPlayer, setO
       <div className="result-text">
         <h1>{victory ? 'YOU WIN 🏆' : 'YOU LOSE 😓'}</h1>
       </div>
-      <Xp level={2} victory={victory}  />
+      <Xp level={29} victory={victory}  />
     </div>
   ) : (
     <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
