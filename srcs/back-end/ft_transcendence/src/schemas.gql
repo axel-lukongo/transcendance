@@ -12,6 +12,7 @@ type User {
   nickname: String!
   avatar: String
   level: Int!
+  rank: String!
 }
 
 type Chanel {
@@ -173,6 +174,7 @@ input UpdateUserInput {
   nickname: String
   avatar: String
   level: Int!
+  rank: String
 }
 
 input CreateChanelInput {

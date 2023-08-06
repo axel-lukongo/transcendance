@@ -41,6 +41,17 @@ export const UPDATE_PLAYER = gql `
   }
 `;
 
+export const UPDATE_USER = gql`
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(updateUserInput: $input) {
+      id
+      token
+      level
+      rank
+    }
+  }
+`;
+
 export const START_PONG = gql`
   mutation StartPong($id: Int!, $playerId: Int!, $otherPlayerId: Int!, $pongId: Int!) {
     startPong(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId, pongId: $pongId)

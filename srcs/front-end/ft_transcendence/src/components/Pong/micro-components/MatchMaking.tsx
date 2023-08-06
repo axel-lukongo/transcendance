@@ -131,8 +131,8 @@ export const MatchMaking: FC<MatchMakingProps> = ({ player, setPlayer, setOtherP
   }, [player, otherPlayer, setPlayer, setOtherPlayer, findPlayer ]);
   
   return (
-    <div>
-      <p>Loading...</p>
-    </div>
+<div className="loading-container">
+  <h2 className="loading-text">Loading GAME...</h2>
+</div>
   )
 };

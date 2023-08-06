@@ -19,7 +19,7 @@ model User {
 	intra_login			String		@unique
 	nickname			String		@unique
 	avatar				String?
-	rank				String?		@default("Bronze")
+	rank				String		@default("Bronze")
 	level 				Float 		@default(1)
 	userPong			Pong[]		@relation("User1")
 	userPong2			Pong[]		@relation("User2")

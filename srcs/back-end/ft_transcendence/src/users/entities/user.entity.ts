@@ -28,5 +28,8 @@ export class User {
 
   @Field(() => Int)
   level: number;
+
+  @Field()
+  rank: string;
   
 }

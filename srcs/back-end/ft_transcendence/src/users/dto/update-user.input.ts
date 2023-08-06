@@ -29,4 +29,7 @@ export class UpdateUserInput extends PartialType(User) {
 
   @Field(() => Int)
   level?: number;
+
+  @Field({ nullable: true })
+  rank?: string;
 }

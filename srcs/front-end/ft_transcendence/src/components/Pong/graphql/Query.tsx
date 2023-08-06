@@ -24,6 +24,8 @@ export const FIND_PONG = gql`
       scoreUser1
       scoreUser2
       versusDate
+      winnerId
+      loserId
     }
   }
 `;

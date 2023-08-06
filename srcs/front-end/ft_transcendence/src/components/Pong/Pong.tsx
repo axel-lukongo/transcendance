@@ -20,6 +20,7 @@ const Pong: FC = () => {
   const [victory, setVictory] = useState<boolean | null>(null);
   const [playerScore, setPlayerScore] = useState<number | undefined>(undefined);
   const [otherPlayerScore, setOtherPlayerScore] = useState<number | undefined>(undefined);
+  const [check, setCheck] = useState<boolean>(false);
   const level = userFromStorage?.level;
 
 
@@ -41,9 +42,10 @@ const Pong: FC = () => {
       })
       .catch((error) => {
         console.error('Error fetching player:', error);
+      }).finally(() => {
       });
     }
-  }, []);
+  }, []); 
 
   useEffect(() => {
     if (player  && player.opponentPlayerId !== 0 && !otherPlayer) {
@@ -104,14 +106,14 @@ const Pong: FC = () => {
         })
       .catch((otherPlayerError) => {
           console.error('Error fetching otherPlayer :', otherPlayerError);
-      });
+      })
     }
   }, [player, otherPlayer, findPlayer, findBall, findPong])
 
 
   return (
     <div>
-      {player && otherPlayer && ball && playerScore !== undefined && otherPlayerScore !== undefined ?(
+      { player && otherPlayer && ball && playerScore !== undefined && otherPlayerScore !== undefined ?(
         <Display
           player={player}
           otherPlayer={otherPlayer}

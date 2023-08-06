@@ -1,8 +1,9 @@
-import React, { FC,  } from 'react';
-
+import  { FC, useEffect  } from 'react';
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
+import { useMutation } from '@apollo/client';
+import { UPDATE_USER } from '../graphql/Mutation';
 
 enum Rank {
   Bronze = "Bronze",
@@ -18,7 +19,8 @@ enum Rank {
 
   interface XpProps {
     level: number;
-    victory: boolean | null
+    victory: boolean | null;
+    userId: number | undefined;
   }
   
   export const findRank = (level: number): Rank | null => {
@@ -57,9 +59,9 @@ enum Rank {
     }
   };
 
-  export const Xp: FC<XpProps> = ({ level, victory }) => {
+  export const Xp: FC<XpProps> = ({ level, victory, userId }) => {
+    
     const rank = findRank(level);
-  
     const { xpGain, max, min } = rank ? levelRanges[rank] : { xpGain: 0, max: 0, min: 0 };
     const rangeSize = max - min;
     const curXpPercentage = ((level - min) / rangeSize) * 100;
@@ -67,6 +69,30 @@ enum Rank {
     const totalXpPercentage = victory && level < 30 ? curXpPercentage + xpGainPercentage : curXpPercentage;
     const nextRank = getNextRank(rank);
 
+    const [updateUser] = useMutation(UPDATE_USER)
+
+    useEffect(() => {
+      if (victory === true && level !== 30 && userId) {
+        level += xpGain;
+        updateUser({
+          variables: {
+            input: {
+              id: userId,
+              level: level,
+              rank: totalXpPercentage === 100 ? nextRank?.toString() : rank?.toString()
+            }
+          }
+        })
+          .then((response) => {
+            if (response.data && response.data.updateUser) {
+              console.log('user level has been updated:', response.data.updateUser);
+            }
+          })
+          .catch((error) => {
+            console.log('Error update level user', error);
+          });
+      }
+    }, [])
   
     return (
       <div className='xp-container'>
