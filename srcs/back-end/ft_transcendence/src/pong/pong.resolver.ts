@@ -60,10 +60,10 @@ export class PongResolver {
   }
 
 
-  // @Query(() => Pong, )
-  // findGame(@Args('userId', { type: () => Int }) userId: number) {
-  //   return this.pongService.findGame(userId);
-  // }
+  @Query(() => [Pong] )
+  myHistoryMatch(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.myHistoryMatch(userId);
+  }
 
   
   @Mutation(() => Pong)
@@ -165,18 +165,17 @@ export class PongResolver {
           return null;
       }
     };
-  
+
     const user = await this.user.findUserById(id);
     if (!user || user.level === 30) {
       return;
     }
-    
+
     const rank = getRank(user.rank);
     if (!rank) {
       return;
     }
-
-  
+    
     const { xpGain, max, min } = levelRanges[rank];
     const rangeSize = max - min;
     const curXpPercentage = ((user.level - min) / rangeSize) * 100;
@@ -189,7 +188,7 @@ export class PongResolver {
       level: user.level + xpGain,
       rank: totalXpPercentage === 100 ? nextRank?.toString() : rank?.toString(),
     };
-  
+
     const updatedUser = await this.user.updateUser(dataUpdateUser);
   }
 

@@ -60,7 +60,7 @@ export class PongService {
     return this.prisma.pong.findUnique({ where : {id}})
   }
 
-  async findGame(userId: number) {
+  async myHistoryMatch(userId: number) {
     try {
       const games = await this.prisma.pong.findMany({
         where: {
@@ -69,19 +69,23 @@ export class PongService {
             { userId2: userId },
           ],
         },
-        orderBy: {
-          versusDate: 'desc', // Tri par date en ordre décroissant
+        include: {
+          user1: true,
+          user2: true,
         },
       });
+  
       if (games.length === 0) {
         throw new Error('No game found for the given userId.');
       }
-      return games[0];
-    } 
-    catch (error) {
+  
+      return games;
+    } catch (error) {
       throw new Error(`Error fetching game: ${error.message}`);
     }
   }
+  
+
   update(id: number, updatePongInput: UpdatePongInput) {
     return this.prisma.pong.update({
       where : {id},

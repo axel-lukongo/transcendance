@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int} from '@nestjs/graphql';
+import { User } from 'src/users/entities/user.entity';
 
 @ObjectType()
 export class Pong {
@@ -25,6 +26,12 @@ export class Pong {
 
 	@Field(() => Date)
 	versusDate: Date;
+
+	@Field(() => User)
+	user1?: User;
+  
+	@Field(() => User)
+	user2?: User;
 }
 
 

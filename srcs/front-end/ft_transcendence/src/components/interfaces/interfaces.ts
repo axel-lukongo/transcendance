@@ -68,6 +68,8 @@ export interface Player {
 	loserId?: number ;
 	winnerId?: number;
 	VersusDate: string;
+	user1?: User;
+	user2?: User;
   }
 
 /* //////////////////////////////////////////////////////// */

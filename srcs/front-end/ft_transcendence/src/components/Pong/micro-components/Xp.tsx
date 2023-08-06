@@ -72,7 +72,6 @@ const Xp: FC<XpProps> = ({ userId }) => {
   if (data && data.findUserById && !rank) {
 
     const user = data.findUserById;
-    console.log(user);
     const userRank = getRank(user.rank);
     
     if (userRank) {

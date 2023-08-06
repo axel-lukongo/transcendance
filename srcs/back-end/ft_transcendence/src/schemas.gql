@@ -84,6 +84,8 @@ type Pong {
   loserId: Int
   winnerId: Int
   versusDate: DateTime!
+  user1: User!
+  user2: User!
 }
 
 type UsersChanels {
@@ -117,6 +119,7 @@ type Query {
   checkTwoAuthenticationFactor(code: String!): User!
   findPongs: [Pong!]!
   findPong(id: Int!): Pong!
+  myHistoryMatch(userId: Int!): [Pong!]!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
   findWaitingRoomPlayer(id: Int!): [Player!]!
@@ -173,7 +176,7 @@ input UpdateUserInput {
   intra_login: String
   nickname: String
   avatar: String
-  level: Int!
+  level: Float
   rank: String
 }
 

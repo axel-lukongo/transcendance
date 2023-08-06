@@ -4,22 +4,25 @@ import { TfaToggleButton } from './micro-components/TfaToogleButton';
 import './css/Home.css';
 import NicknameBox from './micro-components/NicknameBox';
 import AvatarBox from './micro-components/AvatarBox';
+import HistoryMatch from './micro-components/HistoryMatch';
 
 
 const Home = () => {
 
   const user = JSON.parse(sessionStorage.getItem('user') || '');
 
-
   return (
     <div className='Home'>
       {user && (
         <>
           <div className='screen-box'>
-          <div className='rank-box profil-box'>RANK #?</div>
+          <div className='rank-box profil-box'>
+            <h1>RANK #?</h1>
+            </div>
           <AvatarBox />
           <div className="history-match-box profil-box">
-            MATCH HISTORY
+            <h3>MATCH HISTORY</h3>
+            <HistoryMatch />
           </div>
           <NicknameBox/>
           <div className='email-box profil-box'>
@@ -27,7 +30,7 @@ const Home = () => {
           </div>
             <Link to='/pong'>
               <button id="play-button" className='game-box profil-box' >
-                <span>PLAY</span>
+                <h1>PLAY</h1>
                 <div className="movement-ball"></div>
               </button>
             </Link>
