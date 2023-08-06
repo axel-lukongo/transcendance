@@ -175,6 +175,7 @@ export class PongResolver {
     if (!rank) {
       return;
     }
+
   
     const { xpGain, max, min } = levelRanges[rank];
     const rangeSize = max - min;
@@ -190,7 +191,6 @@ export class PongResolver {
     };
   
     const updatedUser = await this.user.updateUser(dataUpdateUser);
-    console.log(updatedUser);
   }
 
   private async  ballMove(  ball: Ball, player: Player, otherPlayer: Player, currentPong: Pong): Promise<void> {
@@ -248,6 +248,7 @@ export class PongResolver {
         if (currentPong.scoreUser1 >= 5 || currentPong.scoreUser2 >= 5)
         {
           this.stopPong();
+          this.updateRankLevel(currentPong.winnerId);
           
         }
         const DataUpdateBall : UpdateBallInput = {
