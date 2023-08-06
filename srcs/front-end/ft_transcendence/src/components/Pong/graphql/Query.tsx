@@ -41,3 +41,13 @@ export const FIND_BALL = gql`
     }
   }
 `;
+
+export const FIND_USER = gql`
+  query FindUserById($id: Int!) {
+    findUserById(id: $id) {
+      id
+      rank
+      level
+    }
+  }
+`;

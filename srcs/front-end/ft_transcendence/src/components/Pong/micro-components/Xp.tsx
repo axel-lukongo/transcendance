@@ -1,117 +1,106 @@
-import  { FC, useEffect  } from 'react';
+import React, { FC, useState } from 'react';
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
-import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '../graphql/Mutation';
+import { useQuery } from '@apollo/client';
+import { FIND_USER } from '../graphql/Query';
 
 enum Rank {
   Bronze = "Bronze",
   Silver = "Silver",
   Gold = "Gold",
 }
-  
-  const levelRanges = {
-    [Rank.Bronze]: { min: 1, max: 9, xpGain: 2 },
-    [Rank.Silver]: { min: 10, max: 19, xpGain: 1 },
-    [Rank.Gold]: { min: 20, max: 30, xpGain: 0.5 },
-  };
 
-  interface XpProps {
-    level: number;
-    victory: boolean | null;
-    userId: number | undefined;
+const levelRanges = {
+  [Rank.Bronze]: { min: 1, max: 9, xpGain: 2 },
+  [Rank.Silver]: { min: 10, max: 19, xpGain: 1 },
+  [Rank.Gold]: { min: 20, max: 30, xpGain: 0.5 },
+};
+
+const getMedalImage = (rank: Rank | null) => {
+  switch (rank) {
+    case Rank.Bronze:
+      return bronzeMedal;
+    case Rank.Silver:
+      return silverMedal;
+    case Rank.Gold:
+      return goldMedal;
+    default:
+      return '';
   }
-  
-  export const findRank = (level: number): Rank | null => {
-    for (const rankKey in levelRanges) {
-      if (levelRanges.hasOwnProperty(rankKey)) {
-        const { min, max } = levelRanges[rankKey as unknown as Rank];
-        if (level >= min && level <= max) {
-          return rankKey as unknown as Rank;
-        }
-      }
-    }
+};
+
+const getNextRank = (rank: Rank | null): Rank | null => {
+  if (rank === Rank.Bronze) {
+    return Rank.Silver;
+  } else if (rank === Rank.Silver) {
+    return Rank.Gold;
+  } else {
     return null;
-  };
+  }
+};
 
-  export const getMedalImage = (rank: Rank | null) => {
-    switch (rank) {
-      case Rank.Bronze:
-        return bronzeMedal;
-      case Rank.Silver:
-        return silverMedal;
-      case Rank.Gold:
-        return goldMedal;
-      default:
-        return '';
-    }
-  };
-
-  export const getNextRank = (rank: Rank | null): Rank | null => {
-    
-    if (rank === Rank.Bronze) {
+const getRank = (rank: string): Rank | null => {
+  switch (rank) {
+    case Rank.Bronze:
+      return Rank.Bronze;
+    case Rank.Silver:
       return Rank.Silver;
-    } else if (rank === Rank.Silver) {
+    case Rank.Gold:
       return Rank.Gold;
-    } else {
+    default:
       return null;
-    }
-  };
+  }
+};
 
-  export const Xp: FC<XpProps> = ({ level, victory, userId }) => {
+interface XpProps {
+  userId: number | undefined;
+}
+
+const Xp: FC<XpProps> = ({ userId }) => {
+
+  const [totalXpPercentage, setTotalXpPercentage] = useState(0);
+  const [rank, setRank] = useState<Rank | null>(null);
+  const [nextRank, setNextRank] = useState<Rank | null>(null);
+
+  const { data } = useQuery(FIND_USER, {
+    variables: {
+      id: userId,
+    },
+  });
+
+  if (data && data.findUserById && !rank) {
+
+    const user = data.findUserById;
+    console.log(user);
+    const userRank = getRank(user.rank);
     
-    const rank = findRank(level);
-    const { xpGain, max, min } = rank ? levelRanges[rank] : { xpGain: 0, max: 0, min: 0 };
-    const rangeSize = max - min;
-    const curXpPercentage = ((level - min) / rangeSize) * 100;
-    const xpGainPercentage = rank && victory ? (xpGain / rangeSize) * 100 : 0;
-    const totalXpPercentage = victory && level < 30 ? curXpPercentage + xpGainPercentage : curXpPercentage;
-    const nextRank = getNextRank(rank);
+    if (userRank) {
+      setRank(userRank);
+      const { xpGain, max, min } = levelRanges[userRank];
+      const rangeSize = max - min;
+      const curXpPercentage = ((user.level - min) / rangeSize) * 100;
+      const xpGainPercentage = (xpGain / rangeSize) * 100;
+      const totalXp = user.level < 30 ? curXpPercentage + xpGainPercentage : curXpPercentage;
+      setTotalXpPercentage(totalXp);
+      setNextRank(getNextRank(userRank));
+    }
+  }
 
-    const [updateUser] = useMutation(UPDATE_USER)
-
-    useEffect(() => {
-      if (victory === true && level !== 30 && userId) {
-        level += xpGain;
-        updateUser({
-          variables: {
-            input: {
-              id: userId,
-              level: level,
-              rank: totalXpPercentage === 100 ? nextRank?.toString() : rank?.toString()
-            }
-          }
-        })
-          .then((response) => {
-            if (response.data && response.data.updateUser) {
-              console.log('user level has been updated:', response.data.updateUser);
-            }
-          })
-          .catch((error) => {
-            console.log('Error update level user', error);
-          });
-      }
-    }, [])
-  
-    return (
-      <div className='xp-container'>
-        <img className='xp-image xp-image-left'   src={getMedalImage(rank)}  alt='left-medal' />
-        <div className='xp-bar'>
-          {victory ? (
-            <div className='xp-bar-segment' style={{ transition: 'width 0.5s ease 0.3s', width: `${curXpPercentage + xpGainPercentage}%` }} />
-          ) : (
-            <div className='xp-bar-segment' style={{ width: `${curXpPercentage}%` }} />
-          )}
-          <div className='xp-bar-text'>
-            <h1>{totalXpPercentage}%</h1>
-          </div>
+  return (
+    <div className='xp-container'>
+      <img className='xp-image xp-image-left' src={getMedalImage(rank)} alt='left-medal' />
+      <div className='xp-bar'>
+        <div className='xp-bar-segment' style={{ transition: 'width 0.5s ease 0.3s', width: `${totalXpPercentage}%` }} />
+        <div className='xp-bar-text'>
+          <h1>{totalXpPercentage}%</h1>
         </div>
-          {nextRank !== null && (
-          <img className='xp-image xp-image-right' src={getMedalImage(nextRank)} alt='right-medal' /> 
-        )}
       </div>
-    )
-  };
-  
-  export default Xp;
+      {nextRank !== null && (
+        <img className='xp-image xp-image-right' src={getMedalImage(nextRank)} alt='right-medal' />
+      )}
+    </div>
+  );
+};
+
+export default Xp;

@@ -222,7 +222,7 @@ export const Display: FC<DisplayProps> = ({ player,
       <div className="result-text">
         <h1>{victory ? 'YOU WIN 🏆' : 'YOU LOSE 😓'}</h1>
       </div>
-      <Xp level={level} victory={victory} userId={player?.userId} />
+      <Xp userId={player?.userId} />
     </div>
   ) : (
     <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>

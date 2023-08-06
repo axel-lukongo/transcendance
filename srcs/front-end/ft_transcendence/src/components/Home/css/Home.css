@@ -41,7 +41,7 @@
 	}
 
 	.profil-box{
-	font-size: 32px;
+	/* font-size: 50%; */
 	font-family: "Orbitron";
 	font-weight:bold;
 	position: fixed;
@@ -83,7 +83,7 @@
 	width: 50%;
 	height: 15%;
 	border-radius: 50px;
-	font-size: 500%;
+	font-size:xx-large;
 
   }
   
@@ -132,7 +132,7 @@
 	border-radius: 50px;
 	justify-content: center;
 	align-items: flex-start;
-	font-size: 390%
+	font-size: xx-large;
   }
 
   .rank-box {

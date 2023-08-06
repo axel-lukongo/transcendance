@@ -65,17 +65,6 @@ export const UPDATE_PONG = gql`
   }
 `;
 
-export const UPDATE_USER = gql`
-  mutation UpdateUser($input: UpdateUserInput!) {
-    updateUser(updateUserInput: $input) {
-      id
-      token
-      level
-      rank
-    }
-  }
-`;
-
 export const REMOVE_BALL = gql`
   mutation RemoveBall($id: Int!) {
     removeBall(id: $id) {
