@@ -2,8 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import { Display } from './micro-components/Display';
 import { MatchMaking } from './micro-components/MatchMaking';
 import { Player, User, Ball } from '../interfaces/interfaces';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery /*, useMutation */} from '@apollo/client';
 import { FIND_PLAYER, FIND_BALL, FIND_PONG} from './graphql/Query';
+// import { REMOVE_BALL, REMOVE_PLAYER, STOP_PONG, UPDATE_PONG } from './graphql/Mutation';
 
 
 
@@ -20,13 +21,17 @@ const Pong: FC = () => {
   const [victory, setVictory] = useState<boolean | null>(null);
   const [playerScore, setPlayerScore] = useState<number | undefined>(undefined);
   const [otherPlayerScore, setOtherPlayerScore] = useState<number | undefined>(undefined);
-  const [check, setCheck] = useState<boolean>(false);
   const level = userFromStorage?.level;
 
 
   const [findPlayer] = useLazyQuery(FIND_PLAYER);
   const [findPong] = useLazyQuery(FIND_PONG);
   const [findBall] = useLazyQuery(FIND_BALL);
+  // const [stopPong] = useMutation(STOP_PONG);
+  // const [removeBall] = useMutation(REMOVE_BALL);
+  // const [removePlayer] = useMutation(REMOVE_PLAYER);
+  // const [updatePong] = useMutation(UPDATE_PONG);
+
 
   useEffect(() => {
     if (userFromStorage ) {
@@ -42,7 +47,6 @@ const Pong: FC = () => {
       })
       .catch((error) => {
         console.error('Error fetching player:', error);
-      }).finally(() => {
       });
     }
   }, []); 
@@ -110,10 +114,70 @@ const Pong: FC = () => {
     }
   }, [player, otherPlayer, findPlayer, findBall, findPong])
 
+  // useEffect(() => {
+  //   return (()=> {
+  //     if (player)
+  //     {
+  //       if (otherPlayer)
+  //       {
+  //         if (victory !== null) // NORMAL EXIT
+  //         {
+  //           if (player.host === true)
+  //           {
+  //             removeBall({
+  //               variables: {
+  //                 id : player.ballId
+  //               }
+  //             })
+  //             .then((response) => {
+  //               console.log('Ball instance was deleted:', response.data.removeBall);
+  //             })
+  //             .catch((error) => {
+  //               console.error('Error deleting ball instance:', error);
+  //             });
+  //           }
+  //         }
+  //         else // INTERUPTION ANORMAL
+  //         {
+  //           stopPong();
+  //           const updateDataPong = {
+  //             id: player.pongId,
+  //             scoreUser1 : player.host ? 0 : 5,
+  //             scoreUser2: player.host ? 5 : 0,
+  //             winnerId: otherPlayer.userId,
+  //             loserId: player.id,
+  //           }
+  //           updatePong({
+  //             variables: {
+  //               input : updateDataPong
+  //             }
+  //           })
+  //           .then((response) => {
+  //             console.log('pong instance was updated:', response.data.updatePong);
+  //           })
+  //           .catch((error) => {
+  //             console.error('Error updating pong instance:', error);
+  //           });
+  //         }
+  //       }
+  //       removePlayer({
+  //         variables: {
+  //             id : player.id
+  //           }
+  //         })
+  //       .then((response) => {
+  //          console.log('Playe instance was deleted:', response.data.removePlayer);
+  //       })
+  //       .catch((error) => {
+  //          console.error('Error deleting player instance:', error);
+  //       });
+  //     }
+  //   })
+  // },[])
 
   return (
     <div>
-      { player && otherPlayer && ball && playerScore !== undefined && otherPlayerScore !== undefined ?(
+      { player && otherPlayer  ?(
         <Display
           player={player}
           otherPlayer={otherPlayer}

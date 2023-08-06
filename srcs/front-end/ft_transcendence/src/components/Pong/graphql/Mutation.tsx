@@ -1,5 +1,17 @@
 import {gql} from '@apollo/client';
 
+export const START_PONG = gql`
+  mutation StartPong($id: Int!, $playerId: Int!, $otherPlayerId: Int!, $pongId: Int!) {
+    startPong(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId, pongId: $pongId)
+  }
+`;
+
+export const STOP_PONG = gql`
+  mutation StopPong {
+    stopPong
+  }
+`;
+
 export const CREATE_PLAYER = gql`
   mutation CreatePlayer($input: CreatePlayerInput!) {
     createPlayer(createPlayerInput: $input) {
@@ -41,6 +53,18 @@ export const UPDATE_PLAYER = gql `
   }
 `;
 
+export const UPDATE_PONG = gql`
+  mutation UpdatePong($input: UpdatePongInput!) {
+    updatePong(updatePongInput: $input) {
+      id
+      scoreUser1
+      scoreUser2
+      loserId
+      winnerId
+    }
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation UpdateUser($input: UpdateUserInput!) {
     updateUser(updateUserInput: $input) {
@@ -52,9 +76,19 @@ export const UPDATE_USER = gql`
   }
 `;
 
-export const START_PONG = gql`
-  mutation StartPong($id: Int!, $playerId: Int!, $otherPlayerId: Int!, $pongId: Int!) {
-    startPong(id: $id, playerId: $playerId, otherPlayerId: $otherPlayerId, pongId: $pongId)
+export const REMOVE_BALL = gql`
+  mutation RemoveBall($id: Int!) {
+    removeBall(id: $id) {
+      id
+    }
+  }
+`;
+
+export const REMOVE_PLAYER = gql`
+  mutation RemovePlayer($id: Int!) {
+    removePlayer(id: $id) {
+      id
+    }
   }
 `;
 
