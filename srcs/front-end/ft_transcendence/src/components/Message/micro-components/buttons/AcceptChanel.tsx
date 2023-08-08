@@ -13,7 +13,9 @@ export default function AcceptChanel({element, handleChanelRefetch, label}: IReq
 				variables: {
 					input: {
 						user_id: element.user_id,
-						chanel_id: element.chanels.id
+						chanel_id: element.chanels.id,
+						is_admin: false,
+						is_muted: false,
 					}
 				}
 			}).then((response) => {

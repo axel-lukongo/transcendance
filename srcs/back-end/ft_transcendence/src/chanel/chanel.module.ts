@@ -6,8 +6,9 @@ import { UsersService } from 'src/users/users.service';
 import { MessagesModule } from 'src/messages/messages.module';
 import { MessagesService } from 'src/messages/messages.service';
 import { MessagesResolver } from '../messages/messages.resolver';
+import { BannedModule } from './banned/banned.module';
 @Module({
-	imports: [MessagesModule],
+	imports: [MessagesModule, BannedModule],
     providers: [ChanelResolver, ChanelService, PrismaService, UsersService, MessagesService, MessagesResolver]
 })
 export class ChanelModule {}

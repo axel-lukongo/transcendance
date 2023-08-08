@@ -9,6 +9,7 @@ import ChatBox from './micro-components/requests/ChatBox';
 import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
+import Param_Chan from './micro-components/forms/chan_param';
 
 /* CSS */
 import './css/messages.css';
@@ -16,6 +17,7 @@ import './css/messages.css';
 export const __CREATE_CHANEL__ = 1;
 export const __ADD_USER__ = 2;
 export const __CHAT__ = 3;
+export const __CHAN_PARAM__ = 5;
 
 export const __DIRECT_MESSAGE__ = 1;
 export const __PRIVATE_CHANEL__ = 2;
@@ -85,7 +87,7 @@ const Message = () => {
 
 
 	const handleChatBox = (switch_id: number) => {
-		if (switch_id < 1 || switch_id > 4)
+		if (switch_id < 1 || switch_id > 5)
 			throw new Error("Bad ID");
 		else
 			setChatBox(switch_id);
@@ -97,7 +99,7 @@ const Message = () => {
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
-	console.log('dans les message ====>>>>   ',chanel_focus );
+	// console.log('dans les message ====>>>>   ',chanel_focus );
 
 	const renderSwitch = (id: number) => {
 		switch(id) {
@@ -217,6 +219,26 @@ const Message = () => {
 						/>
 						<div className="chat-history">
 						<AddUserInChan 
+							user={user}
+							chanel_focus={chanel_focus}
+						/>
+						</div>
+						<div className="chat-message ">
+						</div>
+					</div>
+				);
+			}
+			case __CHAN_PARAM__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+						<Param_Chan 
 							user={user}
 							chanel_focus={chanel_focus}
 						/>

@@ -62,3 +62,28 @@ searchUserForChan(user_id: $user_id, chanel_id: $chanel_id) {
     nickname
   }
 }`
+
+
+export const CHANNEL_MEMBERS_QUERY = gql`
+  query ChanMembers($chan_id: Int!){
+			ChannelMembers(channel_id: $chan_id) {
+			user_id
+			is_muted
+			is_admin
+			user {
+				nickname
+			}
+		}
+	}
+`;
+export const BANNED_LIST_QUERY = gql`
+  query BannedList($channelId: Int!) {
+    banned_list( channelId: $channelId) {
+	 user_id
+	 channel_id
+      user_ban {
+		nickname
+      }
+    }
+  }
+`;

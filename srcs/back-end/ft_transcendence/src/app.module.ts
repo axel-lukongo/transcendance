@@ -12,7 +12,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
 import { PongModule } from './pong/pong.module';
 import { UserChanelsModule } from './user-chanels/user-chanels.module';
-import { ToblocModule } from './tobloc/tobloc.module';
+// import { ToblocModule } from './messages/tobloc/tobloc.module';
 
 @Module({
 	imports: [
@@ -33,7 +33,7 @@ import { ToblocModule } from './tobloc/tobloc.module';
 		AuthenticationModule,
 		PongModule,
 		UserChanelsModule,
-		ToblocModule
+		// ToblocModule
 	],
 })
 export class AppModule {

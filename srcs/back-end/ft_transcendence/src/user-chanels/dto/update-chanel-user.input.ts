@@ -8,4 +8,10 @@ export class UpdateChanelUserInput extends PartialType(AddUserChanel) {
 
 	@Field(() => Int)
 	chanel_id: number;
+
+	@Field(() => Boolean)
+	is_muted: boolean;
+
+	@Field(() => Boolean)
+	is_admin: boolean;
 }

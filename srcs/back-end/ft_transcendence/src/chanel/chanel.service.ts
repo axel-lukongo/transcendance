@@ -21,7 +21,9 @@ export class ChanelService {
         data: {
           chanel_id: chanelRes.id,
           user_id: chanelRes.owner_id,
-          pending: false
+          pending: false,
+		  is_admin: true,
+		  is_muted: false,
         }
       })
       
@@ -101,6 +103,25 @@ export class ChanelService {
 
   }
   
+
+//   async addBannedUser(channelId: number, userId: number): Promise<Chanel | null> {
+//     try {
+//       const updatedChannel = await this.prisma.chanel.update({
+//         where: { id: channelId },
+//         data: {
+//           banned_users: {
+//             push: userId,
+//           },
+//         },
+//       });
+
+//       return updatedChannel;
+//     } catch (error) {
+//       console.error('Error adding banned user:', error);
+//       return null;
+//     }
+//   }
+
 }
 
 

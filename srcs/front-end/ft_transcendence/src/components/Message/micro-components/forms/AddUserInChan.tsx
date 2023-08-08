@@ -41,7 +41,9 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 		addUser({ variables: {
 			input: {
 				user_id: user.id,
-				chanel_id: parseInt(chanel_focus.id)
+				chanel_id: parseInt(chanel_focus.id),
+				is_admin: false,
+				is_muted: false
 			}
 		}})
 	}

@@ -28,8 +28,12 @@ const CreatUserChan = ({ chan, hasFetchedData, handleChange }: MyComponentProps)
 				  user_id: hasFetchedData.interlocutor_id,
 				  chanel_id: hasFetchedData?.id,
 				  pending: false,
+				  is_admin: false,
+				  is_muted: false
 			  }
 			},
+		}).catch((error) => {
+			console.log("Html: ", error.message);
 		});
 		isConditionExecuted.current = true;
 	}

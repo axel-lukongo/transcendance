@@ -40,6 +40,20 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Tobloc {
+  id: Int!
+  blocker_id: Int!
+  blocked_id: Int!
+  blocked: User
+}
+
+type Banned {
+  id: Int!
+  user_id: Int!
+  channel_id: Int!
+  user_ban: User
+}
+
 type Contact {
   id: Int!
   user_id: Int!
@@ -88,16 +102,10 @@ type UsersChanels {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean!
-  is_muted: Boolean!
-  is_admin: Boolean!
+  is_muted: Boolean
+  is_admin: Boolean
+  user: User
   chanels: Chanel!
-}
-
-type Tobloc {
-  id: Int!
-  blocker_id: Int!
-  blocked_id: Int!
-  blocked: User
 }
 
 type Query {
@@ -111,6 +119,9 @@ type Query {
   Message_findAll_msg: [Message!]!
   Message_findAll_msg_chan(channelId: Int!): [Message!]!
   Message_findOne_msg(id: Int!): Message!
+  person_blocked(id: Int!): [Tobloc!]!
+  tobloc(id: Int!): Tobloc!
+  banned_list(channelId: Int!): [Banned!]!
   contactsRequest(user_id: Int!): [Contact!]!
   myContactRequest(user_id: Int!): [Contact!]!
   myContacts(user_id: Int!): [Contact!]!
@@ -128,8 +139,7 @@ type Query {
   Balls(id: Int!): Ball!
   chanelsRequest(user_id: Int!): [UsersChanels!]!
   myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
-  person_blocked(id: Int!): [Tobloc!]!
-  tobloc(id: Int!): Tobloc!
+  ChannelMembers(channel_id: Int!): [UsersChanels!]!
 }
 
 type Mutation {
@@ -143,6 +153,10 @@ type Mutation {
   createMessage(createMsgInput: CreateMessageInput!): Message!
   updateMessage(updateMsgInput: UpdateMessageInput!): Message!
   deleteMessage: Message!
+  createToBloc(blockerId: Int!, blockedId: Int!): Tobloc!
+  removeTobloc(id: Int!): Tobloc!
+  createBanned(createBannedInput: CreateBannedInput!): Banned!
+  removeBanned(userId: Int!, channelId: Int!): Banned!
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
   deletecontact(user1: Float!, user2: Float!): Contact!
@@ -164,8 +178,7 @@ type Mutation {
   addUser(addUserChanel: AddUserChanel!): UsersChanels!
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
   deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
-  createToBloc(blockerId: Int!, blockedId: Int!): Tobloc!
-  removeTobloc(id: Int!): Tobloc!
+  updateChanelUser(key: UpdateChanelUserInput!): UsersChanels!
 }
 
 input UpdateUserInput {
@@ -215,6 +228,11 @@ input UpdateMessageInput {
   sender_id: Int
   channel_id: Int
   id: Int!
+}
+
+input CreateBannedInput {
+  user_id: Int!
+  channel_id: Int!
 }
 
 input CreateContactInput {
@@ -285,12 +303,16 @@ input AddUserChanel {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean
+  is_muted: Boolean
+  is_admin: Boolean
 }
 
 input UpdateChanelUserInput {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean
+  is_muted: Boolean!
+  is_admin: Boolean!
 }
 
 type Subscription {

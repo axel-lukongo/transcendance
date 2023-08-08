@@ -1,5 +1,7 @@
 import { IHeaderProps } from '../../../interfaces/interfaces'
 import { __ADD_USER__ } from "../../message";
+import { __CHAN_PARAM__ } from "../../message";
+
 
 export default function HeaderChanel({chanel_focus, user, is_chanel, handleChatBox}: IHeaderProps) {
 
@@ -8,6 +10,12 @@ export default function HeaderChanel({chanel_focus, user, is_chanel, handleChatB
 		handleChatBox(__ADD_USER__);
 	}
 	
+	const handleChanParam = () => {
+		console.log("param of channel");
+		handleChatBox(__CHAN_PARAM__);
+	}
+
+
 	return (
 		<div className="chat-header">
 			<div className="row">
@@ -22,7 +30,9 @@ export default function HeaderChanel({chanel_focus, user, is_chanel, handleChatB
 				</div>
 				<div>{chanel_focus.id !== "" ? <button onClick={handelClick}>++</button> : null}</div> {/* btn pour l'ajout de users dans un chanel */}
 				</div>
-
+				<div>
+					<button onClick={handleChanParam}> parametre </button>
+				</div>
 			</div>
 		</div>
 	);

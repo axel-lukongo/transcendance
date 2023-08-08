@@ -7,7 +7,7 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { UpdateContact } from './dto/update-contact.input';
 import { response } from 'express';
-import { ToblocService } from 'src/tobloc/tobloc.service';
+import { ToblocService } from 'src/messages/tobloc/tobloc.service';
 @Resolver(() => Contact)
 export class ContactsResolver {
 

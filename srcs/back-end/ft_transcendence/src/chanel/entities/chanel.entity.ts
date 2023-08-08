@@ -26,4 +26,5 @@ export class Chanel {
 
 	@Field({nullable: true})
 	interlocutor_id: number;
+
 }

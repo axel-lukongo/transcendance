@@ -1,5 +1,7 @@
 import { Field, Int } from "@nestjs/graphql";
 import { ObjectType } from "@nestjs/graphql";
+import { User } from 'src/users/entities/user.entity';
+
 
 @ObjectType()
 export class UsersChanels {
@@ -12,9 +14,13 @@ export class UsersChanels {
 	@Field(() => Boolean)
 	pending: boolean;
 
-	@Field(() => Boolean)
+	@Field(() => Boolean, { nullable: true })
 	is_muted: boolean;
 
-	@Field(() => Boolean)
+	@Field(() => Boolean, { nullable: true })
 	is_admin: boolean;
+
+	@Field(() => User, { nullable: true })
+	user: User;
+
 }

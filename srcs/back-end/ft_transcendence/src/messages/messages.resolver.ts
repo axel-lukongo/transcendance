@@ -35,7 +35,6 @@ export class MessagesResolver {
 	async createMessage(@Args('createMsgInput') createMsgInput: CreateMessageInput, @Context() context) {
 
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
-		console.log('userId ===>>>  ', userId);
 		const isMuted = await this.msgService.isUserMutedInChannel(userId, createMsgInput.channel_id);
 
 		if (isMuted === true) {
