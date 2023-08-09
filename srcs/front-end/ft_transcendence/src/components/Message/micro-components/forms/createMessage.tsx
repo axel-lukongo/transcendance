@@ -3,8 +3,14 @@ import React, {useState} from 'react';
 import {useMutation} from '@apollo/client';
 import { CREATE_MSG } from '../../graphql/Mutation';
 
-
-const CreateMsg = () => {
+type channelfocus = {
+	id: string,
+	chanel_name: string,
+	chanel_size: string,
+	max_users: string,
+	logo: string,
+}
+const CreateMsg = ({chan}: {chan: channelfocus}) => {
 	const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
 	const userNickname = JSON.parse(sessionStorage.getItem('user') || '')?.nickname;
 	const [Content, setContent] = useState('');
@@ -18,7 +24,7 @@ const CreateMsg = () => {
 					createMsgInput: {
 						sender_id: userId,
 						content: userNickname + ": " + Content,
-						channel_id: 1,
+						channel_id: +chan.id,
 					},
 				},
 			});

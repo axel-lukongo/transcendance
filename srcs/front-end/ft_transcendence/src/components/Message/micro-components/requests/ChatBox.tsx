@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect, useState} from 'react';
-import {gql, useQuery} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { GET_MESSAGES_BY_CHANNEL } from "../../graphql/Query";
 import { NewMessageSubscription } from "../../graphql/souscription.ws";
@@ -29,7 +29,7 @@ interface ChatBoxProps{
 const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: +chan.id}});
 	const [messages, setMessages] = useState<Message[]>([]);
-	// console.log('le channel_id: ====>>> ' +chan.id);
+	console.log('le channel_id: ====>>> ', chan);
 
 	useEffect(() => {
 		if (data && data.Message_findAll_msg_chan) {
@@ -39,6 +39,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 	}, [data]);
 
 	useEffect(() => {
+		console.log('avant : ====>>> ', +chan.id);
 		const subscription = wsClient.request({query: NewMessageSubscription, variables: { input: +chan.id }}).subscribe({
 			next(response) {
 				// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
@@ -46,16 +47,18 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 				if (response.data) {
 					const newMessage = response.data.addmessage;
 					setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedent et on rajoute newMessage
+					console.log('je suis ici: ====>>> ', chan);
 				}
 			},
 			error(error) {
 				console.error('WebSocket error:', error);
 			},
 		});
+
 		return () => {
 			subscription.unsubscribe();
 		};
-	}, []);
+	}, [+chan.id]);
 
 	return (
 

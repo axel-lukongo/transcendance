@@ -16,7 +16,7 @@ export class AuthMiddleware implements NestMiddleware {
     const isGraphql = (req.url === '/graphql');
     // Vérifie si la requête doit être vérifiée avec le jeton
     const requiresTokenCheck = !(isUserCreationRequest || isMakeAuthenticationRequest || isCheckTwoAuthenticationFactorRequest);
-    if (requiresTokenCheck && !isGraphql) {
+    if (requiresTokenCheck) {
       if (!token) {
         res.status(401).json({ message: 'Token manquant' });
         return;

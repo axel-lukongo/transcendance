@@ -93,9 +93,9 @@ const Message = () => {
 			setChatBox(switch_id);
 	}
 	
-	const handleIsChanel = () => {
-		setIsChanel(prevValue => !prevValue);
-	}
+	// const handleIsChanel = () => {
+	// 	setIsChanel(prevValue => !prevValue);
+	// }
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
@@ -202,7 +202,7 @@ const Message = () => {
 						</div>
 						<div className="chat-message ">
 							<div className="input-group mb-0">
-								<CreateMsg />
+								<CreateMsg chan={chanel_focus}/>
 							</div>
 						</div>
 					</div>
