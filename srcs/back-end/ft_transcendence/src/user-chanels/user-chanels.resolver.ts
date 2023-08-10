@@ -14,12 +14,10 @@ export class UserChanelsResolver {
 				private readonly userChanelService: UserChanelsService) {}
 
 
-
 	@Mutation(() => UsersChanels)
 	addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
 		return this.userChanelService.addUser(addUserChanel);
 	}
-
 
 
 	@ResolveField(() => Chanel, {name: "chanels"})
@@ -28,19 +26,16 @@ export class UserChanelsResolver {
 	}
 
 
-
 	@Mutation(() => UsersChanels, {name: "acceptRequest"})
 	acceptRequest(@Args("key") Requestkey: UpdateChanelUserInput) {
 		return this.userChanelService.acceptRequest(Requestkey);
 	}
 
 
-
 	@Query(() => [UsersChanels], {name: "chanelsRequest"})
 	chanelRequest(@Args("user_id", {type: () => Int}) user_id: number) {
 		return this.userChanelService.findMyRequestChanels(user_id);
 	}
-
 
 
 	@Query(() => [UsersChanels], { name: 'myChanels' })

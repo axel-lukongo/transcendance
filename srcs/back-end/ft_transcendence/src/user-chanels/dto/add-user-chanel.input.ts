@@ -16,4 +16,5 @@ export class AddUserChanel {
 
 	@Field(() => Boolean, {nullable: true})
 	is_admin?: boolean;
+
 }

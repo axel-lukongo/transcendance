@@ -50,7 +50,7 @@ const Message = () => {
 
 	const [chatBox, setChatBox] = useState(__CHAT__);
 
-	const [is_chanel, setIsChanel] = useState(true);
+	const [is_chanel] = useState(true);
 
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
@@ -106,7 +106,6 @@ const Message = () => {
 			case __DIRECT_MESSAGE__: {
 				return (
 					<div>
-						
 						<Direct_message
 						user={user}
 						private_chan={true}

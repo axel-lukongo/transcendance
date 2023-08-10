@@ -14,7 +14,6 @@ const CreateMsg = ({chan}: {chan: channelfocus}) => {
 	const userId = JSON.parse(sessionStorage.getItem('user') || '')?.id;
 	const userNickname = JSON.parse(sessionStorage.getItem('user') || '')?.nickname;
 	const [Content, setContent] = useState('');
-	const [ChanId, setChanId] = useState('');
 	const [createMessage] = useMutation(CREATE_MSG);
 
 	const handlecreateMessage = async () => {
@@ -39,9 +38,6 @@ const CreateMsg = ({chan}: {chan: channelfocus}) => {
 		setContent(e.target.value);
 	};
 
-	const handlechannelIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setChanId(e.target.value);
-	};
 
 	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter' && Content.trim() !== '') {

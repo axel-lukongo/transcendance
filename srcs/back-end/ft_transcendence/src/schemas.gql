@@ -197,10 +197,10 @@ input CreateChanelInput {
   owner_id: Int!
   chanel_name: String!
   chanel_size: Int!
-  privmsg: Boolean
   max_users: Int!
   logo: String
   interlocutor_id: Int
+  directMsg: Boolean
 }
 
 input UpdateChanelInput {
@@ -208,10 +208,10 @@ input UpdateChanelInput {
   owner_id: Int
   chanel_name: String
   chanel_size: Int
-  privmsg: Boolean
   max_users: Int
   logo: String
   interlocutor_id: Int
+  directMsg: Boolean
   id: Int!
 }
 

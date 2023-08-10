@@ -8,24 +8,31 @@ import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
 import Tobloc from "./Tobloc";
 
+/*
+dans ce composant j'affiche la liste de mes contact sur le champs de gauche, et chaque contact possedes des boutons
+
+le boutons pour communiquer avec ce contact:
+>>> Creat_direct_msg a la ligne 71
+
+et le bouton pour un contact 
+>>>bloquer, a la ligne 76.
+
+Ces fonctions ce declanche lorsque un boolean specifique passe a true.
+*/
 export default function Direct_message(props: IPrivateMessageProps) {
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
-	const [showQueryComponent, setShowQueryComponent] = useState(false);
 
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
 
 	const {data, error, loading} = useQuery(GET_CONTACT, {
 		variables: {user_id: myuser.id}
 	});
-	// const [createChanel] = useMutation(CREATE_CHANEL);
 
 	const handleNewDirectMsg = (contactId: number) => {
 		setSelectedContactId(contactId);
 	}
 
 	const [handleTobloc, setHandleTobloc] = useState(false);
-
-	// console.log('je test ici: ', data)
 
 	if (error){
 		return <p> an error appen  </p>
@@ -38,15 +45,9 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	if (!data || !data.myContacts) {
 		return <p>No contacts available.</p>;
 	}
-	
-	// setHandleTobloc(true);
-	// const handleTobloc = (blockerId: number, blockedId: number) => {
-	// 	Tobloc({blockerId, blockedId});
-	//   };
-
 
 	return(
-		
+
 		<div id="plist" className="people-list">
 			<div className="position: sticky">{ 
 				<h3>Direct Message</h3>
@@ -57,19 +58,15 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				return (
 					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
 						<p>{contact.contact.nickname}</p>
-						{selectedContactId === contact.contact.id && < Creat_direct_msg handleChange={props.handleChanelFocus}
-
+						{selectedContactId === contact.contact.id && < Creat_direct_msg
 						interlocutor={contact.contact}
-						handleChanelRefecth={props.handleChanelRefetch} />}
+						handlechanelfocus={props.handleChanelFocus} />}
 						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
-
 						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
 						<button onClick={() => setHandleTobloc(true)}>block</button>
 					</ul>
 				);
 			})}
-
-
 		</div>
 	);
 }

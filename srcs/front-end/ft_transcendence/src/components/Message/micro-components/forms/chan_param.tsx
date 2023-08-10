@@ -19,7 +19,7 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 
 
 
-	const {data, loading, error} = useQuery(CHANNEL_MEMBERS_QUERY, { 
+	const {data, loading, error, refetch} = useQuery(CHANNEL_MEMBERS_QUERY, { 
 		variables: {chan_id: +chanel_focus.id}}
 	);
 
@@ -41,13 +41,13 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 		return (
 			<div>loading...</div>
 		)
-	if (data)
+	if (data){
+		refetch();
 		console.log(data);
+	}
 
 
-	
   const handlemuted = (User_id: number, oldMuted: boolean) => {
-
 	ParamChan({
       variables: {
         key: {
@@ -59,7 +59,8 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
         },
       },
     }).then((result) => {
-      console.log(result.data.updateChanelUser);
+		refetch();
+		console.log(result.data.updateChanelUser);
     }).catch(() => {
 		console.log("action denied ",);
 	});
@@ -77,7 +78,8 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
         },
       },
     }).then((result) => {
-      console.log(result.data.updateChanelUser);
+		refetch();
+		console.log(result.data.updateChanelUser);
     }).catch(() => {
 		console.log("action denied ",);
 	});
@@ -96,6 +98,7 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 		  },
 		},
 	  }).then((result) => {
+		refetch();
 		console.log(result.data.updateChanelUser);
 	  }).catch(() => {
 		console.log("action denied ",);
@@ -111,7 +114,12 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
             channel_id: +chanel_focus.id,
           },
         },
-      });
+      }).then((result) => {
+		refetch();
+		console.log(result.data.updateChanelUser);
+	  }).catch(() => {
+		console.log("action denied ",);
+	});
   }
 
   const handleDeleteBanned = (ToDel: Banned) => {
@@ -121,6 +129,7 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 			channelId: +chanel_focus.id,
 		},
 	  }).then((result) => {
+		refetch();
 		console.log(result.data.updateChanelUser);
 	  }).catch(() => {
 		console.log("action denied ",);
@@ -147,26 +156,21 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 								<button onClick={() => { handleban(member) }}>ban</button>
 								</p>
 							</ul>
-							
 							)
-							
 						})
-						
 					}
 			User Banned:
 				{
-						anotherData.banned_list.map((banned_list: Banned) => {
-							const unique_key=`${banned_list.user_id}`
-							return (
-								<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-									<p>{banned_list.user_ban.nickname}
-									<button onClick={() => { handleDeleteBanned(banned_list) }}>Unbanned</button>
-									</p>
-								</ul>
-								
-							)
-	
-						})
+					anotherData.banned_list.map((banned_list: Banned) => {
+						const unique_key=`${banned_list.user_id}`
+						return (
+							<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
+								<p>{banned_list.user_ban.nickname}
+								<button onClick={() => { handleDeleteBanned(banned_list) }}>Unbanned</button>
+								</p>
+							</ul>
+						)
+					})
 				}
 			</div>
 		</div>

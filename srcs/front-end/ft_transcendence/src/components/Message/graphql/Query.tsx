@@ -13,7 +13,10 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 		getChannelByOwnersAndInterlocutor(userId1: $userId1, userId2: $userId2) {
 			id
 			chanel_name
+			chanel_size
+			max_users
 			owner_id
+			logo
 			interlocutor_id
 		}
 	}
@@ -22,6 +25,7 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 export const GET_CONTACT = gql`
 	query MyContacts($user_id: Int!){
 		myContacts(user_id: $user_id) {
+			id
 			user_id
 			contact_id
 			contact(user_id: $user_id){

@@ -15,9 +15,6 @@ export class CreateChanelInput {
   @Field(() => Int)
   chanel_size: number;
 
-  @Field(() => Boolean, {nullable: true})
-  privmsg?: boolean;
-
   @Field(() => Int)
   max_users: number;
 
@@ -26,5 +23,8 @@ export class CreateChanelInput {
 
   @Field(() => Int, {nullable: true})
   interlocutor_id: number;
+
+  @Field(() => Boolean, {nullable: true})
+  directMsg?: boolean;
 
 }

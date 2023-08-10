@@ -9,30 +9,33 @@ export class UserChanelsService {
 
 	constructor(private readonly prisma: PrismaService) {}
 
-	async findMyChanels(user_id: number, private_chan: boolean) { 
+	async findMyChanels(user_id: number, private_chan: boolean) {
 		return this.prisma.users_Chanels.findMany({
-			where: { 
+			where: {
 				user_id,
 				pending: false,
-				chanel: { private: private_chan }
-			} 
+				chanel: { private: private_chan, directMsg: false }
+			}
 		});
 	}
+
 
 	async findMyRequestChanels(user_id: number) {
 		return this.prisma.users_Chanels.findMany({
-			where: {user_id, pending: true}
+			where: {user_id, pending: true, chanel: { directMsg: false }}
 		});
 	}
 
+
 	async addUser(input: AddUserChanel) {
 		return this.prisma.users_Chanels.create({
-		data : {
-		  user: { connect: { id: input.user_id } },
-		  chanel: { connect: { id: input.chanel_id } }
-		}
+		  data : {
+			user: { connect: { id: input.user_id } },
+			chanel: { connect: { id: input.chanel_id } }
+		  }
 		})
 	}
+
 
 	async acceptRequest(Requestkey: UpdateChanelUserInput) {
 		return this.prisma.users_Chanels.update({
@@ -48,7 +51,7 @@ export class UserChanelsService {
 			is_admin: Requestkey.is_admin, // Assurez-vous que cette propriété existe dans UpdateChanelUserInput
 		  },
 		});
-	  }
+	}
 	  
 
 
@@ -68,8 +71,6 @@ export class UserChanelsService {
 		});
 		return updatedUsersChanels;
 	}
-
-
 
 
 
