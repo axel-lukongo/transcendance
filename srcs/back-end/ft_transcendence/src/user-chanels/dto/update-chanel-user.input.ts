@@ -14,4 +14,7 @@ export class UpdateChanelUserInput extends PartialType(AddUserChanel) {
 
 	@Field(() => Boolean)
 	is_admin: boolean;
+
+	@Field(() =>  Int)
+	mute_start_time?: number;
 }

@@ -56,6 +56,7 @@ export class UserChanelsService {
 
 
 	async update(key: UpdateChanelUserInput) {
+	const currentTimeInMillis = Math.floor(new Date().getTime() / 60000);
 		const updatedUsersChanels = await this.prisma.users_Chanels.update({
 		  where: {
 			user_id_chanel_id: {
@@ -67,6 +68,7 @@ export class UserChanelsService {
 			pending: false,
 			is_muted: key.is_muted,
 			is_admin: key.is_admin,
+			mute_start_time: key.is_muted === true? currentTimeInMillis: 0,
 		  },
 		});
 		return updatedUsersChanels;

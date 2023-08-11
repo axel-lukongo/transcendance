@@ -17,8 +17,6 @@ export interface IAddUserInChanProps {
 
 export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 
-
-
 	const {data, loading, error, refetch} = useQuery(CHANNEL_MEMBERS_QUERY, { 
 		variables: {chan_id: +chanel_focus.id}}
 	);
@@ -48,6 +46,8 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 
 
   const handlemuted = (User_id: number, oldMuted: boolean) => {
+	// const currentTimeInMillis = Math.floor(new Date().getTime() / 60000);
+	// console.log('oeee >>>>>>>>>> ',currentTimeInMillis);
 	ParamChan({
       variables: {
         key: {
@@ -56,6 +56,7 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 		  pending: false,
           is_muted: oldMuted === true? false : true,
           is_admin: false,
+		  mute_start_time: 0,
         },
       },
     }).then((result) => {

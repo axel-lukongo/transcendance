@@ -43,7 +43,8 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 				user_id: user.id,
 				chanel_id: parseInt(chanel_focus.id),
 				is_admin: false,
-				is_muted: false
+				is_muted: false,
+				mute_start_time: 0,
 			}
 		}})
 	}

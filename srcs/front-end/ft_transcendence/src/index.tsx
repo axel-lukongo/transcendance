@@ -31,11 +31,12 @@ const httpLink = createHttpLink({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
+	<React.StrictMode>
     <ApolloProvider client={apollo_client}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>
+	// {console.log('sdsdf');}
 );

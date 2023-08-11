@@ -76,7 +76,7 @@ model Users_Chanels {
 	is_admin			Boolean?	@default(false)
 	user				User		@relation(fields: [user_id], references: [id])
 	chanel				Chanel		@relation(fields: [chanel_id], references: [id])
-
+	mute_start_time		Int			@default(0)
 	@@id([user_id, chanel_id])
 }
 

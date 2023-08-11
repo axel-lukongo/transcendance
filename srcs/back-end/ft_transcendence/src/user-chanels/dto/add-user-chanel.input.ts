@@ -17,4 +17,6 @@ export class AddUserChanel {
 	@Field(() => Boolean, {nullable: true})
 	is_admin?: boolean;
 
+	@Field(() => Int)
+	mute_start_time?: number;
 }

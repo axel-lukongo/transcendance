@@ -22,5 +22,4 @@ export class UsersChanels {
 
 	@Field(() => User, { nullable: true })
 	user: User;
-
 }
