@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateWaitingRoomInput } from './dto/update-waiting-room.input';
-
 import { PrismaService } from 'prisma/prisma.service';
-import { Player } from '../player/entities/player.entity';
 
 @Injectable()
 export class WaitingRoomService {
@@ -21,14 +18,6 @@ export class WaitingRoomService {
     return this.prisma.waitingRoom.findUnique({
       where: { id },
     })
-  }
-
-  update(id: number, player: Player) {
-    // return this.prisma.waitingRoom.update({
-    // where: { id: id },
-    // data: { waitingList: { connect: { id: player.id } } },
-    // include: { waitingList: true }
-    // });
   }
 
 

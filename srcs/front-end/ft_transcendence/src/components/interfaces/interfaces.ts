@@ -61,13 +61,13 @@ export interface Player {
   
   export interface PongI {
 	id: number;
-	userId1: number;
-	userId2: number;
-	scoreUser1?: number;
-	scoreUser2?: number;
+	userId1?: number;
+	userId2?: number;
+	scoreUser1: number;
+	scoreUser2: number;
 	loserId?: number ;
 	winnerId?: number;
-	VersusDate: string;
+	VersusDate?: string;
 	user1?: User;
 	user2?: User;
   }

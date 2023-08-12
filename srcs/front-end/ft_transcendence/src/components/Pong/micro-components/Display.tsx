@@ -1,4 +1,4 @@
-import React, { FC, useEffect,   } from 'react';
+import React, { FC, useEffect, useState,   } from 'react';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { useMutation } from '@apollo/client';
 import { Ball, Player, PongI } from '../../interfaces/interfaces';
@@ -12,42 +12,52 @@ interface DisplayProps {
   player:               Player | null;
   otherPlayer:          Player | null;
   ball:                 Ball | null;
-  level:                number;
-  playerScore:          number | undefined;
-  otherPlayerScore:     number | undefined;
-  victory:              boolean | null;
+  pong:                 PongI | null;
   setPlayer:            (player: Player | null) => void;
   setOtherPlayer:       (player: Player | null) => void;
   setBall:              (ball: Ball | null) => void;
-  setPlayerScore:       (playerScore: number | undefined) => void;
-  setOtherPlayerScore:  (otherPlayerScore: number | undefined) => void;
-  setVictory:           (victory: boolean | null) =>void;
 }
 
 export const Display: FC<DisplayProps> = ({ player,
                                             otherPlayer,
                                             ball,
-                                            level,
-                                            playerScore,
-                                            otherPlayerScore,
-                                            victory,
+                                            pong,
                                             setPlayer,
                                             setOtherPlayer,
-                                            setBall,
-                                            setPlayerScore,
-                                            setOtherPlayerScore,
-                                            setVictory}) => {
+                                            setBall,}) => {
 
-  const [updatePlayer] = useMutation(UPDATE_PLAYER);
-  const [startPong] = useMutation(START_PONG);
-
-  //POSITION OF THE STICK AND SCORE  IN SCREEN
+                                              
+                                              //POSITION OF THE STICK AND SCORE  IN SCREEN
   const playerStickClass = player?.host ? "green-stick" : "red-stick";
   const playerScoreClass = player?.host ? "green-stick-score-host" : "green-stick-score-not-host";
   
   const otherPlayerStickClass = player?.host ? "red-stick" : "green-stick";
   const otherPlayerScoreClass = player?.host ? "red-stick-score-host" : "red-stick-score-not-host";
-                        
+  
+  const [playerScore, setPlayerScore] = useState(() => {
+    if (player) {
+      return player.host ? pong?.scoreUser1 : pong?.scoreUser2;
+    }
+    return 0;
+  });
+
+  const [otherPlayerScore, setOtherPlayerScore] = useState(() => {
+    if (otherPlayer) {
+      return otherPlayer.host ? pong?.scoreUser1 : pong?.scoreUser2;
+    }
+    return 0; 
+  });
+
+  const [victory, setVictory] = useState(() => {
+    if (pong && pong.winnerId) {
+      return  pong.winnerId === player?.userId ? true : false;
+    }
+    return null; 
+  });
+  
+  const [updatePlayer] = useMutation(UPDATE_PLAYER);
+  const [startPong] = useMutation(START_PONG);
+
 /*
 *   SET GAME 
 */
@@ -56,10 +66,10 @@ export const Display: FC<DisplayProps> = ({ player,
       // START PONG
       startPong({
         variables: {
-          id: player?.ballId,
+          ballId: ball?.id,
           playerId: player?.id,
           otherPlayerId: otherPlayer?.id,
-          pongId: player?.pongId
+          pongId: pong?.id
         },
       })
       .then((response) => {
@@ -75,29 +85,28 @@ export const Display: FC<DisplayProps> = ({ player,
 *   BALL ACTION     
 */
 
-// BALL MOVE
+  // BALL MOVE
   useEffect(() => {
-    if (player && victory === null) {
-      const subscription = wsClient.request({ query: BALL_UPDATED_SUBSCRIPTION, variables: {id : player.ballId} }).subscribe({
+    const subscription = wsClient
+      .request({ query: BALL_UPDATED_SUBSCRIPTION, variables: { id: ball?.id } })
+      .subscribe({
         next(response) {
-          if (victory !== null) {
-            subscription.unsubscribe()
-          }
-          if (response.data) {
-            const updatedBall: Ball = response.data?.ballUpdatedSubscription as Ball;
-            setBall(updatedBall);
+          if (ball && victory === null) {
+            if (response.data) {
+              const updatedBall: Ball = response.data?.ballUpdatedSubscription as Ball;
+              setBall(updatedBall);
+            }
           }
         },
         error(error) {
           console.error('WebSocket error:', error);
         },
       });
-      // Fonction de retour pour annuler l'abonnement lors du démontage du composant
-      return () => {
-        subscription.unsubscribe();
-      };
-    }
-  }, [ball, player, victory, setBall]);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [ball, victory, setBall]);
 
 /*
 *     PLAYER / OTHER PLAYER MOVE
@@ -152,50 +161,18 @@ export const Display: FC<DisplayProps> = ({ player,
 
   //OTHER PLAYER MOVE
   useEffect(() => {
-    if (otherPlayer && victory === null) {
-      const subscription = wsClient.request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: {id : otherPlayer.id} }).subscribe({
+    console.log('other player', otherPlayer);
+    const subscription = wsClient
+      .request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: { id: otherPlayer?.id } })
+      .subscribe({
         next(response) {
-          if (victory !== null) {
-            subscription.unsubscribe()
-          }
-          else if (response.data) {
-            const updatedOtherPlayer: Player = response.data?.playerUpdatedSubscription as Player;
-            updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
-            updatedOtherPlayer.positionX += 80;
-            setOtherPlayer(updatedOtherPlayer);
-          }
-        },
-        error(error) {
-          console.error('WebSocket error:', error);
-        },
-      });
-      // Fonction de retour pour annuler l'abonnement lors du démontage du composant
-      return () => {
-        subscription.unsubscribe();
-      };
-    }
-  }, [otherPlayer, victory, setOtherPlayer]);
-
-  useEffect(() => {
-    if (player && otherPlayer && victory === null) {
-      const subscription = wsClient.request({ query: PONG_UPDATED_SUBSCRIPTION, variables: {id : player.pongId} }).subscribe({
-        next(response) {
-          if (victory !== null) {
-            subscription.unsubscribe()
-          }
-          else if(response.data) {
-            const updatedPong: PongI = response.data?.pongUpdatedSubscription as PongI;
-            if (updatedPong.scoreUser1 && updatedPong.scoreUser1 !== playerScore)
-              setPlayerScore(updatedPong.scoreUser1);
-            else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore)
-              setOtherPlayerScore(updatedPong.scoreUser2);
-            if (updatedPong.winnerId !== null)
-            {
-              console.log ('you win or lose');
-              if (updatedPong.winnerId === player.id)
-                setVictory(true);
-              else
-                setVictory(false);
+          if (otherPlayer && victory === null) {
+            console.log('ici');
+            if (response.data) {
+              const updatedOtherPlayer: Player = response.data?.playerUpdatedSubscription as Player;
+              updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
+              updatedOtherPlayer.positionX += 80;
+              setOtherPlayer(updatedOtherPlayer);
             }
           }
         },
@@ -203,13 +180,50 @@ export const Display: FC<DisplayProps> = ({ player,
           console.error('WebSocket error:', error);
         },
       });
-      // Fonction de retour pour annuler l'abonnement lors du démontage du composant
-      return () => {
-        subscription.unsubscribe();
-      };
-    }
-  }, [player, otherPlayer, playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
+  
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [otherPlayer, victory, setOtherPlayer]);
+  
+  
 
+  useEffect(() => {
+    const subscription = wsClient
+      .request({ query: PONG_UPDATED_SUBSCRIPTION, variables: { id: pong?.id } })
+      .subscribe({
+        next(response) {
+          if (player && victory === null) {
+            if (response.data) {
+              const updatedPong: PongI = response.data?.pongUpdatedSubscription as PongI;
+
+              if (updatedPong.scoreUser1 && updatedPong.scoreUser1 !== playerScore) {
+                setPlayerScore(updatedPong.scoreUser1);
+              } 
+              else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore) {
+                setOtherPlayerScore(updatedPong.scoreUser2);
+              }
+              if (updatedPong.winnerId !== null) {
+                if (updatedPong.winnerId === player.id) {
+                  setVictory(true);
+                } 
+                else {
+                  setVictory(false);
+                }
+              }
+            }
+          }
+        },
+        error(error) {
+          console.error('WebSocket error:', error);
+        },
+      });
+  
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [player, , playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
+  
   return (
 <div>
   <div className="score-container-box">
@@ -222,7 +236,7 @@ export const Display: FC<DisplayProps> = ({ player,
       <div className="result-text">
         <h1>{victory ? 'YOU WIN 🏆' : 'YOU LOSE 😓'}</h1>
       </div>
-      <Xp userId={player?.userId} />
+      <Xp userId={player?.userId}/>
     </div>
   ) : (
     <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>

@@ -40,7 +40,7 @@ export class PlayerService {
 	  });  
 	}
 
-	findWaitingRoomPlayers(id: number) {
+	findAllPlayersInWaitingRoom(id: number) {
 		return this.prisma.player.findMany({
 			where : {waitingRoomId : id}
 		})

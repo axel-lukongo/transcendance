@@ -175,6 +175,7 @@ const Authentication: FC = () => {
         {
           setUserExist(false);
         }
+        console.log(AuthenticationError);
     }
   }, [AuthenticationError]);
 
@@ -189,7 +190,7 @@ return (
         <Route path="/pong" element={<Pong  />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
-      </Routes>	
+      </Routes>
     ) : (
       <>
         {!canCheck ? (

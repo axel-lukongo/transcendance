@@ -9,47 +9,12 @@ import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 
 @Injectable()
 export class PongService {
-  constructor(private readonly prisma: PrismaService,
-              private readonly player: PlayerResolver,
-              private readonly ball: BallResolver,
-              private readonly waitingRoom: WaitingRoomResolver) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createPongInput: CreatePongInput) {
-    return this.prisma.$transaction(async (prisma) => {
-      
-      // Nouvelle instance de pong
-      const { playerId1, playerId2, ...dataWithoutPlayerIds } = createPongInput;
-      const pong = await prisma.pong.create({
-        data: dataWithoutPlayerIds
+      return this.prisma.pong.create({
+        data: createPongInput
       });
-  
-      //Nouvelle instance de la waintingRoom des Players
-      const newWaitingRoom = await this.waitingRoom.createWaitingRoom();
-
-      //Nouvelle instance d'un balle pour le Pong 
-      const newBall = await this.ball.createBall();
-  
-      const playerData : UpdatePlayerInput ={
-        id : createPongInput.userId1,
-        host : true,
-        opponentPlayerId: playerId2,
-        waitingRoomId: newWaitingRoom.id,
-        ballId: newBall.id,
-        pongId: pong.id,
-      }
-      this.player.updatePlayer(playerData);
-
-      const otherPlayerData : UpdatePlayerInput ={
-        id : createPongInput.userId2,
-        opponentPlayerId: playerId1,
-        waitingRoomId: newWaitingRoom.id,
-        ballId: newBall.id,
-        pongId: pong.id,
-      }
-      this.player.updatePlayer(otherPlayerData);
-
-      return pong;
-    });
   }
   
   findAll() {
