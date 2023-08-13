@@ -135,28 +135,29 @@ export class PongResolver {
         userId2: listPlayers[1].userId,
       };
       const pong = await this.createPong(createPongInput);
-
+      
       //Nouvelle instance de la waintingRoom des Players
       const newWaitingRoom = await this.waitingRoom.createWaitingRoom();
-
+      
       //Nouvelle instance d'un balle pour le Pong 
       const ball = await this.ball.createBall();
-  
+      
       const playerData : UpdatePlayerInput ={
-        id : createPongInput.userId1,
-        host : true,
+        id : listPlayers[1].id,
+        opponentPlayerId: listPlayers[0].id,
+        host : false,
         waitingRoomId: newWaitingRoom.id,
-        opponentPlayerId: listPlayers[1].id,
+        positionX : listPlayers[1].positionX +80,
         ballId: ball.id,
         pongId: pong.id,
       }
       player = await this.player.updatePlayer(playerData);
-
-
+      
       const otherPlayerData : UpdatePlayerInput ={
-        id : createPongInput.userId2,
+        id : listPlayers[0].id,
+        opponentPlayerId: listPlayers[1].id,
+        host : true,
         waitingRoomId: newWaitingRoom.id,
-        opponentPlayerId: listPlayers[0].id,
         ballId: ball.id,
         pongId: pong.id,
       }
@@ -177,7 +178,7 @@ export class PongResolver {
             const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
             const ball = await this.ball.findUnique(player.ballId);
             const pong = await this.findPong(player.pongId);
-            resolve({ player, ball, otherPlayer, pong });
+            resolve({ player , ball, otherPlayer , pong });
           }
         }, 1000);
       });
@@ -218,7 +219,8 @@ export class PongResolver {
       const player = await this.player.findPlayer(playerId);
 
       const otherPlayer = await this.player.findPlayer(otherPlayerId);
-      otherPlayer.positionX += 80;
+      if (player.host)
+        otherPlayer.positionX += 80;
       await this.ballMove(ball, player, otherPlayer, currentPong);
     }, 50);
 

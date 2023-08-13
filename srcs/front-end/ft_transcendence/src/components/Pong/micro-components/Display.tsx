@@ -161,20 +161,17 @@ export const Display: FC<DisplayProps> = ({ player,
 
   //OTHER PLAYER MOVE
   useEffect(() => {
-    console.log('other player', otherPlayer);
     const subscription = wsClient
-      .request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: { id: otherPlayer?.id } })
-      .subscribe({
+    .request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: { id: otherPlayer?.id } })
+    .subscribe({
         next(response) {
-          if (otherPlayer && victory === null) {
-            console.log('ici');
             if (response.data) {
               const updatedOtherPlayer: Player = response.data?.playerUpdatedSubscription as Player;
               updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
-              updatedOtherPlayer.positionX += 80;
+              if (player?.host)
+                updatedOtherPlayer.positionX += 80;
               setOtherPlayer(updatedOtherPlayer);
             }
-          }
         },
         error(error) {
           console.error('WebSocket error:', error);
