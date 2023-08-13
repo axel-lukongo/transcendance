@@ -113,6 +113,7 @@ export class PongResolver {
   async joinPong(@Args('id', { type: () => Int }) id: number) {
 
     let player = await this.player.setPlayer(id);
+    console.log('player created ' , player);
     if (!player)
     {
       return { player: null };
@@ -260,6 +261,43 @@ export class PongResolver {
     return false; 
   }
 
+  @Mutation(() => String)
+  async endPong(
+    @Args('interupt', { type: () => Boolean }) interupt: boolean,
+    @Args('playerId', { type: () => Int }) playerId: number
+  ): Promise<string> {
+    try {
+      const player = await this.player.findPlayer(playerId);
+      if (!player) {
+        return 'Player not found';
+      }
+  
+      if (interupt === false) {
+        if (player.host === true) {
+          await this.ball.removeBall(player.ballId);
+        }
+        await this.player.removePlayer(player.id);
+        return 'Pong ended normally';
+      } else {
+        const updateDataPong: UpdatePongInput = {
+          id: player.pongId,
+          scoreUser1: player.host ? 0 : 5,
+          scoreUser2: player.host ? 5 : 0,
+          winnerId: player.opponentPlayerId,
+          loserId: player.id,
+        };
+        await this.updatePong(updateDataPong);
+        await this.player.removePlayer(player.id);
+        return 'Pong ended abnormally';
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      throw new Error('An error occurred during endPong');
+    }
+  }
+  
+  
+
   @Mutation(() => Boolean)
   async startPong(  @Args('ballId', { type: () => Int }) ballId: number,
                         @Args('playerId', { type: () => Int }) playerId: number,
@@ -405,41 +443,7 @@ export class PongResolver {
       this.ball.updateBall(DataUpdateBall);
     }
   }
+
+
 }
 
-  // @Mutation(() => String)
-  // async endPong( @Args('interupt', { type: () => Boolean }) interupt: boolean,
-  //                 @Args('playerId', { type: () => Int }) playerId: number,) {
-
-  //     const player = await this.player.findPlayer(playerId);
-  //     if (!player)
-  //     {
-  //       return ('Player does not found');
-  //     }
-  //     if (interupt === false)
-  //     {
-  //       if (player.opponentPlayerId != 0)
-  //       {
-  //         if (player.host === true) {
-  //           await this.ball.removeBall(player.ballId);
-  //         }
-  //         await this.player.removePlayer(player.id);
-  //       }
-  //       return ('normal endPong');
-  //     }
-  //     else
-  //     {
-  //       if (player.opponentPlayerId != 0)
-  //       {
-  //         const updateDataPong: UpdatePongInput = {
-  //           id: player.pongId,
-  //         scoreUser1: player.host ? 0 : 5,
-  //         scoreUser2: player.host ? 5 : 0,
-  //         winnerId: player.opponentPlayerId,
-  //         loserId: player.id,
-  //       };
-  //       await this.updatePong(updateDataPong);
-  //       await this.player.removePlayer(player.id);
-  //     }
-  //     }
-  // }

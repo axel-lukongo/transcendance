@@ -159,6 +159,7 @@ type Mutation {
   updatePong(updatePongInput: UpdatePongInput!): Pong!
   joinPong(id: Int!): JoinPongResponse!
   stopPong: Boolean!
+  endPong(interupt: Boolean!, playerId: Int!): String!
   startPong(ballId: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
   removePlayer(id: Int!): Player!
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!

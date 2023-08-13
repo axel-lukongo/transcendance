@@ -6,11 +6,12 @@ export const START_PONG = gql`
   }
 `;
 
-export const STOP_PONG = gql`
-  mutation StopPong {
-    stopPong
+export const END_PONG = gql`
+  mutation EndPong($interupt: Boolean!, $playerId: Int!) {
+    endPong(interupt: $interupt, playerId: $playerId)
   }
 `;
+
 
 export const JOIN_PONG = gql`
   mutation JoinPong($id: Int!) {
