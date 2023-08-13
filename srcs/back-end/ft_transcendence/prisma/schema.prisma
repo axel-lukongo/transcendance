@@ -106,7 +106,7 @@ model Ball {
   id					Int      	@id @default(autoincrement())
   positionX        		Float 		@default(50)
   positionY        		Float 		@default(50)
-  directionX         	Float 		@default(20)
+  directionX         	Float 		@default(-20)
   directionY         	Float 		@default(10)
   players				Player[] 	@relation("Ball")
 }

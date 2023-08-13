@@ -175,7 +175,6 @@ const Authentication: FC = () => {
         {
           setUserExist(false);
         }
-        console.log(AuthenticationError);
     }
   }, [AuthenticationError]);
 

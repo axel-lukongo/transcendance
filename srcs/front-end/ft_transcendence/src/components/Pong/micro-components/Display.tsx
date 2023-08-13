@@ -64,21 +64,24 @@ export const Display: FC<DisplayProps> = ({ player,
   useEffect(() => {
 
       // START PONG
-      startPong({
-        variables: {
-          ballId: ball?.id,
-          playerId: player?.id,
-          otherPlayerId: otherPlayer?.id,
-          pongId: pong?.id
-        },
-      })
-      .then((response) => {
-        // Appel réussi, le démarrage de ballMove est activé côté serveur
-          console.log('game start',);
+      if (player?.host)
+      {
+        startPong({
+          variables: {
+            ballId: ball?.id,
+            playerId: player?.id,
+            otherPlayerId: otherPlayer?.id,
+            pongId: pong?.id
+          },
+        })
+        .then((response) => {
+          // Appel réussi, le démarrage de ballMove est activé côté serveur
+          console.log('game start', response);
         })
         .catch((error) => {
           console.error('Error calling startPong mutation:', error);
         });
+      }
   }, []); 
 
 /*
@@ -168,8 +171,6 @@ export const Display: FC<DisplayProps> = ({ player,
             if (response.data) {
               const updatedOtherPlayer: Player = response.data?.playerUpdatedSubscription as Player;
               updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
-              if (player?.host)
-                updatedOtherPlayer.positionX += 80;
               setOtherPlayer(updatedOtherPlayer);
             }
         },

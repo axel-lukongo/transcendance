@@ -33,15 +33,15 @@ const Pong: FC = () => {
           const { player, otherPlayer, ball, pong } = response.data.joinPong;
           
           if (player) {
-            // console.log('Setting player:', player);
+            console.log('Setting player:', player);
             setPlayer(player);
           } 
           if (otherPlayer) {
-            // console.log('Setting otherPlayer:', otherPlayer);
+            console.log('Setting otherPlayer:', otherPlayer);
             setOtherPlayer(otherPlayer);
           }
           if (ball) {
-            // console.log('Setting ball:', ball);
+            console.log('Setting ball:', ball);
             setBall(ball);
           }
           if (pong) {

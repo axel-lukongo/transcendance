@@ -147,7 +147,7 @@ export class PongResolver {
         opponentPlayerId: listPlayers[0].id,
         host : false,
         waitingRoomId: newWaitingRoom.id,
-        positionX : listPlayers[1].positionX +80,
+        positionX : 90,
         ballId: ball.id,
         pongId: pong.id,
       }
@@ -183,48 +183,6 @@ export class PongResolver {
         }, 1000);
       });
     } 
-  }
-
-
-  @Mutation(() => Boolean)
-  stopPong() {
-    if (this.start === true) {
-      this.start = false;
-      this.stop = true;
-      clearInterval(this.interval);
-      this.interval = null;
-      return true;
-    }
-
-    return false; 
-  }
-
-  @Mutation(() => Boolean)
-  async startPong(  @Args('ballId', { type: () => Int }) ballId: number,
-                        @Args('playerId', { type: () => Int }) playerId: number,
-                        @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
-                        @Args('pongId', { type: () => Int }) pongId: number) {
-
-    if (this.start === true || this.stop === true) {
-      return false;
-    }
-    this.start = true;
-    
-    this.interval = setInterval(async () => {
-
-      const currentPong = await this.findPong(pongId);
-
-      const ball  = await this.ball.findUnique(ballId);
-  
-      const player = await this.player.findPlayer(playerId);
-
-      const otherPlayer = await this.player.findPlayer(otherPlayerId);
-      if (player.host)
-        otherPlayer.positionX += 80;
-      await this.ballMove(ball, player, otherPlayer, currentPong);
-    }, 50);
-
-    return true;
   }
 
   private async updateRankLevel(id: number) {
@@ -285,33 +243,75 @@ export class PongResolver {
       level: user.level + xpGain,
       rank: totalXpPercentage === 100 ? nextRank?.toString() : rank?.toString(),
     };
-    console.log(dataUpdateUser);
 
     const updatedUser = await this.user.updateUser(dataUpdateUser);
   }
 
+  @Mutation(() => Boolean)
+  stopPong() {
+    if (this.start === true) {
+      this.start = false;
+      this.stop = true;
+      clearInterval(this.interval);
+      this.interval = null;
+      return true;
+    }
+
+    return false; 
+  }
+
+  @Mutation(() => Boolean)
+  async startPong(  @Args('ballId', { type: () => Int }) ballId: number,
+                        @Args('playerId', { type: () => Int }) playerId: number,
+                        @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
+                        @Args('pongId', { type: () => Int }) pongId: number) {
+
+    if (this.start === true || this.stop === true) {
+      return false;
+    }
+    this.start = true;
+    
+    this.interval = setInterval(async () => {
+
+      const currentPong = await this.findPong(pongId);
+
+      const ball  = await this.ball.findUnique(ballId);
+  
+      const player = await this.player.findPlayer(playerId);
+
+      const otherPlayer = await this.player.findPlayer(otherPlayerId);
+    
+      await this.ballMove(ball, player, otherPlayer, currentPong);
+    }, 50);
+
+    return true;
+  }
+
+
   private async  ballMove(  ball: Ball, player: Player, otherPlayer: Player, currentPong: Pong): Promise<void> {
 
     const newPotentialX = ball.positionX + (ball.directionX * this.speed) /100;
-    const newPontantialY = ball.positionY + (ball.directionY * this.speed) /100;
+    const newPotantialY = ball.positionY + (ball.directionY * this.speed) /100;
   
     // Gérer les rebonds en inversant la direction lorsque la balle atteint les bords
     const rightWall = newPotentialX > this.maxX;
     const leftWall = newPotentialX < this.minX;
     const HitWallX = rightWall || leftWall;
-    const HitWallY = newPontantialY > this.maxY || newPontantialY < this.minY;
+    const HitWallY = newPotantialY > this.maxY || newPotantialY < this.minY;
+
 
     // Gérer les rebonds en inversant la direction lorsque la balle atteint player 
     const hitGreenStickPosX = newPotentialX <= player.positionX -3;
-    const hitGreenStickPosY = newPontantialY >= player.positionY && newPontantialY <= player.positionY + 25; // 25% de la taille de l'écran
-    
+    const hitGreenStickPosY = newPotantialY >= player.positionY && newPotantialY <= player.positionY + 25; // 25% de la taille de l'écran
+
+
     // Gérer les rebonds en inversant la direction lorsque la balle atteint otherPlayer
-    const hitRedStickPosX = newPotentialX >= otherPlayer.positionX +3
-    const hitRedStickPosY = newPontantialY >= otherPlayer.positionY && newPontantialY <= otherPlayer.positionY + 25; // 25% de la taille de l'écran
+    const hitRedStickPosX = newPotentialX >= otherPlayer.positionX +3;
+    const hitRedStickPosY = newPotantialY >= otherPlayer.positionY && newPotantialY <= otherPlayer.positionY + 25; // 25% de la taille de l'écran
     
     //position retenu au final
     const newX = HitWallX || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionX : newPotentialX;
-    const newY = HitWallY || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionY : newPontantialY;
+    const newY = HitWallY || (hitGreenStickPosX && hitGreenStickPosY) || (hitRedStickPosX && hitRedStickPosY) ? ball.positionY : newPotantialY;
 
     //TOUCH A WALL
     if (HitWallX || HitWallY) { 
@@ -373,7 +373,6 @@ export class PongResolver {
     // TOUCH THE PLAYER 
     else if (hitGreenStickPosX && hitGreenStickPosY) {
       const newDirectionX = (hitGreenStickPosX && hitGreenStickPosY) ? -ball.directionX : ball.directionX;
-      
       const DataUpdateBall : UpdateBallInput = {
         id : ball.id,
         positionX : newX,
@@ -386,7 +385,6 @@ export class PongResolver {
     //TOUCH THE OTHER PLAYER
     else if (hitRedStickPosX && hitRedStickPosY) {
       const newDirectionX = (hitRedStickPosX && hitRedStickPosY) ? -ball.directionX : ball.directionX;
-
       const DataUpdateBall : UpdateBallInput = {
         id : ball.id,
         positionX : newX,

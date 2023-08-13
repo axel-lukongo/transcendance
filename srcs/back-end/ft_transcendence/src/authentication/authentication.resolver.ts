@@ -69,8 +69,8 @@ export class AuthenticationResolver {
     }
     this.intraLogin = profileResponse.data.login;
     this.email = profileResponse.data.email;
-    console.log('login',this.intraLogin);
-    console.log('email',this.email);
+    // console.log('login',this.intraLogin);
+    // console.log('email',this.email);
     this.user = await this.authService.findUserByIntraLogin(this.intraLogin);
 
     if (!this.user) {
