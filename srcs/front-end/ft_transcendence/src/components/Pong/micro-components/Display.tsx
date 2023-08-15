@@ -4,8 +4,8 @@ import { Ball, Player, PongI } from '../../interfaces/interfaces';
 import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_PONG, PONG_UPDATED_SUBSCRIPTION} from '../graphql/Mutation';
 import '../css/Pong.css'
 import { useMutation } from '@apollo/client';
+import { wsClient } from '../../..';
 
-const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
 interface DisplayProps {
   player: Player | null;

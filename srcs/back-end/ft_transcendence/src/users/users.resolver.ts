@@ -13,12 +13,6 @@ export class UsersResolver {
 
   @Query(() => [User], { name: 'findAllUsers' })
   findAllUsers(@Context() context: any) {
-
-    // const {token} = context;
-    console.log(context);
-    // if (!token || !this.usersService.findUserByToken(token)) {
-    //   throw new ForbiddenException('Invalid token');
-    // }
     return this.usersService.findAll();
   }
 

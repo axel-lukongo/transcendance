@@ -4,9 +4,8 @@ import { useLazyQuery, useMutation, useQuery} from '@apollo/client';
 import {  Player } from '../../interfaces/interfaces'
 import { CREATE_PLAYER, CREATE_PONG, PLAYER_UPDATED_SUBSCRIPTION, LIST_PLAYER_SUBCRIPTION} from '../graphql/Mutation';
 import { FIND_PLAYER  } from '../graphql/Query';
+import { wsClient } from '../../..';
 
-
-const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
 
 interface MatchMakingProps {
   player: Player | null;

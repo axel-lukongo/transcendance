@@ -4,6 +4,9 @@ import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { generateAccessToken } from 'src/utils/auth.utils';
 import { saveBase64ToFile } from 'src/utils/upload.utils';
 
+export const __CONNECTED__ = 1;
+export const __AFK__ = 2;
+export const __DISCONNECTED__ = 3;
 
 @Injectable()
 export class AuthenticationService {
@@ -14,14 +17,18 @@ export class AuthenticationService {
     try {
       let { avatar, ...rest } = createUserInput;
       const user = await this.prisma.user.create({
-        data: rest
+        data: {
+          email: rest.email,
+          nickname: rest.nickname,
+          intra_login: rest.intra_login,
+          state: __CONNECTED__
+        } 
       });
 
       //lors de la creation du User nous mettons a jour le token
       // et un bouleen servant a la verification de la connexion du user
       // et la creation de l'avatr du user 
       const token = generateAccessToken(user.id);
-      const is_connecting = false;
       avatar = avatar ? 
       'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, user.id) 
       :
@@ -29,7 +36,7 @@ export class AuthenticationService {
 
       const updatedUser =  this.prisma.user.update({
         where: { id: user.id },
-        data: { token, is_connecting, avatar }
+        data: { token, avatar }
       });
 
       // Retournez l'utilisateur mis à jour 
@@ -42,15 +49,14 @@ export class AuthenticationService {
   }
 
   async findUserByIntraLogin(intra_login: string) {
-    const user = await this.prisma.user.findUnique({ where: { intra_login } });
+    let user = await this.prisma.user.findUnique({ where: { intra_login } });
 
     // Cette verification permet de savoir si cette query est lancé a l'authentification 
-    if (user && user.is_connecting) {
+    if (user) {
       const token = generateAccessToken(user.id);
-      const is_connecting = false;
-      await this.prisma.user.update({
+      user = await this.prisma.user.update({
         where: { id: user.id },
-        data: { token, is_connecting },
+        data: { token, state: __CONNECTED__ },
       });
     }
     return user;

@@ -9,6 +9,9 @@ export class UpdateUserInput extends PartialType(User) {
   @Field({ nullable: true })
   token?: string;
 
+  @Field(() => Int)
+  state?: number;
+
   @Field(() => Boolean, { nullable: true })
   is_connecting?: boolean;
  

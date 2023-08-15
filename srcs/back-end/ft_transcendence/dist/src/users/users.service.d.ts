@@ -6,7 +6,7 @@ export declare class UsersService {
     findAll(): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -18,7 +18,7 @@ export declare class UsersService {
     findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -30,7 +30,7 @@ export declare class UsersService {
     findUserByToken(token: string): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -42,7 +42,7 @@ export declare class UsersService {
     update(id: number, data: UpdateUserInput): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -54,7 +54,7 @@ export declare class UsersService {
     remove(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -66,7 +66,7 @@ export declare class UsersService {
     researchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -78,7 +78,7 @@ export declare class UsersService {
     researchUsersForAddChanel(user_id: number, chan_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;

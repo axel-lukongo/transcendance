@@ -43,3 +43,11 @@ export const RESEARCH = gql`query ResearchContact($input: String!, $user_id: Int
 		id
 	}
 }`
+
+export const SUB_STATE = gql`subscription {
+	changeState {
+		id
+		nickname
+		state
+	}
+}`

@@ -1,4 +1,4 @@
-import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { Parent, ResolveField, Resolver, Subscription, Context } from '@nestjs/graphql';
 import { Mutation, Query, Args, Int } from '@nestjs/graphql';
 import { Contact } from './entities/contact.entity';
 import { ContactsService } from './contacts.service'
@@ -6,7 +6,9 @@ import { CreateContactInput } from './dto/create-contact.input';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { UpdateContact } from './dto/update-contact.input';
-import { response } from 'express';
+import { CHANGE_STATE } from 'src/authentication/authentication.resolver';
+import { socket } from 'src/main';
+import { resolveCaa } from 'dns';
 
 @Resolver(() => Contact)
 export class ContactsResolver {
@@ -68,4 +70,25 @@ export class ContactsResolver {
 		return this.contactService.findContacts(user_id);
 	}
 
+	@Subscription(() => User, {
+		filter: async function (payload, variables, context) {
+			try {
+				const resolve_payload = await payload;
+				if (resolve_payload.changeState.id == context.token.userId)
+					return false;
+				let user_contact = await this.contactService.findContacts(context.token.userId);
+				let need_to_catch = user_contact.some((contact) => (
+					contact.user_id === resolve_payload.changeState.id || contact.contact_id === resolve_payload.changeState.id
+				))
+				return need_to_catch;
+			}
+			catch(e) {
+				console.log('Error: ', e);
+				return false;
+			}
+		}
+	})
+	changeState(@Context() context) {
+		return socket.asyncIterator(CHANGE_STATE);
+	}
 }

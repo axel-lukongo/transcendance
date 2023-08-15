@@ -74,7 +74,6 @@ const Authentication: FC = () => {
           }
         })
           .then(response => {
-            console.log('user created:', response.data.createUser);
             const { id, token, email, nickname, avatar, tfa_code } = response.data.createUser;
             const user = {
               id,
@@ -99,7 +98,6 @@ const Authentication: FC = () => {
         }
       })
         .then(response => {
-          console.log('user created:', response.data.createUser);
           const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
           const user = {
             id,
@@ -180,7 +178,7 @@ const Authentication: FC = () => {
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {sessionStorage.getItem('user') ? (
+    {sessionStorage.getItem('user') ? ( /* Need to change for back-end check */
       <Routes>
         <Route path="/" element={<Home  />} />
         <Route path="/pong" element={<Pong  />} />

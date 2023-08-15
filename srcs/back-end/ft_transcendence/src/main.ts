@@ -2,6 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as express from 'express'
 import { PrismaService } from 'prisma/prisma.service';
+import { PubSub } from 'graphql-subscriptions';
+
+
+export const socket = new PubSub();
 
 async function CreateEsseantialTable() {
 
@@ -15,7 +19,6 @@ async function CreateEsseantialTable() {
   // Si aucune instance de WaitingRoom n'existe, créez-en une
   if (!existingWaitingRoom) {
     const waitingRoom = await prisma.waitingRoom.create({});
-    console.log('Created a new WaitingRoom:', waitingRoom);
   }
   // Fermez la connexion Prisma une fois que vous avez terminé
   await prisma.$disconnect();

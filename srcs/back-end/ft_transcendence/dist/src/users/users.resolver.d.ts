@@ -6,7 +6,7 @@ export declare class UsersResolver {
     findAllUsers(context: any): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -18,7 +18,7 @@ export declare class UsersResolver {
     findUserById(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -30,7 +30,7 @@ export declare class UsersResolver {
     updateUser(updateUserInput: UpdateUserInput): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -42,7 +42,7 @@ export declare class UsersResolver {
     removeUser(id: number): import(".prisma/client").Prisma.Prisma__UserClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -54,7 +54,7 @@ export declare class UsersResolver {
     searchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;
@@ -66,7 +66,7 @@ export declare class UsersResolver {
     searchUserForChanel(user_id: number, chanel_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
-        is_connecting: boolean;
+        state: number;
         tfa_code: string;
         email: string;
         intra_login: string;

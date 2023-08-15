@@ -4,9 +4,7 @@ import {gql, useQuery} from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { GET_MESSAGES_BY_CHANNEL } from "../../graphql/Query";
 import { NewMessageSubscription } from "../../graphql/souscription.ws";
-
-const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {});
-
+import { wsClient } from "../../../.."; 
 
 type Message = {
 	id: number;

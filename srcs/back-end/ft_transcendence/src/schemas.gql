@@ -5,7 +5,7 @@
 type User {
   id: Int!
   token: String!
-  is_connecting: Boolean!
+  state: Int!
   tfa_code: String
   email: String!
   intra_login: String!
@@ -143,6 +143,7 @@ type Mutation {
   replyAddContact(reply: UpdateContact!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
+  updateState(new_state: Int!, user_id: Int!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
@@ -166,6 +167,7 @@ type Mutation {
 input UpdateUserInput {
   id: Int!
   token: String
+  state: Int!
   is_connecting: Boolean
   tfa_code: String
   email: String
@@ -290,6 +292,7 @@ input UpdateChanelUserInput {
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
+  changeState: User!
   pongUpdatedSubscription(id: Int!): Pong!
   listPlayerSubscription: [Player!]!
   playerUpdatedSubscription(id: Int!): Player!

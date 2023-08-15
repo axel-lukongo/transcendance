@@ -7,7 +7,7 @@ export declare class ChanelService {
     private readonly prisma;
     private readonly user;
     constructor(prisma: PrismaService, user: UsersService);
-    create(createChanelInput: CreateChanelInput): Promise<(import("@prisma/client/runtime/library").GetResult<{
+    create(createChanelInput: CreateChanelInput): Promise<Error | (import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;
@@ -17,7 +17,7 @@ export declare class ChanelService {
         private: boolean;
         interlocutor_id: number;
         directMsg: boolean;
-    }, unknown> & {}) | Error>;
+    }, unknown> & {})>;
     findOne(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;

@@ -190,7 +190,6 @@ export class PongResolver {
         
         if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
-          console.log('ici');
           this.stopPong();
         }
         const DataUpdateBall : UpdateBallInput = {

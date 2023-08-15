@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Chanel } from '../interfaces/interfaces';
+import { Chanel, User } from '../interfaces/interfaces';
 import Chanels from './micro-components/Chanels';
 import ChanelsRequest from './micro-components/ChanelsRequests';
 import HeaderChanel from './micro-components/Box/HeaderChanel';
 import CreateChanelForm from './micro-components/forms/CreateChanelForm';
-import ChatBox from './micro-components/requests/ChatBox';
+import ChatBox from './micro-components/Box/ChatBox';
 import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
+import { wsClient } from '../..';
+import { SUB_STATE } from '../Contact/graphql/Querys';
 
 /* CSS */
 import './css/messages.css';
@@ -32,6 +34,7 @@ const Message = () => {
 	/* //////////////////////////////////////////////////////// */
 	/* States */
 
+	
 	const [chanel_focus, setChanelFocus] = useState({
 		id: "",
 		chanel_name: "",
@@ -49,6 +52,27 @@ const Message = () => {
 	const [chatBox, setChatBox] = useState(__CHAT__);
 
 	const [is_chanel, setIsChanel] = useState(true);
+
+	const [updateState, setUpdateState] = useState<Partial<User>>({})
+
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effect */
+	
+    useEffect(() => {
+        let state_sub = wsClient.request({query: SUB_STATE}, ).subscribe({
+            next(response) {
+				if (response.data) {
+					let update = response.data.changeState;
+					setUpdateState(update as User);
+				}
+				console.log(response);
+            }
+        })
+
+		return () => {
+			state_sub.unsubscribe();
+		}
+    }, []);
 
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
@@ -97,7 +121,7 @@ const Message = () => {
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
-	console.log('dans les message ====>>>>   ',chanel_focus );
+	// console.log('dans les message ====>>>>   ',chanel_focus );
 
 	const renderSwitch = (id: number) => {
 		switch(id) {

@@ -2,13 +2,14 @@
 /* Model */
 
 export interface User {
+    id: number;
     avatar: string;
     email: string;
-    id: number;
     nickname: string;
     token: string;
-    tfa_code?: string
-  }
+    tfa_code?: string;
+	state: number;
+}
 
 export interface Chanel {
 	id: number;

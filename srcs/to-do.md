@@ -1,5 +1,10 @@
 # | TO DO
 
+
+## | SECU
+
+- si on a des valeurs en session storage je peux acceder au site meme si ca n'existe plus en db
+
 <!-- //////////////////////////////////////////////////////// -->
 ## | CHANEL
 
