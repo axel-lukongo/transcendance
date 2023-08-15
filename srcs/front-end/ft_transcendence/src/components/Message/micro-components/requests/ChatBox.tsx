@@ -66,8 +66,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 	return (
 
 		<div>
-			{messages.map(message => (
-					<div key={message.id}> {message.content}</div>
+			{messages.map((message, index) => (
+					<div key={index}> {message.content}</div>
 				))}
 		</div>
 	)

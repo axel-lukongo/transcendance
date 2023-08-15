@@ -63,8 +63,8 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 			<div>
 				{
 					data.searchUserForChan.filter((elem: User) => (elem.nickname.includes(users_list))
-					).map((e: User) => (
-						<div>
+					).map((e: User ) => (
+						<div key= {e.id}>
 							<p>{e.nickname}</p>
 							<button onClick={() => { handleClickBtn(e) }}>Add</button>
 						</div>

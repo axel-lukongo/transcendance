@@ -78,7 +78,6 @@ export class UserChanelsResolver {
 		const isOwner = await this.userChanelService.IsOwnerInChannel(key.user_id, userId);
 
 		if(!isAdmin || isOwner){
-			// console.log('====>>>  ', isOwner);
 			return 'you don t have the permission';
 		}
 
@@ -87,16 +86,13 @@ export class UserChanelsResolver {
 	
 	@Mutation(() => UsersChanels, {name: "updateChanelAdmin"})
 	async updateChanelAdmin(@Args("key") key: UpdateChanelUserInput, @Context() context){
-		
+
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 
 		const isOwner = await this.userChanelService.IsOwnerInChannel(userId, userId);
-		// console.log('====>>>  ',isOwner);
 		if(!isOwner){
 			return 'you don t have the permission';
 		}
-		// console.log('laa====>>>  ',key.is_admin);
-		
 		return this.userChanelService.update(key);
 	}
 }
