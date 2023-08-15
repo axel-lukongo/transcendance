@@ -59,7 +59,7 @@ type Contact {
   user_id: Int!
   contact_id: Int!
   pending: Boolean!
-  contact(user_id: Int!): User!
+  contact: User!
 }
 
 type Player {
@@ -111,10 +111,10 @@ type UsersChanels {
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
-  searchUsers(research: String!, user_id: Int!): [User!]!
-  searchUserForChan(user_id: Int!, chanel_id: Int!): [User!]!
+  searchUsers(research: String!): [User!]!
+  searchUserForChan(chanel_id: Int!): [User!]!
   Channel_findOne(id: Int!): Chanel!
-  chanels(user_id: Int!): [Chanel!]!
+  chanels: [Chanel!]!
   getChannelByOwnersAndInterlocutor(userId1: Int!, userId2: Int!): Chanel!
   Message_findAll_msg: [Message!]!
   Message_findAll_msg_chan(channelId: Int!): [Message!]!
@@ -122,9 +122,9 @@ type Query {
   person_blocked(id: Int!): [Tobloc!]!
   tobloc(id: Int!): Tobloc!
   banned_list(channelId: Int!): [Banned!]!
-  contactsRequest(user_id: Int!): [Contact!]!
-  myContactRequest(user_id: Int!): [Contact!]!
-  myContacts(user_id: Int!): [Contact!]!
+  contactsRequest: [Contact!]!
+  myContactRequest: [Contact!]!
+  myContacts: [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
   Pongs: [Pong!]!
@@ -137,8 +137,8 @@ type Query {
   findWaitingRoom(id: Int!): WaitingRoom!
   Ball: [Ball!]!
   Balls(id: Int!): Ball!
-  chanelsRequest(user_id: Int!): [UsersChanels!]!
-  myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
+  chanelsRequest: [UsersChanels!]!
+  myChanels(private_chan: Boolean!): [UsersChanels!]!
   ChannelMembers(channel_id: Int!): [UsersChanels!]!
 }
 

@@ -9,11 +9,7 @@ import "../css/Contact.css"
 export default function ListContact({refetchContact, refetchProps, user, setSwap}: IProposContact) {
 
 
-	const {data, loading, error, refetch} = useQuery(LIST_CONTACT, {
-		variables: { 
-			input: user.id
-		}
-	});	
+	const {data, loading, error, refetch} = useQuery(LIST_CONTACT);	
 
 	useEffect(() => {
 		refetch();

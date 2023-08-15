@@ -2,7 +2,7 @@ import { GET_CHAN_BY_OWNER_AND_INTERLOCUTOR } from '../graphql/Query';
 import {  IContact, channelfocus } from "../../interfaces/interfaces";
 import { useQuery, useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { CREATE_CHANEL } from '../graphql/MutationsChanel';
+import { CREATE_CHANEL } from '../graphql/Mutation';
 import CreatUserChan from './creat_user_chan';
 import { Chanel } from '../../interfaces/interfaces';
 import { __CHAT__ } from '../message';

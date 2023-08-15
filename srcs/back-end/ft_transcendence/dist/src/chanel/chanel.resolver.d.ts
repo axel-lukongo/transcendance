@@ -44,7 +44,7 @@ export declare class ChanelResolver {
         directMsg: boolean;
         AdminList: number[];
     }, unknown> & {}>;
-    myChanels(user_id: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
+    myChanels(context: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
         chanel_name: string;

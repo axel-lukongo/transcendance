@@ -105,8 +105,7 @@ export class AuthenticationResolver {
 
     if (new_state < 1 || new_state > 3)
       throw new Error("Unrecognized state");
-
-    const updateUser =  await this.userService.update(user_id, {id: context.userId, state: new_state})
+    const updateUser =  await this.userService.update(user_id, {id: context.req.userId, state: new_state})
     socket.publish(CHANGE_STATE, {
       changeState: updateUser
     });

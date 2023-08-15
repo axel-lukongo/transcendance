@@ -11,11 +11,7 @@ export default function ListChanelRequests(props: IListChanelRequestProps) {
 	/* //////////////////////////////////////////////////////// */
 	/* States */
 
-	const {data, refetch, error} = useQuery(USER_CHANEL_LIST, {
-		variables: {
-			input: props.user.id
-		}
-	});
+	const {data, refetch, error} = useQuery(USER_CHANEL_LIST);
 
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effect */

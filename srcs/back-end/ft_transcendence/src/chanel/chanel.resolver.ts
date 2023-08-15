@@ -1,18 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Subscription } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Context } from '@nestjs/graphql';
 import { ChanelService } from './chanel.service';
 import { Chanel } from './entities/chanel.entity';
 import { CreateChanelInput } from './dto/create-chanel.input';
 import { UpdateChanelInput } from './dto/update-chanel.input';
-import { UsersChanels } from '../user-chanels/entities/user_chanel.entity';
-import { AddUserChanel } from '../user-chanels/dto/add-user-chanel.input';
 import { Message } from 'src/messages/entities/messages.entity';
 import { MessagesResolver } from '../messages/messages.resolver';
-import { CreateMessageInput } from '../messages/dto/create-messages.input';
-import { PubSub } from 'graphql-subscriptions';
 
-
-// const pubSub = new PubSub();
-// const NEW_MSG = 'addMessage';
 
 @Resolver(() => Chanel)
 export class ChanelResolver {
@@ -41,8 +34,8 @@ export class ChanelResolver {
   }
 
   @Query(() => [Chanel], {name: "chanels"})
-  myChanels(@Args("user_id", {type: () => Int}) user_id: number) {
-    return this.chanelService.getOwnChanels(user_id);
+  myChanels(@Context() context) {
+    return this.chanelService.getOwnChanels(context.req.userId);
   }
   
   @ResolveField(() => [Message])

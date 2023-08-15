@@ -12,7 +12,6 @@ export default function QuiteChanel({handleChanelRefetch,  element, label}: IReq
 		delContact({
 			variables: {
 				input: {
-					user_id: 1,
 					chanel_id: element.chanels.id
 				}
 			}

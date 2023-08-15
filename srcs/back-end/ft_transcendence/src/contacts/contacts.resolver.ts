@@ -20,7 +20,7 @@ export class ContactsResolver {
 				private readonly toblocService: ToblocService
 				) {}
 	
-	@Mutation(() => Contact, {name: "createContact"})
+	@Mutation(() => Contact, { name: "createContact" })
 	async createContact(@Args("createContact") createContact: CreateContactInput) {
 
 		if (createContact.user_id == createContact.contact_id)
@@ -44,47 +44,50 @@ export class ContactsResolver {
 		}
 	}
   
-	@Query(() => [Contact], {name: 'contactsRequest'})
-	findAllContactsRequest(@Args("user_id", {type: () => Int}) id: number) {
-	  return this.contactService.findContactsRequest(id);
+	@Query(() => [Contact], { name: 'contactsRequest' })
+	findAllContactsRequest(@Context() context) {
+	  return this.contactService.findContactsRequest(context.req.userId);
 	}
 
-	@Query(() => [Contact], {name: "myContactRequest"})
-	findMyContactRequest(@Args("user_id", {type: () => Int}) user_id: number) {
-		return this.contactService.findMyContactRequest(user_id)
+	@Query(() => [Contact], { name: "myContactRequest" })
+	findMyContactRequest(@Context() context) {
+		return this.contactService.findMyContactRequest(context.req.userId);
 	}
   
-	@ResolveField(() => User, {name: "contact"})
-	findContact(@Parent() contact: Contact, @Args("user_id", {type: () => Int}) user: number) {
+	@ResolveField(() => User, { name: "contact" })
+	findContact(
+		@Parent() contact: Contact, 
+		@Context() context)
+	{
 		const {contact_id, user_id} = contact;
 		let id = user_id;
-
-		if (user == user_id)
+		if (context.req.userId == user_id)
 			id = contact_id; 
 
 		return this.userService.findUserById(id);
 	}
 
-	@Mutation(() => Contact, {name: "replyAddContact"}) 
+	@Mutation(() => Contact, { name: "replyAddContact" }) 
 	replyInviteContact(@Args("reply") reply: UpdateContact) {
 		return (this.contactService.replyAddContact(reply));
 	}
 
-	@Mutation(() => Contact, {name: "deletecontact"})
+	@Mutation(() => Contact, { name: "deletecontact" })
 	async deletecontact(
-	@Args("user1") user1: number,
-	@Args("user2") user2: number) {
+		@Args("user1") user1: number,
+		@Args("user2") user2: number)
+	{
 		return (this.contactService.deleteContact(user1, user2));
 	}
 
-	@Mutation(() => Contact, {name: "deleteContact"})
+	@Mutation(() => Contact, { name: "deleteContact" })
 	deleteContact(@Args("id", {type: () => Int }) contact_id: number) {
 		return (this.contactService.delete(contact_id));
 	}
 
-	@Query( ()=> [Contact], {name: "myContacts"} )
-	getMyContacts(@Args("user_id", {type: () => Int}) user_id: number) {
-		return this.contactService.findContacts(user_id);
+	@Query( ()=> [Contact], { name: "myContacts" } )
+	getMyContacts(@Context() context) {
+		return this.contactService.findContacts(context.req.userId);
 	}
 
 	@Subscription(() => User, {

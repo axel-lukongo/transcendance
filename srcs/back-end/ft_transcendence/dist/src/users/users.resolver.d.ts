@@ -51,7 +51,7 @@ export declare class UsersResolver {
         rank: string;
         level: number;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    searchUsers(research: string, user_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
+    searchUsers(research: string, context: any): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         state: number;
@@ -63,7 +63,7 @@ export declare class UsersResolver {
         rank: string;
         level: number;
     }, unknown> & {})[]>;
-    searchUserForChanel(user_id: number, chanel_id: number): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
+    searchUserForChanel(chanel_id: number, context: any): import(".prisma/client").Prisma.PrismaPromise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         state: number;

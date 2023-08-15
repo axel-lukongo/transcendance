@@ -23,12 +23,12 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 `;
 
 export const GET_CONTACT = gql`
-	query MyContacts($user_id: Int!){
-		myContacts(user_id: $user_id) {
+	query MyContacts {
+		myContacts {
 			id
 			user_id
 			contact_id
-			contact(user_id: $user_id){
+			contact {
 				nickname
 				id
 				state
@@ -36,8 +36,8 @@ export const GET_CONTACT = gql`
 		}
 	}
 `;
-export const USER_CHANEL_LIST = gql`query UserChanelList($input: Int!) {
-	chanelsRequest(user_id: $input) {
+export const USER_CHANEL_LIST = gql`query UserChanelList {
+	chanelsRequest {
 		pending
 		user_id
 		chanels {
@@ -47,8 +47,8 @@ export const USER_CHANEL_LIST = gql`query UserChanelList($input: Int!) {
 	}
 }`;
 
-export const CHANELS_LIST = gql`query GetChanelList($input: Int!, $private_chan: Boolean!) {
-	myChanels(user_id: $input, private_chan: $private_chan) {
+export const CHANELS_LIST = gql`query GetChanelList($private_chan: Boolean!) {
+	myChanels(private_chan: $private_chan) {
 		pending
 		user_id
 		chanels {

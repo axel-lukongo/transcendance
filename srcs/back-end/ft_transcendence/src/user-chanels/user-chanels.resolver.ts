@@ -38,15 +38,17 @@ export class UserChanelsResolver {
 
 
 	@Query(() => [UsersChanels], {name: "chanelsRequest"})
-	chanelRequest(@Args("user_id", {type: () => Int}) user_id: number) {
-		return this.userChanelService.findMyRequestChanels(user_id);
+	chanelRequest(@Context() context) {
+		return this.userChanelService.findMyRequestChanels(context.req.userId);
 	}
 
 
 	@Query(() => [UsersChanels], { name: 'myChanels' })
-	findMyChanels(@Args("user_id", {type: () => Int}) user_id: number,
-	@Args("private_chan", {type: () => Boolean}) private_chan: boolean) {
-	  return this.userChanelService.findMyChanels(user_id, private_chan);
+	findMyChanels(
+		@Context() context,
+		@Args("private_chan", {type: () => Boolean}) private_chan: boolean
+	) {
+	  return this.userChanelService.findMyChanels(context.req.userId, private_chan);
 	}
 
 
