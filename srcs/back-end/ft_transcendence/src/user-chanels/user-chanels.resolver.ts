@@ -15,7 +15,12 @@ export class UserChanelsResolver {
 
 
 	@Mutation(() => UsersChanels)
-	addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
+	async addUser(@Args('addUserChanel') addUserChanel: AddUserChanel) {
+		const isBanned = await this.userChanelService.UserBanInChannel(addUserChanel.user_id, addUserChanel.chanel_id)
+
+		if(isBanned) {
+			return 'this user is banned';
+		}
 		return this.userChanelService.addUser(addUserChanel);
 	}
 
@@ -56,10 +61,9 @@ export class UserChanelsResolver {
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 
 		const I_amAdmin = await this.userChanelService.isAdministrator(key, key.user_id);
-		const hes_Admin = await this.userChanelService.isAdministrator(key, userId);
+		const he_is_Admin = await this.userChanelService.isAdministrator(key, userId);
 
-		if (I_amAdmin || !hes_Admin) {
-			console.log('ici');
+		if (I_amAdmin || !he_is_Admin) {
 			return 'you don t have the permission'
 		}
 		return this.userChanelService.delete(key);
@@ -71,12 +75,28 @@ export class UserChanelsResolver {
 		
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 		const isAdmin = await this.userChanelService.isAdministrator(key, userId);
+		const isOwner = await this.userChanelService.IsOwnerInChannel(key.user_id, userId);
 
-		if(!isAdmin){
+		if(!isAdmin || isOwner){
+			// console.log('====>>>  ', isOwner);
 			return 'you don t have the permission';
 		}
 
 		return this.userChanelService.update(key);
 	}
 	
+	@Mutation(() => UsersChanels, {name: "updateChanelAdmin"})
+	async updateChanelAdmin(@Args("key") key: UpdateChanelUserInput, @Context() context){
+		
+		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
+
+		const isOwner = await this.userChanelService.IsOwnerInChannel(userId, userId);
+		// console.log('====>>>  ',isOwner);
+		if(!isOwner){
+			return 'you don t have the permission';
+		}
+		// console.log('laa====>>>  ',key.is_admin);
+		
+		return this.userChanelService.update(key);
+	}
 }

@@ -29,7 +29,8 @@ const CreatUserChan = ({ hasFetchedData, setchanel_focus }: MyComponentProps) =>
 				  chanel_id: hasFetchedData?.id,
 				  pending: false,
 				  is_admin: false,
-				  is_muted: false
+				  is_muted: false,
+				  mute_start_time: 0,
 			  }
 			},
 		}).then(()=>{

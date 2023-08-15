@@ -179,6 +179,7 @@ type Mutation {
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
   deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
   updateChanelUser(key: UpdateChanelUserInput!): UsersChanels!
+  updateChanelAdmin(key: UpdateChanelUserInput!): UsersChanels!
 }
 
 input UpdateUserInput {

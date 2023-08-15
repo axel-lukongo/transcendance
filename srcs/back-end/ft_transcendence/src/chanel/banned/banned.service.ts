@@ -38,4 +38,21 @@ remove(userId: number, channelId: number) {
     }
   });
 }
+
+// async UserBanInChannel(userId: number, channelId: number): Promise<boolean>{
+// 	const userChannel = await this.prisma.user_banned.findFirst({
+// 	  where: {
+// 		user_id: userId,
+// 		channel_id: channelId,
+// 	  },
+// 	});
+
+// 	if(userChannel)
+// 		return true;
+// 	else
+// 		return false;
+
+// }
+
+
 }

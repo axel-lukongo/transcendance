@@ -57,6 +57,17 @@ export const UPDATE_CHANEL_USER = gql`
 `;
 
 
+export const UPDATE_CHANEL_ADMIN = gql`
+  mutation UpdateChanelAdmin($key: UpdateChanelUserInput!) {
+    updateChanelAdmin(key: $key) {
+      user_id
+      chanel_id
+      is_muted
+      is_admin
+    }
+  }
+`;
+
 
 export const DELETE_CHANEL_USER_MUTATION = gql`
   mutation DeleteChanelUser($key: UpdateChanelUserInput!) {

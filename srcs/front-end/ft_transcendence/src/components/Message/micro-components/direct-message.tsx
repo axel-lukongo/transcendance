@@ -57,13 +57,17 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
 					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-						<p>{contact.contact.nickname}</p>
+					<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
+				<div className="about">
+					<div className="name"> {contact.contact.nickname}</div>
 						{selectedContactId === contact.contact.id && < Creat_direct_msg
 						interlocutor={contact.contact}
 						handlechanelfocus={props.handleChanelFocus} />}
 						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
+
+						<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
 						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
-						<button onClick={() => setHandleTobloc(true)}>block</button>
+						</div>
 					</ul>
 				);
 			})}

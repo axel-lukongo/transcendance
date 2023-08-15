@@ -31,13 +31,13 @@ export function MyBlockedList(){
 	};
 
 	return (
-		<div>
-		<h2>My Blocked List</h2>
+		<div  >
+		<h2 >  blocked List: </h2>
 		{data && data.person_blocked.map((item: blocked) => (
 		  <div key={item.id}>
-			  <p>{item.blocked.nickname}</p>
-			  <button onClick={handleUnblockClick}>Unblock</button>
-
+			  <p>{item.blocked.nickname}
+			  <button onClick={handleUnblockClick}>Unlock</button>
+			  </p>
 			  {showUnblock && <Unblocked id={item.id} />}
 
 		  </div>

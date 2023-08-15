@@ -46,7 +46,9 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 				is_muted: false,
 				mute_start_time: 0,
 			}
-		}})
+		}}).catch(() => {
+			return 'you cannot add a banned user';
+		})
 	}
 
 	return (

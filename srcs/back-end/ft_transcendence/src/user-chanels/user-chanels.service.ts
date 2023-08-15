@@ -112,4 +112,36 @@ export class UserChanelsService {
 			}
 		});
 	}
+
+
+	async UserBanInChannel(userId: number, channelId: number){
+		const userChannel = await this.prisma.user_banned.findFirst({
+		  where: {
+			user_id: userId,
+			channel_id: channelId,
+		  },
+		});
+		if(userChannel)
+		return true;
+		
+		return false;
+	
+	}
+
+
+	async IsOwnerInChannel( userId: number, channelId: number){
+		const is_owner = await this.prisma.users_Chanels.findFirst({where: {
+			user_id: userId,
+			chanel_id: channelId,
+			pending: false,
+			chanel: {
+				owner_id: userId
+			}
+		},
+	})
+	if(is_owner)
+		return true;
+	return false;
+	};
+
 }

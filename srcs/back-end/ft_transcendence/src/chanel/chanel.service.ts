@@ -26,7 +26,7 @@ export class ChanelService {
 		  is_muted: false,
         }
       })
-      
+
       return chanelRes;
     }
     catch (e){

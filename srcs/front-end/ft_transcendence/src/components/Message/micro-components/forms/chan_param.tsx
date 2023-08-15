@@ -1,7 +1,7 @@
 // import React, { useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Banned, channelfocus, User, UserChanels } from "../../../interfaces/interfaces";
-import { UPDATE_CHANEL_USER } from "../../graphql/Mutation";
+import { UPDATE_CHANEL_ADMIN, UPDATE_CHANEL_USER } from "../../graphql/Mutation";
 import { DELETE_CHANEL_USER_MUTATION } from "../../graphql/Mutation";
 import { CREATE_BANNED_MUTATION } from "../../graphql/Mutation";
 import { REMOVE_BANNED_MUTATION } from "../../graphql/Mutation";
@@ -21,17 +21,19 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 		variables: {chan_id: +chanel_focus.id}}
 	);
 
-	const { loading: anotherLoading, error: anotherError, data: anotherData } = useQuery(BANNED_LIST_QUERY, {
+	const { loading: anotherLoading, error: anotherError, data: anotherData, refetch: anotherreftch } = useQuery(BANNED_LIST_QUERY, {
 		variables: { 
 			channelId: +chanel_focus.id
 		},
 	});
 
 	const [ParamChan] = useMutation(UPDATE_CHANEL_USER);
+	const [AdminParamChan] = useMutation(UPDATE_CHANEL_ADMIN);
 	const [KickOfChan] = useMutation(DELETE_CHANEL_USER_MUTATION);
 	const [createBanned] = useMutation(CREATE_BANNED_MUTATION);
 	const [UnBanned] = useMutation(REMOVE_BANNED_MUTATION);
 
+	// UPDATE_CHANEL_ADMIN
 	if (error)
 		return (<div>An Error as occured</div>);
 	
@@ -44,10 +46,9 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 		console.log(data);
 	}
 
+	anotherreftch();
 
   const handlemuted = (User_id: number, oldMuted: boolean) => {
-	// const currentTimeInMillis = Math.floor(new Date().getTime() / 60000);
-	// console.log('oeee >>>>>>>>>> ',currentTimeInMillis);
 	ParamChan({
       variables: {
         key: {
@@ -67,15 +68,16 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 	});
   };
 
-  const handleadmin = (User_id: number) => {
-    ParamChan({
+  const handleadmin = (User_id: number, oldAdmin: boolean) => {
+    AdminParamChan({
       variables: {
         key: {
           user_id: User_id,
           chanel_id: +chanel_focus.id,
 		  pending: false,
           is_muted: false,
-          is_admin: true,
+          is_admin: oldAdmin === true? false : true,
+		  mute_start_time: 0,
         },
       },
     }).then((result) => {
@@ -95,8 +97,9 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 			chanel_id: +chanel_focus.id,
 			pending: false,
 			is_admin: ToDel.is_admin,
-			is_muted: ToDel.is_muted
-		  },
+			is_muted: ToDel.is_muted,
+			mute_start_time: 0,
+		},
 		},
 	  }).then((result) => {
 		refetch();
@@ -113,10 +116,12 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
           createBannedInput: {
             user_id: ToDel.user_id,
             channel_id: +chanel_focus.id,
-          },
+			// mute_start_time: 0,
+		},
         },
       }).then((result) => {
 		refetch();
+		anotherreftch();
 		console.log(result.data.updateChanelUser);
 	  }).catch(() => {
 		console.log("action denied ",);
@@ -124,18 +129,20 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
   }
 
   const handleDeleteBanned = (ToDel: Banned) => {
+	// anotherreftch();
 	UnBanned({
 		variables: {
 			userId: ToDel.user_id,
 			channelId: +chanel_focus.id,
 		},
 	  }).then((result) => {
-		refetch();
+		// refetch();
+		// anotherreftch();
 		console.log(result.data.updateChanelUser);
 	  }).catch(() => {
 		console.log("action denied ",);
 	});
-
+	// anotherreftch();
   }
 
 
@@ -152,7 +159,7 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 							<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
 								<p>{member.user.nickname}
 								<button onClick={() => { handlemuted(member.user_id, member.is_muted) }}>muted</button>
-								<button onClick={() => { handleadmin(member.user_id) }}>admin</button>
+								<button onClick={() => { handleadmin(member.user_id, member.is_admin) }}>admin</button>
 								<button onClick={() => { handlekick(member) }}>kick</button>
 								<button onClick={() => { handleban(member) }}>ban</button>
 								</p>

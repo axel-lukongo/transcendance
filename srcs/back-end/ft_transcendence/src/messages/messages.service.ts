@@ -45,7 +45,7 @@ export class MessagesService {
 	in this service i check if the user who want write in this channel has been muted
 	if he is muted, i check make a substraction of the current time and the time when he has been muted.
 	if the difference of the time is > 5 the user stay muted 
-	and if the time is <= 5, that mean the time of the mute has been reached si i unmuted him,
+	and if the time is <= 5, that mean the time of the mute has been reached so i unmuted him,
 	*/
 	async isUserMutedInChannel(userId: number, channelId: number): Promise<boolean>{
 		const userChannel = await this.prisma.users_Chanels.findFirst({
@@ -78,6 +78,6 @@ export class MessagesService {
 		}
 		else{
 			return false;
-		} // Vérifier si l'utilisateur est en mode "muted"
+		} 
 	}
 }

@@ -50,24 +50,26 @@ export default function Contact() {
 					/>
 				</div>
 					{/* Nouveau bouton pour afficher la liste des joueurs bloqués */}
-					<button id="showBlockedPlayers_btn" onClick={handleShowBlockedPlayers}>
-				player blocked
-				</button>
+					{/* <button id="showBlockedPlayers_btn" onClick={handleShowBlockedPlayers}>
+					player blocked
+				</button> */}
 
 				{/* Affichage conditionnel de la liste des joueurs bloqués */}
-				{showBlockedPlayers && (
-				<div className="blockedPlayersList">
-					<MyBlockedList/>
-					{/* Afficher la liste des joueurs bloqués ici */}
-					{/* ... */}
-				</div>
-				)} 
+				
                 {swap ?
                     <div className="box_ListContact">
                         <div className="title">
                             <h2 id="Contact_labels">Friends list</h2>
                             <button id="addContact_btn" onClick={handleSwap}></button>
+							<button id="blocked_btn" onClick={handleShowBlockedPlayers}>
+							
+							</button>
                         </div>
+						{showBlockedPlayers && (
+						<div className="box_ListContact" >
+							<MyBlockedList/>
+						</div>
+						)} 
                         <ListContact 
                             refetchContact={handleRefetch}
                             refetchProps={refetchProp}
