@@ -66,4 +66,12 @@ export class ChanelResolver {
 	  ) {
 	return this.chanelService.removeDirectMsg(userId1, userId2);
   }
+
+//   @Mutation(() => Chanel)
+//   async addBannedUser(
+//     @Args('channelId', { type: () => Int }) channelId: number,
+//     @Args('userId', { type: () => Int }) userId: number,
+//   ) {
+//     return this.chanelService.addBannedUser(channelId, userId);
+//   }
 }

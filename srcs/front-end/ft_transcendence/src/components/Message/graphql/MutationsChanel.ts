@@ -3,6 +3,7 @@ import { gql } from "@apollo/client"
 export 	const ACCEPT_CHANEL = gql`mutation AcceptRequestChanel($input: UpdateChanelUserInput!) {
 	acceptRequest(key: $input) {
 		pending
+		
 	}
 }`
 

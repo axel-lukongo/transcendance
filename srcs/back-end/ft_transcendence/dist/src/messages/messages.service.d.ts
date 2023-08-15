@@ -46,4 +46,5 @@ export declare class MessagesService {
         content: string;
         sent_at: Date;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    isUserMutedInChannel(userId: number, channelId: number): Promise<boolean>;
 }

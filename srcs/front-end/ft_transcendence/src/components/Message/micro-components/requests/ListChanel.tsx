@@ -22,9 +22,9 @@ export default function ChanelList(props: IPropsChanel) {
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effects */
 
-	useEffect(() => {
+	// useEffect(() => {
 		refetch();
-	}, [props.refetchChanels, refetch])
+	// }, [])
 
 	/* //////////////////////////////////////////////////////// */
 	/* Querry Error */

@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect, useState} from 'react';
-import {gql, useQuery} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { GET_MESSAGES_BY_CHANNEL } from "../../graphql/Query";
 import { NewMessageSubscription } from "../../graphql/souscription.ws";
@@ -27,7 +27,7 @@ interface ChatBoxProps{
 const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: +chan.id}});
 	const [messages, setMessages] = useState<Message[]>([]);
-	// console.log('le channel_id: ====>>> ' +chan.id);
+	// console.log('le channel: ====>>> ', chan);
 
 	useEffect(() => {
 		if (data && data.Message_findAll_msg_chan) {
@@ -50,16 +50,22 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 				console.error('WebSocket error:', error);
 			},
 		});
+
 		return () => {
 			subscription.unsubscribe();
 		};
-	}, []);
+	}, [+chan.id]);
+
+	if(loading)
+		return ( <div> loading... </div>)
+	if(error)
+		return ( <div> error </div>)
 
 	return (
 
 		<div>
-			{messages.map(message => (
-					<div key={message.id}> {message.content}</div>
+			{messages.map((message, index) => (
+					<div key={index}> {message.content}</div>
 				))}
 		</div>
 	)

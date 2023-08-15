@@ -25,6 +25,15 @@ export interface UserChanels {
 	user_id: number;
 	pending: boolean;
 	chanels: Chanel;
+	is_admin: boolean;
+	is_muted: boolean;
+	user: User;
+}
+
+export interface Banned{
+	user_id: number;
+	channel_id: number;
+	user_ban: User;
 }
 export interface IContact {
 	id: number;

@@ -5,7 +5,7 @@ import AddContact from "./micro-components/AddContact";
 import { SUB_STATE } from "./graphql/Querys";
 import { wsClient } from "../..";
 import './css/Contact.css'
-
+import { MyBlockedList } from "./micro-components/ListBlocked";
 
 export default function Contact() {
 
@@ -19,6 +19,7 @@ export default function Contact() {
 
     const [swap, setSwap] = useState(true);
 
+	const [showBlockedPlayers, setShowBlockedPlayers] = useState(false);
 
     /* //////////////////////////////////////////////////////// */
     /* Handlers */
@@ -31,6 +32,10 @@ export default function Contact() {
     const handleSwap = () => {
         setSwap(prevValue => !prevValue);
     }
+
+	const handleShowBlockedPlayers = () => {
+		setShowBlockedPlayers(prevValue => !prevValue);
+	  }
 
     /* //////////////////////////////////////////////////////// */
     /* JSX.Element return */
@@ -48,12 +53,27 @@ export default function Contact() {
                         user={user}
 					/>
 				</div>
+					{/* Nouveau bouton pour afficher la liste des joueurs bloqués */}
+					{/* <button id="showBlockedPlayers_btn" onClick={handleShowBlockedPlayers}>
+					player blocked
+				</button> */}
+
+				{/* Affichage conditionnel de la liste des joueurs bloqués */}
+				
                 {swap ?
                     <div className="box_ListContact">
                         <div className="title">
                             <h2 id="Contact_labels">Friends list</h2>
                             <button id="addContact_btn" onClick={handleSwap}></button>
+							<button id="blocked_btn" onClick={handleShowBlockedPlayers}>
+							
+							</button>
                         </div>
+						{showBlockedPlayers && (
+						<div className="box_ListContact" >
+							<MyBlockedList/>
+						</div>
+						)} 
                         <ListContact 
                             refetchContact={handleRefetch}
                             refetchProps={refetchProp}
@@ -73,7 +93,10 @@ export default function Contact() {
                             setSwap={handleSwap}
                         />
                     </div>
+					// je vais rajouter les ban ici
+					
                 }
+			
 			</React.Fragment>
 	</div>);
 }

@@ -78,7 +78,13 @@ async update(id: number, data: UpdateUserInput) {
             { id: user_id },
             { chanels: {
               some: { chanel_id: chan_id }
-            }}
+            }},
+			{ user_ban: {
+				some: {
+				  channel_id: chan_id
+				}
+			  }
+	  		}
           ]
         }
       }

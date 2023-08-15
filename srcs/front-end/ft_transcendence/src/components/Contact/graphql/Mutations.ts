@@ -25,3 +25,10 @@ export const CREATE_CONTACT = gql`mutation CreateContact($input: CreateContactIn
 		pending
 	}
 }`
+
+export const UNBLOCKED = gql`
+mutation Unblocked ($id: Int!){
+  removeTobloc(id: $id){
+    blocked_id
+  }
+}`

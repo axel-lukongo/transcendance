@@ -13,7 +13,10 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 		getChannelByOwnersAndInterlocutor(userId1: $userId1, userId2: $userId2) {
 			id
 			chanel_name
+			chanel_size
+			max_users
 			owner_id
+			logo
 			interlocutor_id
 		}
 	}
@@ -22,6 +25,7 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 export const GET_CONTACT = gql`
 	query MyContacts($user_id: Int!){
 		myContacts(user_id: $user_id) {
+			id
 			user_id
 			contact_id
 			contact(user_id: $user_id){
@@ -62,3 +66,28 @@ searchUserForChan(user_id: $user_id, chanel_id: $chanel_id) {
     nickname
   }
 }`
+
+
+export const CHANNEL_MEMBERS_QUERY = gql`
+  query ChanMembers($chan_id: Int!){
+			ChannelMembers(channel_id: $chan_id) {
+			user_id
+			is_muted
+			is_admin
+			user {
+				nickname
+			}
+		}
+	}
+`;
+export const BANNED_LIST_QUERY = gql`
+  query BannedList($channelId: Int!) {
+    banned_list( channelId: $channelId) {
+	 user_id
+	 channel_id
+      user_ban {
+		nickname
+      }
+    }
+  }
+`;

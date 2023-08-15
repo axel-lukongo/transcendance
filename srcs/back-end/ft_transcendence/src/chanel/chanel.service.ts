@@ -21,10 +21,12 @@ export class ChanelService {
         data: {
           chanel_id: chanelRes.id,
           user_id: chanelRes.owner_id,
-          pending: false
+          pending: false,
+		  is_admin: true,
+		  is_muted: false,
         }
       })
-      
+
       return chanelRes;
     }
     catch (e){
@@ -69,6 +71,7 @@ export class ChanelService {
   }
 
 
+ 
   async removeDirectMsg(userId1: number, userId2: number): Promise<Chanel | null> {
 	const chan = await this.prisma.chanel.findFirst({
 	  where: {
@@ -84,14 +87,41 @@ export class ChanelService {
 		],
 	  },
 	});
-  
+	//after creating a bloc table, we suppress the discussion betweenthe both users
 	if (chan) {
-	  return this.prisma.chanel.delete({ where: { id: chan.id } });
-	} else {
+		await this.prisma.users_Chanels.deleteMany({
+			where: {
+			  chanel_id: chan.id,
+			},
+		  });
+		return this.prisma.chanel.delete({ where: { id: chan.id } });
+	}
+	else {
 	  return null;
 	}
+	//now we suppres them of the friend list
+
   }
   
+
+//   async addBannedUser(channelId: number, userId: number): Promise<Chanel | null> {
+//     try {
+//       const updatedChannel = await this.prisma.chanel.update({
+//         where: { id: channelId },
+//         data: {
+//           banned_users: {
+//             push: userId,
+//           },
+//         },
+//       });
+
+//       return updatedChannel;
+//     } catch (error) {
+//       console.error('Error adding banned user:', error);
+//       return null;
+//     }
+//   }
+
 }
 
 

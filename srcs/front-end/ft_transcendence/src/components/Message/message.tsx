@@ -11,6 +11,7 @@ import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
 import { wsClient } from '../..';
 import { SUB_STATE } from '../Contact/graphql/Querys';
+import Param_Chan from './micro-components/forms/chan_param';
 
 /* CSS */
 import './css/messages.css';
@@ -18,6 +19,7 @@ import './css/messages.css';
 export const __CREATE_CHANEL__ = 1;
 export const __ADD_USER__ = 2;
 export const __CHAT__ = 3;
+export const __CHAN_PARAM__ = 5;
 
 export const __DIRECT_MESSAGE__ = 1;
 export const __PRIVATE_CHANEL__ = 2;
@@ -51,7 +53,7 @@ const Message = () => {
 
 	const [chatBox, setChatBox] = useState(__CHAT__);
 
-	const [is_chanel, setIsChanel] = useState(true);
+	const [is_chanel] = useState(true);
 
 	const [updateState, setUpdateState] = useState<Partial<User>>({})
 
@@ -109,15 +111,15 @@ const Message = () => {
 
 
 	const handleChatBox = (switch_id: number) => {
-		if (switch_id < 1 || switch_id > 4)
+		if (switch_id < 1 || switch_id > 5)
 			throw new Error("Bad ID");
 		else
 			setChatBox(switch_id);
 	}
 	
-	const handleIsChanel = () => {
-		setIsChanel(prevValue => !prevValue);
-	}
+	// const handleIsChanel = () => {
+	// 	setIsChanel(prevValue => !prevValue);
+	// }
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
@@ -128,7 +130,6 @@ const Message = () => {
 			case __DIRECT_MESSAGE__: {
 				return (
 					<div>
-						
 						<Direct_message
 						user={user}
 						private_chan={true}
@@ -224,7 +225,7 @@ const Message = () => {
 						</div>
 						<div className="chat-message ">
 							<div className="input-group mb-0">
-								<CreateMsg />
+								<CreateMsg chan={chanel_focus}/>
 							</div>
 						</div>
 					</div>
@@ -241,6 +242,26 @@ const Message = () => {
 						/>
 						<div className="chat-history">
 						<AddUserInChan 
+							user={user}
+							chanel_focus={chanel_focus}
+						/>
+						</div>
+						<div className="chat-message ">
+						</div>
+					</div>
+				);
+			}
+			case __CHAN_PARAM__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+						<Param_Chan 
 							user={user}
 							chanel_focus={chanel_focus}
 						/>

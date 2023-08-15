@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateContactInput } from './dto/create-contact.input';
 import { UpdateContact } from './dto/update-contact.input';
+import { Contact } from './entities/contact.entity';
 // import { }
 
 @Injectable()
@@ -15,6 +16,29 @@ export class ContactsService {
 
 	delete(contact_id: number) {
 		return (this.prisma.contact.delete({where: {id: contact_id}}));
+	}
+
+	async deleteContact(user1: number, user2: number): Promise<Contact | null> {
+		const the_contact = await this.prisma.contact.findFirst({
+			where: {
+			  OR: [
+				{
+					user_id: user1,
+					contact_id: user2,
+				},
+				{
+					user_id: user2,
+					contact_id: user1,
+				},
+			  ],
+			},
+		  });
+		if (the_contact){
+			return this.prisma.contact.delete({where: {id: the_contact.id}});
+		}
+		else {
+			return null;
+		}
 	}
 
 	findContactsRequest(id: number) {
@@ -59,6 +83,9 @@ export class ContactsService {
 			}
 		})
 	}
+
+
+
 
 	checkExist(createContact: CreateContactInput) {
 		return this.prisma.contact.findUnique({

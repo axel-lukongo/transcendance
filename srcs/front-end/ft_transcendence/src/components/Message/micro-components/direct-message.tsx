@@ -6,25 +6,33 @@ import { CREATE_CHANEL } from "../graphql/MutationsChanel";
 import {useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
-// import Tobloc from "./Tobloc";
+import Tobloc from "./Tobloc";
 
+/*
+dans ce composant j'affiche la liste de mes contact sur le champs de gauche, et chaque contact possedes des boutons
+
+le boutons pour communiquer avec ce contact:
+>>> Creat_direct_msg a la ligne 71
+
+et le bouton pour un contact 
+>>>bloquer, a la ligne 76.
+
+Ces fonctions ce declanche lorsque un boolean specifique passe a true.
+*/
 export default function Direct_message(props: IPrivateMessageProps) {
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
-	const [showQueryComponent, setShowQueryComponent] = useState(false);
 
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
 
 	const {data, error, loading} = useQuery(GET_CONTACT, {
 		variables: {user_id: myuser.id}
 	});
-	// const [createChanel] = useMutation(CREATE_CHANEL);
 
 	const handleNewDirectMsg = (contactId: number) => {
 		setSelectedContactId(contactId);
 	}
 
-
-	// console.log('je test ici: ', data)
+	const [handleTobloc, setHandleTobloc] = useState(false);
 
 	if (error){
 		return <p> an error appen  </p>
@@ -37,12 +45,9 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	if (!data || !data.myContacts) {
 		return <p>No contacts available.</p>;
 	}
-	
-
-
 
 	return(
-		
+
 		<div id="plist" className="people-list">
 			<div className="position: sticky">{ 
 				<h3>Direct Message</h3>
@@ -52,17 +57,20 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
 					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-						<p>{contact.contact.nickname}</p>
-						{selectedContactId === contact.contact.id && < Creat_direct_msg handleChange={props.handleChanelFocus}
+					<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
+				<div className="about">
+					<div className="name"> {contact.contact.nickname}</div>
+						{selectedContactId === contact.contact.id && < Creat_direct_msg
 						interlocutor={contact.contact}
-						handleChanelRefecth={props.handleChanelRefetch} />}
+						handlechanelfocus={props.handleChanelFocus} />}
+						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
+
+						<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
 						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
-						{/* <button onClick={() => handleNewDirectMsg()}>message</button> */}
+						</div>
 					</ul>
 				);
 			})}
-
-
 		</div>
 	);
 }

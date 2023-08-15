@@ -7,8 +7,10 @@ import { PrismaService } from 'prisma/prisma.service';
 export class ToblocService {
 	constructor(private readonly prisma: PrismaService) {}
 
-async findAll() { 
-	return this.prisma.toBloc.findMany({});
+async findAll(id: number){ 
+	return this.prisma.toBloc.findMany({where: {blocker_id: id},
+	include: { blocked: true }
+	});
 }
 
   async findOne(id: number) {
@@ -25,4 +27,19 @@ remove(id: number) {
 	return this.prisma.toBloc.delete({ where: { id: id } });
 }
 
+async YourBloc(blockerId: number, blockedId: number){
+	return await this.prisma.toBloc.findFirst({
+		where: {
+		  OR: [
+			{
+				blocker_id: blockerId,
+				blocked_id: blockedId,
+			},
+			{
+				blocker_id: blockedId,
+				blocked_id: blockerId,
+			},
+		  ],
+		},
+	  });}
 }

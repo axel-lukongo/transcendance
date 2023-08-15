@@ -17,7 +17,12 @@ export declare class ChanelResolver {
         private: boolean;
         interlocutor_id: number;
         directMsg: boolean;
+<<<<<<< HEAD
     }, unknown> & {})>;
+=======
+        AdminList: number[];
+    }, unknown> & {}) | Error>;
+>>>>>>> axel
     findOne(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;
@@ -28,6 +33,7 @@ export declare class ChanelResolver {
         private: boolean;
         interlocutor_id: number;
         directMsg: boolean;
+        AdminList: number[];
     }, unknown> & {}>;
     updateChanel(_updateArgs: UpdateChanelInput): Promise<Chanel>;
     removeChanel(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
@@ -40,6 +46,7 @@ export declare class ChanelResolver {
         private: boolean;
         interlocutor_id: number;
         directMsg: boolean;
+        AdminList: number[];
     }, unknown> & {}>;
     myChanels(user_id: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
@@ -51,6 +58,7 @@ export declare class ChanelResolver {
         private: boolean;
         interlocutor_id: number;
         directMsg: boolean;
+        AdminList: number[];
     }, unknown> & {})[]>;
     messages(chanel: Chanel): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;

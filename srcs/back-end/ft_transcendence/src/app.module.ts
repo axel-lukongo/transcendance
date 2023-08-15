@@ -12,9 +12,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { MailingModule } from './authentication/mailing/mailing.module';
 import { PongModule } from './pong/pong.module';
 import { UserChanelsModule } from './user-chanels/user-chanels.module';
-import { ToblocModule } from './tobloc/tobloc.module';
 import { verify } from 'jsonwebtoken';
-import { decode } from 'punycode';
 
 
 // export interface ConnectionParams {
@@ -63,7 +61,6 @@ import { decode } from 'punycode';
 		AuthenticationModule,
 		PongModule,
 		UserChanelsModule,
-		ToblocModule,
 	],
 })
 export class AppModule {
