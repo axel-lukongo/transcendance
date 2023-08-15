@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import AccepContact  from './buttons/AcceptContact'
 import RefuseContact from "./buttons/RefuseContact";
 import { CONTACTS } from '../graphql/Querys'
-import { IContacts, IProposContact } from "../../interfaces/interfaces"
+import { IContactsLink, IProposContact } from "../../interfaces/interfaces"
 
 import "../css/Contact.css"
 
@@ -39,7 +39,7 @@ export default function FriendsRequest({refetchContact, refetchProps, user}: IPr
 	return (
 		<div className="Friend_contact ">
 		{
-			contacts.map((element: IContacts) => (
+			contacts.map((element: IContactsLink) => (
                 <div key={element.id} className="card">
                     <div className="avatar"></div>
                     <p id="card_p">{element.contact.nickname.toString()}</p>

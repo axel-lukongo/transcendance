@@ -43,18 +43,9 @@ const apollo_client = new ApolloClient({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-<<<<<<< HEAD
-=======
-	<React.StrictMode>
->>>>>>> axel
-    <ApolloProvider client={apollo_client}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-    </ApolloProvider>
-<<<<<<< HEAD
-=======
-  </React.StrictMode>
-	// {console.log('sdsdf');}
->>>>>>> axel
+  <ApolloProvider client={apollo_client}>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+  </ApolloProvider>
 );

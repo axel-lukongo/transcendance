@@ -35,14 +35,14 @@ export interface Banned{
 	channel_id: number;
 	user_ban: User;
 }
-export interface IContact {
+
+export interface IContact extends Partial<User> {
 	id: number;
 	nickname: string;
-	email: string;
-	token: number;
+	state: number;
 }
 
-export interface IContacts {
+export interface IContactsLink {
 	id: number;
 	pending: boolean;
 	contact: IContact
@@ -145,6 +145,7 @@ export interface ICardChanelProps {
 
 	export interface IPrivateMessageProps {
 		user: User;
+		updateState: Partial<User>;
 		chanel_focus: channelfocus;
 		private_chan: boolean;
 		refetchChat: boolean;

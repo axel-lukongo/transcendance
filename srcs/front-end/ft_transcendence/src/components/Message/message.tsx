@@ -67,7 +67,6 @@ const Message = () => {
 					let update = response.data.changeState;
 					setUpdateState(update as User);
 				}
-				console.log(response);
             }
         })
 
@@ -129,9 +128,9 @@ const Message = () => {
 		switch(id) {
 			case __DIRECT_MESSAGE__: {
 				return (
-					<div>
-						<Direct_message
+					<Direct_message
 						user={user}
+						updateState={updateState}
 						private_chan={true}
 						refetchChat={refetchChat}
 						chanel_focus={chanel_focus}
@@ -140,14 +139,14 @@ const Message = () => {
 						handleChanelRefetch={handleChanelReftch}
 						handleChatRefetch={handleChatRefetch}
 						handleChatBox={handleChatBox}
-						/>
-					</div>
+					/>
 				);
 			}
 			case __PRIVATE_CHANEL__: {
 				return (
 					<Chanels 
 						user={user}
+						updateState={updateState}
 						private_chan={true}
 						refetchChat={refetchChat}
 						chanel_focus={chanel_focus}
@@ -163,6 +162,7 @@ const Message = () => {
 				return (
 					<Chanels 
 						user={user}
+						updateState={updateState}
 						private_chan={false}
 						refetchChat={refetchChat}
 						chanel_focus={chanel_focus}

@@ -31,6 +31,7 @@ export const GET_CONTACT = gql`
 			contact(user_id: $user_id){
 				nickname
 				id
+				state
 			}
 		}
 	}

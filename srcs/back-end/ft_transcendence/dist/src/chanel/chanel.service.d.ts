@@ -17,12 +17,8 @@ export declare class ChanelService {
         private: boolean;
         interlocutor_id: number;
         directMsg: boolean;
-<<<<<<< HEAD
-    }, unknown> & {})>;
-=======
         AdminList: number[];
-    }, unknown> & {}) | Error>;
->>>>>>> axel
+    }, unknown> & {})>;
     findOne(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         owner_id: number;

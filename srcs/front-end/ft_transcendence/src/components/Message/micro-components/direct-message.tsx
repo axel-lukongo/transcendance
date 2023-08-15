@@ -1,9 +1,8 @@
 import { gql,useQuery, useMutation } from "@apollo/client";
 import { GET_CONTACT } from "../graphql/Query";
 // import React from 'react';
-import { IContacts, IPropsChanel, IRequest } from "../../interfaces/interfaces";
-import { CREATE_CHANEL } from "../graphql/MutationsChanel";
-import {useState} from 'react';
+import { IContactsLink, IPropsChanel, IRequest } from "../../interfaces/interfaces";
+import {useEffect, useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
 import Tobloc from "./Tobloc";
@@ -28,23 +27,66 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		variables: {user_id: myuser.id}
 	});
 
+	const [states, setStates] = useState<[IContactsLink]>([{
+		id: 0,
+		pending: false,
+		contact: {
+			id: 0,
+			state: 0,
+			nickname: ""
+		}
+	}]);
+
+	useEffect(() => {
+		if (data && data.myContacts)
+			setStates(data.myContacts);
+	}, [data])
+
+	useEffect(() => {
+		const updateState = () => {
+			let update = states.map( (contacts: IContactsLink ) => {
+				if (contacts.contact.id == props.updateState.id) 
+					return ({...contacts, contact: { ...contacts.contact, state: props.updateState.state } });
+				return contacts;
+			})
+			if (update)
+				setStates(update as [IContactsLink]);
+		}
+		updateState();
+	}, [props.updateState])
+
 	const handleNewDirectMsg = (contactId: number) => {
 		setSelectedContactId(contactId);
 	}
-
+	
 	const [handleTobloc, setHandleTobloc] = useState(false);
-
+	
 	if (error){
 		return <p> an error appen  </p>
 	}
-
+	
 	if (loading){
 		return <p>loading...</p>
 	}
-
+	
 	if (!data || !data.myContacts) {
 		return <p>No contacts available.</p>;
 	}
+	
+	const findClassState = (state: number) => {
+		// console.log(state);
+		switch (state) {
+			case 1: 
+				return ('state-active');
+			case 2: 
+				return ('state-afk');
+			case 3: 
+				return ('state-disconnected');
+			default:
+				return 'error';
+		}
+	}
+
 
 	return(
 
@@ -53,13 +95,14 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				<h3>Direct Message</h3>
 			}</div>
 
-			{data.myContacts.map((contact: IContacts) => {
+			{states.map((contact: IContactsLink) => {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
 					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
 					<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
 				<div className="about">
 					<div className="name"> {contact.contact.nickname}</div>
+					<div className={findClassState(contact.contact.state)}></div>
 						{selectedContactId === contact.contact.id && < Creat_direct_msg
 						interlocutor={contact.contact}
 						handlechanelfocus={props.handleChanelFocus} />}
