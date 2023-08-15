@@ -57,7 +57,6 @@ const Pong: FC = () => {
   
     //Cleanup function
     return () => {
-      console.log('je quitte le component ');
         endPong({
           variables: {
             userId: userFromStorage?.id

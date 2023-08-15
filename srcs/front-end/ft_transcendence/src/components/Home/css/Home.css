@@ -132,11 +132,13 @@
 	border-radius: 50px;
 	flex-direction: column;
 	justify-content: center;
-  }
+	overflow: hidden;
+}
 
-  .history-match-container {
+.history-match-container {
 	position: relative; /* Position absolue à l'intérieur de history-match-box */
 	width: 100%; /* Occupe toute la largeur de history-match-box */
+	overflow: scroll;
   }
   
   .history-match-container p {

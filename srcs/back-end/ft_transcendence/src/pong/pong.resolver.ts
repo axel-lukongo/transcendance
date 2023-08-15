@@ -264,14 +264,17 @@ export class PongResolver {
   async endPong(
     @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
     try {
-      this.stopPong();
       const player = await this.player.findPlayerByUserId(userId);
       if (!player) {
         return 'Player not found';
       }
-      
       if (player.pongId)
       {
+        if (player.host)
+        {
+          this.stopPong();
+          await this.ball.removeBall(player.ballId);
+        }
         const pong = await this.findPong(player.pongId);
         if (!pong.winnerId)
         {
@@ -282,10 +285,8 @@ export class PongResolver {
             winnerId: player.opponentPlayerId,
             loserId: player.id,
           };
+          this.updateRankLevel(player.opponentPlayerId);
           await this.updatePong(updateDataPong);
-        }
-        if (player.host === true) {
-          await this.ball.removeBall(player.ballId);
         }
       }
         await this.player.removePlayer(player.id);
@@ -375,25 +376,25 @@ export class PongResolver {
             currentPong.loserId = player.userId;
           }
         }
-        if (currentPong.scoreUser1 >= 5 || currentPong.scoreUser2 >= 5)
+        if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
           this.stopPong();
           this.updateRankLevel(currentPong.winnerId);
-          
+          const DataUpdatePong : UpdatePongInput = {
+            ...currentPong
+          }
+          this.updatePong(DataUpdatePong);
+          await this.player.removePlayer(player.id);
+          await this.player.removePlayer(otherPlayer.id);
+          await this.ball.removeBall(ball.id);
         }
-        const DataUpdatePong : UpdatePongInput = {
-          ...currentPong
+        else
+        {
+          const DataUpdatePong : UpdatePongInput = {
+            ...currentPong
+          }
+          this.updatePong(DataUpdatePong);
         }
-        this.updatePong(DataUpdatePong);
-        const DataUpdateBall : UpdateBallInput = {
-          id : ball.id,
-          positionX : 50,
-          positionY : 50,
-          directionX : Math.random() < 0.5 ? 20 : -10,
-          directionY : Math.random() < 0.5 ? 10 : -20,
-        }
-        this.ball.updateBall(DataUpdateBall);
-
       }
       else
       {
