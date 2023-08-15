@@ -33,4 +33,4 @@ lerna-debug.log*
 Makefile
 package-lock.json
 
-dist
+dist/
