@@ -23,37 +23,35 @@ export default function Direct_message(props: IPrivateMessageProps) {
 
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
 
-	const {data, error, loading} = useQuery(GET_CONTACT, {
+	const {data, error, loading, refetch} = useQuery(GET_CONTACT, {
 		variables: {user_id: myuser.id}
 	});
 
-	const [states, setStates] = useState<[IContactsLink]>([{
-		id: 0,
-		pending: false,
-		contact: {
-			id: 0,
-			state: 0,
-			nickname: ""
-		}
-	}]);
+	const [states, setStates] = useState<IContactsLink[]>([]);
 
+	
 	useEffect(() => {
-		if (data && data.myContacts)
-			setStates(data.myContacts);
-	}, [data])
-
+		refetch();
+	}, [])
+	
 	useEffect(() => {
-		const updateState = () => {
+		const ChangeState = () => {
 			let update = states.map( (contacts: IContactsLink ) => {
 				if (contacts.contact.id == props.updateState.id) 
-					return ({...contacts, contact: { ...contacts.contact, state: props.updateState.state } });
+				return ({...contacts, contact: { ...contacts.contact, state: props.updateState.state } });
 				return contacts;
 			})
 			if (update)
-				setStates(update as [IContactsLink]);
+			setStates(update as [IContactsLink]);
 		}
-		updateState();
+		ChangeState();
 	}, [props.updateState])
+
+	useEffect(() => {
+		console.log("DIRECT MSG | Test => ", data);
+		if (data && data.myContacts)
+			setStates(data.myContacts);
+	}, [data])
 
 	const handleNewDirectMsg = (contactId: number) => {
 		setSelectedContactId(contactId);
@@ -99,17 +97,16 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
 					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-					<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
-				<div className="about">
-					<div className="name"> {contact.contact.nickname}</div>
-					<div className={findClassState(contact.contact.state)}></div>
-						{selectedContactId === contact.contact.id && < Creat_direct_msg
-						interlocutor={contact.contact}
-						handlechanelfocus={props.handleChanelFocus} />}
-						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
-
-						<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
-						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
+						<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
+						<div className="about">
+							<div className="name"> {contact.contact.nickname}</div>
+							<div className={findClassState(contact.contact.state)}></div>
+							{selectedContactId === contact.contact.id && < Creat_direct_msg
+							interlocutor={contact.contact}
+							handlechanelfocus={props.handleChanelFocus} />}
+							{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
+							<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
+							<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
 						</div>
 					</ul>
 				);
