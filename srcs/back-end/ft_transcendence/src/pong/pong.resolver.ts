@@ -119,10 +119,18 @@ export class PongResolver {
     }
     
     if (player.waitingRoomId != 1) {
-      const otherPlayer =  await this.player.findPlayer(player.opponentPlayerId);
-      const ball =  await this.ball.findUnique(player.ballId);
       const pong =  await this.findPong(player.pongId);
-      return { player, ball, otherPlayer, pong };
+      if (pong && pong.winnerId)
+      {
+        await this.endPong(player.userId);
+        player = await this.player.setPlayer(userId);
+      }
+      else
+      {
+        const otherPlayer =  await this.player.findPlayer(player.opponentPlayerId);
+        const ball =  await this.ball.findUnique(player.ballId);
+        return { player, ball, otherPlayer, pong };
+      }
     }
       
     // Si le joueur est dans la salle d'attente 1, récupérer tous les joueurs dans cette salle d'attente
@@ -245,6 +253,7 @@ export class PongResolver {
     };
 
     const updatedUser = await this.user.updateUser(dataUpdateUser);
+    console.log(updatedUser);
   }
 
   @Mutation(() => Boolean)
@@ -266,7 +275,7 @@ export class PongResolver {
     try {
       const player = await this.player.findPlayerByUserId(userId);
       if (!player) {
-        return 'Player not found';
+        return 'Player was aldready deleted';
       }
       if (player.pongId)
       {
@@ -278,14 +287,18 @@ export class PongResolver {
         const pong = await this.findPong(player.pongId);
         if (!pong.winnerId)
         {
+          const winnerId = player.host ? pong.userId2 : pong.userId1;
+          const loserId = player.host ? pong.userId1 : pong.userId2;
+          console.log(winnerId);
+          console.log(loserId);
           const updateDataPong: UpdatePongInput = {
             id: player.pongId,
             scoreUser1: player.host ? 0 : 5,
             scoreUser2: player.host ? 5 : 0,
-            winnerId: player.opponentPlayerId,
-            loserId: player.id,
+            winnerId: winnerId,
+            loserId: loserId,
           };
-          this.updateRankLevel(player.opponentPlayerId);
+          await this.updateRankLevel(winnerId);
           await this.updatePong(updateDataPong);
         }
       }
@@ -318,6 +331,9 @@ export class PongResolver {
       const player = await this.player.findPlayer(playerId);
 
       const otherPlayer = await this.player.findPlayer(otherPlayerId);
+      
+      if (!currentPong || ! ball || !player || !otherPlayer)
+        return this.stopPong();
     
       await this.ballMove(ball, player, otherPlayer, currentPong);
     }, 50);
@@ -380,21 +396,11 @@ export class PongResolver {
         {
           this.stopPong();
           this.updateRankLevel(currentPong.winnerId);
+        }
           const DataUpdatePong : UpdatePongInput = {
             ...currentPong
           }
           this.updatePong(DataUpdatePong);
-          await this.player.removePlayer(player.id);
-          await this.player.removePlayer(otherPlayer.id);
-          await this.ball.removeBall(ball.id);
-        }
-        else
-        {
-          const DataUpdatePong : UpdatePongInput = {
-            ...currentPong
-          }
-          this.updatePong(DataUpdatePong);
-        }
       }
       else
       {

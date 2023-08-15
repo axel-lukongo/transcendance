@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { FIND_USER } from '../graphql/Query';
 
 enum Rank {
@@ -63,28 +63,38 @@ const Xp: FC<XpProps> = ({ userId }) => {
   const [rank, setRank] = useState<Rank | null>(null);
   const [nextRank, setNextRank] = useState<Rank | null>(null);
 
-  const { data } = useQuery(FIND_USER, {
+
+  
+  const { data, refetch } = useQuery(FIND_USER, {
     variables: {
       id: userId,
     },
   });
 
-  if (data && data.findUserById && !rank) {
+  useEffect(() => {
+    refetch();
+  }, [userId, refetch]);
 
-    const user = data.findUserById;
-    const userRank = getRank(user.rank);
-    
-    if (userRank) {
-      setRank(userRank);
-      const { xpGain, max, min } = levelRanges[userRank];
-      const rangeSize = max - min;
-      const curXpPercentage = ((user.level - min) / rangeSize) * 100;
-      const xpGainPercentage = (xpGain / rangeSize) * 100;
-      const totalXp = user.level < 30 ? curXpPercentage + xpGainPercentage : curXpPercentage;
-      setTotalXpPercentage(totalXp);
-      setNextRank(getNextRank(userRank));
+  useEffect(() => {
+    if (data && data.findUserById) {
+      const user = data.findUserById;
+      console.log(user);
+      const userRank = getRank(user.rank);
+
+      if (userRank) {
+        setRank(userRank);
+        const { xpGain, max, min } = levelRanges[userRank];
+        const rangeSize = max - min;
+        const curXpPercentage = ((user.level - min) / rangeSize) * 100;
+        const xpGainPercentage = (xpGain / rangeSize) * 100;
+        const totalXp = user.level < 30 ? (curXpPercentage + xpGainPercentage).toFixed(2)
+                                        : curXpPercentage.toFixed(2);
+
+        setTotalXpPercentage(parseFloat(totalXp));
+        setNextRank(getNextRank(userRank));
+      }
     }
-  }
+  }, [data]);
 
   return (
     <div className='xp-container'>

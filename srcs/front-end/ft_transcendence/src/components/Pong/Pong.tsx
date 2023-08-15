@@ -3,6 +3,7 @@ import { Display } from './micro-components/Display';
 import { Player, User, Ball, PongI } from '../interfaces/interfaces';
 import {useMutation, } from '@apollo/client';
 import { END_PONG, JOIN_PONG } from './graphql/Mutation';
+import Xp from './micro-components/Xp';
 
 
 const Pong: FC = () => {
@@ -33,21 +34,19 @@ const Pong: FC = () => {
         console.log(response);
         const { player, otherPlayer, ball, pong } = response.data.joinPong;
   
-        if (player) {
-          // console.log('Setting player:', player);
+        if (player && otherPlayer && ball && pong) {
           setPlayer(player);
-        } 
-        if (otherPlayer) {
-          // console.log('Setting otherPlayer:', otherPlayer);
           setOtherPlayer(otherPlayer);
-        }
-        if (ball) {
-          // console.log('Setting ball:', ball);
           setBall(ball);
-        }
-        if (pong) {
-          // console.log('Setting pong:', pong);
           setPong(pong);
+          // console.log('Setting otherPlayer:', otherPlayer);
+          // console.log('Setting player:', player);
+          // console.log('Setting ball:', ball);
+          // console.log('Setting pong:', pong);
+        }
+        else
+        {
+
         }
       })
       .catch(error => {
@@ -71,27 +70,27 @@ const Pong: FC = () => {
       }
     }, []);
 
-     
-  
-  return (
-    <div>
-      {player && otherPlayer && ball && pong ? (
-        <Display
-          player={player}
-          otherPlayer={otherPlayer}
-          ball={ball}
-          pong={pong}
-          setPlayer={setPlayer}
-          setOtherPlayer={setOtherPlayer}
-          setBall={setBall}
-        />
-      ) : (
-        <div className="loading-container">
-        <h2 className="loading-text">Loading GAME...</h2>
+    return (
+      <div>
+        {pong && pong.winnerId === null ? (
+          <Display
+            player={player}
+            otherPlayer={otherPlayer}
+            ball={ball}
+            pong={pong}
+            setPlayer={setPlayer}
+            setOtherPlayer={setOtherPlayer}
+            setBall={setBall}
+          />
+        ) : (
+          <div className="loading-container">
+            <h2 className="loading-text">Loading GAME...</h2>
+          </div>
+        )}
       </div>
-      )}
-    </div>
-  );
+    );
+    
+    
 };
 export default Pong;
 

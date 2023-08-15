@@ -191,7 +191,6 @@ export const Display: FC<DisplayProps> = ({ player,
       .request({ query: PONG_UPDATED_SUBSCRIPTION, variables: { id: pong?.id } })
       .subscribe({
         next(response) {
-          if (player && victory === null) {
             if (response.data) {
               const updatedPong: PongI = response.data?.pongUpdatedSubscription as PongI;
 
@@ -202,7 +201,7 @@ export const Display: FC<DisplayProps> = ({ player,
                 setOtherPlayerScore(updatedPong.scoreUser2);
               }
               if (updatedPong.winnerId !== null) {
-                if (updatedPong.winnerId === player.id) {
+                if (updatedPong.winnerId === player?.userId) {
                   setVictory(true);
                 } 
                 else {
@@ -210,7 +209,6 @@ export const Display: FC<DisplayProps> = ({ player,
                 }
               }
             }
-          }
         },
         error(error) {
           console.error('WebSocket error:', error);
