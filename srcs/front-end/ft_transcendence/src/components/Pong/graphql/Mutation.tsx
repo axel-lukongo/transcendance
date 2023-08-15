@@ -7,15 +7,15 @@ export const START_PONG = gql`
 `;
 
 export const END_PONG = gql`
-  mutation EndPong($interupt: Boolean!, $playerId: Int!) {
-    endPong(interupt: $interupt, playerId: $playerId)
+  mutation EndPong($userId: Int!) {
+    endPong(userId: $userId)
   }
 `;
 
 
 export const JOIN_PONG = gql`
-  mutation JoinPong($id: Int!) {
-    joinPong(id: $id) {
+  mutation JoinPong($userId: Int!) {
+    joinPong(userId: $userId) {
       player {
         id
         userId

@@ -24,6 +24,11 @@ export class PlayerResolver {
     return this.playerService.findUnique(id);
   }
 
+  @Query(() => Player, { name: 'findPlayerByUserId' })
+  findPlayerByUserId(@Args('userId', { type: () => Int }) userId: number) {
+    return this.playerService.findUniqueByUserId(userId);
+  }
+
 
   @Mutation(() => Player)
   removePlayer(@Args('id', { type: () => Int }) id: number) {
@@ -45,7 +50,7 @@ export class PlayerResolver {
 
   @Mutation(() => Player)
   async setPlayer(@Args('userId', { type: () => Int }) userId: number) {
-    let player = await this.findPlayer(userId);
+    let player = await this.findPlayerByUserId(userId);
     
     if (!player) {
       // Si le joueur n'existe pas, le créer dans la salle d'attente 1

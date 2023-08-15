@@ -27,6 +27,12 @@ export class PlayerService {
 	  });
 	}
 
+	findUniqueByUserId(userId: number) {
+		return this.prisma.player.findUnique({
+		where: {userId },
+	  });
+	}
+
   	update(id: number, updatePlayerInput: UpdatePlayerInput) {
 		return this.prisma.player.update({
 		where: { id: id },

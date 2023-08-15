@@ -26,7 +26,7 @@ const Pong: FC = () => {
     if (!player && userFromStorage) {
       joinPong({
         variables: {
-          id: userFromStorage.id,
+          userId: userFromStorage.id,
         },
       })
       .then(response => {
@@ -55,29 +55,12 @@ const Pong: FC = () => {
       });
     }
   
-    // Cleanup function
+    //Cleanup function
     return () => {
-      console.log('normal ');
-      if (player && pong && pong.winnerId) {
+      console.log('je quitte le component ');
         endPong({
           variables: {
-            interupt: false,
-            playerId: player.id
-          }
-        })
-        .then(endPongResponse => {
-          console.log('endPong result:', endPongResponse.data.endPong); // Result string
-        })
-        .catch(error => {
-          console.error('Error ending pong:', error);
-        });
-      } 
-      else if (player) {
-        console.log('interupt');
-        endPong({
-          variables: {
-            interupt: true,
-            playerId: player.id
+            userId: userFromStorage?.id
           }
         })
         .then(endPongResponse => {
@@ -87,8 +70,7 @@ const Pong: FC = () => {
           console.error('Error ending pong:', error);
         });
       }
-    };
-  }, []);
+    }, []);
 
      
   

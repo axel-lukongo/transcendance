@@ -109,11 +109,10 @@ export class PongResolver {
     return pubSub.asyncIterator(PONG_UPDATE_EVENT);
   }
   
-  @Mutation(() => JoinPongResponse )
-  async joinPong(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => JoinPongResponse)
+  async joinPong(@Args('userId', { type: () => Int }) userId: number) {
 
-    let player = await this.player.setPlayer(id);
-    console.log('player created ' , player);
+    let player = await this.player.setPlayer(userId);
     if (!player)
     {
       return { player: null };
@@ -122,7 +121,7 @@ export class PongResolver {
     if (player.waitingRoomId != 1) {
       const otherPlayer =  await this.player.findPlayer(player.opponentPlayerId);
       const ball =  await this.ball.findUnique(player.ballId);
-      const pong =  await this.findPong(player.pongId)
+      const pong =  await this.findPong(player.pongId);
       return { player, ball, otherPlayer, pong };
     }
       
@@ -252,7 +251,7 @@ export class PongResolver {
   stopPong() {
     if (this.start === true) {
       this.start = false;
-      this.stop = true;
+      // this.stop = true;
       clearInterval(this.interval);
       this.interval = null;
       return true;
@@ -263,40 +262,40 @@ export class PongResolver {
 
   @Mutation(() => String)
   async endPong(
-    @Args('interupt', { type: () => Boolean }) interupt: boolean,
-    @Args('playerId', { type: () => Int }) playerId: number
-  ): Promise<string> {
+    @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
     try {
-      const player = await this.player.findPlayer(playerId);
+      this.stopPong();
+      const player = await this.player.findPlayerByUserId(userId);
       if (!player) {
         return 'Player not found';
       }
-  
-      if (interupt === false) {
+      
+      if (player.pongId)
+      {
+        const pong = await this.findPong(player.pongId);
+        if (!pong.winnerId)
+        {
+          const updateDataPong: UpdatePongInput = {
+            id: player.pongId,
+            scoreUser1: player.host ? 0 : 5,
+            scoreUser2: player.host ? 5 : 0,
+            winnerId: player.opponentPlayerId,
+            loserId: player.id,
+          };
+          await this.updatePong(updateDataPong);
+        }
         if (player.host === true) {
           await this.ball.removeBall(player.ballId);
         }
-        await this.player.removePlayer(player.id);
-        return 'Pong ended normally';
-      } else {
-        const updateDataPong: UpdatePongInput = {
-          id: player.pongId,
-          scoreUser1: player.host ? 0 : 5,
-          scoreUser2: player.host ? 5 : 0,
-          winnerId: player.opponentPlayerId,
-          loserId: player.id,
-        };
-        await this.updatePong(updateDataPong);
-        await this.player.removePlayer(player.id);
-        return 'Pong ended abnormally';
       }
+        await this.player.removePlayer(player.id);
+        return 'Pong ended';
+
     } catch (error) {
       console.error('An error occurred:', error);
       throw new Error('An error occurred during endPong');
     }
   }
-  
-  
 
   @Mutation(() => Boolean)
   async startPong(  @Args('ballId', { type: () => Int }) ballId: number,
@@ -304,7 +303,7 @@ export class PongResolver {
                         @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
                         @Args('pongId', { type: () => Int }) pongId: number) {
 
-    if (this.start === true || this.stop === true) {
+    if (this.start === true) {
       return false;
     }
     this.start = true;

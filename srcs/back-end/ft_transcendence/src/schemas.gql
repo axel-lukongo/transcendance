@@ -129,6 +129,7 @@ type Query {
   myHistoryMatch(userId: Int!): [Pong!]!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
+  findPlayerByUserId(userId: Int!): Player!
   findAllPlayersInWaitingRoom(id: Int!): [Player!]!
   findWaitingRooms: [WaitingRoom!]!
   findWaitingRoom(id: Int!): WaitingRoom!
@@ -157,9 +158,9 @@ type Mutation {
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
-  joinPong(id: Int!): JoinPongResponse!
+  joinPong(userId: Int!): JoinPongResponse!
   stopPong: Boolean!
-  endPong(interupt: Boolean!, playerId: Int!): String!
+  endPong(userId: Int!): String!
   startPong(ballId: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
   removePlayer(id: Int!): Player!
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!

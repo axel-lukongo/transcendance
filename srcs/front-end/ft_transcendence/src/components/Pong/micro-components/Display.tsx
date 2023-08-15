@@ -180,6 +180,7 @@ export const Display: FC<DisplayProps> = ({ player,
       });
   
     return () => {
+      console.log('remount component in other player move');
       subscription.unsubscribe();
     };
   }, [otherPlayer, victory, setOtherPlayer]);
