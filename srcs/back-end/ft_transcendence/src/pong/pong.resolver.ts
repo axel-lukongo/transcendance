@@ -109,6 +109,69 @@ export class PongResolver {
     return pubSub.asyncIterator(PONG_UPDATE_EVENT);
   }
   
+  private async updateRankLevel(id: number) {
+    enum Rank {
+      Bronze = "Bronze",
+      Silver = "Silver",
+      Gold = "Gold",
+    }
+  
+    const levelRanges = {
+      [Rank.Bronze]: { min: 1, max: 9, xpGain: 2 },
+      [Rank.Silver]: { min: 10, max: 19, xpGain: 1 },
+      [Rank.Gold]: { min: 20, max: 30, xpGain: 0.5 },
+    };
+  
+    const getNextRank = (rank: Rank | null): Rank | null => {
+      if (rank === Rank.Bronze) {
+        return Rank.Silver;
+      } else if (rank === Rank.Silver) {
+        return Rank.Gold;
+      } else {
+        return null;
+      }
+    };
+  
+    const getRank = (rank: string): Rank | null => {
+      switch (rank) {
+        case Rank.Bronze:
+          return Rank.Bronze;
+        case Rank.Silver:
+          return Rank.Silver;
+        case Rank.Gold:
+          return Rank.Gold;
+        default:
+          return null;
+      }
+    };
+
+    const user = await this.user.findUserById(id);
+    if (!user || user.level === 30) {
+      return;
+    }
+
+    const rank = getRank(user.rank);
+    if (!rank) {
+      return;
+    }
+    
+    const { xpGain, max, min } = levelRanges[rank];
+    const rangeSize = max - min;
+    const curXpPercentage = ((user.level - min) / rangeSize) * 100;
+    const xpGainPercentage = (xpGain / rangeSize) * 100;
+    const totalXpPercentage = curXpPercentage + xpGainPercentage;
+    const nextRank = getNextRank(rank);
+  
+    const dataUpdateUser: UpdateUserInput = {
+      id: user.id,
+      level: user.level + xpGain,
+      rank: totalXpPercentage === 100 ? nextRank?.toString() : rank?.toString(),
+    };
+
+    const updatedUser = await this.user.updateUser(dataUpdateUser);
+    // console.log(updatedUser);
+  }
+
   @Mutation(() => JoinPongResponse)
   async joinPong(@Args('userId', { type: () => Int }) userId: number) {
 
@@ -119,14 +182,15 @@ export class PongResolver {
     }
     
     if (player.waitingRoomId != 1) {
-      const pong =  await this.findPong(player.pongId);
-      if (pong && pong.winnerId)
+      const pong_tmp = await this.findPong(player.pongId);
+      if (pong_tmp && pong_tmp.winnerId)
       {
         await this.endPong(player.userId);
         player = await this.player.setPlayer(userId);
       }
       else
       {
+        const pong =  await this.findPong(player.pongId);
         const otherPlayer =  await this.player.findPlayer(player.opponentPlayerId);
         const ball =  await this.ball.findUnique(player.ballId);
         return { player, ball, otherPlayer, pong };
@@ -193,68 +257,6 @@ export class PongResolver {
     } 
   }
 
-  private async updateRankLevel(id: number) {
-    enum Rank {
-      Bronze = "Bronze",
-      Silver = "Silver",
-      Gold = "Gold",
-    }
-  
-    const levelRanges = {
-      [Rank.Bronze]: { min: 1, max: 9, xpGain: 2 },
-      [Rank.Silver]: { min: 10, max: 19, xpGain: 1 },
-      [Rank.Gold]: { min: 20, max: 30, xpGain: 0.5 },
-    };
-  
-    const getNextRank = (rank: Rank | null): Rank | null => {
-      if (rank === Rank.Bronze) {
-        return Rank.Silver;
-      } else if (rank === Rank.Silver) {
-        return Rank.Gold;
-      } else {
-        return null;
-      }
-    };
-  
-    const getRank = (rank: string): Rank | null => {
-      switch (rank) {
-        case Rank.Bronze:
-          return Rank.Bronze;
-        case Rank.Silver:
-          return Rank.Silver;
-        case Rank.Gold:
-          return Rank.Gold;
-        default:
-          return null;
-      }
-    };
-
-    const user = await this.user.findUserById(id);
-    if (!user || user.level === 30) {
-      return;
-    }
-
-    const rank = getRank(user.rank);
-    if (!rank) {
-      return;
-    }
-    
-    const { xpGain, max, min } = levelRanges[rank];
-    const rangeSize = max - min;
-    const curXpPercentage = ((user.level - min) / rangeSize) * 100;
-    const xpGainPercentage = (xpGain / rangeSize) * 100;
-    const totalXpPercentage = curXpPercentage + xpGainPercentage;
-    const nextRank = getNextRank(rank);
-  
-    const dataUpdateUser: UpdateUserInput = {
-      id: user.id,
-      level: user.level + xpGain,
-      rank: totalXpPercentage === 100 ? nextRank?.toString() : rank?.toString(),
-    };
-
-    const updatedUser = await this.user.updateUser(dataUpdateUser);
-    console.log(updatedUser);
-  }
 
   @Mutation(() => Boolean)
   stopPong() {
@@ -289,8 +291,6 @@ export class PongResolver {
         {
           const winnerId = player.host ? pong.userId2 : pong.userId1;
           const loserId = player.host ? pong.userId1 : pong.userId2;
-          console.log(winnerId);
-          console.log(loserId);
           const updateDataPong: UpdatePongInput = {
             id: player.pongId,
             scoreUser1: player.host ? 0 : 5,
@@ -322,6 +322,7 @@ export class PongResolver {
     }
     this.start = true;
     
+    const currentPong = await this.findPong(pongId);
     this.interval = setInterval(async () => {
 
       const currentPong = await this.findPong(pongId);
@@ -377,22 +378,22 @@ export class PongResolver {
         if (rightWall)
         {
           currentPong.scoreUser1 += 1;
-          if (currentPong.scoreUser1 == 5)
+          if (currentPong.scoreUser1 == 1)
           {
-            currentPong.winnerId = player.userId;
-            currentPong.loserId = otherPlayer.userId;
+            currentPong.winnerId = currentPong.userId1;
+            currentPong.loserId = currentPong.userId2;
           }
         }
         else
         {
           currentPong.scoreUser2 += 1;
-          if (currentPong.scoreUser2 == 5)
+          if (currentPong.scoreUser2 == 1)
           {
-            currentPong.winnerId = otherPlayer.userId;
-            currentPong.loserId = player.userId;
+            currentPong.winnerId = currentPong.userId2;
+            currentPong.loserId = currentPong.userId1;
           }
         }
-        if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
+        if (currentPong.scoreUser1 == 1 || currentPong.scoreUser2 == 1)
         {
           this.stopPong();
           this.updateRankLevel(currentPong.winnerId);
@@ -400,7 +401,16 @@ export class PongResolver {
           const DataUpdatePong : UpdatePongInput = {
             ...currentPong
           }
-          this.updatePong(DataUpdatePong);
+          const up = this.updatePong(DataUpdatePong);
+
+          const DataUpdateBall : UpdateBallInput = {
+            id : ball.id,
+            positionX : 50,
+            positionY : 50,
+            directionX : Math.random() < 0.5 ? 20 : -10,
+            directionY : Math.random() < 0.5 ? 10 : -20,
+          }
+          this.ball.updateBall(DataUpdateBall);
       }
       else
       {

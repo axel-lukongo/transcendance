@@ -78,7 +78,6 @@ const Xp: FC<XpProps> = ({ userId }) => {
   useEffect(() => {
     if (data && data.findUserById) {
       const user = data.findUserById;
-      console.log(user);
       const userRank = getRank(user.rank);
 
       if (userRank) {
