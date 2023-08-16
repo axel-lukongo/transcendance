@@ -6,12 +6,6 @@ export class CreatePlayerInput {
 	@Field(() => Int)
 	userId: number
 
-	@Field(() => Float)
-	positionY: number
-
-	@Field(() => Float)
-	positionX: number
-
 	@Field(() => Int)
 	waitingRoomId: number
 }

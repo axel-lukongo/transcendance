@@ -1,4 +1,15 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
+
+
+export const FIND_USER = gql`
+  query FindUserById($id: Int!) {
+    findUserById(id: $id) {
+      id
+      rank
+      level
+    }
+  }
+`;
 
 export const FIND_PLAYER = gql`
   query FindPlayer($id: Int!) {
@@ -12,6 +23,32 @@ export const FIND_PLAYER = gql`
       opponentPlayerId
       ballId
       pongId
+    }
+  }
+`;
+
+export const FIND_PONG = gql`
+  query FindPong($id: Int!) {
+    findPong(id: $id) {
+      id
+      userId1
+      scoreUser1
+      scoreUser2
+      versusDate
+      winnerId
+      loserId
+    }
+  }
+`;
+
+export const FIND_BALL = gql`
+  query FindBall($id: Int!) {
+    findBall(id: $id) {
+      id
+      positionX
+      positionY
+      directionX
+      directionY
     }
   }
 `;

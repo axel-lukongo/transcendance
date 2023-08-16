@@ -7,7 +7,6 @@ import { PubSub } from 'graphql-subscriptions';
 
 const pubSub = new PubSub();
 const PLAYER_UPDATED_EVENT = 'playerUp';
-const PLAYER_CREATE_EVENT = 'playercCreated';
 
 @Resolver(() => Player)
 export class PlayerResolver {
@@ -25,6 +24,12 @@ export class PlayerResolver {
     return this.playerService.findUnique(id);
   }
 
+  @Query(() => Player, { name: 'findPlayerByUserId' })
+  findPlayerByUserId(@Args('userId', { type: () => Int }) userId: number) {
+    return this.playerService.findUniqueByUserId(userId);
+  }
+
+
   @Mutation(() => Player)
   removePlayer(@Args('id', { type: () => Int }) id: number) {
     return this.playerService.remove(id);
@@ -34,27 +39,28 @@ export class PlayerResolver {
   /* WHEN A PLAYER IS CREATED.
     THE WS RETURN ALL PLAYER IN THE FIRST WAINTINGROOM  */
   @Query(() => [Player])
-  async findWaitingRoomPlayer(@Args('id', { type: () => Int }) id: number) {
-    return this.playerService.findWaitingRoomPlayers(id);
+  async findAllPlayersInWaitingRoom(@Args('id', { type: () => Int }) id: number) {
+    return this.playerService.findAllPlayersInWaitingRoom(id);
   }
 
   @Mutation(() => Player)
   async createPlayer(@Args('createPlayerInput') createPlayerInput: CreatePlayerInput) {
-    const newPlayer =  this.playerService.create(createPlayerInput);
-
-    pubSub.publish(PLAYER_CREATE_EVENT, {
-      listPlayerSubscription : this.findWaitingRoomPlayer((await newPlayer).waitingRoomId)
-    })
-    return newPlayer;
+    return  this.playerService.create(createPlayerInput);
   }
-  @Subscription(() => [Player],  {
-    filter: async (payload, variables) => {
-      const resolvedPayload = await payload.listPlayerSubscription;
-      return resolvedPayload.id === variables.id;
+
+  @Mutation(() => Player)
+  async setPlayer(@Args('userId', { type: () => Int }) userId: number) {
+    let player = await this.findPlayerByUserId(userId);
+    
+    if (!player) {
+      // Si le joueur n'existe pas, le créer dans la salle d'attente 1
+      const createPlayerInput: CreatePlayerInput = {
+        userId: userId,
+        waitingRoomId: 1,
+      };
+      player = await this.createPlayer(createPlayerInput);
     }
-  })
-  listPlayerSubscription() {
-    return pubSub.asyncIterator(PLAYER_CREATE_EVENT);
+    return player;
   }
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 

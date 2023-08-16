@@ -20,7 +20,7 @@ model User {
 	nickname			String		@unique
 	avatar				String?
 	rank				String		@default("Bronze")
-	level 				Float 		@default(0)
+	level 				Float 		@default(1)
 	userPong			Pong[]		@relation("User1")
 	userPong2			Pong[]		@relation("User2")
 	chanels				Users_Chanels[]
@@ -92,18 +92,19 @@ model Pong {
 
   user1        			User     	@relation("User1", fields: [userId1], references: [id])
   user2        			User     	@relation("User2", fields: [userId2], references: [id])
+  
 }
 
 model Player {
   id            	Int 			@id @default(autoincrement())
   userId        	Int 			@unique
-  positionX     	Float
-  positionY     	Float
+  positionX     	Float			@default(10)
+  positionY     	Float			@default(50)
   host				Boolean?		@default(false)
   opponentPlayerId	Int				@default(0)
   waitingRoomId 	Int
-  pongId			Int?
   ballId 			Int ?
+  pongId			Int?
   positionBall		Ball? 			@relation("Ball", fields: [ballId], references: [id])
   waitingRoom   	WaitingRoom? 	@relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
@@ -118,7 +119,7 @@ model Ball {
   id					Int      	@id @default(autoincrement())
   positionX        		Float 		@default(50)
   positionY        		Float 		@default(50)
-  directionX         	Float 		@default(20)
+  directionX         	Float 		@default(-20)
   directionY         	Float 		@default(10)
   players				Player[] 	@relation("Ball")
 }

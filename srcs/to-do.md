@@ -25,7 +25,8 @@
 - Logo du chan
 - Nom du chan 
 - Nombre de personne en ligne 
-- liste des membres du chanx§
+- liste des membres du chan
+- par default selectione a la crea
 
 ### | DIRECT MESSAGE
 

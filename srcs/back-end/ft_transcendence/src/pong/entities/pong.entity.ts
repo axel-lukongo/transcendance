@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int} from '@nestjs/graphql';
+import { User } from 'src/users/entities/user.entity';
 
 @ObjectType()
 export class Pong {
@@ -17,14 +18,20 @@ export class Pong {
   	@Field(() => Int)
 	scoreUser2: number;
 
-  	@Field(() => Int)
+ 	@Field(() => Int, {nullable: true})
 	loserId: number;
 
-  	@Field(() => Int)
+ 	@Field(() => Int, {nullable: true})
 	winnerId: number;
 
 	@Field(() => Date)
 	versusDate: Date;
+
+	@Field(() => User)
+	user1?: User;
+  
+	@Field(() => User)
+	user2?: User;
 }
 
 

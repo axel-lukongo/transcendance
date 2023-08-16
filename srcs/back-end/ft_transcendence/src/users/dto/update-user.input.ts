@@ -26,4 +26,10 @@ export class UpdateUserInput extends PartialType(User) {
 
   @Field({ nullable: true })
   avatar?: string;
+
+  @Field({ nullable: true })
+  level?: number;
+
+  @Field({ nullable: true })
+  rank?: string;
 }

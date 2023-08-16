@@ -8,6 +8,7 @@ export interface User {
     nickname: string;
     token: string;
     tfa_code?: string
+	level: number;
   }
 
 export interface Chanel {
@@ -69,13 +70,15 @@ export interface Player {
   
   export interface PongI {
 	id: number;
-	userId1: number;
-	userId2: number;
-	scoreUser1?: number;
-	scoreUser2?: number;
-	loserId?: number | null;
-	winnerId?: number | null;
-	VersusDate: string;
+	userId1?: number;
+	userId2?: number;
+	scoreUser1: number;
+	scoreUser2: number;
+	loserId?: number ;
+	winnerId?: number;
+	VersusDate?: string;
+	user1?: User;
+	user2?: User;
   }
 
 /* //////////////////////////////////////////////////////// */
