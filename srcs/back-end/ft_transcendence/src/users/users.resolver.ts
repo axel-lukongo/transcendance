@@ -35,6 +35,7 @@ export class UsersResolver {
     @Args("research", { type: () => String}) research: string,
     @Context() context
   ) {
+    console.log('context => ', context);
     return this.usersService.researchUsers(research, context.req.userId);
   }
 

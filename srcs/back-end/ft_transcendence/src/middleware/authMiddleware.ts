@@ -21,37 +21,37 @@ export class AuthMiddleware implements NestMiddleware {
 
     if (requiresTokenCheck && token /* a enlever */) {
         
-        if (!token) {
-            res.status(401).json({ message: 'Token manquant' });
-            return;
-        }
-        
-        async function check() {
+      if (!token) {
+          res.status(401).json({ message: 'Token manquant' });
+          return;
+      }
+      
+      async function check() {
+          
+        try {
+          const prisma = new PrismaService();
+          const decodedToken = verify(token, process.env.CLIENT_SECRET_BACKEND) as { userId: number };
+          const user = await prisma.user.findUnique({
+            where: {token}
+          })
+          
+          await prisma.$disconnect();
+
+          if (!user)
+            throw new Error('error');
+          
+          req.userId = decodedToken.userId;
+          next();
             
-            try {
-                const prisma = new PrismaService();
-                const decodedToken = verify(token, process.env.CLIENT_SECRET_BACKEND) as { userId: number };
-                const user = await prisma.user.findUnique({
-                    where: {token}
-                })
-                
-                await prisma.$disconnect();
-
-                if (!user)
-                    throw new Error('error');
-                
-                req.userId = decodedToken.userId;
-                next();
-                
-            } 
-            catch (error) {
-                res.status(401).json({ message: 'Token invalide' });
-            }
+        } 
+        catch (error) {
+          res.status(401).json({ message: 'Token invalide' });
         }
+      }
 
-        check();
+      check();
     }
     else
-        next();
+      next();
   }
 }

@@ -27,7 +27,10 @@ export class AuthenticationResolver {
 
 
   @Mutation(() => User)
-  async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
+  async createUser (
+    @Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput,
+    @Context() context
+  ) {
     if (this.intraLogin && this.email) {
     try {
         const createUserInput: CreateUserInput = {
@@ -35,7 +38,7 @@ export class AuthenticationResolver {
           intra_login: this.intraLogin, 
           email: this.email,
          };
-        return await this.authService.create(createUserInput);
+        let user = await this.authService.create(createUserInput);
       } 
       catch (error) {
         throw new Error("createUser Error: " + error);

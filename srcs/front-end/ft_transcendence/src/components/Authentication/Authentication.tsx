@@ -178,7 +178,7 @@ const Authentication: FC = () => {
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {sessionStorage.getItem('user') ? ( /* Need to change for back-end check */
+    {sessionStorage.getItem('user') ? ( 
       <Routes>
         <Route path="/" element={<Home  />} />
         <Route path="/pong" element={<Pong  />} />
