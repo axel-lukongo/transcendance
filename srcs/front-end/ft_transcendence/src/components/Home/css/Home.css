@@ -132,7 +132,9 @@
 	border-radius: 50px;
 	flex-direction: column;
 	justify-content: center;
-	/* overflow: hidden; */
+	overflow: auto;
+	font-size: 100%;
+
 }
 
 .history-match-container {
