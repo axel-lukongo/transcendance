@@ -44,10 +44,6 @@ const Pong: FC = () => {
           // console.log('Setting ball:', ball);
           // console.log('Setting pong:', pong);
         }
-        else
-        {
-
-        }
       })
       .catch(error => {
         console.error('Error joining pong:', error);
@@ -69,6 +65,28 @@ const Pong: FC = () => {
         });
       }
     }, []);
+
+    const handleUnload = async () => {
+      if (player && userFromStorage) {
+        try {
+          await endPong({
+            variables: {
+              userId: userFromStorage?.id,
+            },
+          });
+        } catch (error) {
+          console.error('Error ending pong:', error);
+        }
+      }
+    };
+  
+    useEffect(() => {
+      window.addEventListener('beforeunload', handleUnload);
+  
+      return () => {
+        window.removeEventListener('beforeunload', handleUnload);
+      };
+    }, [player, userFromStorage]);
 
     return (
       <div>

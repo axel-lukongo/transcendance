@@ -378,7 +378,7 @@ export class PongResolver {
         if (rightWall)
         {
           currentPong.scoreUser1 += 1;
-          if (currentPong.scoreUser1 == 1)
+          if (currentPong.scoreUser1 == 5)
           {
             currentPong.winnerId = currentPong.userId1;
             currentPong.loserId = currentPong.userId2;
@@ -387,13 +387,13 @@ export class PongResolver {
         else
         {
           currentPong.scoreUser2 += 1;
-          if (currentPong.scoreUser2 == 1)
+          if (currentPong.scoreUser2 == 5)
           {
             currentPong.winnerId = currentPong.userId2;
             currentPong.loserId = currentPong.userId1;
           }
         }
-        if (currentPong.scoreUser1 == 1 || currentPong.scoreUser2 == 1)
+        if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
           this.stopPong();
           this.updateRankLevel(currentPong.winnerId);
