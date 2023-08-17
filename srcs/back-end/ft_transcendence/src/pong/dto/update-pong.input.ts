@@ -12,9 +12,9 @@ export class UpdatePongInput extends PartialType(CreatePongInput) {
   @Field(() => Int)
   scoreUser2?: number 
 
-  @Field(() => Int)
+  @Field(() => Int,  {nullable: true})
   loserId? : number 
 
-  @Field(() => Int)
+  @Field(() => Int, {nullable: true})
   winnerId?: number
 }

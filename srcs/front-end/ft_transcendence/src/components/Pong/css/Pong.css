@@ -9,6 +9,7 @@
 	top: 25%; 
 	left: 25%; 
 }
+
   
   /* Utiliser des pourcentages pour la position des sticks */
 .red-stick {
@@ -29,29 +30,56 @@
 	left: 4%; 
  }
 
+ .score-container-box {
+	width: 50%;
+	height: 10%;
+	display: flex;
+	justify-content: space-between; /* Espacement uniforme entre les éléments */
+	align-items: center; /* Centrage vertical des éléments */
+	border-radius: 20px;
+	border: 9px solid #ffd27d;
+	background-color: rgba(41, 37, 82, 0.40);
+	position: absolute;
+	top: 12%;
+	left: 25%;
+  }
+  
+  .score-separator {
+	width: 2%;
+	height: 80%;
+	border-left: 5px dotted #ffd27d;
+  }
 
- .red-stick-score {
-	position: relative;
-	text-align: center;
-	font-size: 200%;
-	top: 1%;
-	font-family: "Orbitron";
-	font-weight: bold;
-	color: #ffd27d; 
+  .green-stick-score-host,
+  .green-stick-score-not-host,
+  .red-stick-score-host,
+  .red-stick-score-not-host {
+	  position: relative;
+	  text-align: center;
+	  font-size: 300%;
+	  font-family: "Orbitron";
+	  font-weight: bold;
+  }
+  
+  .green-stick-score-host {
+	  color: #ffd27d;
+	  left: 30%;
+  }
+  
+  .red-stick-score-host {
+	  color: #ffd27d;
+	  right: 30%;
+  }
+
+  .green-stick-score-not-host {
+	color: #ffd27d;
 	left: 30%;
 }
-
- .green-stick-score {
-	position: relative;
-	text-align: center;
-	font-size: 200%;
-	top: 1%;
-	font-family: "Orbitron";
-	font-weight: bold;
-	color: #ffd27d; 
-	left: 50%;
-}
-
+  .red-stick-score-not-host {
+	  color: #ffd27d;
+	  right: 30%;
+	}
+	
 .ball {
 	width: 3%; /* Définir la largeur de la balle */
 	height: 4%; /* Définir la hauteur de la balle */
@@ -59,5 +87,132 @@
 	border-radius: 50%; /* Rendre la balle circulaire en utilisant un rayon de 50% */
 	background-color: #ffd27d; /* Définir la couleur de fond de la balle (jaune) */
 }
+
+
+.pong-container-result-box {
+	width: 50%;
+	height: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center; /* Centrage horizontal */
+	align-items: center; /* Centrage vertical */
+	border-radius: 20px;
+	border: 9px solid #ffd27d;
+	background-color: rgba(41, 37, 82, 0.40);
+	position: absolute;
+	top: 25%; 
+	left: 25%; 
+}
+
+
+.result-text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 100%;
+	height: 50%;
+	font-size: 100%;
+	color: #ffd27d;
+	font-family: "Orbitron";
+	font-weight: bold;
+  }
+  
+  .xp-container {
+	position: relative;
+	width: 100%;
+	height: 50%;
+	display: flex;
+	align-items: center;
+  }
   
   
+  .xp-image {
+	display: flex;
+	align-items: center;
+	margin-right: 5%;
+  }
+  
+  .xp-image-left,
+  .xp-image-right {
+	width: 10%;
+	height: 25%;
+  }
+  
+  .xp-image-left {
+	margin-left: 5%; 
+  }
+  
+  .xp-image-right {
+	margin-left: 5%; 
+  }
+  
+  .xp-bar {
+	position: relative;
+	width: 60%;
+	height: 10%;
+	border: 3px solid #ffd27d;
+	border-radius: 50px;
+	transition: width 0.5s ease;
+  }
+  .xp-bar-text{
+	font-family: "Orbitron";
+	font-weight: bold;
+	font-size: 100%;
+	color: #ffd27d;
+	justify-content: center;
+	margin-left: 40%;
+  }
+  
+  .xp-bar-segment {
+	position: relative;
+	border-radius: 50px;
+	transition: width 0.5s ease;
+	height: 100%;
+	background-color: #ffd27d;
+  }
+
+  .loading-container {
+	font-family: "Orbitron";
+	font-weight: bold;
+	margin: auto;
+	max-width: 50%;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 50vh;
+	
+	&::after {
+	  animation: loading-bar-translate 2s infinite;
+	  background: #ffd27d;
+	  bottom: 5%;
+	  content: '';
+	  height: 1%;
+	  position: absolute;
+	  width: 100%;
+	}
+	
+	.loading-text {
+	  color: #ffd27d;
+	  text-align: center;
+	  position: relative;
+	  font-size: xx-large;
+	  top: 80%;
+	  text-transform: uppercase;
+	}
+  }
+  
+  @keyframes loading-bar-translate {
+	0%, 30% {
+	  transform: translateX(-96%);
+	}
+	40%, 90% {
+	  transform: translateX(0);
+	}
+	50%, 80% {
+	  transform: translateX(96%);
+	}
+	100% {
+	  transform: translateX(-96%);
+	}
+  }

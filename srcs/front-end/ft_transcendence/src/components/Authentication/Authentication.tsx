@@ -81,7 +81,8 @@ const Authentication: FC = () => {
               email,
               nickname,
               avatar,
-              tfa_code
+              tfa_code,
+              level
             };
             sessionStorage.setItem('user', JSON.stringify(user));
             window.location.reload();
@@ -147,14 +148,15 @@ const Authentication: FC = () => {
 
   useEffect(() => {
     if (AuthenticationData) {
-      const { id, token, email, nickname, avatar, tfa_code} = AuthenticationData.makeAuthentication;
+      const { id, token, email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
       const user = {
         id,
         token,
         email,
         nickname,
         avatar,
-        tfa_code
+        tfa_code,
+        level
       };
       sessionStorage.setItem('user', JSON.stringify(user));
       setCanCheck(true);
@@ -186,7 +188,7 @@ return (
         <Route path="/pong" element={<Pong  />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
-      </Routes>	
+      </Routes>
     ) : (
       <>
         {!canCheck ? (

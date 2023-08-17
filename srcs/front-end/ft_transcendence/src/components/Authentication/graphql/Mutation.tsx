@@ -9,6 +9,7 @@ mutation CreateUser($input: CreateAuthenticationInput!) {
     nickname
     avatar
     tfa_code
+    level
   }
 }
 `;

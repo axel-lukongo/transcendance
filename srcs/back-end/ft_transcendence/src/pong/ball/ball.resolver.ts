@@ -18,12 +18,12 @@ export class BallResolver {
     return this.ballService.create();
   }
 
-  @Query(() => [Ball], { name: 'Ball' })
+  @Query(() => [Ball], { name: 'findBalls' })
   findAll() {
     return this.ballService.findAll();
   }
 
-  @Query(() => Ball, { name: 'Balls' })
+  @Query(() => Ball, { name: 'findBall' })
   findUnique(@Args('id', { type: () => Int }) id: number) {
     return this.ballService.findUnique(id);
   }

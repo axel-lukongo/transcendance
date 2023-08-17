@@ -9,47 +9,12 @@ import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 
 @Injectable()
 export class PongService {
-  constructor(private readonly prisma: PrismaService,
-              private readonly player: PlayerResolver,
-              private readonly ball: BallResolver,
-              private readonly waitingRoom: WaitingRoomResolver) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createPongInput: CreatePongInput) {
-    return this.prisma.$transaction(async (prisma) => {
-      
-      // Nouvelle instance de pong
-      const { playerId1, playerId2, ...dataWithoutPlayerIds } = createPongInput;
-      const pong = await prisma.pong.create({
-        data: dataWithoutPlayerIds
+      return this.prisma.pong.create({
+        data: createPongInput
       });
-  
-      //Nouvelle instance de la waintingRoom des Players
-      const newWaitingRoom = await this.waitingRoom.createWaitingRoom();
-
-      //Nouvelle instance d'un balle pour le Pong 
-      const newBall = await this.ball.createBall();
-  
-      const playerData : UpdatePlayerInput ={
-        id : createPongInput.userId1,
-        host : true,
-        opponentPlayerId: playerId2,
-        waitingRoomId: newWaitingRoom.id,
-        ballId: newBall.id,
-        pongId: pong.id,
-      }
-      this.player.updatePlayer(playerData);
-
-      const otherPlayerData : UpdatePlayerInput ={
-        id : createPongInput.userId2,
-        opponentPlayerId: playerId1,
-        waitingRoomId: newWaitingRoom.id,
-        ballId: newBall.id,
-        pongId: pong.id,
-      }
-      this.player.updatePlayer(otherPlayerData);
-
-      return pong;
-    });
   }
   
   findAll() {
@@ -60,7 +25,7 @@ export class PongService {
     return this.prisma.pong.findUnique({ where : {id}})
   }
 
-  async findGame(userId: number) {
+  async myHistoryMatch(userId: number) {
     try {
       const games = await this.prisma.pong.findMany({
         where: {
@@ -69,21 +34,28 @@ export class PongService {
             { userId2: userId },
           ],
         },
-        orderBy: {
-          versusDate: 'desc', // Tri par date en ordre décroissant
+        include: {
+          user1: true,
+          user2: true,
         },
       });
+  
       if (games.length === 0) {
         throw new Error('No game found for the given userId.');
       }
-      return games[0];
-    } 
-    catch (error) {
+  
+      return games;
+    } catch (error) {
       throw new Error(`Error fetching game: ${error.message}`);
     }
   }
+  
+
   update(id: number, updatePongInput: UpdatePongInput) {
-    return `This action updates a #${id} pong`;
+    return this.prisma.pong.update({
+      where : {id},
+      data : updatePongInput
+    })
   }
 
   remove(id: number) {

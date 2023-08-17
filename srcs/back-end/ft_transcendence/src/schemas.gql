@@ -11,6 +11,8 @@ type User {
   intra_login: String!
   nickname: String!
   avatar: String
+  level: Int!
+  rank: String!
 }
 
 type Chanel {
@@ -62,6 +64,19 @@ type Contact {
   contact: User!
 }
 
+type Pong {
+  id: Int!
+  userId1: Int!
+  userId2: Int!
+  scoreUser1: Int!
+  scoreUser2: Int!
+  loserId: Int
+  winnerId: Int
+  versusDate: DateTime!
+  user1: User!
+  user2: User!
+}
+
 type Player {
   id: Int!
   userId: Int!
@@ -87,15 +102,11 @@ type WaitingRoom {
   waitingList: [Player!]
 }
 
-type Pong {
-  id: Int!
-  userId1: Int!
-  userId2: Int!
-  scoreUser1: Int!
-  scoreUser2: Int!
-  loserId: Int!
-  winnerId: Int!
-  versusDate: DateTime!
+type JoinPongResponse {
+  player: Player
+  otherPlayer: Player
+  ball: Ball
+  pong: Pong
 }
 
 type UsersChanels {
@@ -127,18 +138,19 @@ type Query {
   myContacts: [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
-  Pongs: [Pong!]!
-  Pong(id: Int!): Pong!
-  findGame(userId: Int!): Pong!
+  findPongs: [Pong!]!
+  findPong(id: Int!): Pong!
+  myHistoryMatch(userId: Int!): [Pong!]!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
-  findWaitingRoomPlayer(id: Int!): [Player!]!
+  findPlayerByUserId(userId: Int!): Player!
+  findAllPlayersInWaitingRoom(id: Int!): [Player!]!
   findWaitingRooms: [WaitingRoom!]!
   findWaitingRoom(id: Int!): WaitingRoom!
-  Ball: [Ball!]!
-  Balls(id: Int!): Ball!
-  chanelsRequest: [UsersChanels!]!
-  myChanels(private_chan: Boolean!): [UsersChanels!]!
+  findBalls: [Ball!]!
+  findBall(id: Int!): Ball!
+  chanelsRequest(user_id: Int!): [UsersChanels!]!
+  myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
   ChannelMembers(channel_id: Int!): [UsersChanels!]!
 }
 
@@ -166,10 +178,13 @@ type Mutation {
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
+  joinPong(userId: Int!): JoinPongResponse!
   stopPong: Boolean!
-  startPong(id: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
+  endPong(userId: Int!): String!
+  startPong(ballId: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
   removePlayer(id: Int!): Player!
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!
+  setPlayer(userId: Int!): Player!
   updatePlayer(updatePlayerInput: UpdatePlayerInput!): Player!
   createWaitingRoom: WaitingRoom!
   removeWaitingRoom(id: Int!): WaitingRoom!
@@ -193,6 +208,8 @@ input UpdateUserInput {
   intra_login: String
   nickname: String
   avatar: String
+  level: Float
+  rank: String
 }
 
 input CreateChanelInput {
@@ -259,26 +276,20 @@ input CreateAuthenticationInput {
 input CreatePongInput {
   userId1: Int!
   userId2: Int!
-  playerId1: Int!
-  playerId2: Int!
 }
 
 input UpdatePongInput {
   userId1: Int
   userId2: Int
-  playerId1: Int
-  playerId2: Int
   id: Int!
   scoreUser1: Int!
   scoreUser2: Int!
-  loserId: Int!
-  winnerId: Int!
+  loserId: Int
+  winnerId: Int
 }
 
 input CreatePlayerInput {
   userId: Int!
-  positionY: Float!
-  positionX: Float!
   waitingRoomId: Int!
 }
 
@@ -324,7 +335,6 @@ type Subscription {
   addmessage(channel_id: Int!): Message!
   changeState: User!
   pongUpdatedSubscription(id: Int!): Pong!
-  listPlayerSubscription: [Player!]!
   playerUpdatedSubscription(id: Int!): Player!
   ballUpdatedSubscription(id: Int!): Ball!
 }

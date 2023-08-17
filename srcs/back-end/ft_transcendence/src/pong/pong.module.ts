@@ -11,6 +11,9 @@ import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 import { WaitingRoomService } from './waiting-room/waiting-room.service';
 import { BallResolver } from './ball/ball.resolver';
 import { BallService } from './ball/ball.service';
+import { UsersResolver } from 'src/users/users.resolver';
+import { UsersService } from 'src/users/users.service';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   providers: [PongResolver, 
@@ -21,8 +24,10 @@ import { BallService } from './ball/ball.service';
               WaitingRoomService,
               BallResolver,
               BallService,
+              UsersResolver,
+              UsersService,
               PrismaService],
   
-  imports: [PlayerModule, WaitingRoomModule, BallModule]
+  imports: [PlayerModule, WaitingRoomModule, UsersModule, BallModule]
 })
 export class PongModule {}

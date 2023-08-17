@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { getMainDefinition } from '@apollo/client/utilities';
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider, ApolloLink} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { onError } from '@apollo/client/link/error';
 import App from './App';
@@ -42,6 +39,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       console.log('Erreur GraphQL :', error.message);
     });
   }
+  
   if (networkError) {
     // Gérer les erreurs réseau ici
     if (networkError.message.includes('401')) {

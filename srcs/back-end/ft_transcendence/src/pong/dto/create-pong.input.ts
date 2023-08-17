@@ -8,9 +8,4 @@ export class CreatePongInput {
   @Field(() => Int)
   userId2: number;
 
-  @Field(() => Int)
-  playerId1: number;
-
-  @Field(() => Int)
-  playerId2: number;
 }

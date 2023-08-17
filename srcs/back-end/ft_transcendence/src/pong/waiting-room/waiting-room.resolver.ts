@@ -1,15 +1,10 @@
 import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
 import { WaitingRoomService } from './waiting-room.service';
 import { WaitingRoom } from './entities/waiting-room.entity';
-// import { CreateWaitingRoomInput } from './dto/create-waiting-room.input';
-import { UpdateWaitingRoomInput } from './dto/update-waiting-room.input';
-import { Player } from '../player/entities/player.entity';
-import { PlayerResolver } from '../player/player.resolver';
 
 @Resolver(() => WaitingRoom)
 export class WaitingRoomResolver {
-  constructor(private readonly waitingRoomService: WaitingRoomService,
-              private readonly playerResolver: PlayerResolver) {}
+  constructor(private readonly waitingRoomService: WaitingRoomService,) {}
 
   @Mutation(() => WaitingRoom)
   createWaitingRoom() {

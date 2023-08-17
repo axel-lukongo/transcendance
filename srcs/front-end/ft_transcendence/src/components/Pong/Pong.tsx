@@ -1,49 +1,121 @@
-import { FC, useState } from 'react';
-import { MatchMaking } from './micro-components/MatchMaking';
+import { FC, useEffect, useState } from 'react';
 import { Display } from './micro-components/Display';
-import { Player } from '../interfaces/interfaces';
-
+import { Player, User, Ball, PongI } from '../interfaces/interfaces';
+import {useMutation, } from '@apollo/client';
+import { END_PONG, JOIN_PONG } from './graphql/Mutation';
+import Xp from './micro-components/Xp';
 
 
 const Pong: FC = () => {
 
-  const playerFromStorageString = sessionStorage.getItem('player');
-  const otherPlayerFromStorageString = sessionStorage.getItem('otherPlayer');
+  const userFromStorageString = sessionStorage.getItem('user');
+  let userFromStorage: User | null = null;
+  if (userFromStorageString && userFromStorageString !== 'undefined')
+    userFromStorage = JSON.parse(userFromStorageString);
 
-  let playerFromStorage = null;
-  let otherPlayerFromStrorage = null;
-  
-  if (playerFromStorageString && playerFromStorageString !== 'undefined')
-    playerFromStorage = JSON.parse(playerFromStorageString);
+  const [player, setPlayer] = useState<Player | null>(null);
+  const [otherPlayer, setOtherPlayer] = useState<Player | null>(null);
+  const [ball, setBall]= useState<Ball | null>(null); 
+  const [pong, setPong] = useState<PongI | null>(null);
 
-  if (otherPlayerFromStorageString && otherPlayerFromStorageString !== 'undefined')
-    otherPlayerFromStrorage = JSON.parse(otherPlayerFromStorageString);
 
-  const [player, setPlayer] = useState<Player | null>(playerFromStorage);
-  const [otherPlayer, setOtherPlayer] =useState<Player | null>(otherPlayerFromStrorage);
-  
+  const [joinPong] = useMutation(JOIN_PONG);
+  const [endPong] = useMutation(END_PONG);
   
   
+  useEffect(() => {
+    if (!player && userFromStorage) {
+      joinPong({
+        variables: {
+          userId: userFromStorage.id,
+        },
+      })
+      .then(response => {
+        console.log(response);
+        const { player, otherPlayer, ball, pong } = response.data.joinPong;
+  
+        if (player && otherPlayer && ball && pong) {
+          setPlayer(player);
+          setOtherPlayer(otherPlayer);
+          setBall(ball);
+          setPong(pong);
+          // console.log('Setting otherPlayer:', otherPlayer);
+          // console.log('Setting player:', player);
+          // console.log('Setting ball:', ball);
+          // console.log('Setting pong:', pong);
+        }
+      })
+      .catch(error => {
+        console.error('Error joining pong:', error);
+      });
+    }
+  
+    //Cleanup function
+    return () => {
+        endPong({
+          variables: {
+            userId: userFromStorage?.id
+          }
+        })
+        .then(endPongResponse => {
+          console.log('endPong result:', endPongResponse.data.endPong); // Result string
+        })
+        .catch(error => {
+          console.error('Error ending pong:', error);
+        });
+      }
+    }, []);
 
-  return (
-    <div>
-      {player && otherPlayer ?(
-        <Display
-          player={player}
-          otherPlayer={otherPlayer}
-          setPlayer={setPlayer}
-          setOtherPlayer={setOtherPlayer}
-        />
-      ) : (
-        <MatchMaking
-          player={player}
-          otherPlayer={otherPlayer}
-          setPlayer={setPlayer}
-          setOtherPlayer={setOtherPlayer}
-        />
-      )}
-    </div>
-  );
+    const handleUnload = async () => {
+      if (player && userFromStorage) {
+        try {
+          await endPong({
+            variables: {
+              userId: userFromStorage?.id,
+            },
+          });
+        } catch (error) {
+          console.error('Error ending pong:', error);
+        }
+      }
+    };
+  
+    useEffect(() => {
+      window.addEventListener('beforeunload', handleUnload);
+  
+      return () => {
+        window.removeEventListener('beforeunload', handleUnload);
+      };
+    }, [player, userFromStorage]);
+
+    return (
+      <div>
+        {pong && pong.winnerId === null ? (
+          <Display
+            player={player}
+            otherPlayer={otherPlayer}
+            ball={ball}
+            pong={pong}
+            setPlayer={setPlayer}
+            setOtherPlayer={setOtherPlayer}
+            setBall={setBall}
+          />
+        ) : (
+          <div className="loading-container">
+            <h2 className="loading-text">Loading GAME...</h2>
+          </div>
+        )}
+      </div>
+    );
+    
+    
 };
 export default Pong;
 
+  
+
+      // useEffect(() => {
+      //   return () => {
+  
+      // }, [player, otherPlayer, victory, removeBall, stopPong, updatePong, removePlayer]);
+      

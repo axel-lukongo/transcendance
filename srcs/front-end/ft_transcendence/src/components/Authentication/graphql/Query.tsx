@@ -9,6 +9,7 @@ export const CHECK_2AF = gql`
       nickname
       avatar
       tfa_code
+      level
     }
   }
 `;
@@ -22,6 +23,7 @@ export const MAKE_AUTH= gql`
       nickname
       avatar
       tfa_code
+      level
     }
   }
 `;
