@@ -40,10 +40,8 @@ export class MessagesResolver {
 		if (isMuted === true) {
 			return (' you are muted');
 		}
-		// console.log('je passe ici', isMuted)
 		
 		const new_message = this.msgService.create(createMsgInput);
-		// console.log(" c'est ici ====>>> ", new_message)
 		pubSub.publish(NEW_MSG, {
 			addmessage: new_message,
 		});

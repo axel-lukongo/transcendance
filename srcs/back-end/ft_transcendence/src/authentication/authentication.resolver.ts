@@ -8,6 +8,7 @@ import { MailingService } from './mailing/mailing.service';
 import { generateTwoFactorCode } from 'src/utils/auth.utils';
 import axios, { AxiosResponse } from 'axios';
 import { socket } from 'src/main';
+import { Res } from '@nestjs/common';
 
 
 
@@ -29,7 +30,6 @@ export class AuthenticationResolver {
   @Mutation(() => User)
   async createUser (
     @Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput,
-    @Context() context
   ) {
     if (this.intraLogin && this.email) {
     try {
@@ -38,7 +38,7 @@ export class AuthenticationResolver {
           intra_login: this.intraLogin, 
           email: this.email,
          };
-        let user = await this.authService.create(createUserInput);
+        return await this.authService.create(createUserInput);
       } 
       catch (error) {
         throw new Error("createUser Error: " + error);

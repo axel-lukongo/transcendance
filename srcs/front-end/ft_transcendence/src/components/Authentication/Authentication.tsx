@@ -84,12 +84,13 @@ const Authentication: FC = () => {
               tfa_code
             };
             sessionStorage.setItem('user', JSON.stringify(user));
+            window.location.reload();
           })
           .catch(error => {
             console.log(error);
             window.alert('Nickname is already in use. Please choose a different nickname.');
           });
-      };
+        };
     } else {
       // No avatar file selected
       createUser({
@@ -97,22 +98,23 @@ const Authentication: FC = () => {
           input: user_info
         }
       })
-        .then(response => {
-          const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
-          const user = {
-            id,
-            token,
-            email,
-            nickname,
-            avatar,
-            tfa_code
-          };
-          sessionStorage.setItem('user', JSON.stringify(user));
-        })
-        .catch(error => {
-          console.log(error);
-          window.alert('Nickname is already in use. Please choose a different nickname.');
-        });
+      .then(response => {
+        const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
+        const user = {
+          id,
+          token,
+          email,
+          nickname,
+          avatar,
+          tfa_code
+        };
+        sessionStorage.setItem('user', JSON.stringify(user));
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+        window.alert('Nickname is already in use. Please choose a different nickname.');
+      });
     }
   };
   

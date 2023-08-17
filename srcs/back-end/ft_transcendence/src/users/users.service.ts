@@ -39,7 +39,6 @@ export class UsersService {
   }
 
   researchUsers(research: string, user_id: number) {
-    console.log(user_id);
     let users = this.prisma.user.findMany({
       where: {
         nickname: {

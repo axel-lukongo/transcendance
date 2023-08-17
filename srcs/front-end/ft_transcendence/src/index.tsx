@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider, split} from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider, ApolloLink} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { onError } from '@apollo/client/link/error';
 import App from './App';
 
 const userString = sessionStorage.getItem('user');
@@ -34,8 +35,33 @@ export const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {
   }
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    // Gérer les erreurs GraphQL ici
+    graphQLErrors.forEach(error => {
+      console.log('Erreur GraphQL :', error.message);
+    });
+  }
+  if (networkError) {
+    // Gérer les erreurs réseau ici
+    if (networkError.message.includes('401')) {
+      sessionStorage.removeItem('user');
+      window.location.reload();
+      console.log('erreur 401');
+    }
+    else if (networkError.message.includes('404'))
+      console.log('erreur 404');
+    else if (networkError.message.includes('201'))
+      window.location.reload();
+
+    console.log('Erreur réseau :', networkError);
+
+  }
+});
+
+
 const apollo_client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: ApolloLink.from([errorLink, authLink, httpLink]),
   cache: new InMemoryCache()
 });
 
