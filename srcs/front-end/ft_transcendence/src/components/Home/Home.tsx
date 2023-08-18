@@ -7,9 +7,11 @@ import AvatarBox from './micro-components/AvatarBox';
 import HistoryMatch from './micro-components/HistoryMatch';
 
 
-const Home = () => {
 
+const Home = () => {
+  
   const user = JSON.parse(sessionStorage.getItem('user') || '');
+
 
   return (
     <div className='Home'>

@@ -8,7 +8,7 @@ export interface User {
     nickname: string;
     token: string;
     tfa_code?: string;
-	state: number;
+	state?: number;
 	level: number;
 }
 
@@ -148,7 +148,6 @@ export interface ICardChanelProps {
 
 	export interface IPrivateMessageProps {
 		user: User;
-		updateState: Partial<User>;
 		chanel_focus: channelfocus;
 		private_chan: boolean;
 		refetchChat: boolean;

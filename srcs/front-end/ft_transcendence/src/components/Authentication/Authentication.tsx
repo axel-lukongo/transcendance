@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, useContext } from 'react';
 import { Route, Routes} from 'react-router-dom';
 
 import { useLazyQuery, useMutation } from '@apollo/client';
@@ -13,6 +13,7 @@ import Home from '../Home/Home';
 import Pong from '../Pong/Pong';
 import Message from '../Message/message';
 import Contact from '../Contact/Contact';
+import { WebSocketContext } from '../../WebSocketProvider';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -27,6 +28,8 @@ const Authentication: FC = () => {
   const [userExist, setUserExist] = useState(true);
 
   const [user2fa, setUser2fa] = useState(false);
+
+  const wsContext = useContext(WebSocketContext);
   
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -85,85 +88,88 @@ const Authentication: FC = () => {
               level
             };
             sessionStorage.setItem('user', JSON.stringify(user));
-            window.location.reload();
+            wsContext?.updateUser(user);
           })
           .catch(error => {
             console.log(error);
             window.alert('Nickname is already in use. Please choose a different nickname.');
           });
         };
-    } else {
-      // No avatar file selected
-      createUser({
-        variables: {
-          input: user_info
-        }
+      } else {
+        // No avatar file selected
+        createUser({
+          variables: {
+            input: user_info
+          }
+        })
+        .then(response => {
+          const { id, token, email, nickname, avatar, tfa_code, level} = response.data.createUser;
+          const user = {
+            id,
+            token,
+            email,
+            nickname,
+            avatar,
+            tfa_code,
+            level
+          };
+          sessionStorage.setItem('user', JSON.stringify(user));
+          wsContext?.updateUser(user);
+        })
+        .catch(error => {
+          console.log(error);
+          window.alert('Nickname is already in use. Please choose a different nickname.');
+        });
+      }
+    };
+    
+    
+    const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const { code } = e.currentTarget;
+      
+      checkTwoAuthenticationFactor({ variables: { input: code.value } })
+      .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
+        sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
       })
-      .then(response => {
-        const { id, token, email, nickname, avatar, tfa_code} = response.data.createUser;
+      .catch((error: any) => {
+        window.alert('The code you entered does not match the one sent to the email address');
+      });
+    };
+    
+    /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
+    /*                      USE EFFECT                        */
+    /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
+    
+    useEffect(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCode = urlParams.get('code');
+      if (urlCode) {
+        makeAuthenticationQuery({ variables: { code: urlCode } });
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }, [makeAuthenticationQuery]);
+    
+    useEffect(() => {
+      if (AuthenticationData) {
+        const { id, token, email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
         const user = {
           id,
           token,
           email,
           nickname,
           avatar,
-          tfa_code
+          tfa_code,
+          level
         };
         sessionStorage.setItem('user', JSON.stringify(user));
-        window.location.reload();
-      })
-      .catch(error => {
-        console.log(error);
-        window.alert('Nickname is already in use. Please choose a different nickname.');
-      });
-    }
-  };
-  
- 
-  const handleTfa = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { code } = e.currentTarget;
-  
-    checkTwoAuthenticationFactor({ variables: { input: code.value } })
-    .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
-    })
-    .catch((error: any) => {
-      window.alert('The code you entered does not match the one sent to the email address');
-    });
-  };
+        wsContext?.updateUser(user);
 
-/*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
-/*                      USE EFFECT                        */
-/*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlCode = urlParams.get('code');
-    if (urlCode) {
-      makeAuthenticationQuery({ variables: { code: urlCode } });
-      window.history.replaceState(null, '', window.location.pathname);
-    }
-  }, [makeAuthenticationQuery]);
-
-  useEffect(() => {
-    if (AuthenticationData) {
-      const { id, token, email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
-      const user = {
-        id,
-        token,
-        email,
-        nickname,
-        avatar,
-        tfa_code,
-        level
-      };
-      sessionStorage.setItem('user', JSON.stringify(user));
-      setCanCheck(true);
-    }
-  }, [AuthenticationData]);
-
-  useEffect(() => {
+        setCanCheck(true);
+      }
+    }, [AuthenticationData]);
+    
+    useEffect(() => {
     if (AuthenticationError) {
         setCanCheck(true);
         if (AuthenticationError.message === "To complete authentication, 2FA verification is required")

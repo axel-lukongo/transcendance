@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider, ApolloLink} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { onError } from '@apollo/client/link/error';
 import App from './App';
-
-const userString = sessionStorage.getItem('user');
-const user = userString ? JSON.parse(userString) : null;
-const token = user? user.token : null;
+import { WebSocketProvider } from './WebSocketProvider'
 
 const authLink = setContext((_, { headers }) => {
+  
+  const userString = sessionStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const token = user? user.token : null;
   return {
     headers: {
       ...headers,
@@ -20,17 +20,20 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+
+function recupToken() {
+  const userString = sessionStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const token = user? user.token : null;
+  console.log('token : ', token);
+  return token;
+}
+
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',
-   credentials: 'include'
- });
-
-export const wsClient = new SubscriptionClient('ws://localhost:4000/graphql', {
-  reconnect: true,
-  connectionParams: {
-    headers: token
-  }
+  credentials: 'include'
 });
+
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -66,8 +69,10 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <ApolloProvider client={apollo_client}>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <BrowserRouter>
+      <WebSocketProvider>
+        <App />
+      </WebSocketProvider>
+    </BrowserRouter>
   </ApolloProvider>
 );

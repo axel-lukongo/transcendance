@@ -1,3 +1,4 @@
+import React, {useContext} from "react";
 import { gql,useQuery, useMutation } from "@apollo/client";
 import { GET_CONTACT } from "../graphql/Query";
 // import React from 'react';
@@ -6,6 +7,10 @@ import {useEffect, useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
 import Tobloc from "./Tobloc";
+import { User } from "../../interfaces/interfaces";
+import { SUB_STATE } from "../../Contact/graphql/Querys";
+import { WebSocketContext } from "../../../WebSocketProvider";
+
 
 /*
 dans ce composant j'affiche la liste de mes contact sur le champs de gauche, et chaque contact possedes des boutons
@@ -20,8 +25,10 @@ Ces fonctions ce declanche lorsque un boolean specifique passe a true.
 */
 export default function Direct_message(props: IPrivateMessageProps) {
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
-
+	const wsContext = useContext(WebSocketContext);
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
+	const [updateState, setUpdateState] = useState<Partial<User>>({})
+
 
 	const {data, error, loading, refetch} = useQuery(GET_CONTACT, {
 		variables: {user_id: myuser.id}
@@ -35,20 +42,40 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	}, [])
 	
 	useEffect(() => {
-		const ChangeState = () => {
-			let update = states.map( (contacts: IContactsLink ) => {
-				if (contacts.contact.id == props.updateState.id) 
-				return ({...contacts, contact: { ...contacts.contact, state: props.updateState.state } });
-				return contacts;
+		if (wsContext?.wsClient) {
+			let state_sub = wsContext.wsClient.request({query: SUB_STATE}, ).subscribe({
+				next(response) {
+					if (response.data) {
+						let update = response.data.changeState;
+						setUpdateState(update as User);
+					}
+				},
+				error(e) {
+					console.log('error state: ', e);
+				}
 			})
-			if (update)
-			setStates(update as [IContactsLink]);
+			return () => {
+				state_sub.unsubscribe();
+			}
 		}
-		ChangeState();
-	}, [props.updateState])
+    }, [wsContext]);
 
 	useEffect(() => {
-		console.log("DIRECT MSG | Test => ", data);
+		const ChangeState = () => {
+			let update = states.map( (contacts: IContactsLink ) => {
+				if (contacts.contact.id == updateState.id){
+					return ({...contacts, contact: { ...contacts.contact, state: updateState.state } });
+				} 
+				return contacts;
+			})
+			if (update) {
+				setStates(update as [IContactsLink]);
+			}
+		}
+		ChangeState();
+	}, [updateState])
+
+	useEffect(() => {
 		if (data && data.myContacts)
 			setStates(data.myContacts);
 	}, [data])

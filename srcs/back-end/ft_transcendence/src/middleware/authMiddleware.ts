@@ -15,15 +15,16 @@ export class AuthMiddleware implements NestMiddleware {
     const isUserCreationRequest = req.body?.operationName === 'CreateUser';
     const isMakeAuthenticationRequest = req.body?.operationName === 'MakeAuthentication';
     const isCheckTwoAuthenticationFactorRequest = req.body?.operationName === 'CheckTwoAuthenticationFactor';
-
+    
     // Vérifie si la requête doit être vérifiée avec le jeton
     const requiresTokenCheck = !(isUserCreationRequest || isMakeAuthenticationRequest || isCheckTwoAuthenticationFactorRequest);
+    
+    if (requiresTokenCheck ) {
 
-    if (requiresTokenCheck && token /* a enlever */) {
-        
+      
       if (!token) {
-          res.status(401).json({ message: 'Token manquant' });
-          return;
+        res.status(401).json({ message: 'Token manquant' });
+        return;
       }
       
       async function check() {

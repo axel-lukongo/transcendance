@@ -3,7 +3,6 @@ import FriendsRequest from "./micro-components/FriendsRequest"
 import ListContact from "./micro-components/ListContact";
 import AddContact from "./micro-components/AddContact";
 import { SUB_STATE } from "./graphql/Querys";
-import { wsClient } from "../..";
 import './css/Contact.css'
 import { MyBlockedList } from "./micro-components/ListBlocked";
 

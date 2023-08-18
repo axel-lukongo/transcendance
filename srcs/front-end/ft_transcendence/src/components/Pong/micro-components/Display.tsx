@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useState,   } from 'react';
+import React, { FC, useContext, useEffect, useState,   } from 'react';
 import { useMutation } from '@apollo/client';
 import { Ball, Player, PongI } from '../../interfaces/interfaces';
 import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, START_PONG, PONG_UPDATED_SUBSCRIPTION} from '../graphql/Mutation';
 import Xp from './Xp';
 import '../css/Pong.css'
-import { wsClient } from '../../..';
+import { WebSocketContext } from '../../../WebSocketProvider'; 
 
 
 interface DisplayProps {
@@ -32,6 +32,7 @@ export const Display: FC<DisplayProps> = ({ player,
   
   const otherPlayerStickClass = player?.host ? "red-stick" : "green-stick";
   const otherPlayerScoreClass = player?.host ? "red-stick-score-host" : "red-stick-score-not-host";
+  const wsContext = useContext(WebSocketContext);
   
   const [playerScore, setPlayerScore] = useState(() => {
     if (player) {
@@ -89,7 +90,9 @@ export const Display: FC<DisplayProps> = ({ player,
 
   // BALL MOVE
   useEffect(() => {
-    const subscription = wsClient
+ 
+    if (wsContext?.wsClient) {
+      const subscription = wsContext.wsClient
       .request({ query: BALL_UPDATED_SUBSCRIPTION, variables: { id: ball?.id } })
       .subscribe({
         next(response) {
@@ -105,9 +108,10 @@ export const Display: FC<DisplayProps> = ({ player,
         },
       });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
   }, [ball, victory, setBall]);
 
 /*
@@ -163,60 +167,64 @@ export const Display: FC<DisplayProps> = ({ player,
 
   //OTHER PLAYER MOVE
   useEffect(() => {
-    const subscription = wsClient
-    .request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: { id: otherPlayer?.id } })
-    .subscribe({
-        next(response) {
-            if (response.data) {
-              const updatedOtherPlayer: Player = response.data?.playerUpdatedSubscription as Player;
-              updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
-              setOtherPlayer(updatedOtherPlayer);
-            }
-        },
-        error(error) {
-          console.error('WebSocket error:', error);
-        },
-      });
-  
-    return () => {
-      subscription.unsubscribe();
-    };
+    if (wsContext?.wsClient) {
+      const subscription = wsContext.wsClient
+      .request({ query: PLAYER_UPDATED_SUBSCRIPTION, variables: { id: otherPlayer?.id } })
+      .subscribe({
+          next(response) {
+              if (response.data) {
+                const updatedOtherPlayer: Player = response.data?.playerUpdatedSubscription as Player;
+                updatedOtherPlayer.positionY = Math.min(updatedOtherPlayer.positionY, 75);
+                setOtherPlayer(updatedOtherPlayer);
+              }
+          },
+          error(error) {
+            console.error('WebSocket error:', error);
+          },
+        });
+    
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
   }, [otherPlayer, victory, setOtherPlayer]);
   
   
 
   useEffect(() => {
-    const subscription = wsClient
-      .request({ query: PONG_UPDATED_SUBSCRIPTION, variables: { id: pong?.id } })
-      .subscribe({
-        next(response) {
-            if (response.data) {
-              const updatedPong: PongI = response.data?.pongUpdatedSubscription as PongI;
-
-              if (updatedPong.scoreUser1 && updatedPong.scoreUser1 !== playerScore) {
-                setPlayerScore(updatedPong.scoreUser1);
-              } 
-              else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore) {
-                setOtherPlayerScore(updatedPong.scoreUser2);
-              }
-              if (updatedPong.winnerId !== null) {
-                if (updatedPong.winnerId === player?.userId) {
-                  setVictory(true);
+    if (wsContext?.wsClient) {
+      const subscription = wsContext.wsClient
+        .request({ query: PONG_UPDATED_SUBSCRIPTION, variables: { id: pong?.id } })
+        .subscribe({
+          next(response) {
+              if (response.data) {
+                const updatedPong: PongI = response.data?.pongUpdatedSubscription as PongI;
+  
+                if (updatedPong.scoreUser1 && updatedPong.scoreUser1 !== playerScore) {
+                  setPlayerScore(updatedPong.scoreUser1);
                 } 
-                else {
-                  setVictory(false);
+                else if (updatedPong.scoreUser2 && updatedPong.scoreUser2 !== otherPlayerScore) {
+                  setOtherPlayerScore(updatedPong.scoreUser2);
+                }
+                if (updatedPong.winnerId !== null) {
+                  if (updatedPong.winnerId === player?.userId) {
+                    setVictory(true);
+                  } 
+                  else {
+                    setVictory(false);
+                  }
                 }
               }
-            }
-        },
-        error(error) {
-          console.error('WebSocket error:', error);
-        },
-      });
+          },
+          error(error) {
+            console.error('WebSocket error:', error);
+          },
+        });
+        return () => {
+          subscription.unsubscribe();
+        };
+    }
   
-    return () => {
-      subscription.unsubscribe();
-    };
   }, [player, , playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
   
   return (

@@ -9,8 +9,6 @@ import ChatBox from './micro-components/Box/ChatBox';
 import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
-import { wsClient } from '../..';
-import { SUB_STATE } from '../Contact/graphql/Querys';
 import Param_Chan from './micro-components/forms/chan_param';
 
 /* CSS */
@@ -55,25 +53,12 @@ const Message = () => {
 
 	const [is_chanel] = useState(true);
 
-	const [updateState, setUpdateState] = useState<Partial<User>>({})
 
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effect */
 	
-    useEffect(() => {
-        let state_sub = wsClient.request({query: SUB_STATE}, ).subscribe({
-            next(response) {
-				if (response.data) {
-					let update = response.data.changeState;
-					setUpdateState(update as User);
-				}
-            }
-        })
+	
 
-		return () => {
-			state_sub.unsubscribe();
-		}
-    }, []);
 
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
@@ -130,7 +115,6 @@ const Message = () => {
 				return (
 					<Direct_message
 						user={user}
-						updateState={updateState}
 						private_chan={true}
 						refetchChat={refetchChat}
 						chanel_focus={chanel_focus}
@@ -146,7 +130,6 @@ const Message = () => {
 				return (
 					<Chanels 
 						user={user}
-						updateState={updateState}
 						private_chan={true}
 						refetchChat={refetchChat}
 						chanel_focus={chanel_focus}
@@ -162,7 +145,6 @@ const Message = () => {
 				return (
 					<Chanels 
 						user={user}
-						updateState={updateState}
 						private_chan={false}
 						refetchChat={refetchChat}
 						chanel_focus={chanel_focus}
