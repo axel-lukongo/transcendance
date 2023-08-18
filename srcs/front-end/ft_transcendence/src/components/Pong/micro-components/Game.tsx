@@ -99,6 +99,7 @@ interface GameProps {
               otherPlayer={otherPlayer}
               ball={ball}
               pong={pong}
+              pongMap={pongMap}
               setPlayer={setPlayer}
               setOtherPlayer={setOtherPlayer}
               setBall={setBall}

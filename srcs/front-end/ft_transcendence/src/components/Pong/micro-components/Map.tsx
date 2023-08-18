@@ -3,6 +3,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import des st
 import beachImage from '/ft_transcendence/src/image/beach_map.jpg';
 import footballImage from '/ft_transcendence/src/image/football_map.jpg';
 import plateformImage from '/ft_transcendence/src/image/plateform_map.jpg';
+import defaultImage from '/ft_transcendence/src/image/default_map.png';
 import { useState } from 'react';
 
 
@@ -22,6 +23,8 @@ interface MapProps {
         setMapName('Football')
       else if (path === plateformImage)
         setMapName('Plateform')
+        else if (path === defaultImage)
+        setMapName('Default')
       setSelectedMap(path);
     };
   
@@ -38,6 +41,9 @@ interface MapProps {
         </div>
         <div className=" pong-container-box map-select">
           <Carousel className="carousel-container" showThumbs={false}>
+          <div className="carousel-slide" onClick={() => handleMapSelect(defaultImage)}>
+              <img src={defaultImage} alt="Default Map" />
+            </div>
             <div className="carousel-slide" onClick={() => handleMapSelect(beachImage)}>
               <img src={beachImage} alt="Beach Map" />
             </div>

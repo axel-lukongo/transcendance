@@ -10,6 +10,11 @@
 	left: 25%; 
 }
 
+.pong-container-box img {
+	width: 100%;
+	height: 100%;
+}
+
 .pong-container-box.map-select {
 	flex-direction: column;
 }
@@ -273,11 +278,16 @@
   #select-map {
 	font-size: 100%;
 	justify-content: center;
+	color: #ffd27d;
+	font-family: "Orbitron";
 	margin: auto;
   }
   
   .selected-map-name {
 	font-size: 1.2em;
+	color: #ffd27d;
+	font-family: "Orbitron";
+	font-weight:bold;
 	margin-bottom: 5px;
   }
   
@@ -285,6 +295,7 @@
 	background-color: unset;
 	color: #ffd27d;
 	font-family: "Orbitron";
+	font-weight:bold;
 	border: 2px solid #ffd27d;
 	border-radius: 5px;
 	padding: 5px 10px;

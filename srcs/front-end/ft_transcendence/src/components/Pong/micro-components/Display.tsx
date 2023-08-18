@@ -13,6 +13,7 @@ interface DisplayProps {
   otherPlayer:          Player | null;
   ball:                 Ball | null;
   pong:                 PongI | null;
+  pongMap:              string| null; 
   setPlayer:            (player: Player | null) => void;
   setOtherPlayer:       (player: Player | null) => void;
   setBall:              (ball: Ball | null) => void;
@@ -22,6 +23,7 @@ export const Display: FC<DisplayProps> = ({ player,
                                             otherPlayer,
                                             ball,
                                             pong,
+                                            pongMap,
                                             setPlayer,
                                             setOtherPlayer,
                                             setBall,}) => {
@@ -235,7 +237,7 @@ export const Display: FC<DisplayProps> = ({ player,
       <Xp userId={player?.userId}/>
     </div>
   ) : (
-    <div className="pong-container-box" tabIndex={0} onKeyDown={handleKeyDown}>
+  <div className="pong-container-box" style={pongMap && pongMap !== "/static/media/default_map.313d94a21c71d5064795.png" ? { backgroundImage: `url(${pongMap})`, backgroundSize: 'cover' } : {}} tabIndex={0} onKeyDown={handleKeyDown}>
       <div className={playerStickClass} style={{ top: `${player?.positionY}%` }} />
       <div className={otherPlayerStickClass} style={{ top: `${otherPlayer?.positionY}%` }} />
       <div className='ball' style={{ top: `${ball?.positionY}%`, left: `${ball?.positionX}%` }} /> 

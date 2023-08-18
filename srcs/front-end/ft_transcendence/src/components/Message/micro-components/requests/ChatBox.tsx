@@ -27,7 +27,7 @@ interface ChatBoxProps{
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
-	const { loading, error, data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: +chan.id}});
+	const { data, refetch } = useQuery(GET_MESSAGES_BY_CHANNEL,{variables: {channelId: +chan.id}});
 	const [messages, setMessages] = useState<Message[]>([]);
 	// console.log('le channel_id: ====>>> ' +chan.id);
 
