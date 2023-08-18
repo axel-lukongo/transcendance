@@ -49,8 +49,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     }
     else if (networkError.message.includes('404'))
       console.log('erreur 404');
-    else if (networkError.message.includes('201'))
-      window.location.reload();
 
     console.log('Erreur réseau :', networkError);
 

@@ -14,8 +14,8 @@ mutation CreateUser($input: CreateAuthenticationInput!) {
 }
 `;
 
-export const UPDATE_STATE = gql`mutation UpdateState($state: Int!, $user_id: Int!) {
-  updateState(new_state: $state, user_id: $user_id) {
+export const UPDATE_STATE = gql`mutation UpdateState($state: Int!) {
+  updateState(new_state: $state) {
     id
     state
   }

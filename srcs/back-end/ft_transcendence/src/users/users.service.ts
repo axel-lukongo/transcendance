@@ -29,7 +29,7 @@ export class UsersService {
     
 
     return this.prisma.user.update({
-      where: { id },
+      where: {id: data.id},
       data
     });
   }

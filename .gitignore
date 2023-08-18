@@ -34,3 +34,4 @@ Makefile
 package-lock.json
 
 dist/*
+.pws

@@ -149,8 +149,8 @@ type Query {
   findWaitingRoom(id: Int!): WaitingRoom!
   findBalls: [Ball!]!
   findBall(id: Int!): Ball!
-  chanelsRequest(user_id: Int!): [UsersChanels!]!
-  myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
+  chanelsRequest: [UsersChanels!]!
+  myChanels(private_chan: Boolean!): [UsersChanels!]!
   ChannelMembers(channel_id: Int!): [UsersChanels!]!
 }
 
@@ -174,7 +174,7 @@ type Mutation {
   deletecontact(user1: Float!, user2: Float!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
-  updateState(new_state: Int!, user_id: Int!): User!
+  updateState(new_state: Int!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!

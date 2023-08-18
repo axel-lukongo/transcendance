@@ -74,7 +74,7 @@ const Authentication: FC = () => {
           }
         })
           .then(response => {
-            const { id, token, email, nickname, avatar, tfa_code } = response.data.createUser;
+            const { id, token, email, nickname, avatar, tfa_code, level } = response.data.createUser;
             const user = {
               id,
               token,

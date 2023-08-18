@@ -103,13 +103,15 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => User, {name: "updateState"})
-  async updateState(@Args("new_state", { type: () => Int }) new_state: number,
-  @Args("user_id", { type: () => Int }) user_id: number,
-  @Context() context) {
-
+  async updateState(
+    @Args("new_state", { type: () => Int }) new_state: number,
+    @Context() context
+  ) {
     if (new_state < 1 || new_state > 3)
       throw new Error("Unrecognized state");
-    const updateUser =  await this.userService.update(user_id, {id: context.req.userId, state: new_state})
+    const updateUser =  await this.userService.update(
+      context.req.userId,
+      {id: context.req.userId, state: new_state})
     socket.publish(CHANGE_STATE, {
       changeState: updateUser
     });
