@@ -40,6 +40,7 @@
 	border: 9px solid #ffd27d;
 	background-color: rgba(41, 37, 82, 0.40);
 	position: absolute;
+	font-size: xx-large;
 	top: 12%;
 	left: 25%;
   }
@@ -56,7 +57,6 @@
   .red-stick-score-not-host {
 	  position: relative;
 	  text-align: center;
-	  font-size: 300%;
 	  font-family: "Orbitron";
 	  font-weight: bold;
   }
@@ -216,3 +216,56 @@
 	  transform: translateX(-96%);
 	}
   }
+
+
+
+  .carousel-container {
+	position: relative;
+	display: flex;
+	/* flex-direction: column; */
+	align-items: center;
+	justify-content: center;
+	margin: auto;
+	width: 100%;
+	height: 50%;
+	top: 4%;
+  }
+  
+  .carousel-slide {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 80%;
+	cursor: pointer;
+  }
+  
+  .carousel-slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+  }
+  
+  .confirm-button-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10px;
+  }
+  
+  .selected-map-name {
+	font-size: 1.2em;
+	margin-bottom: 5px;
+  }
+  
+  .confirm-button {
+	background-color: unset;
+	color: #ffd27d;
+	font-family: "Orbitron";
+	border: 2px solid #ffd27d;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+  }
+  

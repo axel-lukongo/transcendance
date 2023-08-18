@@ -223,9 +223,9 @@ export const Display: FC<DisplayProps> = ({ player,
   return (
 <div>
   <div className="score-container-box">
-    <div className={playerScoreClass}>{playerScore}</div>
+    <h1 className={playerScoreClass}>{playerScore}</h1>
     <div className="score-separator" />
-    <div className={otherPlayerScoreClass}>{otherPlayerScore}</div>
+    <h1 className={otherPlayerScoreClass}>{otherPlayerScore}</h1>
   </div>
   {victory !== null ? (
     <div className="pong-container-result-box">

@@ -28,6 +28,7 @@ const HistoryMatch = () => {
 
           return (
             <div className="history-match-container" key={index}>
+              <h1>MATCH HISTORY</h1>
               <div className="history-match-item">
                 <p>{userFromStorage?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"} </p>
                 <hr />
