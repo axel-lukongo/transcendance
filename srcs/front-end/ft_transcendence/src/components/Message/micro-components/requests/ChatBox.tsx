@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect, useState} from 'react';
-import {gql, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import {SubscriptionClient} from 'subscriptions-transport-ws';
 import { GET_MESSAGES_BY_CHANNEL } from "../../graphql/Query";
 import { NewMessageSubscription } from "../../graphql/souscription.ws";

@@ -34,9 +34,9 @@ interface MapProps {
     return (
       <div>
         <div className="score-container-box">
-          <h1>SELECT MAP</h1>
+          <h1 id='select-map'>SELECT MAP</h1>
         </div>
-        <div className="pong-container-box">
+        <div className=" pong-container-box map-select">
           <Carousel className="carousel-container" showThumbs={false}>
             <div className="carousel-slide" onClick={() => handleMapSelect(beachImage)}>
               <img src={beachImage} alt="Beach Map" />
