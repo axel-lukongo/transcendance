@@ -56,8 +56,16 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 				<hr className="horizontal-line" />
 
 				<div className='boxes-container'>
-					<div className='rankes-box' > {user.rank} </div>
-					<div className='xp-box' > level: {user.level} </div>
+					<div className='rankes-box' > RANK
+					<div>
+					 {user.rank}
+					</div>
+					</div>
+					<div className='xp-box' > level
+					<div>
+						{user.level}
+					</div>
+					 </div>
 				</div>
 				<div className='resumer'> Resumer </div>
 
