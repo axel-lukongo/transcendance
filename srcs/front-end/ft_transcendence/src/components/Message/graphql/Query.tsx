@@ -61,8 +61,8 @@ export const CHANELS_LIST = gql`query GetChanelList($private_chan: Boolean!) {
 	}
 }`;
 
-export const ALL_USERS = gql`query SearchUserForChan($user_id: Int!, $chanel_id: Int!){
-searchUserForChan(user_id: $user_id, chanel_id: $chanel_id) {
+export const ALL_USERS = gql`query SearchUserForChan($chanel_id: Int!){
+searchUserForChan(chanel_id: $chanel_id) {
     id
     nickname
   }

@@ -96,7 +96,6 @@ export class ContactsResolver {
 		filter: async function (payload, variables, context) {
 			try {
 				const resolve_payload = await payload;
-				console.log('FILTER | resolve_payload: ', resolve_payload)
 				if (resolve_payload.changeState.id == context.token.userId)
 					return false;
 				let user_contact = await this.contactService.findContacts(context.token.userId);
@@ -112,7 +111,6 @@ export class ContactsResolver {
 		}
 	})
 	changeState(@Context() context) {
-		console.log('CONTACT | rec');
 		return socket.asyncIterator(CHANGE_STATE);
 	}
 }
