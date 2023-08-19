@@ -2,8 +2,8 @@ import {Link} from 'react-router-dom';
 import { TfaToggleButton } from './micro-components/TfaToogleButton';
 
 import './css/Home.css';
-import NicknameBox from './micro-components/NicknameBox';
-import AvatarBox from './micro-components/AvatarBox';
+import NicknameBox from './micro-components/Nickname';
+import AvatarBox from './micro-components/Avatar';
 import HistoryMatch from './micro-components/HistoryMatch';
 
 

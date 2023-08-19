@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { User, PongI } from "../../interfaces/interfaces";
 import { MY_HISTORY_MATCH } from "../graphl/Query";
+import { useEffect } from "react";
 
 const HistoryMatch = () => {
   const userFromStorageString = sessionStorage.getItem('user');
@@ -8,11 +9,16 @@ const HistoryMatch = () => {
   if (userFromStorageString && userFromStorageString !== 'undefined')
     userFromStorage = JSON.parse(userFromStorageString);
 
-  const { data } = useQuery(MY_HISTORY_MATCH, {
+  const { data, refetch } = useQuery(MY_HISTORY_MATCH, {
     variables: {
       userId: userFromStorage?.id,
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, );
+
 
   if (data && data.myHistoryMatch) {
     const historyMatches: PongI[] = data.myHistoryMatch;
@@ -28,7 +34,6 @@ const HistoryMatch = () => {
 
           return (
             <div className="history-match-container" key={index}>
-              <h1>MATCH HISTORY</h1>
               <div className="history-match-item">
                 <p>{userFromStorage?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"} </p>
                 <hr />
