@@ -12,14 +12,36 @@
 	z-index: 1000;
 }
 
+.profile_btn{
+	width: 15px;
+	height: 15px;
+	background: url("/ft_transcendence/src/image/profil.png") center no-repeat;
+	background-size: contain;
+	margin-left: 5%;
+}
+
 .profil-modal .modal-content {
+	position: relative;
 	background-color: rgba(35, 24, 104, 0.466);
 	border-radius: 5%;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	height: 80%;
 	width: 40%;
 	overflow: hidden;
+	animation: glow-border 4s linear infinite;
 }
+
+@keyframes glow-border {
+	0%, 100% {
+		border: 2px solid transparent;
+		box-shadow: 0 0 55px 5px rgba(136, 29, 129, 0.6);
+	}
+	50% {
+		/* border: 0px solid rgba(255, 0, 0, 0.6); */
+		box-shadow: none;
+	}
+}
+
 
 .modal-content .close-btn {
 	/* position: relative; */
@@ -44,17 +66,34 @@
 	display: flex;
 	height: 20%;
 }
-.Container_one .avatar {
+@keyframes rotateBorder {
+	0%, 100% {
+		border: 2px solid transparent;
+		box-shadow: 0 0 10px 5px #763b0471;
+	}
+	50% {
+		box-shadow: none;
+	}
+  }
+
+  .Container_one .avatar {
 	/* position: relative; */
-	width: 25%;
-	height: 95%;
+	margin-left: 1%;
+	width: 24%;
+	height: 99%;
 	border-radius: 50%;
+	/* border: 2px solid #ffd27d; */
 	overflow: hidden;
-}
-.modal-content .avatar img {
+	animation: rotateBorder 5s linear infinite;
+  }
+  
+  .modal-content .avatar img {
 	width: 100%;
 	height: 100%;
   }
+  
+
+
 
 .Container_one .sub-Container_one {
 	display: flex;
@@ -102,7 +141,16 @@
 	
 }
 
-.modal-content .rankes-box{
+@keyframes flicker {
+	0%, 100% {
+	  opacity: 1;
+	}
+	50% {
+	  opacity: 0.8;
+	}
+  }
+  
+  .modal-content .rankes-box {
 	color: #ffd27d;
 	margin-top: 0%;
 	border-radius: 10%;
@@ -110,7 +158,14 @@
 	background-color: rgba(154, 147, 205, 0.642);
 	width: 30%;
 	height: 100%;
+	animation: flicker 2s infinite; /* Animation de scintillement */
+  }
+
+  .Ranks{
+	margin-top: 10%;
+	font-size: 1.5rem;
 }
+
 
 .modal-content .xp-box{
 	color: #ffd27d;
@@ -120,11 +175,15 @@
 	background-color: rgba(154, 147, 205, 0.642);
 	width: 30%;
 	height: 100%;
+	animation: flicker 2s infinite; /* Animation de scintillement */
+
 }
 
 .modal-content .resumer{
 	margin-top: 10%;
 	color: #f2f2f2;
+	font-size: 1.5rem;
+
 }
 
 
@@ -151,10 +210,10 @@
 	margin-right: 30%;
 	background-color: #f2f2f2;
 	margin-top: 0%;
-	border-radius: 30%;
+	border-radius: 10%;
 	margin: 5% auto; /* Ajuste la marge autour de la ligne */
 	border: 3px solid #ffd27d;
-	padding: 2%;
+	padding: 1%;
 	background-color: rgba(154, 147, 205, 0.099);
 	width: 90%;
 	height: 100%;

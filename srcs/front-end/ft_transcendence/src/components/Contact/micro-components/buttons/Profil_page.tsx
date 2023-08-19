@@ -57,14 +57,14 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 
 				<div className='boxes-container'>
 					<div className='rankes-box' > RANK
-					<div>
-					 {user.rank}
-					</div>
+						<div className='Ranks'>
+							{user.rank}
+						</div>
 					</div>
 					<div className='xp-box' > level
-					<div>
-						{user.level}
-					</div>
+						<div>
+							{user.level}
+						</div>
 					 </div>
 				</div>
 				<div className='resumer'> Resumer </div>

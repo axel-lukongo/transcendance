@@ -115,8 +115,8 @@ import Profil_page from "./buttons/Profil_page";
 		  {ShowProfil === true && SelectedUserIndex === index && (
 			<Profil_page handleShowProfil={handleShowProfil} user={data.searchUsers[index]} />
 		  )}
-		  <button className="add_btn" onClick={() => handleShowProfil(index)}> prf </button>
-		 	<div key={element.id} className="card">
+		  <button className="profile_btn" onClick={() => handleShowProfil(index)}></button>
+		 	{/* <div key={element.id} className="card"> */}
 				{/* <p>{element.nickname}</p> */}
 				<AddContactBtn 
 					user={user}
@@ -124,7 +124,7 @@ import Profil_page from "./buttons/Profil_page";
 					nickname={element.nickname}
 					refetch={refetchContact}
 				/>
-			</div>	
+			{/* </div>	 */}
 		</div>      
 	  ))}
 	</div>
