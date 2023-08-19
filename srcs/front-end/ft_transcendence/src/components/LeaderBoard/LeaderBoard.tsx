@@ -1,15 +1,22 @@
+import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { HISTORY_MATCH } from "./graphql/Query";
 import { ILeaderBoard } from "../interfaces/interfaces";
+import './css/LeaderBoard.css'
+
 import trophyImg from "/ft_transcendence/src/image/trophy.png";
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
-import './css/LeaderBoard.css'
+
 
 
 const LeaderBoard: React.FC = () => {
-  const { loading, error, data } = useQuery(HISTORY_MATCH);
+  const { loading, error, data, refetch } = useQuery(HISTORY_MATCH);
+
+  useEffect(() => {
+    refetch();
+  }, );
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
