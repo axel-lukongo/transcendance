@@ -39,8 +39,13 @@ export const LIST_CONTACT = gql`query GetListContact($input: Int!) {
 
 export const RESEARCH = gql`query ResearchContact($input: String!, $user_id: Int!) {
 	searchUsers(research: $input, user_id: $user_id) {
-		nickname
 		id
+		email
+		intra_login
+		nickname
+		avatar
+		level
+		rank
 	}
 }`
 

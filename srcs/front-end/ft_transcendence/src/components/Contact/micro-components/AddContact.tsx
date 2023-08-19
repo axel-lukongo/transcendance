@@ -4,6 +4,7 @@ import { RESEARCH } from '../graphql/Querys'
 import { useQuery } from "@apollo/client";
 import AddContactBtn from "./buttons/AddContactBtn";
 import MyPendingRequest from "./ListMyPendingRequest";
+import Profil_page from "./buttons/Profil_page";
 
  export default function  AddContact({refetchContact, refetchProps, user, setSwap}: IProposContact) {
 
@@ -18,6 +19,8 @@ import MyPendingRequest from "./ListMyPendingRequest";
 		}
 	});
 
+	const [ShowProfil ,setShowProfil] = useState(false);
+	const [SelectedUserIndex ,setSelectedUserIndex] = useState(0);
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effect */
 
@@ -50,36 +53,87 @@ import MyPendingRequest from "./ListMyPendingRequest";
 	};
 	
 
-	return ( 
-		<div className="AddContact">
-			<div className="search_bar">
-				<input 
-					type="search"
-					name="search_bar"
-					id="search_bar_contact"
-					value={search}
-					onChange={handleChange}
-					ref={(el) => inputRef.current = el}
+	const handleShowProfil = (userIndex: number) => {
+		setShowProfil(true);
+		setSelectedUserIndex(userIndex);
+	  };
+
+	// return ( 
+	// 	<div className="AddContact">
+	// 		<div className="search_bar">
+	// 			<input 
+	// 				type="search"
+	// 				name="search_bar"
+	// 				id="search_bar_contact"
+	// 				value={search}
+	// 				onChange={handleChange}
+	// 				ref={(el) => inputRef.current = el}
+	// 			/>
+	// 		</div>
+	// 		<div className="research_result">
+	// 		{data.searchUsers.map((element: { nickname: string, id: number }, index: number) => (
+					
+					
+	// 				<div key={element.id} className="card">
+	// 					<p>{element.nickname}</p>
+	// 					<AddContactBtn 
+	// 						user={user}
+	// 						id={element.id}
+	// 						nickname={element.nickname}
+	// 						refetch={refetchContact}
+	// 					/>
+	// 				</div>		
+	// 			))}
+	// 		</div>
+	// 		<div className="pending_request">
+	// 			<MyPendingRequest 
+	// 				user={user}
+	// 			/>
+	// 		</div>
+	// 	</div>
+	// );
+
+
+	
+
+	return (
+	<div className="AddContact">
+	<div className="search_bar">
+	  <input 
+		type="search"
+		name="search_bar"
+		id="search_bar_contact"
+		value={search}
+		onChange={handleChange}
+		ref={(el) => inputRef.current = el}
+	  />
+	</div>
+	<div className="research_result">
+	  {data.searchUsers.map((element: { nickname: string, id: number }, index: number) => (
+		<div key={element.id} className="card">
+		  <p>{element.nickname}</p>
+		  {ShowProfil === true && SelectedUserIndex === index && (
+			<Profil_page handleShowProfil={handleShowProfil} user={data.searchUsers[index]} />
+		  )}
+		  <button className="add_btn" onClick={() => handleShowProfil(index)}> prf </button>
+		 	<div key={element.id} className="card">
+				{/* <p>{element.nickname}</p> */}
+				<AddContactBtn 
+					user={user}
+					id={element.id}
+					nickname={element.nickname}
+					refetch={refetchContact}
 				/>
-			</div>
-			<div className="research_result">
-				{data.searchUsers.map((element: {nickname: string, id: number}) => (
-					<div key={element.id} className="card">
-						<p>{element.nickname}</p>
-						<AddContactBtn 
-							user={user}
-							id={element.id}
-							nickname={element.nickname}
-							refetch={refetchContact}
-						/>
-					</div>		
-				))}
-			</div>
-			<div className="pending_request">
-				<MyPendingRequest 
+			</div>	
+		</div>      
+	  ))}
+	</div>
+	<div className="pending_request">
+			<MyPendingRequest 
 					user={user}
 				/>
-			</div>
-		</div>
-	);
+	</div>
+  </div>
+);
+
 }
