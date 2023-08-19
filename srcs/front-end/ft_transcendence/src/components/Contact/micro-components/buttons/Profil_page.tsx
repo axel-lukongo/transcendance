@@ -57,32 +57,29 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 
 				<div className='boxes-container'>
 					<div className='rankes-box' > {user.rank} </div>
-					<div className='xp-box' > xp </div>
+					<div className='xp-box' > level: {user.level} </div>
 				</div>
 				<div className='resumer'> Resumer </div>
 
 				<hr className="horizontal-line" />
 
 
-				<div className="container-tree" >
-					{ data?.myHistoryMatch.map((match: PongI, index: number) => {
-					const isUser1 = match.user1?.nickname === user.nickname;
-					const myScore = isUser1 ? match.scoreUser1 : match.scoreUser2;
-					const opponentScore = isUser1 ? match.scoreUser2 : match.scoreUser1;
-					const opponentNickname = isUser1 ? match.user2?.nickname : match.user1?.nickname;
-					const isWinner = match.winnerId === user.id;
-
-					return (
-						<div className="profil-match-history" key={index}>
-							{/* <div className="profil-match-history"> */}
-								{/* <div className="profil-match-history"> */}
-									{user.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"}
-								{/* </div> */}
-								{/* <hr className="separation-line" /> */}
-							{/* </div> */}
-						</div>
-					);
+				<div className='container-scroll'> 
+					<div className="container-tree" >
+						{ data?.myHistoryMatch.map((match: PongI, index: number) => {
+							const isUser1 = match.user1?.nickname === user.nickname;
+							const myScore = isUser1 ? match.scoreUser1 : match.scoreUser2;
+						const opponentScore = isUser1 ? match.scoreUser2 : match.scoreUser1;
+						const opponentNickname = isUser1 ? match.user2?.nickname : match.user1?.nickname;
+						const isWinner = match.winnerId === user.id;
+						
+						return (
+							<div className="profil-match-history" key={index}>
+								{user.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"}
+							</div>
+						);
 					})}
+					</div>
 				</div>
 
             </div>
