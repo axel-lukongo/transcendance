@@ -32,7 +32,7 @@ const Home = () => {
                 <h1>PLAY</h1>
                 <div className="movement-ball"></div>
               </button>
-            </Link>
+          </Link>
           <button className='log-out-button logo-box'></button>
           <Link to="/">
             <button className='home-button logo-box'></button>
