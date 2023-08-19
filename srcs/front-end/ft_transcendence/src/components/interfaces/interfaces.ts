@@ -72,6 +72,13 @@ export interface Player {
 	user2?: User;
   }
 
+  export interface ILeaderBoard {
+	grade: number;
+	nickname: string;
+	level: number;
+	rank: string;
+  }
+
 /* //////////////////////////////////////////////////////// */
 /* Contact */
 
