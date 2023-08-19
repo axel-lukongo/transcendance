@@ -14,6 +14,7 @@ import { UpdateUserInput } from 'src/users/dto/update-user.input';
 import { CreatePlayerInput } from './player/dto/create-player.input';
 import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 import { UpdatePlayerInput } from './player/dto/update-player.input';
+import { User } from 'src/users/entities/user.entity';
 
 const pubSub = new PubSub();
 const PONG_UPDATE_EVENT = 'PongUp';
@@ -31,6 +32,22 @@ export class JoinPongResponse {
 
   @Field(() => Pong, { nullable: true })
   pong?: Pong;
+}
+
+@ObjectType()
+export class LeaderBoard{
+  @Field(() => Int)
+  grade: number;
+  
+  @Field(() => String)
+  nickname: string;
+
+  @Field(() => Int)
+  level: number;
+
+  @Field(() => String)
+  rank: string;
+
 }
 
 @Resolver(() => Pong)
@@ -84,6 +101,11 @@ export class PongResolver {
     return this.pongService.myHistoryMatch(userId);
   }
 
+  @Query(() => [LeaderBoard])
+  async historyMatch() {
+    return this.pongService.historyMatch();
+  }
+  
   
   @Mutation(() => Pong)
   removePong(@Args('id', { type: () => Int }) id: number) {

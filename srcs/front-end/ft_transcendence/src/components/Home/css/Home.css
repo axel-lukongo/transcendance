@@ -49,7 +49,7 @@
 	border-radius: 50px;
 	background-position: center;
 	background-color: rgba(113, 67, 250, 0.20);
-	border: 3px solid #ffd27d;
+	border: 5px solid #ffd27d;
 	color: #ffd27d;
 	display: flex;
 	justify-content: center;
@@ -219,27 +219,35 @@
 }
 
    .log-out-button{
-	top : 7%;
-	background: url('/ft_transcendence/src/image/Logout.png') no-repeat center;
+	top : 5%;
+	background: url('/ft_transcendence/src/image/log_icon.svg') no-repeat center;
 	background-size: contain;
 }
+
+.leader-board-button{
+	top : 35%;
+	background: url('/ft_transcendence/src/image/podium_icon.svg') no-repeat center;
+	background-size: contain;
+}
+
+.home-button {
+	top: 50%; 
+	background: url('/ft_transcendence/src/image/home_icon.svg') no-repeat center;
+	background-size: contain;
+}
+
 	
 	.message-button {
-	top: 55%; 
-	background: url('/ft_transcendence/src/image/message.png') no-repeat center;
+	top: 65%; 
+	background: url('/ft_transcendence/src/image/message_icon.svg') no-repeat center;
 	background-size: contain;
 
   }
 
-  .home-button {
-	  top: 40%; 
-	  background: url('/ft_transcendence/src/image/Home.png') no-repeat center;
-	  background-size: contain;
-  }
 
   .contact-button {
-	top: 70%; 
-	background: url('/ft_transcendence/src/image/Contact.png') no-repeat center;
+	top: 80%; 
+	background: url('/ft_transcendence/src/image/contact_icon.svg') no-repeat center;
 	background-size: contain;
   }
 

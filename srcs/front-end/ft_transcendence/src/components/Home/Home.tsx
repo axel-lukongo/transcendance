@@ -21,7 +21,6 @@ const Home = () => {
             </div>
           <AvatarBox />
           <div className="history-match-box profil-box">
-            <h3>MATCH HISTORY</h3>
             <HistoryMatch />
           </div>
           <NicknameBox/>
@@ -37,6 +36,9 @@ const Home = () => {
           <button className='log-out-button logo-box'></button>
           <Link to="/">
             <button className='home-button logo-box'></button>
+          <Link to="/leaderBoard">
+            <button className='leader-board-button logo-box'></button>
+          </Link>
           </Link>
           <Link to="/message">
             <button className='message-button logo-box'></button>

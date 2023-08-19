@@ -95,6 +95,13 @@ type JoinPongResponse {
   pong: Pong
 }
 
+type LeaderBoard {
+  grade: Int!
+  nickname: String!
+  level: Int!
+  rank: String!
+}
+
 type UsersChanels {
   user_id: Int!
   chanel_id: Int!
@@ -127,6 +134,7 @@ type Query {
   findPongs: [Pong!]!
   findPong(id: Int!): Pong!
   myHistoryMatch(userId: Int!): [Pong!]!
+  historyMatch: [LeaderBoard!]!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
   findPlayerByUserId(userId: Int!): Player!
