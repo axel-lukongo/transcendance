@@ -104,9 +104,9 @@ export interface IRequestProps {
 
 export interface IAddContact {
 	id: number;
-	nickname: string;
 	user: User;
 	refetch: () => void;
+	handleRefreshPending: () => void;
 }
 
 /* //////////////////////////////////////////////////////// */

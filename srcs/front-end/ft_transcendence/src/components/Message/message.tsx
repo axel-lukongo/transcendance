@@ -10,6 +10,10 @@ import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
 import Param_Chan from './micro-components/forms/chan_param';
+import user_onglet from '../../image/user_onglet.png'
+import public_onglet from '../../image/visibility.png'
+import private_onglet from '../../image/visible.png'
+import request_onglet from '../../image/hourglass.png'
 
 /* CSS */
 import './css/messages.css';
@@ -269,13 +273,19 @@ const Message = () => {
           <button className='home-button logo-box'></button>
         </Link>
 
-		  <div className="row clearfix">
-			<div className="col-lg-12">
-				<div>
-					<button onClick={() => handleChangeOnglet(__DIRECT_MESSAGE__)}>1</button>
-					<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)}>2</button>
-					<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)}>3</button>
-					<button onClick={() => handleChangeOnglet(__CHANEL_REQUEST__)}>4</button>
+				<div className='nav_section_message'>
+					<button onClick={() => handleChangeOnglet(__DIRECT_MESSAGE__)}>
+						<img src={user_onglet} alt="" />
+					</button>
+					<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)}>
+						<img src={private_onglet} alt="" />
+					</button>
+					<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)}>
+						<img src={public_onglet} alt="" />
+					</button>
+					<button onClick={() => handleChangeOnglet(__CHANEL_REQUEST__)}>
+						<img src={request_onglet} alt="" />
+					</button>
 				</div>
 
 			  <div className="screen-box chat-app">
@@ -284,8 +294,6 @@ const Message = () => {
 			  </div>
 			  
 			 </div> 
-		  </div>
-		</div>
 	  );
 };
 

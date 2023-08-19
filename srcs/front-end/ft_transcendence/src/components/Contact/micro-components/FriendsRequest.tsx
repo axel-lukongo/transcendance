@@ -17,7 +17,10 @@ export default function FriendsRequest({refetchContact, refetchProps, user}: IPr
 	}, [refetch, refetchProps]);
 
 	if (loading)
-		return (<div><p>Loading...</p></div>);
+		return (
+		<div className="loader-container">
+			<p>Loading...</p>
+		</div>);
 	
 	if (error) {
 		console.log(error);
@@ -41,7 +44,7 @@ export default function FriendsRequest({refetchContact, refetchProps, user}: IPr
 		{
 			contacts.map((element: IContactsLink) => (
                 <div key={element.id} className="card">
-                    <div className="avatar"></div>
+                    <div className="avatar"><img src={user.avatar} alt="" id="avatar_contact" /></div>
                     <p id="card_p">{element.contact.nickname.toString()}</p>
                     <div className="response">
                         <AccepContact 

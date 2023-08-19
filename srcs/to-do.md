@@ -50,21 +50,11 @@
 
 ### | CONTACT
 
-- Loading dans Contact
-- couleur titre contact ?
 - NavBar
-- Meilleur centrage des divs 'boxs'
 
 <!-- Friend list -->
-- refresh des ajouts en temps reel
 - stylise pending request
-- changer btn ajout 
-- ? changer card de list de user a ajouter
 - ? changer le system de search bar pour eviter perma request 
-
-<!-- Cards Friend Request-->
-- Photo dans le cadre des Friends request
-- Rajouter un effet profondeur sur les cards friend request (+ pp ou uniquement pp)
 
 ### | MESSAGES
 

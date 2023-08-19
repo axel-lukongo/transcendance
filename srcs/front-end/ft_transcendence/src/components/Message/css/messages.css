@@ -239,6 +239,9 @@
     }
 }
 
+.nav_section_message {
+    position: relative;
+}
 
 .input-message {
 	width: 90%;

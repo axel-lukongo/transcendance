@@ -18,6 +18,8 @@ import MyPendingRequest from "./ListMyPendingRequest";
 		}
 	});
 
+	const [refreshPending, setRefreshPending] = useState(false);
+
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effect */
 
@@ -49,6 +51,9 @@ import MyPendingRequest from "./ListMyPendingRequest";
 		setSearch(prevValue => event.target.value);
 	};
 	
+	const handleRefreshPending = () => {
+		setRefreshPending(prevData => !prevData);
+	}
 
 	return ( 
 		<div className="AddContact">
@@ -62,6 +67,9 @@ import MyPendingRequest from "./ListMyPendingRequest";
 					ref={(el) => inputRef.current = el}
 				/>
 			</div>
+			<div className="header_pending_contact">
+				<h4>Pending Request</h4>
+			</div>
 			<div className="research_result">
 				{data.searchUsers.map((element: {nickname: string, id: number}) => (
 					<div key={element.id} className="card">
@@ -69,8 +77,8 @@ import MyPendingRequest from "./ListMyPendingRequest";
 						<AddContactBtn 
 							user={user}
 							id={element.id}
-							nickname={element.nickname}
 							refetch={refetchContact}
+							handleRefreshPending={handleRefreshPending}
 						/>
 					</div>		
 				))}
@@ -78,6 +86,7 @@ import MyPendingRequest from "./ListMyPendingRequest";
 			<div className="pending_request">
 				<MyPendingRequest 
 					user={user}
+					refreshPending={refreshPending}
 				/>
 			</div>
 		</div>

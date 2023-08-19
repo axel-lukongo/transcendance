@@ -1,8 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { CREATE_CONTACT } from "../../graphql/Mutations";
 import { IAddContact } from '../../../interfaces/interfaces'
+import addBtn from '/ft_transcendence/src/image/plus.png'
 
-export default function AddContactBtn({id, nickname, user, refetch}: IAddContact) {
+export default function AddContactBtn({id, user, refetch, handleRefreshPending}: IAddContact) {
 
 	const [addContact, { loading: loading, error: error }] = useMutation(CREATE_CONTACT)
 	
@@ -15,6 +16,7 @@ export default function AddContactBtn({id, nickname, user, refetch}: IAddContact
 				}
 			}
 		}).then(() => {
+			handleRefreshPending();
 			refetch();
 		}).catch((error) => {
 			console.log("you can't add this user: ", error.message);
@@ -28,6 +30,6 @@ export default function AddContactBtn({id, nickname, user, refetch}: IAddContact
 	}
 	
 	return (
-		<button onClick={handleSubmit} className="add_btn">+</button>
+		<button onClick={handleSubmit} className="add_btn"><img src={addBtn} alt="add_btn" id="add_btn_img"/></button>
 	);
 }
