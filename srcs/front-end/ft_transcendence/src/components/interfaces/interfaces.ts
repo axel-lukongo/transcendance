@@ -41,6 +41,10 @@ export interface IContact {
 	nickname: string;
 	email: string;
 	token: number;
+    avatar: string;
+	level: number;
+	rank: string;
+
 }
 
 export interface IContacts {

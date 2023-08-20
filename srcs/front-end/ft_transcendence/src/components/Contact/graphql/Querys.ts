@@ -30,9 +30,15 @@ export const REQUEST = gql`query GetMyContactRequest($input: Int!) {
 export const LIST_CONTACT = gql`query GetListContact($input: Int!) {
 	myContacts(user_id: $input) {
 		id
+		
 		contact(user_id: $input) {
-			nickname
+			id
+			email
 			intra_login
+			nickname
+			avatar
+			level
+			rank
 		}
 	}
 }`

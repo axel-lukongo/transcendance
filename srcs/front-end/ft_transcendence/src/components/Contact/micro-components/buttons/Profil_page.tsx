@@ -5,13 +5,15 @@ import { User } from '../../../interfaces/interfaces';
 import { useQuery } from '@apollo/client';
 import { MY_HISTORY_MATCH } from '../../../Home/graphl/Query';
 import { PongI } from '../../../interfaces/interfaces';
-
+import { IContact } from '../../../interfaces/interfaces';
 interface IshowProfil{
 	handleShowProfil: (userIndex: number) => void;
-	user: User;
+	user: User | IContact;
 }
 
 const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
+
+	// console.log('weew=====>>>>>>>>  ',user)
 	const [avatar, setAvatar] = useState(user.avatar);
 	const { data, loading, error, refetch } = useQuery(MY_HISTORY_MATCH, {
 		variables: {
