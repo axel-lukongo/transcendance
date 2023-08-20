@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { HISTORY_MATCH } from "./graphql/Query";
 import { ILeaderBoard } from "../interfaces/interfaces";
 import './css/LeaderBoard.css'
 
@@ -8,12 +7,13 @@ import trophyImg from "/ft_transcendence/src/image/trophy.png";
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
-import { Link } from "react-router-dom"; // Assurez-vous d'importer Link depuis 'react-router-dom'
+import { Link } from "react-router-dom"; 
+import { LEADERBOARD } from "./graphql/Query";
 
 
 
 const LeaderBoard: React.FC = () => {
-  const { loading, error, data, refetch } = useQuery(HISTORY_MATCH);
+  const { loading, error, data, refetch } = useQuery(LEADERBOARD);
 
   useEffect(() => {
     refetch();
@@ -22,7 +22,7 @@ const LeaderBoard: React.FC = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const leaderBoard: ILeaderBoard[] = data.historyMatch;
+  const leaderBoard: ILeaderBoard[] = data.leaderBoard;
 
 
   // ...
@@ -47,7 +47,7 @@ const LeaderBoard: React.FC = () => {
   
       <div className="screen-box-leader-board">
         <h1>Leaderboard</h1>
-        <img src={trophyImg} alt="Trophy Image" />
+        <img src={trophyImg} alt="Trophy " />
         <div className="table-container">
           <table>
             <thead>

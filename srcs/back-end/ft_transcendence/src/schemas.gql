@@ -95,11 +95,14 @@ type JoinPongResponse {
   pong: Pong
 }
 
-type LeaderBoard {
+type StatisticMatch {
   grade: Int!
   nickname: String!
   level: Int!
   rank: String!
+  wins: Int!
+  defeats: Int!
+  ratio: Float!
 }
 
 type UsersChanels {
@@ -133,8 +136,9 @@ type Query {
   checkTwoAuthenticationFactor(code: String!): User!
   findPongs: [Pong!]!
   findPong(id: Int!): Pong!
-  myHistoryMatch(userId: Int!): [Pong!]!
-  historyMatch: [LeaderBoard!]!
+  myMatchHistory(userId: Int!): [Pong!]!
+  myMatchStatistic(userId: Int!): StatisticMatch!
+  leaderBoard: [StatisticMatch!]!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
   findPlayerByUserId(userId: Int!): Player!

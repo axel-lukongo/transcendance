@@ -1,37 +1,45 @@
 import {Link} from 'react-router-dom';
-import { TfaToggleButton } from './micro-components/TfaToogleButton';
-
-import './css/Home.css';
 import NicknameBox from './micro-components/Nickname';
 import AvatarBox from './micro-components/Avatar';
-import HistoryMatch from './micro-components/HistoryMatch';
+import HistoryMatch from './micro-components/MatchHistory';
+import { TfaToggleButton } from './micro-components/TfaToogleButton';
+import { User } from '../interfaces/interfaces';
 
+import './css/Home.css';
+import MatchStatistic from './micro-components/MatchStatistic';
 
 const Home = () => {
 
-  const user = JSON.parse(sessionStorage.getItem('user') || '');
+  const userFromStorageString = sessionStorage.getItem('user');
+  let userFromStorage: User | null = null;
+  if (userFromStorageString && userFromStorageString !== 'undefined')
+    userFromStorage = JSON.parse(userFromStorageString);
+
 
   return (
     <div className='Home'>
-      {user && (
+      {userFromStorage && (
         <>
           <div className='screen-box'>
-          <div className='rank-box profil-box'>
-            <h1>RANK #?</h1>
-            </div>
+          
+          <MatchStatistic user={userFromStorage} />
+          
           <AvatarBox />
+          
           <div className="history-match-box profil-box">
-            <HistoryMatch />
+          <HistoryMatch user={userFromStorage} />
           </div>
           <NicknameBox/>
+          
           <div className='email-box profil-box'>
-          {user.email}
+          {userFromStorage.email}
           </div>
             <Link to='/pong'>
               <button id="play-button" className='game-box profil-box' >
                 <h1>PLAY</h1>
                 <div className="movement-ball"></div>
               </button>
+          
           </Link>
           <button className='log-out-button logo-box'></button>
           <Link to="/">
@@ -46,7 +54,7 @@ const Home = () => {
           <Link to="/contact">
             <button className='contact-button logo-box'></button>
           </Link>
-          <TfaToggleButton userId={user.id} tfaCode={user.tfa_code} />
+          <TfaToggleButton userId={userFromStorage.id} tfaCode={userFromStorage.tfa_code} />
           </div>
         </>
       )}

@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreatePongInput } from './dto/create-pong.input';
 import { UpdatePongInput } from './dto/update-pong.input';
 import { PrismaService } from 'prisma/prisma.service';
-import { Pong } from './entities/pong.entity';
 import { User } from 'src/users/entities/user.entity';
-import { LeaderBoard } from './pong.resolver';
+import { StatisticMatch } from './pong.resolver';
 
 
-
+interface UserStats {
+  wins: number;
+  defeats: number;
+  ratio: number;
+}
 
 @Injectable()
 export class PongService {
@@ -27,7 +30,24 @@ export class PongService {
     return this.prisma.pong.findUnique({ where : {id}})
   }
 
-  async myHistoryMatch(userId: number) {
+  async myMatchStatistic(userId: number): Promise<StatisticMatch | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+  
+    if (!user) {
+        return null;
+    }
+  
+    const leaderBoard: StatisticMatch[] = await this.leaderBoard();
+  
+    const userStatistics = leaderBoard.find(player => player.nickname === user.nickname);
+  
+    return userStatistics || null;
+  }
+  
+
+  async myMatchHistory(userId: number) {
     try {
       const games = await this.prisma.pong.findMany({
         where: {
@@ -53,63 +73,76 @@ export class PongService {
   }
 
 
-  async calculateWins(user: User): Promise<number> {
-    const userPongWins = await this.prisma.pong.count({
+  async calculateStat(user: User): Promise<UserStats> {
+    const totalGames = await this.prisma.pong.findMany({
       where: {
-        AND: [
-          { winnerId: user.id },
-          {
-            OR: [
-              { userId1: user.id },
-              { userId2: user.id },
-            ],
-          },
+        OR: [
+          { userId1: user.id },
+          { userId2: user.id },
         ],
       },
     });
+  
+    let wins = 0;
+    let defeats = 0;
+  
+    totalGames.forEach(game => {
+      if (game.winnerId === user.id) {
+        wins++;
+      } else if (game.loserId === user.id) {
+        defeats++;
+      }
+    });
 
-    return userPongWins;
+    const totalMatches = wins + defeats;
+    const ratio = totalMatches === 0 ? 0 : wins / totalMatches;
+  
+    return { wins, defeats, ratio };
+  
   }
-  async historyMatch() {
+  
+  async leaderBoard() {
     const allUsers = await this.prisma.user.findMany({});
     
-    const usersWithWins = await Promise.all(
+    const usersWithStats = await Promise.all(
       allUsers.map(async (user) => ({
         user,
-        wins: await this.calculateWins(user),
+        stat: await this.calculateStat(user),
       }))
-      );
-
-    const sortedUsers = usersWithWins.sort((a, b) => {
+    );
+  
+    const sortedUsers = usersWithStats.sort((a, b) => {
       if (a.user.level !== b.user.level) {
         return b.user.level - a.user.level;
-      } else if (a.wins !== b.wins) {
-        return b.wins - a.wins;
+      } else if (a.stat.wins !== b.stat.wins) {
+        return b.stat.wins - a.stat.wins; // Tri par victoires
       } else {
         return a.user.nickname.localeCompare(b.user.nickname); // Tri alphabétique
       }
     });
-
+  
     let currentGrade = 1;
     let level = 1;
     let win = 1;
-
-
-    const leaderBoard: LeaderBoard[] = sortedUsers.map((userWithWins, index) => {
-      if (userWithWins.user.level !== level || userWithWins.wins !== win) {
-        level = userWithWins.user.level;
-        win = userWithWins.wins;
+  
+    const leaderBoard: StatisticMatch[] = sortedUsers.map((userWithStats, index) => {
+      if (userWithStats.user.level !== level || userWithStats.stat.wins !== win) {
+        level = userWithStats.user.level;
+        win = userWithStats.stat.wins;
         currentGrade = index + 1;
       }
-
+  
       return {
-        grade: currentGrade,
-        nickname: userWithWins.user.nickname,
-        level: userWithWins.user.level,
-        rank: userWithWins.user.rank,
+        grade:    currentGrade,
+        nickname: userWithStats.user.nickname,
+        level:    userWithStats.user.level,
+        rank:     userWithStats.user.rank,
+        wins:     userWithStats.stat.wins,
+        defeats:  userWithStats.stat.defeats,
+        ratio:    userWithStats.stat.ratio
       };
     });
-
+  
     return leaderBoard;
   }
 

@@ -8,9 +8,9 @@ export const GET_USER_AVATAR = gql`
   }
 `;
 
-export const MY_HISTORY_MATCH = gql`
-query MyHistoryMatch($userId: Int!) {
-  myHistoryMatch(userId: $userId) {
+export const MY_MATCH_HISTORY = gql`
+query MyMatchHistory($userId: Int!) {
+  myMatchHistory(userId: $userId) {
     scoreUser1
     scoreUser2
     winnerId
@@ -23,4 +23,17 @@ query MyHistoryMatch($userId: Int!) {
     }
   }
 }
+`;
+
+export const MY_MATCH_STATS = gql`
+  query MyMatchStatistic($userId: Int!) {
+    myMatchStatistic(userId: $userId) {
+      grade
+      level
+      rank
+      wins
+      defeats
+      ratio
+    }
+  }
 `;

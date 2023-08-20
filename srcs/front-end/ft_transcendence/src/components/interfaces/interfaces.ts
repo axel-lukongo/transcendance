@@ -79,6 +79,15 @@ export interface Player {
 	rank: string;
   }
 
+  export interface IUserStat {
+	grade: number;
+	level: number;
+	rank: string;
+	wins: number;
+	defeats: number;
+	ratio: number;
+  }
+
 /* //////////////////////////////////////////////////////// */
 /* Contact */
 

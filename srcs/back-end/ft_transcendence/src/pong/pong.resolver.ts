@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, Subscription, Context, ObjectType, Field } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Subscription, Context, ObjectType, Field, Float } from '@nestjs/graphql';
 import { PongService } from './pong.service';
 import { Pong } from './entities/pong.entity';
 import { CreatePongInput } from './dto/create-pong.input';
@@ -35,7 +35,7 @@ export class JoinPongResponse {
 }
 
 @ObjectType()
-export class LeaderBoard{
+export class StatisticMatch{
   @Field(() => Int)
   grade: number;
   
@@ -47,6 +47,15 @@ export class LeaderBoard{
 
   @Field(() => String)
   rank: string;
+
+  @Field(() => Int)
+  wins: number;
+
+  @Field(() => Int)
+  defeats: number;
+
+  @Field(() => Float)
+  ratio: number;
 
 }
 
@@ -97,14 +106,22 @@ export class PongResolver {
 
 
   @Query(() => [Pong] )
-  myHistoryMatch(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.myHistoryMatch(userId);
+  myMatchHistory(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.myMatchHistory(userId);
   }
 
-  @Query(() => [LeaderBoard])
-  async historyMatch() {
-    return this.pongService.historyMatch();
+
+  @Query(() => StatisticMatch)
+  async myMatchStatistic(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.myMatchStatistic(userId)
   }
+
+  @Query(() => [StatisticMatch])
+  async leaderBoard() {
+    return this.pongService.leaderBoard();
+  }
+
+
   
   
   @Mutation(() => Pong)

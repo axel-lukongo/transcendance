@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const HISTORY_MATCH = gql`
-  query HistoryMatch {
-    historyMatch {
+export const LEADERBOARD = gql`
+  query LeaderBoard {
+    leaderBoard {
       grade
       nickname
       level
