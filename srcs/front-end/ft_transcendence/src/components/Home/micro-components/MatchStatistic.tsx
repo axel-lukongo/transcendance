@@ -38,7 +38,6 @@ const MatchStatistic: React.FC<PropsMatchStatistic> =({user}) => {
   }
 
   return (
-<div className="stat-box profil-box">
   <div className="stat-box-container">
     <div className="stat-item">
       <img src={gradeImg} alt="Grade" />
@@ -77,7 +76,6 @@ const MatchStatistic: React.FC<PropsMatchStatistic> =({user}) => {
       <p>RATIO</p>
     </div> 
   </div>
-</div>
 
   );
 };

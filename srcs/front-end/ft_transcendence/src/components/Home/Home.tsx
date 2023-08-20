@@ -21,8 +21,9 @@ const Home = () => {
       {userFromStorage && (
         <>
           <div className='screen-box'>
-          
-          <MatchStatistic user={userFromStorage} />
+          <div className="stat-box profil-box">
+                 <MatchStatistic user={userFromStorage} />
+          </div>
           
           <AvatarBox />
           

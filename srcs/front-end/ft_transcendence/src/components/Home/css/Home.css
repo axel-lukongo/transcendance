@@ -168,6 +168,7 @@
 	position: relative;
 	align-items: center;
 	width: 100%;
+	overflow: hidden;
 }
 
 /* Ajoutez ces styles à votre feuille de styles CSS */
@@ -175,28 +176,27 @@
 .stat-item {
 	display: flex;
 	align-items: center;
-
 	flex-direction: column;
   }
   
   .stat-item img {
 	width: 40%; /* Ajustez la largeur de l'image selon vos besoins */
 	/* margin-right: 3%; */
-	margin-bottom: 1%;
+	margin-bottom: 12%;
   }
   
   .stat-item p {
 	margin-top: 2%; /* Ajustez l'espacement comme souhaité */
 	margin-bottom: 1%; /* Ajustez l'espacement comme souhaité */
-	font-size: medium;
+	font-size: large;
   }
   
   .stat-item hr {
-	width: 50%;
+	width: 70%;
 	border: none;
-	border-top: 3px solid #ccc;
+	border-top: 3px solid #c5c3c6ab;
 	margin-top: 1%; /* Ajustez l'espacement comme souhaité */
-	margin-bottom: 1%; /* Ajustez l'espacement comme souhaité */
+	margin-bottom: 4%; /* Ajustez l'espacement comme souhaité */
   }
   
   
