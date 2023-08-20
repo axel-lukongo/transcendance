@@ -54,7 +54,6 @@ export class MailingService {
       };
   
       const result = await transport.sendMail(mailOptions);
-      // console.log('Email sent successfully:', result);
     } catch (error) {
       console.error('Error sending email:', error);
     }

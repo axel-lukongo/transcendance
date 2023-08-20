@@ -4,7 +4,7 @@ import { IAddContact } from '../../../interfaces/interfaces'
 
 export default function AddContactBtn({id, nickname, user, refetch}: IAddContact) {
 
-	const [addContact] = useMutation(CREATE_CONTACT)
+	const [addContact, { loading: loading, error: error }] = useMutation(CREATE_CONTACT)
 	
 	const handleSubmit = () => {
 		addContact({
@@ -16,7 +16,15 @@ export default function AddContactBtn({id, nickname, user, refetch}: IAddContact
 			}
 		}).then(() => {
 			refetch();
-		})
+		}).catch((error) => {
+			console.log("you can't add this user: ", error.message);
+		});
+
+	}
+	if(error){
+		return(
+			<div>{error.message}  </div>
+		)
 	}
 	
 	return (

@@ -1,13 +1,4 @@
 
-// interface the_id{
-// 	blockerId: number
-// 	blockedId: number
-// }
-
-// export default function Tobloc({blockerId, blockedId}: the_id){
-
-// }
-
 
 import React from 'react';
 import { useMutation, gql } from '@apollo/client';
@@ -19,7 +10,7 @@ interface TheId {
 
 
 const Tobloc: React.FC<TheId> = ({ blockerId, blockedId }) => {
-  const [createTobloc] = useMutation(CREATE_TOBLOC_MUTATION);
+  const [createTobloc, {data, loading}] = useMutation(CREATE_TOBLOC_MUTATION);
 
   const handleCreateTobloc = async () => {
     try {

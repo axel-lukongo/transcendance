@@ -14,7 +14,6 @@ export default function ChanelList(props: IPropsChanel) {
 	/* State */
 	const {data, refetch, error} = useQuery(CHANELS_LIST, {
 		variables: {
-			input: props.user.id,
 			private_chan: props.private_chan
 		}
 	})
@@ -22,9 +21,9 @@ export default function ChanelList(props: IPropsChanel) {
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effects */
 
-	useEffect(() => {
+	// useEffect(() => {
 		refetch();
-	}, [props.refetchChanels, refetch])
+	// }, [])
 
 	/* //////////////////////////////////////////////////////// */
 	/* Querry Error */

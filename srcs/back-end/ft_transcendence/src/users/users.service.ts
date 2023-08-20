@@ -20,22 +20,19 @@ export class UsersService {
     return this.prisma.user.findUnique({where: {token}});
   }
   
+  async update(id: number, data: UpdateUserInput) {
 
-async update(id: number, data: UpdateUserInput) {
+    data.avatar = data.avatar ? 
+      'http://localhost:4000/uploads/' + await saveBase64ToFile(data.avatar, id) 
+      :
+      'http://localhost:4000/uploads/default_avatar.jpg';
+    
 
-  data.avatar = data.avatar ? 
-    'http://localhost:4000/uploads/' + await saveBase64ToFile(data.avatar, id) 
-    :
-    'http://localhost:4000/uploads/default_avatar.jpg';
-  
-
-  return this.prisma.user.update({
-    where: { id },
-    data
-  });
-}
-
-
+    return this.prisma.user.update({
+      where: {id: data.id},
+      data
+    });
+  }
 
   remove(id: number) {
     return this.prisma.user.delete({where: {id: id}});
@@ -78,7 +75,13 @@ async update(id: number, data: UpdateUserInput) {
             { id: user_id },
             { chanels: {
               some: { chanel_id: chan_id }
-            }}
+            }},
+			{ user_ban: {
+				some: {
+				  channel_id: chan_id
+				}
+			  }
+	  		}
           ]
         }
       }

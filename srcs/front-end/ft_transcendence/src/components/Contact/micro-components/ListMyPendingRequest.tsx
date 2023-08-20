@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { REQUEST } from '../graphql/Querys'
-import { IContacts, User } from '../../interfaces/interfaces'
+import { IContactsLink, User } from '../../interfaces/interfaces'
 
 export interface IMyPendingRequest {
 	user: User;
@@ -23,7 +23,7 @@ export default function MyPendingRequest({user}: IMyPendingRequest) {
 	return (
 		<div>
 			{
-				data.myContactRequest.map( (element: IContacts) => (
+				data.myContactRequest.map( (element: IContactsLink) => (
 					<p>{element.contact.nickname}</p>
 				))
 			}

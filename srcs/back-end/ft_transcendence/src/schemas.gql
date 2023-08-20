@@ -5,7 +5,7 @@
 type User {
   id: Int!
   token: String!
-  is_connecting: Boolean!
+  state: Int!
   tfa_code: String
   email: String!
   intra_login: String!
@@ -42,12 +42,26 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Tobloc {
+  id: Int!
+  blocker_id: Int!
+  blocked_id: Int!
+  blocked: User
+}
+
+type Banned {
+  id: Int!
+  user_id: Int!
+  channel_id: Int!
+  user_ban: User
+}
+
 type Contact {
   id: Int!
   user_id: Int!
   contact_id: Int!
   pending: Boolean!
-  contact(user_id: Int!): User!
+  contact: User!
 }
 
 type Pong {
@@ -109,29 +123,29 @@ type UsersChanels {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean!
+  is_muted: Boolean
+  is_admin: Boolean
+  user: User
   chanels: Chanel!
-}
-
-type Tobloc {
-  id: Int!
-  blocker_id: Int!
-  blocked_id: Int!
 }
 
 type Query {
   findAllUsers: [User!]!
   findUserById(id: Int!): User!
-  searchUsers(research: String!, user_id: Int!): [User!]!
-  searchUserForChan(user_id: Int!, chanel_id: Int!): [User!]!
+  searchUsers(research: String!): [User!]!
+  searchUserForChan(chanel_id: Int!): [User!]!
   Channel_findOne(id: Int!): Chanel!
-  chanels(user_id: Int!): [Chanel!]!
+  chanels: [Chanel!]!
   getChannelByOwnersAndInterlocutor(userId1: Int!, userId2: Int!): Chanel!
   Message_findAll_msg: [Message!]!
   Message_findAll_msg_chan(channelId: Int!): [Message!]!
   Message_findOne_msg(id: Int!): Message!
-  contactsRequest(user_id: Int!): [Contact!]!
-  myContactRequest(user_id: Int!): [Contact!]!
-  myContacts(user_id: Int!): [Contact!]!
+  person_blocked(id: Int!): [Tobloc!]!
+  tobloc(id: Int!): Tobloc!
+  banned_list(channelId: Int!): [Banned!]!
+  contactsRequest: [Contact!]!
+  myContactRequest: [Contact!]!
+  myContacts: [Contact!]!
   makeAuthentication(code: String!): User!
   checkTwoAuthenticationFactor(code: String!): User!
   findPongs: [Pong!]!
@@ -147,9 +161,9 @@ type Query {
   findWaitingRoom(id: Int!): WaitingRoom!
   findBalls: [Ball!]!
   findBall(id: Int!): Ball!
-  chanelsRequest(user_id: Int!): [UsersChanels!]!
-  myChanels(user_id: Int!, private_chan: Boolean!): [UsersChanels!]!
-  tobloc(id: Int!): Tobloc!
+  chanelsRequest: [UsersChanels!]!
+  myChanels(private_chan: Boolean!): [UsersChanels!]!
+  ChannelMembers(channel_id: Int!): [UsersChanels!]!
 }
 
 type Mutation {
@@ -163,10 +177,16 @@ type Mutation {
   createMessage(createMsgInput: CreateMessageInput!): Message!
   updateMessage(updateMsgInput: UpdateMessageInput!): Message!
   deleteMessage: Message!
+  createToBloc(blockerId: Int!, blockedId: Int!): Tobloc!
+  removeTobloc(id: Int!): Tobloc!
+  createBanned(createBannedInput: CreateBannedInput!): Banned!
+  removeBanned(userId: Int!, channelId: Int!): Banned!
   createContact(createContact: CreateContactInput!): Contact!
   replyAddContact(reply: UpdateContact!): Contact!
+  deletecontact(user1: Float!, user2: Float!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
+  updateState(new_state: Int!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
@@ -186,13 +206,14 @@ type Mutation {
   addUser(addUserChanel: AddUserChanel!): UsersChanels!
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
   deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!
-  createToBloc(blockerId: Int!, blockedId: Int!): Tobloc!
-  removeTobloc(id: Int!): Tobloc!
+  updateChanelUser(key: UpdateChanelUserInput!): UsersChanels!
+  updateChanelAdmin(key: UpdateChanelUserInput!): UsersChanels!
 }
 
 input UpdateUserInput {
   id: Int!
   token: String
+  state: Int!
   is_connecting: Boolean
   tfa_code: String
   email: String
@@ -208,10 +229,10 @@ input CreateChanelInput {
   owner_id: Int!
   chanel_name: String!
   chanel_size: Int!
-  privmsg: Boolean
   max_users: Int!
   logo: String
   interlocutor_id: Int
+  directMsg: Boolean
 }
 
 input UpdateChanelInput {
@@ -219,10 +240,10 @@ input UpdateChanelInput {
   owner_id: Int
   chanel_name: String
   chanel_size: Int
-  privmsg: Boolean
   max_users: Int
   logo: String
   interlocutor_id: Int
+  directMsg: Boolean
   id: Int!
 }
 
@@ -239,6 +260,11 @@ input UpdateMessageInput {
   sender_id: Int
   channel_id: Int
   id: Int!
+}
+
+input CreateBannedInput {
+  user_id: Int!
+  channel_id: Int!
 }
 
 input CreateContactInput {
@@ -303,16 +329,23 @@ input AddUserChanel {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean
+  is_muted: Boolean
+  is_admin: Boolean
+  mute_start_time: Int!
 }
 
 input UpdateChanelUserInput {
   user_id: Int!
   chanel_id: Int!
   pending: Boolean
+  is_muted: Boolean!
+  is_admin: Boolean!
+  mute_start_time: Int!
 }
 
 type Subscription {
   addmessage(channel_id: Int!): Message!
+  changeState: User!
   pongUpdatedSubscription(id: Int!): Pong!
   playerUpdatedSubscription(id: Int!): Player!
   ballUpdatedSubscription(id: Int!): Ball!

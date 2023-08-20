@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Chanel } from '../interfaces/interfaces';
+import { Chanel, User } from '../interfaces/interfaces';
 import Chanels from './micro-components/Chanels';
 import ChanelsRequest from './micro-components/ChanelsRequests';
 import HeaderChanel from './micro-components/Box/HeaderChanel';
 import CreateChanelForm from './micro-components/forms/CreateChanelForm';
-import ChatBox from './micro-components/requests/ChatBox';
+import ChatBox from './micro-components/Box/ChatBox';
 import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
+import Param_Chan from './micro-components/forms/chan_param';
 
 /* CSS */
 import './css/messages.css';
@@ -16,6 +17,7 @@ import './css/messages.css';
 export const __CREATE_CHANEL__ = 1;
 export const __ADD_USER__ = 2;
 export const __CHAT__ = 3;
+export const __CHAN_PARAM__ = 5;
 
 export const __DIRECT_MESSAGE__ = 1;
 export const __PRIVATE_CHANEL__ = 2;
@@ -32,6 +34,7 @@ const Message = () => {
 	/* //////////////////////////////////////////////////////// */
 	/* States */
 
+	
 	const [chanel_focus, setChanelFocus] = useState({
 		id: "",
 		chanel_name: "",
@@ -48,7 +51,14 @@ const Message = () => {
 
 	const [chatBox, setChatBox] = useState(__CHAT__);
 
-	const [is_chanel, setIsChanel] = useState(true);
+	const [is_chanel] = useState(true);
+
+
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effect */
+	
+	
+
 
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
@@ -85,27 +95,25 @@ const Message = () => {
 
 
 	const handleChatBox = (switch_id: number) => {
-		if (switch_id < 1 || switch_id > 4)
+		if (switch_id < 1 || switch_id > 5)
 			throw new Error("Bad ID");
 		else
 			setChatBox(switch_id);
 	}
 	
-	const handleIsChanel = () => {
-		setIsChanel(prevValue => !prevValue);
-	}
+	// const handleIsChanel = () => {
+	// 	setIsChanel(prevValue => !prevValue);
+	// }
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
-	console.log('dans les message ====>>>>   ',chanel_focus );
+	// console.log('dans les message ====>>>>   ',chanel_focus );
 
 	const renderSwitch = (id: number) => {
 		switch(id) {
 			case __DIRECT_MESSAGE__: {
 				return (
-					<div>
-						
-						<Direct_message
+					<Direct_message
 						user={user}
 						private_chan={true}
 						refetchChat={refetchChat}
@@ -115,8 +123,7 @@ const Message = () => {
 						handleChanelRefetch={handleChanelReftch}
 						handleChatRefetch={handleChatRefetch}
 						handleChatBox={handleChatBox}
-						/>
-					</div>
+					/>
 				);
 			}
 			case __PRIVATE_CHANEL__: {
@@ -200,7 +207,7 @@ const Message = () => {
 						</div>
 						<div className="chat-message ">
 							<div className="input-group mb-0">
-								<CreateMsg />
+								<CreateMsg chan={chanel_focus}/>
 							</div>
 						</div>
 					</div>
@@ -217,6 +224,26 @@ const Message = () => {
 						/>
 						<div className="chat-history">
 						<AddUserInChan 
+							user={user}
+							chanel_focus={chanel_focus}
+						/>
+						</div>
+						<div className="chat-message ">
+						</div>
+					</div>
+				);
+			}
+			case __CHAN_PARAM__: {
+				return (
+					<div className="chat"> 
+						<HeaderChanel
+							user={user}
+							chanel_focus={chanel_focus}
+							handleChatBox={handleChatBox}
+							is_chanel={is_chanel}
+						/>
+						<div className="chat-history">
+						<Param_Chan 
 							user={user}
 							chanel_focus={chanel_focus}
 						/>

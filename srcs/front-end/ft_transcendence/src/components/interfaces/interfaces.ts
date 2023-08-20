@@ -2,14 +2,15 @@
 /* Model */
 
 export interface User {
+    id: number;
     avatar: string;
     email: string;
-    id: number;
     nickname: string;
     token: string;
-    tfa_code?: string
+    tfa_code?: string;
+	state?: number;
 	level: number;
-  }
+}
 
 export interface Chanel {
 	id: number;
@@ -25,15 +26,24 @@ export interface UserChanels {
 	user_id: number;
 	pending: boolean;
 	chanels: Chanel;
-}
-export interface IContact {
-	id: number;
-	nickname: string;
-	email: string;
-	token: number;
+	is_admin: boolean;
+	is_muted: boolean;
+	user: User;
 }
 
-export interface IContacts {
+export interface Banned{
+	user_id: number;
+	channel_id: number;
+	user_ban: User;
+}
+
+export interface IContact extends Partial<User> {
+	id: number;
+	nickname: string;
+	state: number;
+}
+
+export interface IContactsLink {
 	id: number;
 	pending: boolean;
 	contact: IContact

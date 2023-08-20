@@ -3,16 +3,16 @@ import { useRef } from 'react';
 import { useMutation } from '@apollo/client';
 // import { CREATE_MUTATION_1, CREATE_MUTATION_2 } from '../graphql/mutations';
 import { ADD_USER_IN_CHANEL } from '../../Contact/graphql/Mutations';
-import { Chanel  } from '../../interfaces/interfaces';
+import { Chanel, channelfocus  } from '../../interfaces/interfaces';
 import { __CHAT__ } from '../message';
 
 interface MyComponentProps {
-	chan: Chanel;
 	hasFetchedData: Chanel | undefined; // Définir le type de l'état hasFetchedData
-    handleChange: (element: Chanel) => void;
+	setchanel_focus: (element: Chanel) => void;
+    // handleChange: (element: Chanel) => void;
 }
 
-const CreatUserChan = ({ chan, hasFetchedData, handleChange }: MyComponentProps) => {
+const CreatUserChan = ({ hasFetchedData, setchanel_focus }: MyComponentProps) => {
   const [createMutation2, { loading: loading2, error: error2 }] = useMutation(ADD_USER_IN_CHANEL);
   const user = JSON.parse(sessionStorage.getItem('user') || '');
   const isConditionExecuted = useRef<boolean>(false);
@@ -28,8 +28,16 @@ const CreatUserChan = ({ chan, hasFetchedData, handleChange }: MyComponentProps)
 				  user_id: hasFetchedData.interlocutor_id,
 				  chanel_id: hasFetchedData?.id,
 				  pending: false,
+				  is_admin: false,
+				  is_muted: false,
+				  mute_start_time: 0,
 			  }
 			},
+		}).then(()=>{
+		  setchanel_focus(hasFetchedData);
+		})
+		.catch((error) => {
+			console.log("Html: ", error.message);
 		});
 		isConditionExecuted.current = true;
 	}
@@ -43,6 +51,8 @@ const CreatUserChan = ({ chan, hasFetchedData, handleChange }: MyComponentProps)
   if ( error2) {
     return <div>Error: in the double mutation</div>;
   }
+
+//   chanel_focus(hasFetchedData);
 
 //   if(hasFetchedData){
 // 		handleChange(hasFetchedData)

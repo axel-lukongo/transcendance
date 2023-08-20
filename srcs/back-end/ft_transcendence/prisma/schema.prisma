@@ -13,7 +13,7 @@ datasource db {
 model User {
 	id					Int         @id @default(autoincrement())
 	token				String?		@unique
-	is_connecting		Boolean?	@default(true)
+	state				Int
 	tfa_code			String?
 	email				String		@unique
 	intra_login			String		@unique
@@ -24,10 +24,13 @@ model User {
 	userPong			Pong[]		@relation("User1")
 	userPong2			Pong[]		@relation("User2")
 	chanels				Users_Chanels[]
-	own_chan			Chanel[]	@relation("Owner")
-	contact				Contact[]	@relation("contactRef")
-	reverse_contact		Contact[]	@relation("reverseContactRef")
-	sender				Message[]	@relation("Send")
+	own_chan			Chanel[]		@relation("Owner")
+	contact				Contact[]		@relation("contactRef")
+	reverse_contact		Contact[]		@relation("reverseContactRef")
+	sender				Message[]       @relation("Send")
+	blocked				ToBloc[]		@relation("Blocked")
+	user_ban			user_banned[]		@relation("User_ban")
+
 }
 
 model Contact {
@@ -52,18 +55,28 @@ model Chanel {
 	owner				User		@relation("Owner", fields: [owner_id], references: [id])
 	users				Users_Chanels[]
 	messages			Message[]	@relation("ChanelMessages")
-	interlocutor_id     Int?
+	interlocutor_id		Int?
 	directMsg			Boolean		@default(false)
+	AdminList			Int[]		@default([]) // Liste des ID des administrateurs
+}
+
+model user_banned{
+	id					Int			@id @default(autoincrement())
+	user_id				Int
+	channel_id			Int
+	user_ban			User		@relation("User_ban", fields: [user_id], references: [id])
 }
 
 model Users_Chanels {
+
 	user_id				Int
 	chanel_id			Int
 	pending				Boolean?	@default(true)
-					
+	is_muted			Boolean?	@default(false)
+	is_admin			Boolean?	@default(false)
 	user				User		@relation(fields: [user_id], references: [id])
 	chanel				Chanel		@relation(fields: [chanel_id], references: [id])
-
+	mute_start_time		Int			@default(0)
 	@@id([user_id, chanel_id])
 }
 
@@ -115,6 +128,7 @@ model ToBloc{
 	id					Int			@id @default(autoincrement())
 	blocker_id			Int
 	blocked_id			Int
+	blocked				User		@relation("Blocked", fields: [blocked_id], references: [id])
 }
 
 model Message {

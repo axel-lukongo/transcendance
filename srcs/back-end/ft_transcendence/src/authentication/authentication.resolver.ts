@@ -1,21 +1,22 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context, Subscription } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { CreateAuthenticationInput } from './dto/create-authentication.input';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
-import { UpdateUserInput } from 'src/users/dto/update-user.input';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService, __CONNECTED__, __DISCONNECTED__ } from './authentication.service';
 import { UsersService } from 'src/users/users.service';
 import { MailingService } from './mailing/mailing.service';
-import { saveBase64ToFile } from 'src/utils/upload.utils';
 import { generateTwoFactorCode } from 'src/utils/auth.utils';
 import axios, { AxiosResponse } from 'axios';
+import { socket } from 'src/main';
+import { Res } from '@nestjs/common';
 
 
 
+export const CHANGE_STATE = 'changeState';
 
 @Resolver()
 export class AuthenticationResolver {
-
+  
   private intraLogin: string;
   private email: string;
   private user: User;
@@ -27,7 +28,10 @@ export class AuthenticationResolver {
 
 
   @Mutation(() => User)
-  async createUser(@Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput) {
+  async createUser (
+    @Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput,
+    @Context() context
+  ) {
     if (this.intraLogin && this.email) {
     try {
         const createUserInput: CreateUserInput = {
@@ -35,7 +39,8 @@ export class AuthenticationResolver {
           intra_login: this.intraLogin, 
           email: this.email,
          };
-        return await this.authService.create(createUserInput);
+        let user =  await this.authService.create(createUserInput);
+        return (user);
       } 
       catch (error) {
         throw new Error("createUser Error: " + error);
@@ -98,4 +103,22 @@ export class AuthenticationResolver {
       throw new Error('Invalid two-factor authentication code');
     }
   }
+
+  @Mutation(() => User, {name: "updateState"})
+  async updateState(
+    @Args("new_state", { type: () => Int }) new_state: number,
+    @Context() context
+  ) {
+    if (new_state < 1 || new_state > 3)
+      throw new Error("Unrecognized state");
+    const updateUser =  await this.userService.update(
+      context.req.userId,
+      {id: context.req.userId, state: new_state})
+    socket.publish(CHANGE_STATE, {
+      changeState: updateUser
+    });
+
+    return updateUser;
+  }
+
 }

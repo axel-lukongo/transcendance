@@ -8,9 +8,9 @@ export class User {
   @Field()
   token: string;
 
-  @Field(() => Boolean)
-  is_connecting: boolean;
- 
+  @Field(() => Int)
+  state: number;
+
   @Field({ nullable: true })
   tfa_code?: string;
 

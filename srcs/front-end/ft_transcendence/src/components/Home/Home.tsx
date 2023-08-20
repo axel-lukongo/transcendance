@@ -8,13 +8,14 @@ import { User } from '../interfaces/interfaces';
 import './css/Home.css';
 import MatchStatistic from './micro-components/MatchStatistic';
 
-const Home = () => {
 
+
+const Home = () => {
   const userFromStorageString = sessionStorage.getItem('user');
   let userFromStorage: User | null = null;
   if (userFromStorageString && userFromStorageString !== 'undefined')
     userFromStorage = JSON.parse(userFromStorageString);
-
+  
 
   return (
     <div className='Home'>

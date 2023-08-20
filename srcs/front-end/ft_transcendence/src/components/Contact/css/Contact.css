@@ -61,6 +61,18 @@ h2 {
 		margin-right: 5%;
 	}
 
+	#blocked_btn {
+		/* position: relative; */
+		width: 30px;
+		height: 30px;
+		background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat;
+		background-size: contain;
+		border: 0px transparent;
+		object-fit: scale-down;
+		align-items: center;
+		margin-right: 5%;
+	}
+
 /* Friend Request */
 
 .box_request{
