@@ -30,7 +30,7 @@ const HistoryMatch = () => {
             <div className="history-match-container" key={index}>
               <div className="history-match-item">
                 <p>{userFromStorage?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"} </p>
-                <hr />
+                {/* <hr /> */}
               </div>
             </div>
           );

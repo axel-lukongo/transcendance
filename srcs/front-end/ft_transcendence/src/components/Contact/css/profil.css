@@ -14,11 +14,12 @@
 
 .profile_btn{
 	width: 15px;
-	height: 15px;
+	height: 20px;
 	background: url("/ft_transcendence/src/image/profil.png") center no-repeat;
 	background-size: contain;
 	margin-left: 5%;
 }
+
 
 .profil-modal .modal-content {
 	position: relative;
@@ -114,6 +115,7 @@
 .sub-Container_one .mail-boxe{
 	color: #ffd27d;
 	width: 0%;
+
 }
 
 
@@ -158,11 +160,13 @@
 	background-color: rgba(154, 147, 205, 0.642);
 	width: 30%;
 	height: 100%;
+	align-items: center;
 	animation: flicker 2s infinite; /* Animation de scintillement */
   }
 
   .Ranks{
 	margin-top: 10%;
+	
 	font-size: 1.5rem;
 }
 
@@ -183,7 +187,6 @@
 	margin-top: 10%;
 	color: #f2f2f2;
 	font-size: 1.5rem;
-
 }
 
 

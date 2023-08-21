@@ -13,7 +13,6 @@ interface IshowProfil{
 
 const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 
-	// console.log('weew=====>>>>>>>>  ',user)
 	const [avatar, setAvatar] = useState(user.avatar);
 	const { data, loading, error, refetch } = useQuery(MY_HISTORY_MATCH, {
 		variables: {
@@ -27,13 +26,6 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 			<div>loading...</div>
 		)
 	}
-
-	// if(error)
-	// {
-	// 	return (
-	// 		<div>error</div>
-	// 	)
-	// }
 
 	if (data && data.myHistoryMatch) {
 		const historyMatches: PongI[] = data.myHistoryMatch;
@@ -58,24 +50,24 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 				<hr className="horizontal-line" />
 
 				<div className='boxes-container'>
-					<div className='rankes-box' > RANK
-						<div className='Ranks'>
+					<div className='rankes-box' style={{ textAlign: 'center' }} > RANK
+						<div className='Ranks'  >
 							{user.rank}
 						</div>
 					</div>
-					<div className='xp-box' > level
+					<div className='xp-box' style={{ textAlign: 'center' }}> level
 						<div>
 							{user.level}
 						</div>
 					 </div>
 				</div>
-				<div className='resumer'> Resumer </div>
+				<div className='resumer' style={{ textAlign: 'center' }}> Resumer </div>
 
 				<hr className="horizontal-line" />
 
 
 				<div className='container-scroll'> 
-					<div className="container-tree" >
+					<div className="container-tree" style={{ textAlign: 'center' }}>
 						{ data?.myHistoryMatch.map((match: PongI, index: number) => {
 							const isUser1 = match.user1?.nickname === user.nickname;
 							const myScore = isUser1 ? match.scoreUser1 : match.scoreUser2;

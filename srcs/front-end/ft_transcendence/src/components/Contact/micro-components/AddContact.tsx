@@ -73,26 +73,26 @@ import Profil_page from "./buttons/Profil_page";
 	<div className="research_result">
 	  {data.searchUsers.map((element: { nickname: string, id: number }, index: number) => (
 		<div key={element.id} className="card">
-		  <p>{element.nickname}</p>
-		  {ShowProfil === true && SelectedUserIndex === index && (
-			<Profil_page handleShowProfil={handleShowProfil} user={data.searchUsers[index]} />
-		  )}
-		  <button className="profile_btn" onClick={() => handleShowProfil(index)}></button>
-				<AddContactBtn 
-					user={user}
-					id={element.id}
-					nickname={element.nickname}
-					refetch={refetchContact}
-				/>
+			<p>{element.nickname}</p>
+			{ShowProfil === true && SelectedUserIndex === index && (
+				<Profil_page handleShowProfil={handleShowProfil} user={data.searchUsers[index]} />
+			)}
+			<button className="profile_btn"  onClick={() => handleShowProfil(index)}></button>
+
+			<AddContactBtn 
+				user={user}
+				id={element.id}
+				nickname={element.nickname}
+				refetch={refetchContact}
+			/>
 		</div>
 	  ))}
 	</div>
 	<div className="pending_request">
 			<MyPendingRequest 
-					user={user}
-				/>
+				user={user}
+			/>
 	</div>
   </div>
 );
-
 }

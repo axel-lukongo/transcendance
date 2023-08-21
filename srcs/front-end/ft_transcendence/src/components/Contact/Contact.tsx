@@ -66,7 +66,7 @@ export default function Contact() {
 							</button>
                         </div>
 						{showBlockedPlayers && (
-						<div className="box_ListContact" >
+						<div className="boxe_BannedList" style={{ textAlign: 'center' }} >
 							<MyBlockedList/>
 						</div>
 						)} 

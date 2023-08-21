@@ -39,7 +39,6 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 			setShowProfil(true);
 			setSelectedUserIndex(userIndex);
 		};
-	// console.log('on est laaaa =====>>>> ',data.myContacts[0].contact);
 	return (
 		<div className="List_contact">
 			{
@@ -47,18 +46,16 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 					<div key={element.id} className="card">
 						<div className="avatar"></div>
 						<p>{element.contact.nickname}</p>
+						<button className="profile_btn profile" onClick={() => handleShowProfil(index)}></button>
 						{ShowProfil === true && SelectedUserIndex === index && (
-						<Profil_page handleShowProfil={handleShowProfil} user={element.contact} />
+							<Profil_page handleShowProfil={handleShowProfil} user={element.contact} />
 		  				)}
-						<button className="profile_btn" onClick={() => handleShowProfil(index)}></button>
-
-						{/* <div>{element.contact.email}</div>
-						<div>{element.contact.token}</div> */}
 						<RefuseContact 
 							element={element} 
 							refetchContact={refetchContact}
 							label="delete"
 						/>
+
 					</div>
 				))
 			}

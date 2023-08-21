@@ -166,6 +166,23 @@ h2 {
 	flex-wrap: wrap;
 }
 
+.boxe_BannedList{
+	position: relative;
+	width: 80%;
+	height: 45%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: 3px solid #ffd27d;
+	background-color: rgba(113, 67, 250, 0.20);
+	overflow: hidden;
+	border-radius: 50px;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+
 .List_contact {
 	position: relative;
 	height: 70%;
