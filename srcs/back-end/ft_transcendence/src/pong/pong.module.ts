@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PongService } from './pong.service';
-import { PongResolver } from './pong.resolver';
+import { PongResolver, TimerService } from './pong.resolver';
 import { PlayerModule } from './player/player.module';
 import { PrismaService } from 'prisma/prisma.service';
 import { WaitingRoomModule } from './waiting-room/waiting-room.module';
@@ -26,6 +26,7 @@ import { UsersModule } from 'src/users/users.module';
               BallService,
               UsersResolver,
               UsersService,
+              TimerService,
               PrismaService],
   
   imports: [PlayerModule, WaitingRoomModule, UsersModule, BallModule]

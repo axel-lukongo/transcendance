@@ -22,41 +22,46 @@ const Home = () => {
       {userFromStorage && (
         <>
           <div className='screen-box'>
-          <div className="stat-box profil-box">
-                 <MatchStatistic user={userFromStorage} />
-          </div>
-          
-          <AvatarBox />
-          
-          <div className="history-match-box profil-box">
-          <HistoryMatch user={userFromStorage} />
-          </div>
-          <NicknameBox/>
-          
-          <div className='email-box profil-box'>
-          {userFromStorage.email}
-          </div>
+            
+            <div className="stat-box profil-box">
+              <MatchStatistic user={userFromStorage} />
+            </div>
+            
+            <AvatarBox />
+
+            <div className="history-match-box profil-box">
+              <HistoryMatch user={userFromStorage} />
+            </div>
+
+            <NicknameBox/>
+
+            <div className='email-box profil-box'>
+              {userFromStorage.email}
+            </div>
+
+            <TfaToggleButton userId={userFromStorage.id} tfaCode={userFromStorage.tfa_code} />
+            
             <Link to='/pong'>
-              <button id="play-button" className='game-box profil-box' >
+              <button className='game-box profil-box' >
                 <h1>PLAY</h1>
                 <div className="movement-ball"></div>
               </button>
-          
-          </Link>
-          <button className='log-out-button logo-box'></button>
-          <Link to="/">
-            <button className='home-button logo-box'></button>
-          <Link to="/leaderBoard">
-            <button className='leader-board-button logo-box'></button>
-          </Link>
-          </Link>
-          <Link to="/message">
-            <button className='message-button logo-box'></button>
-          </Link>
-          <Link to="/contact">
-            <button className='contact-button logo-box'></button>
-          </Link>
-          <TfaToggleButton userId={userFromStorage.id} tfaCode={userFromStorage.tfa_code} />
+            </Link>
+            <Link to ='/'>
+              <button className='log-out-button logo-box'></button>
+            </Link>
+            <Link to="/">
+              <button className='home-button logo-box'></button>
+            </Link>
+            <Link to="/leaderBoard">
+              <button className='leader-board-button logo-box'></button>
+            </Link>
+            <Link to="/message">
+              <button className='message-button logo-box'></button>
+            </Link>
+            <Link to="/contact">
+              <button className='contact-button logo-box'></button>
+            </Link>
           </div>
         </>
       )}

@@ -73,6 +73,8 @@ type Pong {
   loserId: Int
   winnerId: Int
   versusDate: DateTime!
+  start: Boolean!
+  interval: Int!
   user1: User!
   user2: User!
 }
@@ -191,7 +193,6 @@ type Mutation {
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
   joinPong(userId: Int!): JoinPongResponse!
-  stopPong: Boolean!
   endPong(userId: Int!): String!
   startPong(ballId: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
   removePlayer(id: Int!): Player!
@@ -213,8 +214,7 @@ type Mutation {
 input UpdateUserInput {
   id: Int!
   token: String
-  state: Int!
-  is_connecting: Boolean
+  state: Float
   tfa_code: String
   email: String
   intra_login: String
@@ -294,10 +294,12 @@ input UpdatePongInput {
   userId1: Int
   userId2: Int
   id: Int!
-  scoreUser1: Int!
-  scoreUser2: Int!
+  scoreUser1: Int
+  scoreUser2: Int
   loserId: Int
   winnerId: Int
+  start: Boolean
+  interval: Int
 }
 
 input CreatePlayerInput {
