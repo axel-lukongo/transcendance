@@ -166,22 +166,10 @@ h2 {
 	flex-wrap: wrap;
 }
 
-.boxe_BannedList{
-	position: relative;
-	width: 80%;
-	height: 45%;
-	margin-left: 10%;
-	margin-right: 10%;
-	border: 3px solid #ffd27d;
-	background-color: rgba(113, 67, 250, 0.20);
-	overflow: hidden;
-	border-radius: 50px;
-	margin-top: 2%;
-	margin-bottom: 2%;
-	display: flex;
-	flex-wrap: wrap;
-}
+.Banned{
+	margin-left: 40%;
 
+}
 
 .List_contact {
 	position: relative;
@@ -202,6 +190,8 @@ h2 {
 	border-radius: 50px;
 	margin-left: 10%;
 	margin-right: 10%;
+	align-items: center;
+
 }
 
 .List_contact .avatar {
@@ -215,14 +205,14 @@ h2 {
 
 	/* List Contact Button */
 
-	#delete {
+	.delete {
 		position: relative;
 		background: url(/ft_transcendence/src/image/no.png) center no-repeat;
 		background-size: contain;
 		border: none;
 		height: 100%;
 		width: 100%;
-		margin-right: 15px;
+		margin-right: 25px;
 	}
 
 /* Add Contact */

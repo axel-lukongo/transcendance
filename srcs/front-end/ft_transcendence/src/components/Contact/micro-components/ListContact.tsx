@@ -46,7 +46,7 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 					<div key={element.id} className="card">
 						<div className="avatar"></div>
 						<p>{element.contact.nickname}</p>
-						<button className="profile_btn profile" onClick={() => handleShowProfil(index)}></button>
+						<button className="profile_btn " onClick={() => handleShowProfil(index)}></button>
 						{ShowProfil === true && SelectedUserIndex === index && (
 							<Profil_page handleShowProfil={handleShowProfil} user={element.contact} />
 		  				)}

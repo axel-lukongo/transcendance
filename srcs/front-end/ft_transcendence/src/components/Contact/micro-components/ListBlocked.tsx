@@ -31,7 +31,7 @@ export function MyBlockedList(){
 	};
 
 	return (
-		<div  >
+		<div className="Banned" >
 		<h2 >  blocked List: </h2>
 		{data && data.person_blocked.map((item: blocked) => (
 		  <div key={item.id}>

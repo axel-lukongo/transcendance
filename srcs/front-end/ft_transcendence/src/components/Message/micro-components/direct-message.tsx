@@ -7,6 +7,7 @@ import {useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
 import Tobloc from "./Tobloc";
+import Profil_page from "../../Contact/micro-components/buttons/Profil_page";
 
 /*
 dans ce composant j'affiche la liste de mes contact sur le champs de gauche, et chaque contact possedes des boutons
@@ -21,6 +22,10 @@ Ces fonctions ce declanche lorsque un boolean specifique passe a true.
 */
 export default function Direct_message(props: IPrivateMessageProps) {
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
+
+	const [ShowProfil ,setShowProfil] = useState(false);
+	const [SelectedUserIndex ,setSelectedUserIndex] = useState(0);
+
 
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
 
@@ -46,6 +51,14 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		return <p>No contacts available.</p>;
 	}
 
+	const handleShowProfil = (userIndex: number) => {
+		setShowProfil(true);
+		setSelectedUserIndex(userIndex);
+	};
+
+	console.log(' ========>>>>>>>  ', data);
+
+
 	return(
 
 		<div id="plist" className="people-list">
@@ -53,20 +66,24 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				<h3>Direct Message</h3>
 			}</div>
 
-			{data.myContacts.map((contact: IContacts) => {
+			{data.myContacts.map((contact: IContacts, index:number) => {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
-					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-					<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
-				<div className="about">
-					<div className="name"> {contact.contact.nickname}</div>
-						{selectedContactId === contact.contact.id && < Creat_direct_msg
-						interlocutor={contact.contact}
-						handlechanelfocus={props.handleChanelFocus} />}
-						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
 
+					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
+						<button className="profile_btn " onClick={() => handleShowProfil(index)}></button>
+						{ShowProfil === true && SelectedUserIndex === index && (
+							<Profil_page handleShowProfil={handleShowProfil} user={contact.contact} />
+						)}
+						<img src={contact.contact.avatar} alt="avatar" />
 						<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
-						<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
+						<div className="about">
+							<div className="name"> {contact.contact.nickname}</div>
+							{selectedContactId === contact.contact.id && < Creat_direct_msg
+							interlocutor={contact.contact}
+							handlechanelfocus={props.handleChanelFocus} />}
+							{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
+							<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
 						</div>
 					</ul>
 				);

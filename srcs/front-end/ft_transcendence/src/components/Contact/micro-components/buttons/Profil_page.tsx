@@ -14,6 +14,7 @@ interface IshowProfil{
 const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 
 	const [avatar, setAvatar] = useState(user.avatar);
+	console.log(' ========>>>>>>>  ', user);
 	const { data, loading, error, refetch } = useQuery(MY_HISTORY_MATCH, {
 		variables: {
 			userId: user.id
@@ -37,12 +38,12 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
                 <button className="close-btn" onClick={() => handleShowProfil(user.id)}> X </button>
 
 				<div className='Container_one'>
-					<div className='avatar' > 
-						<img src={avatar} alt="User Avatar" />
+					<div className='avatar_prfl'> 
+						<img className='avatar-img-prfl' src={avatar} alt="Avatar of user" />
 					</div>
 					<div className='sub-Container_one'>
-						<div className='nickname-boxe'> {user.nickname}</div>
-						<div className='mail-boxe'> {user.email}</div>
+						<div className='nickname-box'> {user.nickname}</div>
+						<div className='mail-box'> {user.email}</div>
 					</div>
 				</div>
 

@@ -29,8 +29,13 @@ export const GET_CONTACT = gql`
 			user_id
 			contact_id
 			contact(user_id: $user_id){
-				nickname
 				id
+				email
+				intra_login
+				nickname
+				avatar
+				level
+				rank
 			}
 		}
 	}
