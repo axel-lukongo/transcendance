@@ -3,6 +3,7 @@ import '../css/Authentication.css'
 
 interface PropsCreateUser {
     onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    
   }
   
   export const CreateUserForm = ({ onSubmit }: PropsCreateUser): JSX.Element => {

@@ -30,7 +30,9 @@ const Authentication: FC = () => {
 
   const [user2fa, setUser2fa] = useState(false);
 
-  const wsContext = useContext(WebSocketContext);
+  const [access, setAccess] = useState(false);
+
+  // const wsContext = useContext(WebSocketContext);
   
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -78,18 +80,10 @@ const Authentication: FC = () => {
           }
         })
           .then(response => {
-            const { id, token, email, nickname, avatar, tfa_code, level } = response.data.createUser;
-            const user = {
-              id,
-              token,
-              email,
-              nickname,
-              avatar,
-              tfa_code,
-              level
-            };
-            sessionStorage.setItem('user', JSON.stringify(user));
-            wsContext?.updateUser(user);
+            const {token} = response.data.createUser;
+            sessionStorage.setItem('userToken', JSON.stringify(token));
+            setAccess(true);
+            // wsContext?.updateUser(user);
           })
           .catch(error => {
             console.log(error);
@@ -104,18 +98,10 @@ const Authentication: FC = () => {
           }
         })
         .then(response => {
-          const { id, token, email, nickname, avatar, tfa_code, level} = response.data.createUser;
-          const user = {
-            id,
-            token,
-            email,
-            nickname,
-            avatar,
-            tfa_code,
-            level
-          };
-          sessionStorage.setItem('user', JSON.stringify(user));
-          wsContext?.updateUser(user);
+          const {token} = response.data.createUser;
+          sessionStorage.setItem('userToken', JSON.stringify(token));
+          setAccess(true);
+          // wsContext?.updateUser(user);
         })
         .catch(error => {
           console.log(error);
@@ -131,7 +117,11 @@ const Authentication: FC = () => {
       
       checkTwoAuthenticationFactor({ variables: { input: code.value } })
       .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
+        
+        const {token} = response.data.checkTwoAuthenticationFactor
+        sessionStorage.setItem('userToken', JSON.stringify(token));
+        setAccess(true);
+      
       })
       .catch((error: any) => {
         window.alert('The code you entered does not match the one sent to the email address');
@@ -153,46 +143,38 @@ const Authentication: FC = () => {
     
     useEffect(() => {
       if (AuthenticationData) {
-        const { id, token, email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
-        const user = {
-          id,
-          token,
-          email,
-          nickname,
-          avatar,
-          tfa_code,
-          level
-        };
-        sessionStorage.setItem('user', JSON.stringify(user));
-        wsContext?.updateUser(user);
+        const {token, state} = AuthenticationData.makeAuthentication;
+        
+        if (state === -1)
+        {
+          setCanCheck(true);
+          setUserExist(false);
+        }
+        else if (state == 0)
+        {
+          setCanCheck(true);
+          setUser2fa(true);
+        }
+        else
+        {
+          setAccess(true);
+        }
+        sessionStorage.setItem('userToken', JSON.stringify(token));
+        // wsContext?.updateUser(user);
 
-        setCanCheck(true);
       }
     }, [AuthenticationData]);
     
-    useEffect(() => {
-    if (AuthenticationError) {
-        setCanCheck(true);
-        if (AuthenticationError.message === "To complete authentication, 2FA verification is required")
-         {
-           setUser2fa(true);
-         }
-        else if (AuthenticationError.message === "This user does not exist yet") 
-        {
-          setUserExist(false);
-        }
-    }
-  }, [AuthenticationError]);
 
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      RETURN                            */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {sessionStorage.getItem('user') ? ( 
+    {sessionStorage.getItem('userToken') && access? (
       <Routes>
-        <Route path="/" element={<Home  />} />
-        <Route path="/pong" element={<Pong  />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/pong" element={<Pong />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/leaderBoard' element={<LeaderBoard />} />
@@ -203,17 +185,11 @@ return (
           <SigninButton onClick={handleRedirect} />
         ) : (
           <>
-            {AuthenticationError && (
-              <>
-                {!userExist && (
-                  <CreateUserForm onSubmit={handleCreateUser} />
-                )}
-                {user2fa && (
-                  <>
-                    <TwoFactorAuthForm onSubmit={handleTfa} />
-                  </>
-                )}
-              </>
+            {AuthenticationData && !userExist && (
+              <CreateUserForm onSubmit={handleCreateUser} />
+            )}
+            {AuthenticationData && user2fa && (
+              <TwoFactorAuthForm onSubmit={handleTfa} />
             )}
           </>
         )}
@@ -221,6 +197,8 @@ return (
     )}
   </div>
 );
+
+
 }
 
 export default Authentication;

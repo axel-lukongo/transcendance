@@ -30,7 +30,6 @@ async function main() {
 				nickname: data.nickname,
 				email: data.email,
 				token: data.token,
-				intra_login: data.intra_login,
 				state: __CONNECTED__
 			}
 		})

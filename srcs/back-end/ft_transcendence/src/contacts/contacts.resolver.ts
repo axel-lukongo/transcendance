@@ -6,11 +6,10 @@ import { CreateContactInput } from './dto/create-contact.input';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { UpdateContact } from './dto/update-contact.input';
-import { CHANGE_STATE } from 'src/authentication/authentication.resolver';
+import { CHANGE_STATE } from 'src/users/users.resolver';
 import { socket } from 'src/main';
 import { resolveCaa } from 'dns';
 
-import { response } from 'express';
 import { ToblocService } from 'src/messages/tobloc/tobloc.service';
 @Resolver(() => Contact)
 export class ContactsResolver {

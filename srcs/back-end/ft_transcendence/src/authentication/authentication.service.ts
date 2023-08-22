@@ -4,6 +4,8 @@ import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { generateAccessToken } from 'src/utils/auth.utils';
 import { saveBase64ToFile } from 'src/utils/upload.utils';
 
+export const __CREATING__ = -1;
+export const __NEED_TFA__ = 0;
 export const __CONNECTED__ = 1;
 export const __AFK__ = 2;
 export const __DISCONNECTED__ = 3;
@@ -15,20 +17,19 @@ export class AuthenticationService {
 
   async create(createUserInput: CreateUserInput) {
     try {
-      let { avatar, ...rest } = createUserInput;
       const user = await this.prisma.user.create({
         data: {
-          email: rest.email,
-          nickname: rest.nickname,
-          intra_login: rest.intra_login,
-          state: __CONNECTED__
+          ...createUserInput,
+          state: __CREATING__,
         } 
       });
 
-      //lors de la creation du User nous mettons a jour le token
-      // et un bouleen servant a la verification de la connexion du user
-      // et la creation de l'avatr du user 
+
+      //GENERATE ACCES TOKEN
       const token = generateAccessToken(user.id);
+      
+      // DEFINE THE AVATAR IMG
+      let avatar = createUserInput.avatar;
       avatar = avatar ? 
       'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, user.id) 
       :
@@ -36,10 +37,11 @@ export class AuthenticationService {
 
       const updatedUser =  this.prisma.user.update({
         where: { id: user.id },
-        data: { token, avatar }
+        data: { 
+          token,
+           avatar }
       });
 
-      // Retournez l'utilisateur mis à jour 
       return updatedUser;
     } 
     catch (error) {
@@ -48,10 +50,9 @@ export class AuthenticationService {
     }
   }
 
-  async findUserByIntraLogin(intra_login: string) {
-    let user = await this.prisma.user.findUnique({ where: { intra_login } });
+  async findUserByEmail(email: string) {
+    let user = await this.prisma.user.findUnique({ where: { email } });
 
-    // Cette verification permet de savoir si cette query est lancé a l'authentification 
     if (user) {
       const token = generateAccessToken(user.id);
       user = await this.prisma.user.update({

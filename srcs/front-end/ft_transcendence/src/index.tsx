@@ -9,9 +9,8 @@ import { WebSocketProvider } from './WebSocketProvider'
 
 const authLink = setContext((_, { headers }) => {
   
-  const userString = sessionStorage.getItem('user');
-  const user = userString ? JSON.parse(userString) : null;
-  const token = user? user.token : null;
+  const token  = sessionStorage.getItem('userToken');
+  console.log('token front end ', token);
   return {
     headers: {
       ...headers,
@@ -19,15 +18,6 @@ const authLink = setContext((_, { headers }) => {
     }
   }
 });
-
-
-function recupToken() {
-  const userString = sessionStorage.getItem('user');
-  const user = userString ? JSON.parse(userString) : null;
-  const token = user? user.token : null;
-  console.log('token : ', token);
-  return token;
-}
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',
@@ -46,7 +36,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     // Gérer les erreurs réseau ici
     if (networkError.message.includes('401')) {
-      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('userToken');
       window.location.reload();
       console.log('erreur 401');
     }

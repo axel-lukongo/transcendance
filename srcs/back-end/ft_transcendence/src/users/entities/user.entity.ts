@@ -18,9 +18,6 @@ export class User {
   email: string;
 
   @Field()
-  intra_login: string;
-
-  @Field()
   nickname: string;
 
   @Field({ nullable: true })

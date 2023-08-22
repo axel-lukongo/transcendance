@@ -8,7 +8,6 @@ type User {
   state: Int!
   tfa_code: String
   email: String!
-  intra_login: String!
   nickname: String!
   avatar: String
   level: Int!
@@ -74,7 +73,6 @@ type Pong {
   winnerId: Int
   versusDate: DateTime!
   start: Boolean!
-  interval: Int!
   user1: User!
   user2: User!
 }
@@ -187,8 +185,7 @@ type Mutation {
   replyAddContact(reply: UpdateContact!): Contact!
   deletecontact(user1: Float!, user2: Float!): Contact!
   deleteContact(id: Int!): Contact!
-  createUser(createAuthenticationInput: CreateAuthenticationInput!): User!
-  updateState(new_state: Int!): User!
+  createUser(updateAuthenticationInput: UpdateAuthenticationInput!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
@@ -217,7 +214,6 @@ input UpdateUserInput {
   state: Float
   tfa_code: String
   email: String
-  intra_login: String
   nickname: String
   avatar: String
   level: Float
@@ -280,9 +276,9 @@ input UpdateContact {
   id: Int!
 }
 
-input CreateAuthenticationInput {
+input UpdateAuthenticationInput {
   nickname: String!
-  avatar: String
+  avatar: String!
 }
 
 input CreatePongInput {
@@ -299,7 +295,6 @@ input UpdatePongInput {
   loserId: Int
   winnerId: Int
   start: Boolean
-  interval: Int
 }
 
 input CreatePlayerInput {
