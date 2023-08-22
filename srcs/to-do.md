@@ -17,8 +17,6 @@
 
 ### | PROFILE PAGE
 
-- create profil page 
-
 ## | OTHER
 
 - deconnection

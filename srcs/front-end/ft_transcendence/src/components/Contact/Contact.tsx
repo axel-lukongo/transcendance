@@ -1,8 +1,7 @@
-import React, { useEffect, useState,} from "react"
+import React, { useState } from "react"
 import FriendsRequest from "./micro-components/FriendsRequest"
 import ListContact from "./micro-components/ListContact";
 import AddContact from "./micro-components/AddContact";
-import { SUB_STATE } from "./graphql/Querys";
 import './css/Contact.css'
 import { MyBlockedList } from "./micro-components/ListBlocked";
 import { Link } from "react-router-dom";
@@ -13,7 +12,6 @@ export default function Contact() {
     /* //////////////////////////////////////////////////////// */
     /* States */
 
-    const [test, setTest] = useState([]);
 	const [refetchProp, setRefetch] = useState(false);
 
     const [swap, setSwap] = useState(true);

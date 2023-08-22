@@ -10,7 +10,7 @@ import "../css/Contact.css"
 
 export default function FriendsRequest({refetchContact, refetchProps, user}: IProposContact) {
 
-	const {data, loading, error, refetch} = useQuery(CONTACTS, {variables: {input: user.id}});
+	const {data, loading, error, refetch} = useQuery(CONTACTS);
 
 	useEffect(() => {
 		refetch();
