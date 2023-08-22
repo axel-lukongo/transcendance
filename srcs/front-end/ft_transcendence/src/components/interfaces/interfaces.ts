@@ -82,6 +82,22 @@ export interface Player {
 	user2?: User;
   }
 
+  export interface ILeaderBoard {
+	grade: number;
+	nickname: string;
+	level: number;
+	rank: string;
+  }
+
+  export interface IUserStat {
+	grade: number;
+	level: number;
+	rank: string;
+	wins: number;
+	defeats: number;
+	ratio: number;
+  }
+
 /* //////////////////////////////////////////////////////// */
 /* Contact */
 

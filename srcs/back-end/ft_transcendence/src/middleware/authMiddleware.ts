@@ -2,7 +2,6 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction, response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { PrismaService } from 'prisma/prisma.service';
-import { generateAccessToken } from 'src/utils/auth.utils';
 
 export interface AuthenticatedRequest extends Request {
   userId?: number;
@@ -18,7 +17,6 @@ export class AuthMiddleware implements NestMiddleware {
     
     // Vérifie si la requête doit être vérifiée avec le jeton
     const requiresTokenCheck = !(isUserCreationRequest || isMakeAuthenticationRequest || isCheckTwoAuthenticationFactorRequest);
-    
     if (requiresTokenCheck ) {
 
       

@@ -9,6 +9,7 @@ const __AFK__ = 2;
 const __DISCONECTED__ = 3;
 
 
+
 const App = () => {
 
 	const [updateState] = useMutation(UPDATE_STATE)

@@ -88,7 +88,6 @@ const Xp: FC<XpProps> = ({ userId }) => {
         const xpGainPercentage = (xpGain / rangeSize) * 100;
         const totalXp = user.level < 30 ? (curXpPercentage + xpGainPercentage).toFixed(2)
                                         : curXpPercentage.toFixed(2);
-
         setTotalXpPercentage(parseFloat(totalXp));
         setNextRank(getNextRank(userRank));
       }

@@ -89,6 +89,7 @@ model Pong {
   loserId     			Int?
   winnerId    			Int?
   versusDate  			DateTime 	@default(now())
+  start					Boolean		@default(false)
 
   user1        			User     	@relation("User1", fields: [userId1], references: [id])
   user2        			User     	@relation("User2", fields: [userId2], references: [id])

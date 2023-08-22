@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, Subscription, Context, ObjectType, Field } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Subscription, Context, ObjectType, Field, Float } from '@nestjs/graphql';
 import { PongService } from './pong.service';
 import { Pong } from './entities/pong.entity';
 import { CreatePongInput } from './dto/create-pong.input';
@@ -11,9 +11,9 @@ import { Player } from './player/entities/player.entity';
 import { UpdateBallInput } from './ball/dto/update-ball.input';
 import { UsersResolver } from 'src/users/users.resolver';
 import { UpdateUserInput } from 'src/users/dto/update-user.input';
-import { CreatePlayerInput } from './player/dto/create-player.input';
 import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 import { UpdatePlayerInput } from './player/dto/update-player.input';
+import { Injectable } from '@nestjs/common';
 
 const pubSub = new PubSub();
 const PONG_UPDATE_EVENT = 'PongUp';
@@ -33,12 +33,55 @@ export class JoinPongResponse {
   pong?: Pong;
 }
 
+@ObjectType()
+export class StatisticMatch{
+  @Field(() => Int)
+  grade: number;
+  
+  @Field(() => String)
+  nickname: string;
+
+  @Field(() => Int)
+  level: number;
+
+  @Field(() => String)
+  rank: string;
+
+  @Field(() => Int)
+  wins: number;
+
+  @Field(() => Int)
+  defeats: number;
+
+  @Field(() => Float)
+  ratio: number;
+
+}
+
+Injectable()
+export class TimerService {
+  private timers: Record<number, NodeJS.Timer> = {};
+
+  startPongTimer(pongId: number, callback: () => void) {
+    if (this.timers[pongId]) {
+      clearInterval(this.timers[pongId]);
+    }
+
+    const timer = setInterval(callback, 50);
+    this.timers[pongId] = timer;
+  }
+
+  stopPongTimer(pongId: number) {
+    if (this.timers[pongId]) {
+      clearInterval(this.timers[pongId]);
+      delete this.timers[pongId];
+    }
+  }
+}
+
 @Resolver(() => Pong)
 export class PongResolver {
 
-  private start : boolean;
-  private stop : boolean;
-  private  interval : NodeJS.Timer | null;
 
   // Vérifier les limites de l'environnement pour gérer les rebonds
   private maxX: number;  // Valeur maximale de la coordonnée X (par exemple, 100%)
@@ -52,10 +95,8 @@ export class PongResolver {
               private readonly player: PlayerResolver,
               private readonly ball: BallResolver,
               private readonly waitingRoom: WaitingRoomResolver,
-              private readonly user: UsersResolver) {
-                this.start = false;
-                this.stop = false;
-                this.interval = null;
+              private readonly user: UsersResolver,
+              private readonly timer: TimerService) {
                 this.maxX = 100;
                 this.maxY = 100;
                 this.minX = 0;
@@ -80,10 +121,23 @@ export class PongResolver {
 
 
   @Query(() => [Pong] )
-  myHistoryMatch(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.myHistoryMatch(userId);
+  myMatchHistory(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.myMatchHistory(userId);
   }
 
+
+  @Query(() => StatisticMatch)
+  async myMatchStatistic(@Args('userId', { type: () => Int }) userId: number) {
+    return this.pongService.myMatchStatistic(userId)
+  }
+
+  @Query(() => [StatisticMatch])
+  async leaderBoard() {
+    return this.pongService.leaderBoard();
+  }
+
+
+  
   
   @Mutation(() => Pong)
   removePong(@Args('id', { type: () => Int }) id: number) {
@@ -258,19 +312,6 @@ export class PongResolver {
   }
 
 
-  @Mutation(() => Boolean)
-  stopPong() {
-    if (this.start === true) {
-      this.start = false;
-      // this.stop = true;
-      clearInterval(this.interval);
-      this.interval = null;
-      return true;
-    }
-
-    return false; 
-  }
-
   @Mutation(() => String)
   async endPong(
     @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
@@ -283,7 +324,7 @@ export class PongResolver {
       {
         if (player.host)
         {
-          this.stopPong();
+          // this.stopPong(player.pongId);
           await this.ball.removeBall(player.ballId);
         }
         const pong = await this.findPong(player.pongId);
@@ -297,6 +338,7 @@ export class PongResolver {
             scoreUser2: player.host ? 5 : 0,
             winnerId: winnerId,
             loserId: loserId,
+            start: false
           };
           await this.updateRankLevel(winnerId);
           await this.updatePong(updateDataPong);
@@ -317,27 +359,29 @@ export class PongResolver {
                         @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
                         @Args('pongId', { type: () => Int }) pongId: number) {
 
-    if (this.start === true) {
+
+    const pong = await this.findPong(pongId);
+    if (pong.start === true) {
       return false;
     }
-    this.start = true;
-    
-    const currentPong = await this.findPong(pongId);
-    this.interval = setInterval(async () => {
+    const updateDataPong : UpdatePongInput = {
+      id: pong.id,
+      start: true
+    }
+    await this.updatePong(updateDataPong);
 
+    const callback = async () => {
       const currentPong = await this.findPong(pongId);
-
+      if (currentPong.start === false) {
+        this.timer.stopPongTimer(pongId);
+        return true;
+      }
       const ball  = await this.ball.findUnique(ballId);
-  
       const player = await this.player.findPlayer(playerId);
-
       const otherPlayer = await this.player.findPlayer(otherPlayerId);
-      
-      if (!currentPong || ! ball || !player || !otherPlayer)
-        return this.stopPong();
-    
       await this.ballMove(ball, player, otherPlayer, currentPong);
-    }, 50);
+    }
+    this.timer.startPongTimer(pongId, callback);
 
     return true;
   }
@@ -395,13 +439,13 @@ export class PongResolver {
         }
         if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
-          this.stopPong();
+          currentPong.start = false;
           this.updateRankLevel(currentPong.winnerId);
         }
           const DataUpdatePong : UpdatePongInput = {
             ...currentPong
           }
-          const up = this.updatePong(DataUpdatePong);
+         this.updatePong(DataUpdatePong);
 
           const DataUpdateBall : UpdateBallInput = {
             id : ball.id,

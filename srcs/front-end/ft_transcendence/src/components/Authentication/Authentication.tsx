@@ -13,6 +13,7 @@ import Home from '../Home/Home';
 import Pong from '../Pong/Pong';
 import Message from '../Message/message';
 import Contact from '../Contact/Contact';
+import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import { WebSocketContext } from '../../WebSocketProvider';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
@@ -194,6 +195,7 @@ return (
         <Route path="/pong" element={<Pong  />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/leaderBoard' element={<LeaderBoard />} />
       </Routes>
     ) : (
       <>

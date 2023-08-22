@@ -10,6 +10,14 @@
 	left: 25%; 
 }
 
+.pong-container-box img {
+	width: 100%;
+	height: 100%;
+}
+
+.pong-container-box.map-select {
+	flex-direction: column;
+}
   
   /* Utiliser des pourcentages pour la position des sticks */
 .red-stick {
@@ -40,10 +48,12 @@
 	border: 9px solid #ffd27d;
 	background-color: rgba(41, 37, 82, 0.40);
 	position: absolute;
+	font-size: xx-large;
 	top: 12%;
 	left: 25%;
   }
   
+
   .score-separator {
 	width: 2%;
 	height: 80%;
@@ -56,7 +66,6 @@
   .red-stick-score-not-host {
 	  position: relative;
 	  text-align: center;
-	  font-size: 300%;
 	  font-family: "Orbitron";
 	  font-weight: bold;
   }
@@ -216,3 +225,80 @@
 	  transform: translateX(-96%);
 	}
   }
+
+
+
+  .carousel-container {
+	position: relative;
+	display: flex;
+	/* flex-direction: column; */
+	align-items: center;
+	justify-content: center;
+	width: 90%;
+	margin: auto;
+	height: 80%;
+	top: 2%;
+
+  }
+  
+  .carousel.carousel-slider {
+	width: 100%;
+	height: 100%
+  }
+  .carousel-slide {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	cursor: pointer;
+  }
+
+  .carousel .slider {
+	height: 100%;
+  }
+
+  .slider-wrapper.axis-horizontal {
+	height: 100%;
+  }
+  
+  .carousel-slide img {
+	width: 100%;
+	height: 100%;
+  }
+  
+  .confirm-button-container {
+	height: 20%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+  }
+
+  #select-map {
+	font-size: 100%;
+	justify-content: center;
+	color: #ffd27d;
+	font-family: "Orbitron";
+	margin: auto;
+  }
+  
+  .selected-map-name {
+	font-size: 1.2em;
+	color: #ffd27d;
+	font-family: "Orbitron";
+	font-weight:bold;
+	margin-bottom: 5px;
+  }
+  
+  .confirm-button {
+	background-color: unset;
+	color: #ffd27d;
+	font-family: "Orbitron";
+	font-weight:bold;
+	border: 2px solid #ffd27d;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+  }
+  
