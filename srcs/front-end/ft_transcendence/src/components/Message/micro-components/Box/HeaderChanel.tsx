@@ -28,11 +28,13 @@ export default function HeaderChanel({chanel_focus, user, is_chanel, handleChatB
 					<h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
 					<small>Last seen: 2 hours ago</small>
 				</div>
-				<div>{chanel_focus.id !== "" ? <button onClick={handelClick}>++</button> : null}</div> {/* btn pour l'ajout de users dans un chanel */}
 				</div>
-				<div>
-					<button onClick={handleChanParam}> parametre </button>
-				</div>
+				<div className='btn-on-header'>
+				{/* <div> */}
+					{chanel_focus.id !== "" ? <button className='add-user-in-chan' onClick={handelClick}></button> : null}
+					<button className='parametre-of-chan' onClick={handleChanParam}></button>
+				</div> {/* btn pour l'ajout de users dans un chanel */}
+				{/* </div> */}
 			</div>
 		</div>
 	);

@@ -56,7 +56,6 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		setSelectedUserIndex(userIndex);
 	};
 
-	console.log(' ========>>>>>>>  ', data);
 
 
 	return(
@@ -70,22 +69,23 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
 
-					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-						<button className="profile_btn " onClick={() => handleShowProfil(index)}></button>
+					<div className="list-of-direct-msg" key={unique_key}> 
+						<button className="direct-msg-btn" onClick={() => handleNewDirectMsg(contact.contact.id)}>
+							<img className="avatar-in-direct-msg" src={contact.contact.avatar} alt="avatar" />
+							<div className="my-about">
+								<div className="name-in-direct-msg"> {contact.contact.nickname}</div>
+							</div>
+						</button>
+						<button className="btn_profile " onClick={() => handleShowProfil(index)}></button>
 						{ShowProfil === true && SelectedUserIndex === index && (
 							<Profil_page handleShowProfil={handleShowProfil} user={contact.contact} />
 						)}
-						<img src={contact.contact.avatar} alt="avatar" />
-						<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
-						<div className="about">
-							<div className="name"> {contact.contact.nickname}</div>
-							{selectedContactId === contact.contact.id && < Creat_direct_msg
-							interlocutor={contact.contact}
-							handlechanelfocus={props.handleChanelFocus} />}
-							{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
-							<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
-						</div>
-					</ul>
+						<button className="btn_blocked" onClick={() => setHandleTobloc(true)}></button>
+						{selectedContactId === contact.contact.id && < Creat_direct_msg
+						interlocutor={contact.contact}
+						handlechanelfocus={props.handleChanelFocus} />}
+						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
+					</div>
 				);
 			})}
 		</div>
