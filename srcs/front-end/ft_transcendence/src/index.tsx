@@ -9,8 +9,8 @@ import { WebSocketProvider } from './WebSocketProvider'
 
 const authLink = setContext((_, { headers }) => {
   
-  const token  = sessionStorage.getItem('userToken');
-  console.log('token front end ', token);
+  const tokenValue = sessionStorage.getItem('userToken');
+  const token = tokenValue ? tokenValue.replace(/^"(.*)"$/, '$1') : null;
   return {
     headers: {
       ...headers,

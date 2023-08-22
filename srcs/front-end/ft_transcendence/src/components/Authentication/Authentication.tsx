@@ -30,7 +30,15 @@ const Authentication: FC = () => {
 
   const [user2fa, setUser2fa] = useState(false);
 
-  const [access, setAccess] = useState(false);
+  const userTokenString = sessionStorage.getItem('userToken');
+  const userToken = userTokenString ? JSON.parse(userTokenString) : { token: '', access: '' };
+  
+  const [access, setAccess] = useState({
+    token: userToken.token || '',
+    state: userToken.access || 0,
+  });
+  
+  
 
   // const wsContext = useContext(WebSocketContext);
   
@@ -80,9 +88,8 @@ const Authentication: FC = () => {
           }
         })
           .then(response => {
-            const {token} = response.data.createUser;
-            sessionStorage.setItem('userToken', JSON.stringify(token));
-            setAccess(true);
+            const {token, state} = response.data.createUser;
+            sessionStorage.setItem('userToken', JSON.stringify(token, state));
             // wsContext?.updateUser(user);
           })
           .catch(error => {
@@ -98,9 +105,8 @@ const Authentication: FC = () => {
           }
         })
         .then(response => {
-          const {token} = response.data.createUser;
-          sessionStorage.setItem('userToken', JSON.stringify(token));
-          setAccess(true);
+          const {token, state} = response.data.createUser;
+          sessionStorage.setItem('userToken', JSON.stringify(token, state));
           // wsContext?.updateUser(user);
         })
         .catch(error => {
@@ -118,9 +124,8 @@ const Authentication: FC = () => {
       checkTwoAuthenticationFactor({ variables: { input: code.value } })
       .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
         
-        const {token} = response.data.checkTwoAuthenticationFactor
-        sessionStorage.setItem('userToken', JSON.stringify(token));
-        setAccess(true);
+        const {token, state} = response.data.checkTwoAuthenticationFactor
+        sessionStorage.setItem('userToken', JSON.stringify(token, state));
       
       })
       .catch((error: any) => {
@@ -145,21 +150,17 @@ const Authentication: FC = () => {
       if (AuthenticationData) {
         const {token, state} = AuthenticationData.makeAuthentication;
         
-        if (state === -1)
+        if (state === -2)
         {
           setCanCheck(true);
           setUserExist(false);
         }
-        else if (state == 0)
+        else if (state == 1)
         {
           setCanCheck(true);
           setUser2fa(true);
         }
-        else
-        {
-          setAccess(true);
-        }
-        sessionStorage.setItem('userToken', JSON.stringify(token));
+        sessionStorage.setItem('userToken', JSON.stringify(token, state));
         // wsContext?.updateUser(user);
 
       }
@@ -171,7 +172,7 @@ const Authentication: FC = () => {
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {sessionStorage.getItem('userToken') && access? (
+    {sessionStorage.getItem('userToken') ? (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pong" element={<Pong />} />

@@ -28,11 +28,11 @@ let AuthenticationResolver = exports.AuthenticationResolver = class Authenticati
         this.mailingService = mailingService;
     }
     async createUser(updateAuthenticationInput, context) {
-        console.log('contexxxxxxxxt', context.userId);
-        if (context.token.userId) {
+        console.log('contexxxxxxxxt', context.req.userId);
+        if (context.req.userId) {
             try {
-                const updateUserDataInput = Object.assign(Object.assign({}, updateAuthenticationInput), { id: context.token.userId });
-                await this.userResolveur.updateUser(updateUserDataInput);
+                const updateUserDataInput = Object.assign(Object.assign({}, updateAuthenticationInput), { id: context.req.userId });
+                return await this.userResolveur.updateUser(updateUserDataInput);
             }
             catch (error) {
                 throw new Error("createUser Error: " + error);

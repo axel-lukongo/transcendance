@@ -1,7 +1,7 @@
-import { Resolver, Query, Mutation, Args, Int, Context,  } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context,  } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
-import { AuthenticationService, __CONNECTED__, __DISCONNECTED__, __NEED_TFA__ } from './authentication.service';
+import { AuthenticationService, __ACCESS__, __CONNECTED__, __DISCONNECTED__, __NEED_TFA__ } from './authentication.service';
 import { MailingService } from './mailing/mailing.service';
 import { generateTwoFactorCode } from 'src/utils/auth.utils';
 import axios, { AxiosResponse } from 'axios';
@@ -25,15 +25,16 @@ export class AuthenticationResolver {
   async createUser (
     @Args('updateAuthenticationInput')updateAuthenticationInput:UpdateAuthenticationInput,
     @Context() context) {
-      console.log('contexxxxxxxxt',context.userId);
-      if (context.token.userId)
+      console.log('contexxxxxxxxt',context.req.userId);
+      if (context.req.userId)
       {
         try {
           const updateUserDataInput: UpdateUserInput = {
             ...updateAuthenticationInput,
-            id:  context.token.userId,
+            id:  context.req.userId,
+            state: __ACCESS__
           };
-          await this.userResolveur.updateUser(updateUserDataInput)
+           return await this.userResolveur.updateUser(updateUserDataInput);
         } 
         catch (error) {
           throw new Error("createUser Error: " + error);
@@ -88,8 +89,8 @@ export class AuthenticationResolver {
         tfa_code: code,
         state : __NEED_TFA__
       };
-      this.userResolveur.updateUser(updateUserDataInput);
       this.mailingService.sendMail(user.email, tfa_code);
+      return this.userResolveur.updateUser(updateUserDataInput);
     }
     return user;
   }
@@ -105,6 +106,7 @@ export class AuthenticationResolver {
       if (user.tfa_code === code) {
         const updateUserDataInput: UpdateUserInput = {
           id:  context.token.userId,
+          state: __ACCESS__,
           tfa_code : 'true'
         };
         return await this.userResolveur.updateUser(updateUserDataInput)

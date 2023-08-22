@@ -4,6 +4,7 @@ export const CREATE_USER = gql`
 mutation CreateUser($input: UpdateAuthenticationInput!) {
   createUser(updateAuthenticationInput: $input) {
     token
+    state
   }
 }
 `;

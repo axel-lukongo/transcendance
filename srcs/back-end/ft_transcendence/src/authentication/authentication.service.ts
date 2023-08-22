@@ -4,8 +4,9 @@ import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { generateAccessToken } from 'src/utils/auth.utils';
 import { saveBase64ToFile } from 'src/utils/upload.utils';
 
-export const __CREATING__ = -1;
-export const __NEED_TFA__ = 0;
+export const __CREATING__ = -2;
+export const __NEED_TFA__ = -1;
+export const __ACCESS__ = 0;
 export const __CONNECTED__ = 1;
 export const __AFK__ = 2;
 export const __DISCONNECTED__ = 3;

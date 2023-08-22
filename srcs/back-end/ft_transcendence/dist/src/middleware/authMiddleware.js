@@ -13,7 +13,7 @@ const prisma_service_1 = require("../../prisma/prisma.service");
 let AuthMiddleware = exports.AuthMiddleware = class AuthMiddleware {
     use(req, res, next) {
         var _a, _b, _c;
-        const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split('')[1];
+        const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
         const isMakeAuthenticationRequest = ((_b = req.body) === null || _b === void 0 ? void 0 : _b.operationName) === 'MakeAuthentication';
         const isGraphql = (req.url === '/graphql');
         if (!isMakeAuthenticationRequest) {
