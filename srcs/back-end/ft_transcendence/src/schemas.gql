@@ -24,6 +24,8 @@ type Chanel {
   logo: String
   private: Boolean!
   interlocutor_id: Float
+  directMsg: Boolean
+  interlocutor: User
   messages: [Message!]!
 }
 

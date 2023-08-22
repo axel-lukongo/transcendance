@@ -76,14 +76,16 @@ export default function Direct_message(props: IPrivateMessageProps) {
 								<div className="name-in-direct-msg"> {contact.contact.nickname}</div>
 							</div>
 						</button>
+						{selectedContactId === contact.contact.id && < Creat_direct_msg
+						interlocutor={contact.contact}
+						handlechanelfocus={props.handleChanelFocus} />}
+
 						<button className="btn_profile " onClick={() => handleShowProfil(index)}></button>
 						{ShowProfil === true && SelectedUserIndex === index && (
 							<Profil_page handleShowProfil={handleShowProfil} user={contact.contact} />
 						)}
+
 						<button className="btn_blocked" onClick={() => setHandleTobloc(true)}></button>
-						{selectedContactId === contact.contact.id && < Creat_direct_msg
-						interlocutor={contact.contact}
-						handlechanelfocus={props.handleChanelFocus} />}
 						{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
 					</div>
 				);

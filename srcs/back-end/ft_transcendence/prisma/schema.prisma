@@ -25,6 +25,7 @@ model User {
 	userPong2			Pong[]		@relation("User2")
 	chanels				Users_Chanels[]
 	own_chan			Chanel[]		@relation("Owner")
+	interlocutor		Chanel[]		@relation("Interlocutor")
 	contact				Contact[]		@relation("contactRef")
 	reverse_contact		Contact[]		@relation("reverseContactRef")
 	sender				Message[]       @relation("Send")
@@ -52,10 +53,11 @@ model Chanel {
 	max_users			Int
 	logo				String?
 	private				Boolean		@default(true)
+	interlocutor_id		Int?		
 	owner				User		@relation("Owner", fields: [owner_id], references: [id])
+	interlocutor		User?		@relation("Interlocutor", fields: [interlocutor_id], references: [id])
 	users				Users_Chanels[]
 	messages			Message[]	@relation("ChanelMessages")
-	interlocutor_id		Int?
 	directMsg			Boolean		@default(false)
 	AdminList			Int[]		@default([]) // Liste des ID des administrateurs
 }

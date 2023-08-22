@@ -14,12 +14,14 @@ export interface User {
 
 export interface Chanel {
 	id: number;
+	owner_id: number;
 	chanel_name: string;
 	chanel_size: number;
 	max_users: number;
 	logo: string;
 	interlocutor_id: number;
-
+	directMsg: boolean;
+	interlocutor: User;
 }
 
 export interface UserChanels {
@@ -129,10 +131,13 @@ export interface IPropsChanel {
 
 export interface channelfocus  {
 	id: string,
+	owner_id: string
 	chanel_name: string,
 	chanel_size: string,
 	max_users: string,
 	logo: string,
+	directMsg: boolean,
+	interlocutor: User,
 }
 
 export interface IRequest {

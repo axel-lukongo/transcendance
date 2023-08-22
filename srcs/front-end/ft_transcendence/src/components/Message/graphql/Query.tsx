@@ -18,6 +18,11 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 			owner_id
 			logo
 			interlocutor_id
+			directMsg
+			interlocutor{
+				nickname
+				avatar
+			}
 		}
 	}
 `;
@@ -37,6 +42,7 @@ export const GET_CONTACT = gql`
 				level
 				rank
 			}
+
 		}
 	}
 `;
@@ -56,6 +62,7 @@ export const CHANELS_LIST = gql`query GetChanelList($input: Int!, $private_chan:
 		pending
 		user_id
 		chanels {
+			owner_id
 			chanel_name
 			id
 			chanel_size

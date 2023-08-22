@@ -53,6 +53,8 @@ export class ChanelService {
     return this.prisma.chanel.findMany({where: {owner_id: user_id}});
   }
 
+
+
   async getChannelByOwnersAndInterlocutor(userId1: number, userId2: number): Promise<Chanel | null> {
     return this.prisma.chanel.findFirst({
       where: {
@@ -67,11 +69,12 @@ export class ChanelService {
           },
         ],
       },
+	include: {interlocutor: true}
     });
   }
 
 
- 
+
   async removeDirectMsg(userId1: number, userId2: number): Promise<Chanel | null> {
 	const chan = await this.prisma.chanel.findFirst({
 	  where: {
