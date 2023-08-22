@@ -46,23 +46,32 @@ export default function ChanelList(props: IPropsChanel) {
 
 	return (
 		
-		<div id="plist" className="people-list">
-			<div className="position: sticky">{props.private_chan ? 
-			<h3>Private Chanels<button onClick={handleClic}>+</button></h3>
-			: <h3>Public Chanels<button onClick={handleClic}>+</button></h3>
-			}</div>
+		<div className="people-list">
+			<div className="header-side-bar">
+			{
+				props.private_chan ? 
+					<h3>
+						Private Chanels 
+						<button onClick={handleClic}>+</button></h3>
+					: <h3>
+						Public Chanels 
+						<button onClick={handleClic}>+</button>
+					</h3>
+			}
+			</div>
 			<div>
 			{
 				data.myChanels.map((chanel: UserChanels, index: number) => {
 					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`;
-					return (<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}>
-						<CardChanel 
-							chanel={chanel}
-							handleChanelFocus={props.handleChanelFocus}
-							handleChatBox={props.handleChatBox}
-						/>
-				</ul>);
-			})
+					return (
+						<ul className="chat-list" key={unique_key}>
+							<CardChanel 
+								chanel={chanel}
+								handleChanelFocus={props.handleChanelFocus}
+								handleChatBox={props.handleChatBox}
+							/>
+						</ul>);
+				})
 			}</div>
 		</div>
 	)

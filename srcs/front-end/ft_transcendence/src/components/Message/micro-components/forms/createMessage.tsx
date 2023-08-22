@@ -46,19 +46,16 @@ const CreateMsg = ({chan}: {chan: channelfocus}) => {
 	};
 
 	return (
-		<div >
-			<div >
-				{/* <label htmlFor='nom'> Content </label> */}
-				<input type='text'
-				value={Content}
-				onChange={handleContentChange}
-				id='champs1'
-				name='the Content'
-				onKeyPress={handleKeyPress}
-				className='input-message' />
-				<button onClick={handlecreateMessage} disabled={!Content} className='send-button' > send </button>
-			</div>
-
+		<div className='input-send-msg'>
+			{/* <label htmlFor='nom'> Content </label> */}
+			<input type='text'
+			value={Content}
+			onChange={handleContentChange}
+			id='champs1'
+			name='the Content'
+			onKeyPress={handleKeyPress}
+			className='input-message' />
+			<button onClick={handlecreateMessage} disabled={!Content} className='send-button' > send </button>
 			{/* <div>
 				 <label htmlFor='nom'> Channel_id </label> 
 				 <input type='text' value={ChanId} onChange={handlechannelIdChange} id='champs3' name='the channel_id' /> 

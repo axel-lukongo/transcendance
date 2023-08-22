@@ -10,10 +10,11 @@ import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
 import Param_Chan from './micro-components/forms/chan_param';
-import user_onglet from '../../image/user_onglet.png'
-import public_onglet from '../../image/visibility.png'
-import private_onglet from '../../image/visible.png'
-import request_onglet from '../../image/hourglass.png'
+
+/* Images */
+import user_onglet from '../../image/send.svg'
+import public_onglet from '../../image/visible.svg'
+import request_onglet from '../../image/wait-svgrepo-com.svg'
 
 /* CSS */
 import './css/messages.css';
@@ -45,6 +46,7 @@ const Message = () => {
 		chanel_size: "",
 		max_users: "",
 		logo: "",
+		directMsg: false
 	});
 
 	const [refecthChanels, setRefetchChanel] = useState(false);
@@ -74,7 +76,8 @@ const Message = () => {
 			chanel_name: element.chanel_name,
 			chanel_size: element.chanel_size.toString(),
 			max_users: element.max_users.toString(),
-			logo: element.logo
+			logo: element.logo,
+			directMsg: element.directMsg
 		});
 	}
 
@@ -210,9 +213,7 @@ const Message = () => {
 							<ChatBox chan={chanel_focus} />
 						</div>
 						<div className="chat-message ">
-							<div className="input-group mb-0">
-								<CreateMsg chan={chanel_focus}/>
-							</div>
+							<CreateMsg chan={chanel_focus}/>
 						</div>
 					</div>
 				);
@@ -272,24 +273,24 @@ const Message = () => {
         <Link to="/">
           <button className='home-button logo-box'></button>
         </Link>
-
-				<div className='nav_section_message'>
-					<button onClick={() => handleChangeOnglet(__DIRECT_MESSAGE__)}>
-						<img src={user_onglet} alt="" />
-					</button>
-					<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)}>
-						<img src={private_onglet} alt="" />
-					</button>
-					<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)}>
-						<img src={public_onglet} alt="" />
-					</button>
-					<button onClick={() => handleChangeOnglet(__CHANEL_REQUEST__)}>
-						<img src={request_onglet} alt="" />
-					</button>
-				</div>
-
 			  <div className="screen-box chat-app">
-				{ renderSwitch(side_bar_focus) }
+				<div className='side-bar'>
+					<div className='nav_section_message'>
+						<button onClick={() => handleChangeOnglet(__DIRECT_MESSAGE__)} className='nav_section_btn'>
+							<img src={user_onglet} alt="" id='btn1' />
+						</button>
+						<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)} className='nav_section_btn'>
+							<img src={public_onglet} alt="" id='btn2'/>
+						</button>
+						<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)} className='nav_section_btn'>
+							<img src={public_onglet} alt="" id='btn3'/>
+						</button>
+						<button onClick={() => handleChangeOnglet(__CHANEL_REQUEST__)} className='nav_section_btn'>
+							<img src={request_onglet} alt="" id='btn4'/>
+						</button>
+					</div>
+					{ renderSwitch(side_bar_focus) }
+				</div>
 				{ renderSwitchChatBox(chatBox) }
 			  </div>
 			  

@@ -9,30 +9,24 @@
 
 - Invitation a jouer une partie de PONG
 
+- accepter les fichiers pour les logos de chanels
+
 ### | DIRECT MESSAGE 
 
 - Erreur : Error: in the double mutation lorsque selection du btn message 
-
-
-
-### | PRIVATE CHANEL
-
-> Header :
-- Logo du chan
-- Nom du chan 
-- Nombre de personne en ligne <!-- Optionel -->
-
 
 ### | PROFILE PAGE
 
 - create profil page 
 
-
-## | LEADER BOARD
-
 ## | OTHER
 
 - deconnection
+
+<!-- //////////////////////////////////////////////////////// -->
+## | ERRORS
+
+- status quand je quitte la page et que j'en lance une nouvelle pas de statut co (test depuis safari et chrome en split screen)
 
 <!-- //////////////////////////////////////////////////////// -->
 ## | CSS
@@ -53,18 +47,13 @@
 - NavBar
 
 <!-- Friend list -->
-- stylise pending request
 - ? changer le system de search bar pour eviter perma request 
+- ajouter pp dans liste d'amis
+- bouger le btn pour supprimer ami
 
 ### | MESSAGES
 
-- Icones onglets section
 - message lorsque vide
-
-<!-- Direct Messages -->
-- creation de cards pour chaque users
-- que la card soit le btn ajouter
-
 
 <!-- Chat box -->
 

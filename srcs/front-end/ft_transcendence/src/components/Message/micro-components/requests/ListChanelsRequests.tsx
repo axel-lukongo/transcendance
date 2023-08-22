@@ -38,7 +38,9 @@ export default function ListChanelRequests(props: IListChanelRequestProps) {
 		return (
 			
 			<div id="plist" className="people-list">
-			<h3>Chanel Request</h3>{
+			<div className="header-side-bar">
+				<h3>Chanel Request</h3>
+			</div>{
 				data.chanelsRequest.map((chanel: UserChanels, index: number) => {
 					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`
 
