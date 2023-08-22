@@ -24,6 +24,9 @@ export class Chanel {
 	@Field(() => Boolean)
 	private: boolean;
 
+	@Field(() => Boolean, {nullable: true})
+	directMsg?: boolean;
+
 	@Field({nullable: true})
 	interlocutor_id: number;
 
