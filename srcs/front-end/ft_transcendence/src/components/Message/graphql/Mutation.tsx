@@ -1,5 +1,6 @@
 import {gql} from '@apollo/client';
 
+
 export const CREATE_MSG = gql`
   mutation CreateMessage($createMsgInput: CreateMessageInput!) {
     createMessage(createMsgInput: $createMsgInput) {
@@ -10,6 +11,7 @@ export const CREATE_MSG = gql`
   }
 `;
 
+
 export const CREATE_TOBLOC_MUTATION = gql`
   mutation createTobloc($blockerId: Int!, $blockedId: Int!) {
     createToBloc(blockerId: $blockerId, blockedId: $blockedId) {
@@ -19,11 +21,14 @@ export const CREATE_TOBLOC_MUTATION = gql`
     }
   }
 `;
+
+
 export 	const ACCEPT_CHANEL = gql`mutation AcceptRequestChanel($input: UpdateChanelUserInput!) {
 	acceptRequest(key: $input) {
 		pending
 	}
 }`;
+
 
 export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInput!) {
 	createChanel(createChanelInput: $input) {
@@ -39,17 +44,20 @@ export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInpu
 	}
 }`;
 
+
 export const QUITE_CHANEL = gql`mutation QuiteChanel($input: UpdateChanelUserInput!) {
 	deleteChanelUser(key: $input) {
 		user_id
 	}
 }`;
 
+
 export const ADD_CHANEL = gql`mutation AddChanel($input: AddUserChanel!) {
 	addUser(addUserChanel: $input) {
 		pending
 	}
 }`;
+
 
 export const UPDATE_CHANEL_USER = gql`
   mutation UpdateChanelUser($key: UpdateChanelUserInput!) {
@@ -85,7 +93,6 @@ export const DELETE_CHANEL_USER_MUTATION = gql`
     }
   }
 `;
-
 
 
 export const CREATE_BANNED_MUTATION = gql`
