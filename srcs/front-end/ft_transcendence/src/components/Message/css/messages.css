@@ -94,6 +94,12 @@
     border-radius: 50%
 }
 
+.people-list .list-of-direct-msg img {
+    width: 45px;
+    border-radius: 50%
+}
+
+
 .people-list img {
     float: left;
     border-radius: 50%
@@ -380,6 +386,12 @@
     background-color: red;
 }
 
+
+
+
+
+
+
 /* @media only screen and (min-width: 768px) and (max-width: 992px) {
     .chat-app .chat-list {
         height: 650px;
@@ -402,3 +414,116 @@
         overflow-x: auto
     }
 } */
+
+
+
+.list-of-direct-msg{
+	height: 8%;
+	width: 90%;
+	display: flex;
+	background-color: #210b358a;
+	border-radius: 5%;
+	margin-top: 5%;
+	transition: height 0.3s;
+}
+
+.list-of-direct-msg:hover {
+    height: 10%; /* Nouvelle hauteur lorsque survolé */
+}
+
+
+.avatar-in-direct-msg{
+	height: 80%;
+	width: 90%;
+}
+.name-in-direct-msg{
+	width: 60%;
+	height: 100%;
+	color: #ffd27d;
+	font-size: 1.9rem;
+}
+
+
+
+
+
+.direct-msg-btn{
+	background-color: #570fe700;
+	border: none;
+	width: 90%;
+}
+
+.my-about{
+	float: left;
+	height: 50%;
+	padding-left: 8px;
+	margin-top: 5%;
+}
+
+
+
+
+.btn_profile{
+	width: 20px;
+	height: 40px;
+	background: url("/ft_transcendence/src/image/profil.png") center no-repeat;
+	background-size: contain;
+	border: none;
+	align-items: center;
+	object-fit: scale-down;
+	margin-top: 2%;
+	margin-right: 5%;
+	cursor: pointer;
+	/* margin-right: 5%; */
+}
+
+#btn_profile:hover {
+	width: 10px
+}
+
+
+.btn_blocked{
+	width: 20%;
+	height: 40%;
+	/* background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat; */
+	background-size: contain;
+	border: 0px transparent;
+	object-fit: scale-down;
+	align-items: center;
+	margin-top: 8%;
+}
+
+
+
+.parametre-of-chan{
+	height: 20px;
+	width: 20px;
+	margin-left: 2%;
+	margin-top: 0.7%;
+	border: none;
+	background: url("/ft_transcendence/src/image/settings_btn.png") center no-repeat;
+	background-size: contain;
+	transition: width 0.3s;
+}
+.parametre-of-chan:hover {
+    width: 10%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.add-user-in-chan{
+	height: 30px;
+	width: 30px;
+	margin-left: 90%;
+	border: none;
+	background: url("/ft_transcendence/src/image/add-user.png") center no-repeat;
+	background-size: contain;
+	transition: width 0.3s;
+
+}
+.add-user-in-chan:hover {
+    width: 10%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.btn-on-header{
+	display: flex;
+	height: 30%;
+}

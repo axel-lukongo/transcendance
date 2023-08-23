@@ -24,6 +24,8 @@ type Chanel {
   logo: String
   private: Boolean!
   interlocutor_id: Float
+  directMsg: Boolean
+  interlocutor: User
   messages: [Message!]!
 }
 
@@ -74,7 +76,6 @@ type Pong {
   winnerId: Int
   versusDate: DateTime!
   start: Boolean!
-  interval: Int!
   user1: User!
   user2: User!
 }
@@ -299,7 +300,6 @@ input UpdatePongInput {
   loserId: Int
   winnerId: Int
   start: Boolean
-  interval: Int
 }
 
 input CreatePlayerInput {

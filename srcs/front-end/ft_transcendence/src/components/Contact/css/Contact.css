@@ -187,6 +187,11 @@ h2 {
 	flex-wrap: wrap;
 }
 
+.Banned{
+	margin-left: 40%;
+
+}
+
 .List_contact {
 	position: relative;
 	height: 70%;
@@ -206,6 +211,8 @@ h2 {
 	border-radius: 50px;
 	margin-left: 10%;
 	margin-right: 10%;
+	align-items: center;
+
 }
 
 .List_contact .avatar {
@@ -219,14 +226,14 @@ h2 {
 
 	/* List Contact Button */
 
-	#delete {
+	.delete {
 		position: relative;
 		background: url(/ft_transcendence/src/image/no.png) center no-repeat;
 		background-size: contain;
 		border: none;
 		height: 100%;
 		width: 100%;
-		margin-right: 15px;
+		margin-right: 25px;
 	}
 
 /* Add Contact */
@@ -319,6 +326,12 @@ h2 {
 		height: 30%;
 	}
 	
+		.profile_btn{
+			position: relative;
+			border: 0px transparent;
+			margin-left: 30%;
+			margin-right: 2%;
+		}
 	/* Pending Request Section */
 	
 	.pending_request {

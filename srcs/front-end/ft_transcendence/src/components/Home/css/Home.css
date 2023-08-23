@@ -141,9 +141,13 @@
 .history-match-container {
 	position: relative; /* Position absolue à l'intérieur de history-match-box */
 	width: 100%; /* Occupe toute la largeur de history-match-box */
-	/* overflow: scroll; */
+	margin: 9% auto; /* Ajuste la marge autour de la ligne */
+	border: 3px solid #ffd27d;
+	padding: 1%;
+	border-radius: 10%;
+	overflow: scroll;
   }
-  
+
   .history-match-container p {
 	margin: 1%;
 	padding: 1%;

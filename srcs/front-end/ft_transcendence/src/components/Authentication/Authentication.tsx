@@ -78,7 +78,7 @@ const Authentication: FC = () => {
           }
         })
           .then(response => {
-            const { id, token, email, nickname, avatar, tfa_code, level } = response.data.createUser;
+            const { id, token, email, nickname, avatar, tfa_code, level, rank } = response.data.createUser;
             const user = {
               id,
               token,
@@ -86,7 +86,8 @@ const Authentication: FC = () => {
               nickname,
               avatar,
               tfa_code,
-              level
+              level,
+			  rank
             };
             sessionStorage.setItem('user', JSON.stringify(user));
             wsContext?.updateUser(user);
@@ -104,7 +105,7 @@ const Authentication: FC = () => {
           }
         })
         .then(response => {
-          const { id, token, email, nickname, avatar, tfa_code, level} = response.data.createUser;
+          const { id, token, email, nickname, avatar, tfa_code, level, rank} = response.data.createUser;
           const user = {
             id,
             token,
@@ -112,7 +113,8 @@ const Authentication: FC = () => {
             nickname,
             avatar,
             tfa_code,
-            level
+            level,
+			rank
           };
           sessionStorage.setItem('user', JSON.stringify(user));
           wsContext?.updateUser(user);
@@ -153,7 +155,7 @@ const Authentication: FC = () => {
     
     useEffect(() => {
       if (AuthenticationData) {
-        const { id, token, email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
+        const { id, token, email, nickname, avatar, tfa_code, level, rank} = AuthenticationData.makeAuthentication;
         const user = {
           id,
           token,
@@ -161,7 +163,8 @@ const Authentication: FC = () => {
           nickname,
           avatar,
           tfa_code,
-          level
+          level,
+		  rank
         };
         sessionStorage.setItem('user', JSON.stringify(user));
         wsContext?.updateUser(user);

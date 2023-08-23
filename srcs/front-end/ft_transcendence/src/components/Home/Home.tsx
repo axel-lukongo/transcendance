@@ -16,6 +16,7 @@ const Home = () => {
   if (userFromStorageString && userFromStorageString !== 'undefined')
     userFromStorage = JSON.parse(userFromStorageString);
   
+	console.log(' ============ ici ============');
 
   return (
     <div className='Home'>

@@ -67,6 +67,8 @@ export class ChanelService {
           },
         ],
       },
+	  include: {interlocutor: true}
+
     });
   }
 

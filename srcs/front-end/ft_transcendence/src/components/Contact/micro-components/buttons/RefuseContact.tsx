@@ -23,7 +23,7 @@ export default function RefuseContact({element, refetchContact, label}: IRequest
 
 	return (
 		<div>
-			<button id={label} onClick={handleClic} ></button>
+			<button className="delete" onClick={handleClic} > .</button>
 		</div>
 	)
 }
