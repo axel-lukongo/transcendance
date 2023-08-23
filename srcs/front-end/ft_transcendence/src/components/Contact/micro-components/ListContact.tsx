@@ -35,10 +35,10 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 			{
 				data.myContacts.map((element: IContactsLink) => (
 					<div key={element.id} className="card">
-						<div className="avatar"></div>
-						<p>{element.contact.nickname}</p>
-						<div>{element.contact.email}</div>
-						<div>{element.contact.token}</div>
+						<div className="avatar">
+							<img src={element.contact.avatar} alt="avatar" />
+						</div>
+						<p id="nickname-card-ListContact">{element.contact.nickname}</p>
 						<RefuseContact 
 							element={element} 
 							refetchContact={refetchContact}

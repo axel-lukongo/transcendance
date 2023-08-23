@@ -33,6 +33,7 @@ export const LIST_CONTACT = gql`query GetListContact {
 		contact {
 			nickname
 			intra_login
+			avatar
 		}
 	}
 }`

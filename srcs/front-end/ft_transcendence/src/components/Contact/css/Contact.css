@@ -48,39 +48,80 @@ h2 {
 		object-fit: scale-down;
 		align-items: center;
 		margin-right: 5%;
+		cursor: pointer;
+	}
+
+	#listContact_btn:hover{
+		height: 35px;
+		width: 35px;
+		transition: 1s;
+	}
+
+	#listContact_btn:not(:hover) {
+		transition: .75s;
 	}
 	
 	#addContact_btn {
 		/* position: relative; */
-		width: 30px;
-		height: 30px;
+		width: 7%;
+		height: 40%;
 		background: url("/ft_transcendence/src/image/user.png") center no-repeat;
 		background-size: contain;
 		border: 0px transparent;
 		object-fit: scale-down;
 		align-items: center;
 		margin-right: 5%;
+		cursor: pointer;
 	}
 
-	#blocked_btn {
+	#addContact_btn:hover {
+		transition: 1s;
+		height: 50%;
+	}
+
+	#addContact_btn:not(:hover) {
+		transition:.75s;
+	}
+
+	.blocked_btn {
 		/* position: relative; */
-		width: 30px;
-		height: 30px;
+		width: 30%;
+		height: 30%;
 		background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat;
 		background-size: contain;
 		border: 0px transparent;
 		object-fit: scale-down;
-		align-items: center;
 		margin-right: 5%;
-	}
-
-	#blocked_btn:hover {
-		width: 40%;
-		transition: .5s;
 		cursor: pointer;
 	}
 
-	#blocked_btn:not(:hover) {
+
+	#listContact-block-btn {
+		width: 7%;
+	}
+
+	#listContact-block-btn:hover {
+		height: 40%;
+		transition: 1s;
+	}
+
+
+	#listContact-block-btn:not(:hover) {
+		transition: 1s;
+	}
+
+	#direct-msg-block-btn {
+		height: 30px;
+		width: 30px;
+	}
+
+	#direct-msg-block-btn:hover {
+		height: 45px;
+		width: 45px;
+		transition: .5s;
+	}
+
+	#direct-msg-block-btn:not(:hover) {
 		transition: .5s;
 	}
 /* Friend Request */
@@ -117,7 +158,9 @@ h2 {
 	border-radius: 50px;
 	text-align: center;
 	margin: 2% 0% 2% 0%;
-	box-shadow: 8px 8px 20px;
+	box-shadow: 8px 8px 14px #000000;
+	background-color: rgba(121, 27, 235, 0.32);
+	color: rgb(205, 163, 241);;
 }
 
 .Friend_contact .card .avatar {
@@ -132,8 +175,10 @@ h2 {
 	max-width: 100%;
 	max-height: 100%;
 	overflow: hidden;
-	box-shadow: 1px 1px 10px;
+	box-shadow: 1px 1px 10px #000000;
 }
+
+
 
 .Friend_contact .card .avatar #avatar_contact {
 	object-fit: contain;
@@ -150,6 +195,8 @@ h2 {
 .Friend_contact .response {
 	position: relative;
 	display: flex;
+	height: 10%;
+	width: 100%;
 	justify-content:  space-around;
 }
 
@@ -160,14 +207,17 @@ h2 {
 		background: url('/ft_transcendence/src/image/check.png') no-repeat center;
 		background-size: contain;
 		border: 0px;
+		cursor: pointer;
 	}
 
 	#refuse {
-		height: 100%;
+		height: 90%;
 		background: url('/ft_transcendence/src/image/cross.png') no-repeat center;
 		background-size: contain;
 		border: 10px;
+		cursor: pointer;
 	}
+
 		
 /* List Contact */
 
@@ -194,7 +244,7 @@ h2 {
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	gap: 20px;
 }
 
@@ -202,10 +252,10 @@ h2 {
 	width: 80%;
 	border: 3px solid #ffd27d;
 	display: flex;
-	justify-content: space-between;
 	border-radius: 50px;
 	margin-left: 10%;
 	margin-right: 10%;
+	background-color: rgba(121, 27, 235, 0.32);
 }
 
 .List_contact .avatar {
@@ -215,18 +265,36 @@ h2 {
 	border-radius: 50px;
 	align-self: center;
 	margin-left: 2%;
+	max-width: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	z-index: 6;
+}
+
+.List_contact img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	z-index: 5;
 }
 
 	/* List Contact Button */
 
 	#delete {
-		position: relative;
+		position: absolute;
 		background: url(/ft_transcendence/src/image/no.png) center no-repeat;
 		background-size: contain;
 		border: none;
-		height: 100%;
-		width: 100%;
-		margin-right: 15px;
+		height: 60%;
+		width: 10%;
+		margin-left: 90%;
+		align-self: center;
+		cursor: pointer;
+	}
+
+	#nickname-card-ListContact {
+		margin-left: 3%;
+		color: rgb(205, 163, 241);
 	}
 
 /* Add Contact */
@@ -276,6 +344,7 @@ h2 {
 		align-items: center;
 		justify-content: center;
 		transition:  0.5s;
+		color: rgb(205, 163, 241);
 	}
 	
 	.research_result .card:hover {
@@ -312,6 +381,7 @@ h2 {
 		height: 20%;
 		object-fit: cover;
 		transition: 0.5s;
+		cursor: pointer;
 	}
 
 	#add_btn_img:hover {
@@ -324,13 +394,14 @@ h2 {
 	.pending_request {
 		position: relative;
 		width: 49%;
-		height: 100%;
+		height: 80%;
 		text-align: center;
+		color: rgb(205, 163, 241);;
 	}
 
 	.header_pending_contact {
 		width: 49%;
-		height: 15;
+		height: 15%;
 		display: flex;
 		justify-content: center;
 		align-items: center;

@@ -5,6 +5,7 @@ import { UserChanels } from "../../../interfaces/interfaces";
 import QuiteChanel from "../buttons/QuitChanel";
 import { CHANELS_LIST } from '../../graphql/Query'
 import CardChanel from "../Box/CardChanel";
+import add_btn from '../../../../image/add-album-svgrepo-com.svg'
 
 import { __CREATE_CHANEL__ } from "../../message";
 
@@ -17,13 +18,6 @@ export default function ChanelList(props: IPropsChanel) {
 			private_chan: props.private_chan
 		}
 	})
-
-	/* //////////////////////////////////////////////////////// */
-	/* Use Effects */
-
-	// useEffect(() => {
-		refetch();
-	// }, [])
 
 	/* //////////////////////////////////////////////////////// */
 	/* Querry Error */
@@ -52,10 +46,15 @@ export default function ChanelList(props: IPropsChanel) {
 				props.private_chan ? 
 					<h3>
 						Private Chanels 
-						<button onClick={handleClic}>+</button></h3>
+						<div onClick={handleClic} id="add-chanel-btn-box">
+							<img src={add_btn} alt="add_chanel" id="add-chanel-btn"/>
+						</div>
+					</h3>
 					: <h3>
 						Public Chanels 
-						<button onClick={handleClic}>+</button>
+						<div onClick={handleClic} id="add-chanel-btn-box">
+							<img src={add_btn} alt="add_chanel" id="add-chanel-btn"/>
+						</div>
 					</h3>
 			}
 			</div>

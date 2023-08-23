@@ -263,34 +263,39 @@
 	top : 5%;
 	background: url('/ft_transcendence/src/image/log_icon.svg') no-repeat center;
 	background-size: contain;
+	cursor: pointer;
 }
 
 .leader-board-button{
 	top : 35%;
 	background: url('/ft_transcendence/src/image/podium_icon.svg') no-repeat center;
 	background-size: contain;
+	cursor: pointer;
 }
 
 .home-button {
 	top: 50%; 
 	background: url('/ft_transcendence/src/image/home_icon.svg') no-repeat center;
 	background-size: contain;
+	cursor: pointer;
 }
 
-	
-	.message-button {
+
+.message-button {
 	top: 65%; 
 	background: url('/ft_transcendence/src/image/message_icon.svg') no-repeat center;
 	background-size: contain;
+	cursor: pointer;
+	
+}
 
-  }
 
-
-  .contact-button {
+.contact-button {
 	top: 80%; 
 	background: url('/ft_transcendence/src/image/contact_icon.svg') no-repeat center;
 	background-size: contain;
-  }
+	cursor: pointer;
+}
 
   input[type="checkbox"] {
 	display: none;

@@ -16,6 +16,10 @@ const Home = () => {
   if (userFromStorageString && userFromStorageString !== 'undefined')
     userFromStorage = JSON.parse(userFromStorageString);
   
+	const handleLogOut = () => {
+		sessionStorage.removeItem('user');
+		window.location.reload();
+	}
 
   return (
     <div className='Home'>
@@ -48,7 +52,7 @@ const Home = () => {
               </button>
             </Link>
             <Link to ='/'>
-              <button className='log-out-button logo-box'></button>
+              <button className='log-out-button logo-box' onClick={handleLogOut}></button>
             </Link>
             <Link to="/">
               <button className='home-button logo-box'></button>

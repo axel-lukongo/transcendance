@@ -66,14 +66,12 @@ export default function Contact() {
                         <div className="title">
                             <h2 id="Contact_labels">Friends list</h2>
                             <button id="addContact_btn" onClick={handleSwap}></button>
-							<button id="blocked_btn" onClick={handleShowBlockedPlayers}>
+							<button className="blocked_btn" id="listContact-block-btn" onClick={handleShowBlockedPlayers}>
 							
 							</button>
                         </div>
 						{showBlockedPlayers && (
-                            <div className="box_ListContact" >
 							<MyBlockedList/>
-						</div>
 						)} 
                         <ListContact 
                             refetchContact={handleRefetch}

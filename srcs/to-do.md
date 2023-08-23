@@ -46,8 +46,6 @@
 
 <!-- Friend list -->
 - ? changer le system de search bar pour eviter perma request 
-- ajouter pp dans liste d'amis
-- bouger le btn pour supprimer ami
 
 ### | MESSAGES
 

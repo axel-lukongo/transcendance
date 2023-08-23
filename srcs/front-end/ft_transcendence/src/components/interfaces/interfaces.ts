@@ -46,7 +46,7 @@ export interface IContact extends Partial<User> {
 export interface IContactsLink {
 	id: number;
 	pending: boolean;
-	contact: IContact
+	contact: IContact;
 }
 
 export interface Player {

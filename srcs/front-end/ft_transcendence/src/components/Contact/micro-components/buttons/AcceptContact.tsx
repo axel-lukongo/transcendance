@@ -26,7 +26,6 @@ export default function AcceptContact({element, refetchContact, label}: IRequest
 
 
 	return (
-	<div>
 		<button id={label} onClick={handleClick}></button>
-	</div>);
+	);
 }

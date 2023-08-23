@@ -24,15 +24,17 @@ export function MyBlockedList(){
 	if (error) {
 		return <p>Error: {error.message}</p>;
 	}
-	// console.log(data.person_blocked);
+	console.log(data.person_blocked);
 
 	const handleUnblockClick = () => {
 		setShowUnblock(true);
 	};
 
 	return (
-		<div  >
-		<h2 >  blocked List: </h2>
+		<div  className="box_ListContact">
+			<div className="title">
+				<h2 >  Blocked List </h2>
+			</div>
 		{data && data.person_blocked.map((item: blocked) => (
 		  <div key={item.id}>
 			  <p>{item.blocked.nickname}
