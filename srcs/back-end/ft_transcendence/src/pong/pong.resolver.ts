@@ -239,7 +239,7 @@ export class PongResolver {
       const pong_tmp = await this.findPong(player.pongId);
       if (pong_tmp && pong_tmp.winnerId)
       {
-        await this.endPong(player.id);
+        await this.endPong(player.userId);
         player = await this.player.setPlayer(context.req.userId);
       }
       else
