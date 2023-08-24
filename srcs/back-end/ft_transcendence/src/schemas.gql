@@ -6,6 +6,7 @@ type User {
   id: Int!
   token: String!
   state: Int!
+  connection_status: Int!
   tfa_code: String
   email: String!
   nickname: String!
@@ -150,8 +151,8 @@ type Query {
   checkTwoAuthenticationFactor(code: String!): User!
   findPongs: [Pong!]!
   findPong(id: Int!): Pong!
-  myMatchHistory(userId: Int!): [Pong!]!
-  myMatchStatistic(userId: Int!): StatisticMatch!
+  myMatchHistory: [Pong!]!
+  myMatchStatistic: StatisticMatch!
   leaderBoard: [StatisticMatch!]!
   Players: [Player!]!
   findPlayer(id: Int!): Player!
@@ -186,12 +187,13 @@ type Mutation {
   deletecontact(user1: Float!, user2: Float!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(updateAuthenticationInput: UpdateAuthenticationInput!): User!
+  updateState(new_state: Int!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
-  joinPong(userId: Int!): JoinPongResponse!
-  endPong(userId: Int!): String!
-  startPong(ballId: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
+  joinPong: JoinPongResponse!
+  endPong: String!
+  startPong: Boolean!
   removePlayer(id: Int!): Player!
   createPlayer(createPlayerInput: CreatePlayerInput!): Player!
   setPlayer(userId: Int!): Player!
@@ -212,6 +214,7 @@ input UpdateUserInput {
   id: Int!
   token: String
   state: Float
+  connection_status: Float
   tfa_code: String
   email: String
   nickname: String

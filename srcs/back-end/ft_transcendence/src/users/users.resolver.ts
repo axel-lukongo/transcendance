@@ -17,6 +17,12 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
+  // @Query(() => User, { name: 'myInfo' })
+  // myInfo(@Context() context: any) {
+
+  //   return this.usersService.findUserById(context.req.userId);
+  // }
+
   @Query(() => User, { name: 'findUserById' })
   findUserById(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.findUserById(id);

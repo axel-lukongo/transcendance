@@ -12,11 +12,10 @@ export class AuthMiddleware implements NestMiddleware {
   use(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const token = req.headers.authorization?.split(' ')[1];
     const isMakeAuthenticationRequest = req.body?.operationName === 'MakeAuthentication';
-    const isGraphql = (req.url === '/graphql');
+    // const isGraphql = (req.url === '/graphql');
     
     // Vérifie si la requête doit être vérifiée avec le token
     if (!isMakeAuthenticationRequest ) {
-      console.log(req.body?.operationName);
       
       if (!token) {
         res.status(401).json({ message: 'Token manquant' });
@@ -27,13 +26,10 @@ export class AuthMiddleware implements NestMiddleware {
         
         try {
           const prisma = new PrismaService();
-          console.log('token', token);
           const decodedToken = verify(token, process.env.CLIENT_SECRET_BACKEND) as { userId: number };
-          console.log("decodetoken pass");
           const user = await prisma.user.findUnique({
             where: {token}
           })
-          console.log("find user pass ");
           
           await prisma.$disconnect();
 

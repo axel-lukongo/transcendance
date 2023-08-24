@@ -6,7 +6,8 @@ import { saveBase64ToFile } from 'src/utils/upload.utils';
 
 export const __CREATING__ = -2;
 export const __NEED_TFA__ = -1;
-export const __ACCESS__ = 0;
+export const __ACCESS__ = 1;
+
 export const __CONNECTED__ = 1;
 export const __AFK__ = 2;
 export const __DISCONNECTED__ = 3;
@@ -21,7 +22,8 @@ export class AuthenticationService {
       const user = await this.prisma.user.create({
         data: {
           ...createUserInput,
-          state: __CREATING__,
+          state: __CONNECTED__,
+          connection_status: __CREATING__,
         } 
       });
 
@@ -58,7 +60,10 @@ export class AuthenticationService {
       const token = generateAccessToken(user.id);
       user = await this.prisma.user.update({
         where: { id: user.id },
-        data: { token, state: __CONNECTED__ },
+        data: { 
+          token, 
+          state: __CONNECTED__,
+          connection_status: __ACCESS__},
       });
     }
     return user;

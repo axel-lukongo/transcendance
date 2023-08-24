@@ -1,4 +1,4 @@
-import { __CONNECTED__ } from "src/authentication/authentication.service";
+import { __ACCESS__, __CONNECTED__ } from "src/authentication/authentication.service";
 import { PrismaService } from "./prisma.service";
 
 const prisma = new PrismaService();
@@ -30,7 +30,8 @@ async function main() {
 				nickname: data.nickname,
 				email: data.email,
 				token: data.token,
-				state: __CONNECTED__
+				state: __CONNECTED__,
+				connection_status: __ACCESS__,
 			}
 		})
 	}

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Context,  } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context, Int,  } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { AuthenticationService, __ACCESS__, __CONNECTED__, __DISCONNECTED__, __NEED_TFA__ } from './authentication.service';
@@ -25,14 +25,14 @@ export class AuthenticationResolver {
   async createUser (
     @Args('updateAuthenticationInput')updateAuthenticationInput:UpdateAuthenticationInput,
     @Context() context) {
-      console.log('contexxxxxxxxt',context.req.userId);
       if (context.req.userId)
       {
         try {
           const updateUserDataInput: UpdateUserInput = {
             ...updateAuthenticationInput,
             id:  context.req.userId,
-            state: __ACCESS__
+            connection_status: __ACCESS__,
+            state: __CONNECTED__,
           };
            return await this.userResolveur.updateUser(updateUserDataInput);
         } 
@@ -79,7 +79,6 @@ export class AuthenticationResolver {
         nickname: profileResponse.data.login
        };
        const create_user = await this.authService.create(createUserInput);
-       console.log(create_user.token); 
        return create_user;
     } 
     else if (user.tfa_code) {
@@ -87,7 +86,7 @@ export class AuthenticationResolver {
       const updateUserDataInput: UpdateUserInput = {
         id: user.id,
         tfa_code: code,
-        state : __NEED_TFA__
+        connection_status : __NEED_TFA__
       };
       this.mailingService.sendMail(user.email, tfa_code);
       return this.userResolveur.updateUser(updateUserDataInput);
@@ -106,7 +105,8 @@ export class AuthenticationResolver {
       if (user.tfa_code === code) {
         const updateUserDataInput: UpdateUserInput = {
           id:  context.token.userId,
-          state: __ACCESS__,
+          connection_status: __ACCESS__,
+          state: __CONNECTED__,
           tfa_code : 'true'
         };
         return await this.userResolveur.updateUser(updateUserDataInput)
@@ -120,21 +120,21 @@ export class AuthenticationResolver {
     }
   }
 
-  // @Mutation(() => User, {name: "updateState"})
-  // async updateState(
-  //   @Args("new_state", { type: () => Int }) new_state: number,
-  //   @Context() context
-  // ) {
-  //   if (new_state < 1 || new_state > 3)
-  //   {
-  //     throw new Error("Unrecognized state");
-  //   }
-  //   const updateUserDataInput: UpdateUserInput = {
-  //     id:  context.token.userId,
-  //     state: new_state
-  //   };
-  //   return await this.userResolveur.updateUser(updateUserDataInput);
+  @Mutation(() => User, {name: "updateState"})
+  async updateState(
+    @Args("new_state", { type: () => Int }) new_state: number,
+    @Context() context: any
+  ) {
+    if (new_state < 1 || new_state > 3)
+    {
+      throw new Error("Unrecognized state");
+    }
+    const updateUserDataInput: UpdateUserInput = {
+      id:  context.req.userId,
+      state: new_state
+    };
+    return await this.userResolveur.updateUser(updateUserDataInput);
 
-  // }
+  }
 
 }

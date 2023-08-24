@@ -9,7 +9,7 @@ import { END_PONG, JOIN_PONG } from '../graphql/Mutation';
 interface GameProps {
     pongMap:  string| null; 
   }
-  const Game: React.FC<GameProps> = ({ pongMap }) => {
+  const Game: FC<GameProps> = ({ pongMap }) => {
 
     const userFromStorageString = sessionStorage.getItem('user');
     let userFromStorage: User | null = null;
@@ -28,11 +28,7 @@ interface GameProps {
     
     useEffect(() => {
       if (!player && userFromStorage) {
-        joinPong({
-          variables: {
-            userId: userFromStorage.id,
-          },
-        })
+        joinPong({})
         .then(response => {
           console.log(response);
           const { player, otherPlayer, ball, pong } = response.data.joinPong;
@@ -55,13 +51,9 @@ interface GameProps {
     
       //Cleanup function
       return () => {
-          endPong({
-            variables: {
-              userId: userFromStorage?.id
-            }
-          })
+          endPong({})
           .then(endPongResponse => {
-            console.log('endPong result:', endPongResponse.data.endPong); // Result string
+            // console.log('endPong result:', endPongResponse.data.endPong); 
           })
           .catch(error => {
             console.error('Error ending pong:', error);
@@ -72,11 +64,7 @@ interface GameProps {
       const handleUnload = async () => {
         if (player && userFromStorage) {
           try {
-            await endPong({
-              variables: {
-                userId: userFromStorage?.id,
-              },
-            });
+            await endPong({});
           } catch (error) {
             console.error('Error ending pong:', error);
           }

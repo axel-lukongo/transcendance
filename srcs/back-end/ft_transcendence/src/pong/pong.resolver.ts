@@ -121,14 +121,14 @@ export class PongResolver {
 
 
   @Query(() => [Pong] )
-  myMatchHistory(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.myMatchHistory(userId);
+  myMatchHistory(@Context() context : any) {
+    return this.pongService.myMatchHistory(context.req.userId);
   }
 
 
   @Query(() => StatisticMatch)
-  async myMatchStatistic(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.myMatchStatistic(userId)
+  async myMatchStatistic(@Context() context : any) {
+    return this.pongService.myMatchStatistic(context.req.userId)
   }
 
   @Query(() => [StatisticMatch])
@@ -227,9 +227,9 @@ export class PongResolver {
   }
 
   @Mutation(() => JoinPongResponse)
-  async joinPong(@Args('userId', { type: () => Int }) userId: number) {
+  async joinPong(@Context() context : any) {
 
-    let player = await this.player.setPlayer(userId);
+    let player = await this.player.setPlayer(context.req.userId);
     if (!player)
     {
       return { player: null };
@@ -239,8 +239,8 @@ export class PongResolver {
       const pong_tmp = await this.findPong(player.pongId);
       if (pong_tmp && pong_tmp.winnerId)
       {
-        await this.endPong(player.userId);
-        player = await this.player.setPlayer(userId);
+        await this.endPong(context);
+        player = await this.player.setPlayer(context.req.userId);
       }
       else
       {
@@ -313,10 +313,9 @@ export class PongResolver {
 
 
   @Mutation(() => String)
-  async endPong(
-    @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
+  async endPong(@Context() context : any ): Promise<string> {
     try {
-      const player = await this.player.findPlayerByUserId(userId);
+      const player = await this.player.findPlayerByUserId(context.req.userId);
       if (!player) {
         return 'Player was aldready deleted';
       }
@@ -324,7 +323,6 @@ export class PongResolver {
       {
         if (player.host)
         {
-          // this.stopPong(player.pongId);
           await this.ball.removeBall(player.ballId);
         }
         const pong = await this.findPong(player.pongId);
@@ -354,13 +352,14 @@ export class PongResolver {
   }
 
   @Mutation(() => Boolean)
-  async startPong(  @Args('ballId', { type: () => Int }) ballId: number,
-                        @Args('playerId', { type: () => Int }) playerId: number,
-                        @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
-                        @Args('pongId', { type: () => Int }) pongId: number) {
+  async startPong(@Context() context : any ) {
 
+    const player = await this.player.findPlayerByUserId(context.req.userId);
+    if (!player){
+      return false;
+    }
 
-    const pong = await this.findPong(pongId);
+    const pong = await this.findPong(player.pongId);
     if (pong.start === true) {
       return false;
     }
@@ -371,17 +370,19 @@ export class PongResolver {
     await this.updatePong(updateDataPong);
 
     const callback = async () => {
-      const currentPong = await this.findPong(pongId);
+      const player = await this.player.findPlayerByUserId(context.req.userId);
+      
+      const currentPong = await this.findPong(player.pongId);
       if (currentPong.start === false) {
-        this.timer.stopPongTimer(pongId);
+        this.timer.stopPongTimer(player.pongId);
         return true;
       }
-      const ball  = await this.ball.findUnique(ballId);
-      const player = await this.player.findPlayer(playerId);
-      const otherPlayer = await this.player.findPlayer(otherPlayerId);
+      const ball  = await this.ball.findUnique(player.ballId);
+      const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
+      
       await this.ballMove(ball, player, otherPlayer, currentPong);
     }
-    this.timer.startPongTimer(pongId, callback);
+    this.timer.startPongTimer(player.pongId, callback);
 
     return true;
   }

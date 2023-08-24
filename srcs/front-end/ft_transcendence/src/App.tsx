@@ -4,6 +4,11 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_STATE } from './components/Authentication/graphql/Mutation';
 import { WebSocketContext } from './WebSocketProvider';
 
+
+export const __CREATING__ = -2;
+export const __NEED_TFA__ = -1;
+export const __ACCESS__ = 1;
+
 const __CONNECTED_ = 1;
 const __AFK__ = 2;
 const __DISCONECTED__ = 3;

@@ -7,10 +7,12 @@ import { onError } from '@apollo/client/link/error';
 import App from './App';
 import { WebSocketProvider } from './WebSocketProvider'
 
+
 const authLink = setContext((_, { headers }) => {
   
-  const tokenValue = sessionStorage.getItem('userToken');
-  const token = tokenValue ? tokenValue.replace(/^"(.*)"$/, '$1') : null;
+  const userString = sessionStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const token = user? user.token : null;
   return {
     headers: {
       ...headers,
@@ -36,7 +38,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     // Gérer les erreurs réseau ici
     if (networkError.message.includes('401')) {
-      sessionStorage.removeItem('userToken');
+      sessionStorage.removeItem('user');
       window.location.reload();
       console.log('erreur 401');
     }

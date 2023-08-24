@@ -15,6 +15,7 @@ import Message from '../Message/message';
 import Contact from '../Contact/Contact';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import { WebSocketContext } from '../../WebSocketProvider';
+import { __CREATING__, __NEED_TFA__ } from '../../App';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -29,25 +30,16 @@ const Authentication: FC = () => {
   const [userExist, setUserExist] = useState(true);
 
   const [user2fa, setUser2fa] = useState(false);
-
-  const userTokenString = sessionStorage.getItem('userToken');
-  const userToken = userTokenString ? JSON.parse(userTokenString) : { token: '', access: '' };
-  
-  const [access, setAccess] = useState({
-    token: userToken.token || '',
-    state: userToken.access || 0,
-  });
-  
   
 
-  // const wsContext = useContext(WebSocketContext);
+  const wsContext = useContext(WebSocketContext);
   
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      REQUEST                           */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
   
-  const [makeAuthenticationQuery, {data: AuthenticationData, error: AuthenticationError }] = useLazyQuery(MAKE_AUTH);
+  const [makeAuthenticationQuery, {data: AuthenticationData }] = useLazyQuery(MAKE_AUTH);
 
   const [createUser] = useMutation(CREATE_USER);
 
@@ -81,21 +73,31 @@ const Authentication: FC = () => {
       reader.onloadend = () => {
         const avatarDataUrl = reader.result as string;
         user_info.avatar = avatarDataUrl;
-  
         createUser({
           variables: {
             input: user_info
           }
         })
-          .then(response => {
-            const {token, state} = response.data.createUser;
-            sessionStorage.setItem('userToken', JSON.stringify(token, state));
-            // wsContext?.updateUser(user);
-          })
-          .catch(error => {
-            console.log(error);
-            window.alert('Nickname is already in use. Please choose a different nickname.');
-          });
+        .then(response => {
+          const {id, token, connection_status,  email, nickname, avatar, tfa_code, level}  = response.data.createUser;
+          const user = {
+            id,
+            token,
+            connection_status,
+            email,
+            nickname,
+            avatar,
+            tfa_code,
+            level
+          }
+          sessionStorage.setItem('user', JSON.stringify(user));
+          wsContext?.updateUser(user);
+        })
+        .catch(error => {
+          console.log(error);
+          window.alert('Nickname is already in use. Please choose a different nickname.');
+        });
+        
         };
       } else {
         // No avatar file selected
@@ -105,14 +107,25 @@ const Authentication: FC = () => {
           }
         })
         .then(response => {
-          const {token, state} = response.data.createUser;
-          sessionStorage.setItem('userToken', JSON.stringify(token, state));
-          // wsContext?.updateUser(user);
+          const {id, token, connection_status,  email, nickname, avatar, tfa_code, level}  = response.data.createUser;
+          const user = {
+            id,
+            token,
+            connection_status,
+            email,
+            nickname,
+            avatar,
+            tfa_code,
+            level
+          }
+          sessionStorage.setItem('user', JSON.stringify(user));
+          wsContext?.updateUser(user);
         })
         .catch(error => {
           console.log(error);
           window.alert('Nickname is already in use. Please choose a different nickname.');
         });
+        
       }
     };
     
@@ -124,9 +137,18 @@ const Authentication: FC = () => {
       checkTwoAuthenticationFactor({ variables: { input: code.value } })
       .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
         
-        const {token, state} = response.data.checkTwoAuthenticationFactor
-        sessionStorage.setItem('userToken', JSON.stringify(token, state));
-      
+        const {id, token, connection_status,  email, nickname, avatar, tfa_code, level} = response.data.checkTwoAuthenticationFactor
+        const user = {
+          id,
+          token,
+          connection_status,
+          email,
+          nickname,
+          avatar,
+          tfa_code,
+          level
+        }
+        sessionStorage.setItem('user', JSON.stringify(user));
       })
       .catch((error: any) => {
         window.alert('The code you entered does not match the one sent to the email address');
@@ -148,31 +170,40 @@ const Authentication: FC = () => {
     
     useEffect(() => {
       if (AuthenticationData) {
-        const {token, state} = AuthenticationData.makeAuthentication;
+        const {id, token, connection_status,  email, nickname, avatar, tfa_code, level} = AuthenticationData.makeAuthentication;
+        const user = {
+          id,
+          token,
+          connection_status,
+          email,
+          nickname,
+          avatar,
+          tfa_code,
+          level
+        }
         
-        if (state === -2)
+        if (connection_status === __CREATING__)
         {
           setCanCheck(true);
           setUserExist(false);
         }
-        else if (state == 1)
+        else if (connection_status === __NEED_TFA__)
         {
           setCanCheck(true);
           setUser2fa(true);
         }
-        sessionStorage.setItem('userToken', JSON.stringify(token, state));
-        // wsContext?.updateUser(user);
+        sessionStorage.setItem('user', JSON.stringify(user));
+        wsContext?.updateUser(user);
 
       }
     }, [AuthenticationData]);
     
-
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      RETURN                            */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {sessionStorage.getItem('userToken') ? (
+    {(JSON.parse(sessionStorage.getItem('user') || '{}').connection_status === 1) ? (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pong" element={<Pong />} />
@@ -198,6 +229,8 @@ return (
     )}
   </div>
 );
+
+
 
 
 }

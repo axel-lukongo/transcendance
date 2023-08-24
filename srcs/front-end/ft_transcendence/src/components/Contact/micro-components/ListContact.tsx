@@ -34,7 +34,6 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 						<div className="avatar"></div>
 						<p>{element.contact.nickname}</p>
 						<div>{element.contact.email}</div>
-						<div>{element.contact.token}</div>
 						<RefuseContact 
 							element={element} 
 							refetchContact={refetchContact}

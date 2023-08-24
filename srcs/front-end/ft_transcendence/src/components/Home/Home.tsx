@@ -11,60 +11,61 @@ import MatchStatistic from './micro-components/MatchStatistic';
 
 
 const Home = () => {
-
-  console.log('je suis dans home');
+  const userFromStorageString = sessionStorage.getItem('user');
+  let userFromStorage: User | null = null;
+  if (userFromStorageString && userFromStorageString !== 'undefined')
+    userFromStorage = JSON.parse(userFromStorageString);
   
 
   return (
-    <div></div>
-    // <div className='Home'>
-    //   {userFromStorage && (
-    //     <>
-    //       <div className='screen-box'>
+    <div className='Home'>
+      {userFromStorage && (
+        <>
+          <div className='screen-box'>
             
-    //         <div className="stat-box profil-box">
-    //           <MatchStatistic user={''} />
-    //         </div>
+            <div className="stat-box profil-box">
+              <MatchStatistic  />
+            </div>
             
-    //         <AvatarBox />
+            <AvatarBox />
 
-    //         <div className="history-match-box profil-box">
-    //           <HistoryMatch user={userFromStorage} />
-    //         </div>
+            <div className="history-match-box profil-box">
+              <HistoryMatch user={userFromStorage} />
+            </div>
 
-    //         <NicknameBox/>
+            <NicknameBox/>
 
-    //         <div className='email-box profil-box'>
-    //           {userFromStorage.email}
-    //         </div>
+            <div className='email-box profil-box'>
+              {userFromStorage.email}
+            </div>
 
-    //         <TfaToggleButton userId={userFromStorage.id} tfaCode={userFromStorage.tfa_code} />
+            <TfaToggleButton userId={userFromStorage.id} tfaCode={userFromStorage.tfa_code} />
             
-    //         <Link to='/pong'>
-    //           <button className='game-box profil-box' >
-    //             <h1>PLAY</h1>
-    //             <div className="movement-ball"></div>
-    //           </button>
-    //         </Link>
-    //         <Link to ='/'>
-    //           <button className='log-out-button logo-box'></button>
-    //         </Link>
-    //         <Link to="/">
-    //           <button className='home-button logo-box'></button>
-    //         </Link>
-    //         <Link to="/leaderBoard">
-    //           <button className='leader-board-button logo-box'></button>
-    //         </Link>
-    //         <Link to="/message">
-    //           <button className='message-button logo-box'></button>
-    //         </Link>
-    //         <Link to="/contact">
-    //           <button className='contact-button logo-box'></button>
-    //         </Link>
-    //       </div>
-    //     </>
-    //   )}
-    // </div>
+            <Link to='/pong'>
+              <button className='game-box profil-box' >
+                <h1>PLAY</h1>
+                <div className="movement-ball"></div>
+              </button>
+            </Link>
+            <Link to ='/'>
+              <button className='log-out-button logo-box'></button>
+            </Link>
+            <Link to="/">
+              <button className='home-button logo-box'></button>
+            </Link>
+            <Link to="/leaderBoard">
+              <button className='leader-board-button logo-box'></button>
+            </Link>
+            <Link to="/message">
+              <button className='message-button logo-box'></button>
+            </Link>
+            <Link to="/contact">
+              <button className='contact-button logo-box'></button>
+            </Link>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

@@ -68,14 +68,7 @@ export const Display: FC<DisplayProps> = ({ player,
       // START PONG
       if (player?.host)
       {
-        startPong({
-          variables: {
-            ballId: ball?.id,
-            playerId: player?.id,
-            otherPlayerId: otherPlayer?.id,
-            pongId: pong?.id
-          },
-        })
+        startPong({})
         .then((response) => {
           // Appel réussi, le démarrage de ballMove est activé côté serveur
           console.log('game start', response);
@@ -227,7 +220,7 @@ export const Display: FC<DisplayProps> = ({ player,
         };
     }
   
-  }, [player, , playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
+  }, [player, playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
   
   return (
 <div>
