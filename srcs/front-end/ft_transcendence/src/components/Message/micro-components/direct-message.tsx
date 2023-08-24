@@ -132,8 +132,8 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	/* //////////////////////////////////////////////////////// */
 	/* JSX.Element return  */
 
-	const handleShowProfil = (userIndex: number) => {
-		setShowProfil(true);
+	const handleShowProfil = (userIndex: number, show:boolean) => {
+		setShowProfil(show);
 		setSelectedUserIndex(userIndex);
 	};
 
@@ -167,11 +167,11 @@ export default function Direct_message(props: IPrivateMessageProps) {
 										/>
 								}
 
-								<button className="btn_profile " onClick={() => handleShowProfil(index)}>
-								</button>
 								{ShowProfil === true && SelectedUserIndex === index && (
 									<Profil_page handleShowProfil={handleShowProfil} user={contact.contact} />
 								)}
+								<button className="btn_profile " onClick={() => handleShowProfil(index, true)}>
+								</button>
 
 								{
 									handleTobloc === true 

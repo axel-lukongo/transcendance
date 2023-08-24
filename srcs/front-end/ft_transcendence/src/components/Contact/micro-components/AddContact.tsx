@@ -58,8 +58,8 @@ import Profil_page from "./buttons/Profil_page";
 		setRefreshPending(prevData => !prevData);
 	}
 
-	const handleShowProfil = (userIndex: number) => {
-		setShowProfil(true);
+	const handleShowProfil = (userIndex: number, show: boolean) => {
+		setShowProfil(show);
 		setSelectedUserIndex(userIndex);
 	};
 
@@ -86,7 +86,7 @@ import Profil_page from "./buttons/Profil_page";
 						{ShowProfil === true && SelectedUserIndex === index && (
 						<Profil_page handleShowProfil={handleShowProfil} user={data.searchUsers[index]} />
 						)}
-						<button className="profile_btn"  onClick={() => handleShowProfil(index)}></button>
+						<button className="profile_btn"  onClick={() => handleShowProfil(index, true)}></button>
 
 						<AddContactBtn 
 							user={user}

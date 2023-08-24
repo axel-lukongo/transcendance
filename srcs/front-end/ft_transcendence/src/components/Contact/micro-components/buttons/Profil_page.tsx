@@ -7,7 +7,7 @@ import { MY_MATCH_HISTORY } from '../../../Home/graphl/Query';
 import { PongI } from '../../../interfaces/interfaces';
 import { IContact } from '../../../interfaces/interfaces';
 interface IshowProfil{
-	handleShowProfil: (userIndex: number) => void;
+	handleShowProfil: (userIndex: number, show:boolean) => void;
 	user: User | IContact;
 }
 
@@ -35,7 +35,7 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 	return (
         <div className="profil-modal">
             <div className="modal-content">
-                <button className="close-btn" onClick={() => handleShowProfil(user.id)}> X </button>
+                <button className="close-btn" onClick={() => handleShowProfil(user.id, false)}> X </button>
 
 				<div className='Container_one'>
 					<div className='avatar_prfl'> 
