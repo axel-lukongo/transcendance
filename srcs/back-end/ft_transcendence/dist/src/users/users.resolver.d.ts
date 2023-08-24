@@ -1,5 +1,6 @@
 import { UsersService } from './users.service';
 import { UpdateUserInput } from './dto/update-user.input';
+export declare const CHANGE_STATE = "changeState";
 export declare class UsersResolver {
     private readonly usersService;
     constructor(usersService: UsersService);
@@ -7,9 +8,9 @@ export declare class UsersResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;
@@ -19,9 +20,9 @@ export declare class UsersResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;
@@ -31,9 +32,9 @@ export declare class UsersResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;
@@ -43,9 +44,9 @@ export declare class UsersResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;
@@ -55,9 +56,9 @@ export declare class UsersResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;
@@ -67,9 +68,9 @@ export declare class UsersResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;

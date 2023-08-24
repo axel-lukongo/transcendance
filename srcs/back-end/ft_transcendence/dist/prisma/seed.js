@@ -22,8 +22,8 @@ async function main() {
                 nickname: data.nickname,
                 email: data.email,
                 token: data.token,
-                intra_login: data.intra_login,
-                state: authentication_service_1.__CONNECTED__
+                state: authentication_service_1.__CONNECTED__,
+                connection_status: authentication_service_1.__ACCESS__,
             }
         });
     }

@@ -1,40 +1,57 @@
-import { User } from 'src/users/entities/user.entity';
-import { CreateAuthenticationInput } from './dto/create-authentication.input';
 import { AuthenticationService } from './authentication.service';
-import { UsersService } from 'src/users/users.service';
 import { MailingService } from './mailing/mailing.service';
-export declare const CHANGE_STATE = "changeState";
+import { UpdateAuthenticationInput } from './dto/update-authentication.input';
+import { UsersResolver } from 'src/users/users.resolver';
 export declare class AuthenticationResolver {
     private readonly authService;
-    private readonly userService;
+    private readonly userResolveur;
     private readonly mailingService;
-    private intraLogin;
-    private email;
-    private user;
-    constructor(authService: AuthenticationService, userService: UsersService, mailingService: MailingService);
-    createUser(createAuthenticationInput: CreateAuthenticationInput, context: any): Promise<import("@prisma/client/runtime/library").GetResult<{
+    constructor(authService: AuthenticationService, userResolveur: UsersResolver, mailingService: MailingService);
+    createUser(updateAuthenticationInput: UpdateAuthenticationInput, context: any): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;
         level: number;
     }, unknown> & {}>;
-    makeAuthentication(code: string): Promise<User | {
+    makeAuthentication(code: string): Promise<(import("@prisma/client/runtime/library").GetResult<{
+        id: number;
+        token: string;
+        state: number;
+        connection_status: number;
+        tfa_code: string;
+        email: string;
+        nickname: string;
+        avatar: string;
+        rank: string;
+        level: number;
+    }, unknown> & {}) | {
         error: string;
     }>;
-    checkTwoAuthenticationFactor(code: string): Promise<User>;
+    checkTwoAuthenticationFactor(code: string, context: any): Promise<import("@prisma/client/runtime/library").GetResult<{
+        id: number;
+        token: string;
+        state: number;
+        connection_status: number;
+        tfa_code: string;
+        email: string;
+        nickname: string;
+        avatar: string;
+        rank: string;
+        level: number;
+    }, unknown> & {}>;
     updateState(new_state: number, context: any): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;

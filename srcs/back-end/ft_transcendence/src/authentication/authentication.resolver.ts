@@ -1,58 +1,54 @@
-import { Resolver, Query, Mutation, Args, Int, Context, Subscription } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context, Int,  } from '@nestjs/graphql';
 import { User } from 'src/users/entities/user.entity';
-import { CreateAuthenticationInput } from './dto/create-authentication.input';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
-import { AuthenticationService, __CONNECTED__, __DISCONNECTED__ } from './authentication.service';
-import { UsersService } from 'src/users/users.service';
+import { AuthenticationService, __ACCESS__, __CONNECTED__, __DISCONNECTED__, __NEED_TFA__ } from './authentication.service';
 import { MailingService } from './mailing/mailing.service';
 import { generateTwoFactorCode } from 'src/utils/auth.utils';
 import axios, { AxiosResponse } from 'axios';
-import { socket } from 'src/main';
-import { Res } from '@nestjs/common';
+import { UpdateAuthenticationInput } from './dto/update-authentication.input';
+import { UpdateUserInput } from 'src/users/dto/update-user.input';
+import { UsersResolver } from 'src/users/users.resolver';
 
 
 
-export const CHANGE_STATE = 'changeState';
 
 @Resolver()
 export class AuthenticationResolver {
   
-  private intraLogin: string;
-  private email: string;
-  private user: User;
-
   constructor(
     private readonly authService: AuthenticationService, 
-    private readonly userService: UsersService,
+    private readonly userResolveur: UsersResolver,
     private readonly mailingService: MailingService) {}
 
 
   @Mutation(() => User)
   async createUser (
-    @Args('createAuthenticationInput') createAuthenticationInput: CreateAuthenticationInput,
-    @Context() context
-  ) {
-    if (this.intraLogin && this.email) {
-    try {
-        const createUserInput: CreateUserInput = {
-          ...createAuthenticationInput, 
-          intra_login: this.intraLogin, 
-          email: this.email,
-         };
-        let user =  await this.authService.create(createUserInput);
-        return (user);
-      } 
-      catch (error) {
-        throw new Error("createUser Error: " + error);
-      } 
-    }
-    else {
-      throw new Error("You must first authenticate via the API of 42 to create an user");
-    }
+    @Args('updateAuthenticationInput')updateAuthenticationInput:UpdateAuthenticationInput,
+    @Context() context) {
+      if (context.req.userId)
+      {
+        try {
+          const updateUserDataInput: UpdateUserInput = {
+            ...updateAuthenticationInput,
+            id:  context.req.userId,
+            connection_status: __ACCESS__,
+            state: __CONNECTED__,
+          };
+           return await this.userResolveur.updateUser(updateUserDataInput);
+        } 
+        catch (error) {
+          throw new Error("createUser Error: " + error);
+        } 
+      }
+      else {
+        throw new Error("You must first authenticate via the API of 42 to create an user");
+      }
   } 
 
   @Query(() => User, { name: 'makeAuthentication' })
   async makeAuthentication(@Args('code') code: string) {
+
+    // GET INFO FROM 42 API
     let profileResponse: AxiosResponse<any, any>;
     try {
       const response = await axios.post('https://api.intra.42.fr/oauth/token', {
@@ -72,53 +68,73 @@ export class AuthenticationResolver {
     } catch (error) {
       return { error: "42 API is not accessible. Please try again in a few minutes." };
     }
-    this.intraLogin = profileResponse.data.login;
-    this.email = profileResponse.data.email;
-    // console.log('login',this.intraLogin);
-    // console.log('email',this.email);
-    this.user = await this.authService.findUserByIntraLogin(this.intraLogin);
 
-    if (!this.user) {
-      throw new Error("This user does not exist yet");
-      // return { message: "This user does not exist yet" };
+    //SEARCH THE USER
+    let user = await this.authService.findUserByEmail(profileResponse.data.email);
+
+    // CREATE USER
+    if (!user) { 
+      const createUserInput: CreateUserInput = {
+        email: profileResponse.data.email,
+        nickname: profileResponse.data.login
+       };
+       const create_user = await this.authService.create(createUserInput);
+       return create_user;
     } 
-    else if (this.user.tfa_code) {
+    else if (user.tfa_code) {
       const tfa_code = generateTwoFactorCode();
-      const updatedUser = await this.userService.update(this.user.id, {id : this.user.id, tfa_code });
-      this.mailingService.sendMail(this.user.email, tfa_code);
-      this.user = updatedUser;
-      throw new Error("To complete authentication, 2FA verification is required")
-      // return { error: "To complete authentication, 2FA verification is required" };
-      }
-    return this.user;
+      const updateUserDataInput: UpdateUserInput = {
+        id: user.id,
+        tfa_code: code,
+        connection_status : __NEED_TFA__
+      };
+      this.mailingService.sendMail(user.email, tfa_code);
+      return this.userResolveur.updateUser(updateUserDataInput);
+    }
+    return user;
   }
 
   @Query(() => User)
-  async checkTwoAuthenticationFactor(@Args('code') code: string) {
-    if (this.user && this.user.tfa_code === code) {
-      this.user.tfa_code = "true";
-      return this.user;
-    } 
+  async checkTwoAuthenticationFactor(@Args('code') code: string, 
+  @Context() context) {
+
+    const user = await this.userResolveur.findUserById(context.token.userId)
+
+    if (!user)
+    {
+      if (user.tfa_code === code) {
+        const updateUserDataInput: UpdateUserInput = {
+          id:  context.token.userId,
+          connection_status: __ACCESS__,
+          state: __CONNECTED__,
+          tfa_code : 'true'
+        };
+        return await this.userResolveur.updateUser(updateUserDataInput)
+      } 
+      else {
+        throw new Error('Invalid two-factor authentication code');
+      }
+    }
     else {
-      throw new Error('Invalid two-factor authentication code');
+      throw new Error('User does not found');
     }
   }
 
   @Mutation(() => User, {name: "updateState"})
   async updateState(
     @Args("new_state", { type: () => Int }) new_state: number,
-    @Context() context
+    @Context() context: any
   ) {
     if (new_state < 1 || new_state > 3)
+    {
       throw new Error("Unrecognized state");
-    const updateUser =  await this.userService.update(
-      context.req.userId,
-      {id: context.req.userId, state: new_state})
-    socket.publish(CHANGE_STATE, {
-      changeState: updateUser
-    });
+    }
+    const updateUserDataInput: UpdateUserInput = {
+      id:  context.req.userId,
+      state: new_state
+    };
+    return await this.userResolveur.updateUser(updateUserDataInput);
 
-    return updateUser;
   }
 
 }

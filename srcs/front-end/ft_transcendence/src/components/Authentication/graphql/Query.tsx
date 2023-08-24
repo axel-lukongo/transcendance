@@ -5,6 +5,7 @@ export const CHECK_2AF = gql`
     checkTwoAuthenticationFactor(code: $input) {
       id
       token
+      connection_status
       email
       nickname
       avatar
@@ -19,6 +20,7 @@ export const MAKE_AUTH= gql`
     makeAuthentication(code: $code) {
       id
       token
+      connection_status
       email
       nickname
       avatar

@@ -12,11 +12,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersResolver = void 0;
+exports.UsersResolver = exports.CHANGE_STATE = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const users_service_1 = require("./users.service");
 const user_entity_1 = require("./entities/user.entity");
 const update_user_input_1 = require("./dto/update-user.input");
+const main_1 = require("../main");
+exports.CHANGE_STATE = 'changeState';
 let UsersResolver = exports.UsersResolver = class UsersResolver {
     constructor(usersService) {
         this.usersService = usersService;
@@ -28,7 +30,11 @@ let UsersResolver = exports.UsersResolver = class UsersResolver {
         return this.usersService.findUserById(id);
     }
     updateUser(updateUserInput) {
-        return this.usersService.update(updateUserInput.id, updateUserInput);
+        const updateUser = this.usersService.update(updateUserInput.id, updateUserInput);
+        main_1.socket.publish(exports.CHANGE_STATE, {
+            changeState: updateUser
+        });
+        return updateUser;
     }
     removeUser(id) {
         return this.usersService.remove(id);

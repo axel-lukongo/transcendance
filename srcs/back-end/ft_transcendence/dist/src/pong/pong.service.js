@@ -108,7 +108,7 @@ let PongService = exports.PongService = class PongService {
             if (userWithStats.user.level !== level || userWithStats.stat.wins !== win) {
                 level = userWithStats.user.level;
                 win = userWithStats.stat.wins;
-                currentGrade = index + 1;
+                currentGrade = index === 0 ? 1 : currentGrade + 1;
             }
             return {
                 grade: currentGrade,

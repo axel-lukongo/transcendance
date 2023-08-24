@@ -2,9 +2,9 @@ export declare class User {
     id: number;
     token: string;
     state: number;
+    connection_status: number;
     tfa_code?: string;
     email: string;
-    intra_login: string;
     nickname: string;
     avatar?: string;
     level: number;

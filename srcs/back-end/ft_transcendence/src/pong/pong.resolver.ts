@@ -121,14 +121,14 @@ export class PongResolver {
 
 
   @Query(() => [Pong] )
-  myMatchHistory(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.myMatchHistory(userId);
+  myMatchHistory(@Context() context : any) {
+    return this.pongService.myMatchHistory(context.req.userId);
   }
 
 
   @Query(() => StatisticMatch)
-  async myMatchStatistic(@Args('userId', { type: () => Int }) userId: number) {
-    return this.pongService.myMatchStatistic(userId)
+  async myMatchStatistic(@Context() context : any) {
+    return this.pongService.myMatchStatistic(context.req.userId)
   }
 
   @Query(() => [StatisticMatch])
@@ -227,9 +227,9 @@ export class PongResolver {
   }
 
   @Mutation(() => JoinPongResponse)
-  async joinPong(@Args('userId', { type: () => Int }) userId: number) {
+  async joinPong(@Context() context : any) {
 
-    let player = await this.player.setPlayer(userId);
+    let player = await this.player.setPlayer(context.req.userId);
     if (!player)
     {
       return { player: null };
@@ -240,7 +240,7 @@ export class PongResolver {
       if (pong_tmp && pong_tmp.winnerId)
       {
         await this.endPong(player.userId);
-        player = await this.player.setPlayer(userId);
+        player = await this.player.setPlayer(context.req.userId);
       }
       else
       {
@@ -313,8 +313,7 @@ export class PongResolver {
 
 
   @Mutation(() => String)
-  async endPong(
-    @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
+  async endPong( @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
     try {
       const player = await this.player.findPlayerByUserId(userId);
       if (!player) {
@@ -324,7 +323,6 @@ export class PongResolver {
       {
         if (player.host)
         {
-          // this.stopPong(player.pongId);
           await this.ball.removeBall(player.ballId);
         }
         const pong = await this.findPong(player.pongId);
@@ -439,7 +437,7 @@ export class PongResolver {
         }
         if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
-          currentPong.start = false;
+          currentPong.start = false; // STOP A SPECIFIC GAME
           this.updateRankLevel(currentPong.winnerId);
         }
           const DataUpdatePong : UpdatePongInput = {

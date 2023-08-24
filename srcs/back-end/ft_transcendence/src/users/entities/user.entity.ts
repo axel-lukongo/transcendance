@@ -11,14 +11,14 @@ export class User {
   @Field(() => Int)
   state: number;
 
+  @Field(() => Int)
+  connection_status: number;
+
   @Field({ nullable: true })
   tfa_code?: string;
 
   @Field()
   email: string;
-
-  @Field()
-  intra_login: string;
 
   @Field()
   nickname: string;

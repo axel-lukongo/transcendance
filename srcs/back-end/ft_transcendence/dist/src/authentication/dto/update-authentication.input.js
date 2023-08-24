@@ -9,19 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateAuthenticationInput = void 0;
+exports.UpdateAuthenticationInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let CreateAuthenticationInput = exports.CreateAuthenticationInput = class CreateAuthenticationInput {
+const user_entity_1 = require("../../users/entities/user.entity");
+let UpdateAuthenticationInput = exports.UpdateAuthenticationInput = class UpdateAuthenticationInput extends (0, graphql_1.PartialType)(user_entity_1.User) {
 };
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], CreateAuthenticationInput.prototype, "nickname", void 0);
+], UpdateAuthenticationInput.prototype, "nickname", void 0);
 __decorate([
-    (0, graphql_1.Field)({ nullable: true }),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], CreateAuthenticationInput.prototype, "avatar", void 0);
-exports.CreateAuthenticationInput = CreateAuthenticationInput = __decorate([
+], UpdateAuthenticationInput.prototype, "avatar", void 0);
+exports.UpdateAuthenticationInput = UpdateAuthenticationInput = __decorate([
     (0, graphql_1.InputType)()
-], CreateAuthenticationInput);
-//# sourceMappingURL=create-authentication.input.js.map
+], UpdateAuthenticationInput);
+//# sourceMappingURL=update-authentication.input.js.map

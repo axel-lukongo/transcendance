@@ -10,12 +10,7 @@ interface PropsHistoryMatch {
 
 const HistoryMatch: React.FC<PropsHistoryMatch> =({user}) => {
 
-
-  const { data, refetch } = useQuery(MY_MATCH_HISTORY, {
-    variables: {
-      userId: user.id
-    },
-  });
+  const { data, refetch } = useQuery(MY_MATCH_HISTORY, {});
 
   useEffect(() => {
     refetch();

@@ -125,11 +125,11 @@ let PongResolver = exports.PongResolver = class PongResolver {
     findPong(id) {
         return this.pongService.findUnique(id);
     }
-    myMatchHistory(userId) {
-        return this.pongService.myMatchHistory(userId);
+    myMatchHistory(context) {
+        return this.pongService.myMatchHistory(context.req.userId);
     }
-    async myMatchStatistic(userId) {
-        return this.pongService.myMatchStatistic(userId);
+    async myMatchStatistic(context) {
+        return this.pongService.myMatchStatistic(context.req.userId);
     }
     async leaderBoard() {
         return this.pongService.leaderBoard();
@@ -203,8 +203,8 @@ let PongResolver = exports.PongResolver = class PongResolver {
         };
         const updatedUser = await this.user.updateUser(dataUpdateUser);
     }
-    async joinPong(userId) {
-        let player = await this.player.setPlayer(userId);
+    async joinPong(context) {
+        let player = await this.player.setPlayer(context.req.userId);
         if (!player) {
             return { player: null };
         }
@@ -212,7 +212,7 @@ let PongResolver = exports.PongResolver = class PongResolver {
             const pong_tmp = await this.findPong(player.pongId);
             if (pong_tmp && pong_tmp.winnerId) {
                 await this.endPong(player.userId);
-                player = await this.player.setPlayer(userId);
+                player = await this.player.setPlayer(context.req.userId);
             }
             else {
                 const pong = await this.findPong(player.pongId);
@@ -437,16 +437,16 @@ __decorate([
 ], PongResolver.prototype, "findPong", null);
 __decorate([
     (0, graphql_1.Query)(() => [pong_entity_1.Pong]),
-    __param(0, (0, graphql_1.Args)('userId', { type: () => graphql_1.Int })),
+    __param(0, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], PongResolver.prototype, "myMatchHistory", null);
 __decorate([
     (0, graphql_1.Query)(() => StatisticMatch),
-    __param(0, (0, graphql_1.Args)('userId', { type: () => graphql_1.Int })),
+    __param(0, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], PongResolver.prototype, "myMatchStatistic", null);
 __decorate([
@@ -484,9 +484,9 @@ __decorate([
 ], PongResolver.prototype, "pongUpdatedSubscription", null);
 __decorate([
     (0, graphql_1.Mutation)(() => JoinPongResponse),
-    __param(0, (0, graphql_1.Args)('userId', { type: () => graphql_1.Int })),
+    __param(0, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], PongResolver.prototype, "joinPong", null);
 __decorate([

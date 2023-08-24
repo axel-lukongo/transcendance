@@ -11,14 +11,11 @@ export interface AuthenticatedRequest extends Request {
 export class AuthMiddleware implements NestMiddleware {
   use(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const token = req.headers.authorization?.split(' ')[1];
-    const isUserCreationRequest = req.body?.operationName === 'CreateUser';
     const isMakeAuthenticationRequest = req.body?.operationName === 'MakeAuthentication';
-    const isCheckTwoAuthenticationFactorRequest = req.body?.operationName === 'CheckTwoAuthenticationFactor';
+    // const isGraphql = (req.url === '/graphql');
     
-    // Vérifie si la requête doit être vérifiée avec le jeton
-    const requiresTokenCheck = !(isUserCreationRequest || isMakeAuthenticationRequest || isCheckTwoAuthenticationFactorRequest);
-    if (requiresTokenCheck ) {
-
+    // Vérifie si la requête doit être vérifiée avec le token
+    if (!isMakeAuthenticationRequest ) {
       
       if (!token) {
         res.status(401).json({ message: 'Token manquant' });
@@ -26,7 +23,7 @@ export class AuthMiddleware implements NestMiddleware {
       }
       
       async function check() {
-          
+        
         try {
           const prisma = new PrismaService();
           const decodedToken = verify(token, process.env.CLIENT_SECRET_BACKEND) as { userId: number };
@@ -44,6 +41,7 @@ export class AuthMiddleware implements NestMiddleware {
             
         } 
         catch (error) {
+          console.log('error', error);
           res.status(401).json({ message: 'Token invalide' });
         }
       }

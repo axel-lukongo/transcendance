@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { MY_MATCH_STATS } from "../graphl/Query";
-import { useEffect, useState } from "react";
-import { IUserStat, User } from "../../interfaces/interfaces";
+import { useEffect,  } from "react";
+import { IUserStat,  } from "../../interfaces/interfaces";
 
 import gradeImg from "/ft_transcendence/src/image/grade_icon.svg"
 import levelImg from "/ft_transcendence/src/image/level_icon.svg"
@@ -11,18 +11,10 @@ import defeatImg from "/ft_transcendence/src/image/defeat_icon.svg"
 import ratioImg from "/ft_transcendence/src/image/ratio_icon.svg"
 
 
-interface PropsMatchStatistic {
-  user: User
-}
-
-const MatchStatistic: React.FC<PropsMatchStatistic> =({user}) => {
+const MatchStatistic: React.FC = () => {
 
 
-  const { loading, error, data, refetch } = useQuery(MY_MATCH_STATS, {
-    variables: {
-      userId: user.id
-    },
-  });
+  const { loading, error, data, refetch } = useQuery(MY_MATCH_STATS, {});
 
   useEffect(() => {
     refetch();
