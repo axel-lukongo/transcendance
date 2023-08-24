@@ -67,7 +67,7 @@ let UserChanelsResolver = exports.UserChanelsResolver = class UserChanelsResolve
     }
     async updateChanelAdmin(key, context) {
         const userId = context.req.userId;
-        const isOwner = await this.userChanelService.IsOwnerInChannel(userId, userId);
+        const isOwner = await this.userChanelService.IsOwnerInChannel(userId, key.chanel_id);
         if (!isOwner) {
             return 'you don t have the permission';
         }

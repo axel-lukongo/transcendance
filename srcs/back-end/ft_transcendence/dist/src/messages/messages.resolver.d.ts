@@ -11,13 +11,7 @@ export declare class MessagesResolver {
         content: string;
         sent_at: Date;
     }, unknown> & {})[]>;
-    findAll_msg_chan(channelId: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
-        id: number;
-        sender_id: number;
-        channel_id: number;
-        content: string;
-        sent_at: Date;
-    }, unknown> & {})[]>;
+    findAll_msg_chan(channelId: number, context: any): Promise<any[]>;
     findOne_msg(id: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         sender_id: number;

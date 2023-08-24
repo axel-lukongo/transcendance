@@ -36,6 +36,7 @@ export declare class ToblocService {
         blocker_id: number;
         blocked_id: number;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    is_blocked(blockerId: number, blockedId: number): Promise<boolean>;
     YourBloc(blockerId: number, blockedId: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         blocker_id: number;

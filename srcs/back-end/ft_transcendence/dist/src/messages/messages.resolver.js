@@ -28,8 +28,8 @@ let MessagesResolver = exports.MessagesResolver = class MessagesResolver {
     findAll_msg() {
         return this.msgService.findAll_msg();
     }
-    findAll_msg_chan(channelId) {
-        return this.msgService.findAll_msg_chan(channelId);
+    async findAll_msg_chan(channelId, context) {
+        return this.msgService.findAll_msg_chan(channelId, context.req.userId);
     }
     findOne_msg(id) {
         return this.msgService.findOne_msg(id);
@@ -65,9 +65,10 @@ __decorate([
 __decorate([
     (0, graphql_1.Query)(() => [messages_entity_1.Message], { name: 'Message_findAll_msg_chan' }),
     __param(0, (0, graphql_1.Args)('channelId', { type: () => graphql_1.Int })),
+    __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "findAll_msg_chan", null);
 __decorate([
     (0, graphql_1.Query)(() => messages_entity_1.Message, { name: 'Message_findOne_msg' }),

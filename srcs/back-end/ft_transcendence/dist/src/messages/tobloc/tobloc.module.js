@@ -14,11 +14,12 @@ const prisma_service_1 = require("../../../prisma/prisma.service");
 const chanel_service_1 = require("../../chanel/chanel.service");
 const users_service_1 = require("../../users/users.service");
 const contacts_service_1 = require("../../contacts/contacts.service");
+const messages_service_1 = require("../messages.service");
 let ToblocModule = exports.ToblocModule = class ToblocModule {
 };
 exports.ToblocModule = ToblocModule = __decorate([
     (0, common_1.Module)({
-        providers: [tobloc_resolver_1.ToblocResolver, tobloc_service_1.ToblocService, prisma_service_1.PrismaService, chanel_service_1.ChanelService, users_service_1.UsersService, contacts_service_1.ContactsService]
+        providers: [tobloc_resolver_1.ToblocResolver, tobloc_service_1.ToblocService, prisma_service_1.PrismaService, chanel_service_1.ChanelService, users_service_1.UsersService, contacts_service_1.ContactsService, messages_service_1.MessagesService]
     })
 ], ToblocModule);
 //# sourceMappingURL=tobloc.module.js.map

@@ -30,6 +30,18 @@ let ToblocService = exports.ToblocService = class ToblocService {
     remove(id) {
         return this.prisma.toBloc.delete({ where: { id: id } });
     }
+    async is_blocked(blockerId, blockedId) {
+        const user_is_blocked = await this.prisma.toBloc.findFirst({
+            where: {
+                blocker_id: blockerId,
+                blocked_id: blockedId,
+            },
+        });
+        if (user_is_blocked)
+            return true;
+        else
+            return false;
+    }
     async YourBloc(blockerId, blockedId) {
         return await this.prisma.toBloc.findFirst({
             where: {

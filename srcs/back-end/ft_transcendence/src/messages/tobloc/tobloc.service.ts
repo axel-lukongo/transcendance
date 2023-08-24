@@ -27,6 +27,22 @@ remove(id: number) {
 	return this.prisma.toBloc.delete({ where: { id: id } });
 }
 
+async is_blocked(blockerId: number, blockedId: number){
+	// console.log('le bloqueur: ', blockerId, 'le bloquer: ', blockedId);
+	const user_is_blocked = await this.prisma.toBloc.findFirst({
+		where: {
+			blocker_id: blockerId,
+			blocked_id: blockedId,
+		},
+	  });
+	//   console.log('===>>>>>  ',user_is_blocked);
+	  if (user_is_blocked)
+	  	return true;
+	  else
+	  	return false;
+	}
+
+
 async YourBloc(blockerId: number, blockedId: number){
 	return await this.prisma.toBloc.findFirst({
 		where: {
@@ -43,3 +59,6 @@ async YourBloc(blockerId: number, blockedId: number){
 		},
 	  });}
 }
+
+
+

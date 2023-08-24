@@ -4,11 +4,12 @@ import { CreateMessageInput } from './dto/create-messages.input';
 import { UpdateMessageInput } from './dto/update-message.input';
 import { Message } from './entities/messages.entity';
 import { UserChanelsService } from 'src/user-chanels/user-chanels.service';
-
+import { ToblocService } from './tobloc/tobloc.service';
 @Injectable()
 export class MessagesService {
-	constructor(private readonly prisma: PrismaService) {}
-
+	constructor(private readonly prisma: PrismaService,
+		private readonly blocked: ToblocService) {}
+	
 	async findAll_msg() { 
 		return this.prisma.message.findMany({});
 	}
@@ -17,13 +18,25 @@ export class MessagesService {
 		return this.prisma.message.findUnique({where: {id: id}});
 	}
 
-	async findAll_msg_chan(channelId: number) {
-		return this.prisma.message.findMany({
+	async findAll_msg_chan(channelId: number, my_id: number) {
+
+		const new_msg = await this.prisma.message.findMany({
 			where: {
 				//il faudra peut etre que on rajoute un filtre pour ne pas retourner les message des personne bloquer par ce user
 				channel_id: channelId // Utilisation de la variable channelId pour filtrer les messages
 			}
 		});
+
+		const filteredMessages = [];
+		for (const message of new_msg) {
+			const isBlocked = await this.blocked.is_blocked(my_id, message.sender_id); // Vérifier si le sender_id est bloqué par my_id
+			// console.log
+			if (!isBlocked) {
+				filteredMessages.push(message);
+			}
+		}
+
+		return filteredMessages;
 	}
 
 	create(createMsg: CreateMessageInput) {

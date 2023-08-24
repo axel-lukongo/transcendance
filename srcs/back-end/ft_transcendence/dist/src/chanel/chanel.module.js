@@ -16,12 +16,13 @@ const messages_module_1 = require("../messages/messages.module");
 const messages_service_1 = require("../messages/messages.service");
 const messages_resolver_1 = require("../messages/messages.resolver");
 const banned_module_1 = require("./banned/banned.module");
+const tobloc_service_1 = require("../messages/tobloc/tobloc.service");
 let ChanelModule = exports.ChanelModule = class ChanelModule {
 };
 exports.ChanelModule = ChanelModule = __decorate([
     (0, common_1.Module)({
         imports: [messages_module_1.MessagesModule, banned_module_1.BannedModule],
-        providers: [chanel_resolver_1.ChanelResolver, chanel_service_1.ChanelService, prisma_service_1.PrismaService, users_service_1.UsersService, messages_service_1.MessagesService, messages_resolver_1.MessagesResolver]
+        providers: [chanel_resolver_1.ChanelResolver, chanel_service_1.ChanelService, prisma_service_1.PrismaService, users_service_1.UsersService, messages_service_1.MessagesService, messages_resolver_1.MessagesResolver, tobloc_service_1.ToblocService]
     })
 ], ChanelModule);
 //# sourceMappingURL=chanel.module.js.map

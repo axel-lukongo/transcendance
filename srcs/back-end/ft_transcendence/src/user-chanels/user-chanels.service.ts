@@ -139,6 +139,7 @@ export class UserChanelsService {
 			}
 		},
 	})
+	// console.log('le owner ===>>>> ',is_owner)
 	if(is_owner)
 		return true;
 	return false;

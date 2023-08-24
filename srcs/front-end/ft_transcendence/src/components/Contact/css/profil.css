@@ -38,7 +38,7 @@
 @keyframes glow-border {
 	0%, 100% {
 		border: 2px solid transparent;
-		box-shadow: 0 0 55px 5px rgba(136, 29, 129, 0.6);
+		box-shadow: 0 0 55px 5px rgba(152, 26, 26, 0.959);
 	}
 	50% {
 		/* border: 0px solid rgba(255, 0, 0, 0.6); */
@@ -61,7 +61,33 @@
 
 
 
+.blocked-interface{
+	position: relative;
+	background-color: rgba(35, 24, 104, 0.466);
+	border-radius: 5%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	height: 10%;
+	width: 20%;
+	overflow: hidden;
+	animation: glow-border 4s linear infinite;
+}
+.confirme-blocked-interface{
+	margin-top: 15%;
+	margin-left: 6%;
+	color: #ec5454;
+	background-color: #ece95400;
+	border: none;
+	cursor: pointer;
+}
 
+.cancel-blocked-interface{
+	margin-left: 30%;
+	color: #90ebae;
+	background-color: #ec545400;
+	border: none;
+	cursor: pointer;
+
+}
 
 
 

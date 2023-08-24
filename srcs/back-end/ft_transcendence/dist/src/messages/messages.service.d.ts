@@ -1,9 +1,11 @@
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateMessageInput } from './dto/create-messages.input';
 import { UpdateMessageInput } from './dto/update-message.input';
+import { ToblocService } from './tobloc/tobloc.service';
 export declare class MessagesService {
     private readonly prisma;
-    constructor(prisma: PrismaService);
+    private readonly blocked;
+    constructor(prisma: PrismaService, blocked: ToblocService);
     findAll_msg(): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         sender_id: number;
@@ -18,13 +20,7 @@ export declare class MessagesService {
         content: string;
         sent_at: Date;
     }, unknown> & {}>;
-    findAll_msg_chan(channelId: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
-        id: number;
-        sender_id: number;
-        channel_id: number;
-        content: string;
-        sent_at: Date;
-    }, unknown> & {})[]>;
+    findAll_msg_chan(channelId: number, my_id: number): Promise<any[]>;
     create(createMsg: CreateMessageInput): import(".prisma/client").Prisma.Prisma__MessageClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         sender_id: number;

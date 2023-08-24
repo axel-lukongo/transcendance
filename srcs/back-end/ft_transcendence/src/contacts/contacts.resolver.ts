@@ -9,7 +9,6 @@ import { UpdateContact } from './dto/update-contact.input';
 import { CHANGE_STATE } from 'src/authentication/authentication.resolver';
 import { socket } from 'src/main';
 import { resolveCaa } from 'dns';
-
 import { response } from 'express';
 import { ToblocService } from 'src/messages/tobloc/tobloc.service';
 @Resolver(() => Contact)

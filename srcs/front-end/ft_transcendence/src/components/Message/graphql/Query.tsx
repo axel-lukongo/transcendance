@@ -103,3 +103,12 @@ export const BANNED_LIST_QUERY = gql`
     }
   }
 `;
+
+
+export const USER_IS_BLOCKED = gql`
+  query IsBlocked($other_userId: Int!) {
+    IsBlocked(other_userId: $channelId) {
+		id 
+	}
+  }
+`;

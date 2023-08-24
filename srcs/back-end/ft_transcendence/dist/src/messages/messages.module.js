@@ -12,12 +12,13 @@ const messages_resolver_1 = require("./messages.resolver");
 const messages_service_1 = require("./messages.service");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const tobloc_module_1 = require("./tobloc/tobloc.module");
+const tobloc_service_1 = require("./tobloc/tobloc.service");
 let MessagesModule = exports.MessagesModule = class MessagesModule {
 };
 exports.MessagesModule = MessagesModule = __decorate([
     (0, common_1.Module)({
         imports: [tobloc_module_1.ToblocModule],
-        providers: [messages_service_1.MessagesService, messages_resolver_1.MessagesResolver, prisma_service_1.PrismaService]
+        providers: [messages_service_1.MessagesService, messages_resolver_1.MessagesResolver, prisma_service_1.PrismaService, tobloc_service_1.ToblocService]
     })
 ], MessagesModule);
 //# sourceMappingURL=messages.module.js.map

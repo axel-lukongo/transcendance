@@ -137,7 +137,9 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		setSelectedUserIndex(userIndex);
 	};
 
-
+	const handleshowBlocked = (state: boolean) => {
+		setHandleTobloc(state);
+	}
 
 	return(
 
@@ -176,6 +178,7 @@ export default function Direct_message(props: IPrivateMessageProps) {
 									&& < Tobloc 
 											blockerId={myuser.id}
 											blockedId={contact.contact.id}
+											handleshowBlocked={handleshowBlocked}
 										/>
 								}
 								<div id="blocked_btn" onClick={() => setHandleTobloc(true)}></div>

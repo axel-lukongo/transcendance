@@ -12,9 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const tobloc_service_1 = require("./tobloc/tobloc.service");
 let MessagesService = exports.MessagesService = class MessagesService {
-    constructor(prisma) {
+    constructor(prisma, blocked) {
         this.prisma = prisma;
+        this.blocked = blocked;
     }
     async findAll_msg() {
         return this.prisma.message.findMany({});
@@ -22,12 +24,20 @@ let MessagesService = exports.MessagesService = class MessagesService {
     async findOne_msg(id) {
         return this.prisma.message.findUnique({ where: { id: id } });
     }
-    async findAll_msg_chan(channelId) {
-        return this.prisma.message.findMany({
+    async findAll_msg_chan(channelId, my_id) {
+        const new_msg = await this.prisma.message.findMany({
             where: {
                 channel_id: channelId
             }
         });
+        const filteredMessages = [];
+        for (const message of new_msg) {
+            const isBlocked = await this.blocked.is_blocked(my_id, message.sender_id);
+            if (!isBlocked) {
+                filteredMessages.push(message);
+            }
+        }
+        return filteredMessages;
     }
     create(createMsg) {
         return this.prisma.message.create({ data: createMsg });
@@ -77,6 +87,7 @@ let MessagesService = exports.MessagesService = class MessagesService {
 };
 exports.MessagesService = MessagesService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        tobloc_service_1.ToblocService])
 ], MessagesService);
 //# sourceMappingURL=messages.service.js.map

@@ -42,6 +42,9 @@ let ToblocResolver = exports.ToblocResolver = class ToblocResolver {
     findOne(id) {
         return this.toblocService.findOne(id);
     }
+    async UserBlocked(other_userId, context) {
+        return await this.toblocService.YourBloc(context.req.userId, other_userId);
+    }
     removeTobloc(id) {
         return this.toblocService.remove(id);
     }
@@ -68,6 +71,14 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ToblocResolver.prototype, "findOne", null);
+__decorate([
+    (0, graphql_1.Query)(() => tobloc_entity_1.Tobloc, { name: 'IsBlocked' }),
+    __param(0, (0, graphql_1.Args)('other_userId', { type: () => graphql_1.Int })),
+    __param(1, (0, graphql_1.Context)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], ToblocResolver.prototype, "UserBlocked", null);
 __decorate([
     (0, graphql_1.Mutation)(() => tobloc_entity_1.Tobloc),
     __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),

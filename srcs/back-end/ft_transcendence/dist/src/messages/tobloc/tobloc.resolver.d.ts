@@ -36,6 +36,11 @@ export declare class ToblocResolver {
         blocker_id: number;
         blocked_id: number;
     }, unknown> & {}>;
+    UserBlocked(other_userId: number, context: any): Promise<import("@prisma/client/runtime/library").GetResult<{
+        id: number;
+        blocker_id: number;
+        blocked_id: number;
+    }, unknown> & {}>;
     removeTobloc(id: number): import(".prisma/client").Prisma.Prisma__ToBlocClient<import("@prisma/client/runtime/library").GetResult<{
         id: number;
         blocker_id: number;
