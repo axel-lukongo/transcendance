@@ -76,12 +76,12 @@ export class UserChanelsService {
 
 
 
-	async isAdministrator(key: UpdateChanelUserInput, userID: number): Promise<boolean> {
+	async isAdministrator(channel_id: number, userID: number): Promise<boolean> {
 		const chan_executor = await this.prisma.users_Chanels.findUnique({
 			where: {
 				user_id_chanel_id: {
 					user_id: userID,
-					chanel_id: key.chanel_id
+					chanel_id: channel_id,
 				},
 			},
 		})

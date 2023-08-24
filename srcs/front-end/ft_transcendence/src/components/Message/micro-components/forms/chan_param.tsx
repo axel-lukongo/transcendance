@@ -158,10 +158,14 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 						return (
 							<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
 								<p>{member.user.nickname}
-								<button onClick={() => { handlemuted(member.user_id, member.is_muted) }}>muted</button>
-								<button onClick={() => { handleadmin(member.user_id, member.is_admin) }}>admin</button>
-								<button onClick={() => { handlekick(member) }}>kick</button>
-								<button onClick={() => { handleban(member) }}>ban</button>
+									{
+										member.is_muted===true?
+										<button className="unmute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>:
+										<button className="mute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>
+									}
+									<button className="admin_btn" onClick={() => { handleadmin(member.user_id, member.is_admin) }}></button>
+									<button className="kick_btn" onClick={() => { handlekick(member) }}></button>
+									<button className="banned_btn" onClick={() => { handleban(member) }}></button>
 								</p>
 							</ul>
 							)

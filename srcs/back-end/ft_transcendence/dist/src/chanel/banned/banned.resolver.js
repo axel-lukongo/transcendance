@@ -17,12 +17,20 @@ const graphql_1 = require("@nestjs/graphql");
 const banned_service_1 = require("./banned.service");
 const banned_entity_1 = require("./entities/banned.entity");
 const create_banned_input_1 = require("./dto/create-banned.input");
+const user_chanels_service_1 = require("../../user-chanels/user-chanels.service");
 let BannedResolver = exports.BannedResolver = class BannedResolver {
-    constructor(bannedService) {
+    constructor(bannedService, userChanelService) {
         this.bannedService = bannedService;
+        this.userChanelService = userChanelService;
     }
-    createBanned(createBannedInput) {
-        return this.bannedService.create(createBannedInput);
+    async createBanned(createBannedInput, context) {
+        const userId = context.req.userId;
+        const I_amAdmin = await this.userChanelService.isAdministrator(createBannedInput.channel_id, userId);
+        const he_is_Owner = await this.userChanelService.IsOwnerInChannel(createBannedInput.user_id, createBannedInput.channel_id);
+        if (I_amAdmin && !he_is_Owner)
+            return this.bannedService.create(createBannedInput);
+        else
+            return 'action denied';
     }
     async findAll(channelId) {
         return this.bannedService.findAll(channelId);
@@ -34,9 +42,10 @@ let BannedResolver = exports.BannedResolver = class BannedResolver {
 __decorate([
     (0, graphql_1.Mutation)(() => banned_entity_1.Banned),
     __param(0, (0, graphql_1.Args)('createBannedInput')),
+    __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_banned_input_1.CreateBannedInput]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_banned_input_1.CreateBannedInput, Object]),
+    __metadata("design:returntype", Promise)
 ], BannedResolver.prototype, "createBanned", null);
 __decorate([
     (0, graphql_1.Query)(() => [banned_entity_1.Banned], { name: 'banned_list' }),
@@ -55,6 +64,7 @@ __decorate([
 ], BannedResolver.prototype, "removeBanned", null);
 exports.BannedResolver = BannedResolver = __decorate([
     (0, graphql_1.Resolver)(() => banned_entity_1.Banned),
-    __metadata("design:paramtypes", [banned_service_1.BannedService])
+    __metadata("design:paramtypes", [banned_service_1.BannedService,
+        user_chanels_service_1.UserChanelsService])
 ], BannedResolver);
 //# sourceMappingURL=banned.resolver.js.map

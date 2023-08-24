@@ -44,7 +44,7 @@ export declare class UserChanelsService {
         is_admin: boolean;
         mute_start_time: number;
     }, unknown> & {}>;
-    isAdministrator(key: UpdateChanelUserInput, userID: number): Promise<boolean>;
+    isAdministrator(channel_id: number, userID: number): Promise<boolean>;
     findMembersOfChan(channel_id: number): Promise<({
         user: import("@prisma/client/runtime/library").GetResult<{
             id: number;

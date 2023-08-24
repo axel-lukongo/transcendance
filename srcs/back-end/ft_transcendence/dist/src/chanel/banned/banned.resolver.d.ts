@@ -1,13 +1,15 @@
 import { BannedService } from './banned.service';
 import { CreateBannedInput } from './dto/create-banned.input';
+import { UserChanelsService } from 'src/user-chanels/user-chanels.service';
 export declare class BannedResolver {
     private readonly bannedService;
-    constructor(bannedService: BannedService);
-    createBanned(createBannedInput: CreateBannedInput): import(".prisma/client").Prisma.Prisma__user_bannedClient<import("@prisma/client/runtime/library").GetResult<{
+    private readonly userChanelService;
+    constructor(bannedService: BannedService, userChanelService: UserChanelsService);
+    createBanned(createBannedInput: CreateBannedInput, context: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         user_id: number;
         channel_id: number;
-    }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }, unknown> & {}) | "action denied">;
     findAll(channelId: number): Promise<({
         user_ban: import("@prisma/client/runtime/library").GetResult<{
             id: number;
