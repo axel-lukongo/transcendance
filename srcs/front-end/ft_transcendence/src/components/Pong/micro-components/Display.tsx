@@ -64,19 +64,26 @@ export const Display: FC<DisplayProps> = ({ player,
 *   SET GAME 
 */
   useEffect(() => {
-
-      // START PONG
-      if (player?.host)
-      {
-        startPong({})
-        .then((response) => {
-          // Appel réussi, le démarrage de ballMove est activé côté serveur
-          console.log('game start', response);
-        })
-        .catch((error) => {
-          console.error('Error calling startPong mutation:', error);
-        });
-      }
+    
+   // START PONG
+   if (player?.host)
+   {
+     startPong({
+       variables: {
+         ballId: ball?.id,
+         playerId: player?.id,
+         otherPlayerId: otherPlayer?.id,
+         pongId: pong?.id
+       },
+     })
+     .then((response) => {
+       // Appel réussi, le démarrage de ballMove est activé côté serveur
+       console.log('game start', response);
+     })
+     .catch((error) => {
+       console.error('Error calling startPong mutation:', error);
+     });
+   }
   }, []); 
 
 /*

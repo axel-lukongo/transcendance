@@ -239,7 +239,7 @@ export class PongResolver {
       const pong_tmp = await this.findPong(player.pongId);
       if (pong_tmp && pong_tmp.winnerId)
       {
-        await this.endPong(context);
+        await this.endPong(player.id);
         player = await this.player.setPlayer(context.req.userId);
       }
       else
@@ -313,9 +313,9 @@ export class PongResolver {
 
 
   @Mutation(() => String)
-  async endPong(@Context() context : any ): Promise<string> {
+  async endPong( @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
     try {
-      const player = await this.player.findPlayerByUserId(context.req.userId);
+      const player = await this.player.findPlayerByUserId(userId);
       if (!player) {
         return 'Player was aldready deleted';
       }
@@ -352,14 +352,13 @@ export class PongResolver {
   }
 
   @Mutation(() => Boolean)
-  async startPong(@Context() context : any ) {
+  async startPong(  @Args('ballId', { type: () => Int }) ballId: number,
+                        @Args('playerId', { type: () => Int }) playerId: number,
+                        @Args('otherPlayerId', { type: () => Int }) otherPlayerId: number,
+                        @Args('pongId', { type: () => Int }) pongId: number) {
 
-    const player = await this.player.findPlayerByUserId(context.req.userId);
-    if (!player){
-      return false;
-    }
 
-    const pong = await this.findPong(player.pongId);
+    const pong = await this.findPong(pongId);
     if (pong.start === true) {
       return false;
     }
@@ -370,19 +369,17 @@ export class PongResolver {
     await this.updatePong(updateDataPong);
 
     const callback = async () => {
-      const player = await this.player.findPlayerByUserId(context.req.userId);
-      
-      const currentPong = await this.findPong(player.pongId);
+      const currentPong = await this.findPong(pongId);
       if (currentPong.start === false) {
-        this.timer.stopPongTimer(player.pongId);
+        this.timer.stopPongTimer(pongId);
         return true;
       }
-      const ball  = await this.ball.findUnique(player.ballId);
-      const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
-      
+      const ball  = await this.ball.findUnique(ballId);
+      const player = await this.player.findPlayer(playerId);
+      const otherPlayer = await this.player.findPlayer(otherPlayerId);
       await this.ballMove(ball, player, otherPlayer, currentPong);
     }
-    this.timer.startPongTimer(player.pongId, callback);
+    this.timer.startPongTimer(pongId, callback);
 
     return true;
   }
@@ -440,7 +437,7 @@ export class PongResolver {
         }
         if (currentPong.scoreUser1 == 5 || currentPong.scoreUser2 == 5)
         {
-          currentPong.start = false;
+          currentPong.start = false; // STOP A SPECIFIC GAME
           this.updateRankLevel(currentPong.winnerId);
         }
           const DataUpdatePong : UpdatePongInput = {

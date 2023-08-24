@@ -1,17 +1,16 @@
 import {gql} from '@apollo/client';
 
 export const START_PONG = gql`
-  mutation StartPong{
-    startPong
+  mutation StartPong($ballId: Int!, $playerId: Int!, $otherPlayerId: Int!, $pongId: Int!) {
+    startPong(ballId: $ballId, playerId: $playerId, otherPlayerId: $otherPlayerId, pongId: $pongId)
   }
 `;
 
 export const END_PONG = gql`
-  mutation EndPong {
-    endPong
+  mutation EndPong($userId: Int!) {
+    endPong(userId: $userId)
   }
 `;
-
 
 export const JOIN_PONG = gql`
   mutation JoinPong {

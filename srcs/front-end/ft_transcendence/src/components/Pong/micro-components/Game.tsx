@@ -49,35 +49,43 @@ interface GameProps {
         });
       }
     
-      //Cleanup function
-      return () => {
-          endPong({})
-          .then(endPongResponse => {
-            // console.log('endPong result:', endPongResponse.data.endPong); 
-          })
-          .catch(error => {
-            console.error('Error ending pong:', error);
-          });
+     //Cleanup function
+     return () => {
+      endPong({
+        variables: {
+          userId: userFromStorage?.id
         }
-      }, []);
-  
-      const handleUnload = async () => {
-        if (player && userFromStorage) {
-          try {
-            await endPong({});
-          } catch (error) {
-            console.error('Error ending pong:', error);
-          }
-        }
-      };
-    
-      useEffect(() => {
-        window.addEventListener('beforeunload', handleUnload);
-    
-        return () => {
-          window.removeEventListener('beforeunload', handleUnload);
-        };
-      }, [player, userFromStorage]);
+      })
+      .then(endPongResponse => {
+        console.log('endPong result:', endPongResponse.data.endPong); // Result string
+      })
+      .catch(error => {
+        console.error('Error ending pong:', error);
+      });
+    }
+  }, []);
+
+  const handleUnload = async () => {
+    if (player && userFromStorage) {
+      try {
+        await endPong({
+          variables: {
+            userId: userFromStorage?.id,
+          },
+        });
+      } catch (error) {
+        console.error('Error ending pong:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [player, userFromStorage]);
   
       return (
         <div>
