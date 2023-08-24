@@ -25,6 +25,8 @@ type Chanel {
   private: Boolean!
   directMsg: Boolean
   interlocutor_id: Float
+  directMsg: Boolean
+  interlocutor: User
   messages: [Message!]!
 }
 
@@ -144,6 +146,7 @@ type Query {
   Message_findOne_msg(id: Int!): Message!
   person_blocked(id: Int!): [Tobloc!]!
   tobloc(id: Int!): Tobloc!
+  IsBlocked(other_userId: Int!): Tobloc!
   banned_list(channelId: Int!): [Banned!]!
   contactsRequest: [Contact!]!
   myContactRequest: [Contact!]!

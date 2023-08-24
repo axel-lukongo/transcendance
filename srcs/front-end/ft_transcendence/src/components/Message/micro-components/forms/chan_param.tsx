@@ -83,8 +83,8 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
     }).then((result) => {
 		refetch();
 		console.log(result.data.updateChanelUser);
-    }).catch(() => {
-		console.log("action denied ",);
+    }).catch((error) => {
+		console.log("action denied ===>>>", error);
 	});
   };
 

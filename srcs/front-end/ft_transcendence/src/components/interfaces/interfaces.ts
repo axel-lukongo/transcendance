@@ -10,16 +10,19 @@ export interface User {
     tfa_code?: string;
 	state?: number;
 	level: number;
-}
+	rank: string;
+  }
 
 export interface Chanel {
 	id: number;
+	owner_id: number;
 	chanel_name: string;
 	chanel_size: number;
 	max_users: number;
 	logo: string;
 	interlocutor_id: number;
 	directMsg: boolean;
+	interlocutor: User;
 }
 
 export interface UserChanels {
@@ -37,10 +40,16 @@ export interface Banned{
 	user_ban: User;
 }
 
-export interface IContact extends Partial<User> {
+export interface IContact {
 	id: number;
 	nickname: string;
 	state: number;
+	email: string;
+	token: number;
+	avatar: string;
+	level: number;
+	rank: string;
+
 }
 
 export interface IContactsLink {
@@ -140,12 +149,14 @@ export interface IPropsChanel {
 }
 
 export interface channelfocus  {
-	id: string;
-	chanel_name: string;
-	chanel_size: string;
-	max_users: string;
-	logo: string;
-	directMsg: boolean;
+	id: string,
+	owner_id: string
+	chanel_name: string,
+	chanel_size: string,
+	max_users: string,
+	logo: string,
+	directMsg: boolean,
+	interlocutor: User,
 }
 
 export interface IRequest {

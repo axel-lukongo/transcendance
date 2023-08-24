@@ -1,0 +1,255 @@
+
+.profil-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.profile_btn{
+	width: 15px;
+	height: 20px;
+	background: url("/ft_transcendence/src/image/profil.png") center no-repeat;
+	background-size: contain;
+	/* margin-left: 5%; */
+	/* margin-right: 1%; */
+	align-items: center;
+	margin-left: 60%;
+}
+
+
+.profil-modal .modal-content {
+	position: relative;
+	background-color: rgba(35, 24, 104, 0.466);
+	border-radius: 5%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	height: 80%;
+	width: 40%;
+	overflow: hidden;
+	animation: glow-border 4s linear infinite;
+}
+
+@keyframes glow-border {
+	0%, 100% {
+		border: 2px solid transparent;
+		box-shadow: 0 0 55px 5px rgba(152, 26, 26, 0.959);
+	}
+	50% {
+		/* border: 0px solid rgba(255, 0, 0, 0.6); */
+		box-shadow: none;
+	}
+}
+
+
+.modal-content .close-btn {
+	/* position: relative; */
+	/* left: 10%; */
+	margin-top: 3%;
+	margin-left: 85%;
+	background-color: #ec5454;
+	border: none;
+	padding: 0.5% 1%;
+	border-radius: 100%;
+	cursor: pointer;
+}
+
+
+
+.blocked-interface{
+	position: relative;
+	background-color: rgba(35, 24, 104, 0.466);
+	border-radius: 5%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	height: 10%;
+	width: 20%;
+	overflow: hidden;
+	animation: glow-border 4s linear infinite;
+}
+.confirme-blocked-interface{
+	margin-top: 15%;
+	margin-left: 6%;
+	color: #ec5454;
+	background-color: #ece95400;
+	border: none;
+	cursor: pointer;
+}
+
+.cancel-blocked-interface{
+	margin-left: 30%;
+	color: #90ebae;
+	background-color: #ec545400;
+	border: none;
+	cursor: pointer;
+
+}
+
+
+
+/* ############################ parti du haut #############################*/
+.modal-content .Container_one{
+	display: flex;
+	height: 20%;
+}
+@keyframes rotateBorder {
+	0%, 100% {
+		border: 2px solid transparent;
+		box-shadow: 0 0 10px 5px #763b0471;
+	}
+	50% {
+		box-shadow: none;
+	}
+  }
+
+  .Container_one .avatar_prfl {
+	/* position: relative; */
+	margin-left: 1%;
+	width: 24%;
+	height: 99%;
+	border-radius: 50%;
+	border: 2px solid #ffd27d;
+	overflow: hidden;
+	animation: rotateBorder 5s linear infinite;
+  }
+  
+  .modal-content .avatar_prfl .avatar-img-prfl {
+	/* justify-content: center; */
+	/* align-items: center; */
+	/* margin-left: 30%; */
+	width: 100%;
+	height: 100%;
+  }
+  
+
+
+
+.Container_one .sub-Container_one {
+	display: flex;
+	margin-left: 5%;
+	margin-top: 5%;
+	/* align-items: flex-start; Aligne les éléments en haut du conteneur */
+	flex-direction: column; /* Aligne les éléments en colonne */
+}
+
+.sub-Container_one .nickname-box{
+	width: 0%;
+	color: #ffd27d;
+	height: 30%;
+	margin-bottom: 10px; 
+	margin-left: 0%;
+}
+
+.sub-Container_one .mail-box{
+	color: #ffd27d;
+	width: 0%;
+
+}
+
+
+
+
+
+
+/* ############################ parti du milieu #############################*/
+
+.modal-content .horizontal-line{
+	border: none;
+	border-top: 1px solid #706767; 
+	margin: 1% auto; /* Ajuste la marge autour de la ligne */
+	width: 80%;
+}
+
+
+
+.modal-content .boxes-container {
+	display: flex;
+    justify-content: space-between; /* Espace les éléments de manière égale */
+    align-items: center; /* Aligne les éléments verticalement */
+    margin-bottom: 10px; /* Ajoute une marge en bas */
+	height: 15%;
+	
+}
+
+@keyframes flicker {
+	0%, 100% {
+	  opacity: 1;
+	}
+	50% {
+	  opacity: 0.8;
+	}
+  }
+  
+  .modal-content .rankes-box {
+	color: #ffd27d;
+	margin-top: 0%;
+	border-radius: 10%;
+	margin-left: 15%;
+	background-color: rgba(154, 147, 205, 0.642);
+	width: 30%;
+	height: 100%;
+	align-items: center;
+	animation: flicker 2s infinite; /* Animation de scintillement */
+  }
+
+  .Ranks{
+	margin-top: 10%;
+	
+	font-size: 1.5rem;
+}
+
+
+.modal-content .xp-box{
+	color: #ffd27d;
+	margin-top: 0%;
+	margin-right: 15%;
+	border-radius: 10%;
+	background-color: rgba(154, 147, 205, 0.642);
+	width: 30%;
+	height: 100%;
+	animation: flicker 2s infinite; /* Animation de scintillement */
+
+}
+
+.modal-content .resumer{
+	margin-top: 10%;
+	color: #f2f2f2;
+	font-size: 1.5rem;
+}
+
+
+
+
+
+
+/* ############################ parti du bas #############################*/
+
+.container-scroll {
+  overflow-y: auto; /* Ajoute une barre de défilement verticale lorsque le contenu dépasse */
+  max-height: 45%; /* Ajuste la hauteur maximale de la zone de défilement */
+}
+
+.container-tree {
+	/* width: 100%; */
+	/* height: 5%; */
+	color: #ffd27d;
+	/* overflow: scroll; */
+	
+}
+
+.container-tree .profil-match-history {
+	margin-right: 30%;
+	background-color: #f2f2f2;
+	margin-top: 0%;
+	border-radius: 10%;
+	margin: 5% auto; /* Ajuste la marge autour de la ligne */
+	border: 3px solid #ffd27d;
+	padding: 1%;
+	background-color: rgba(154, 147, 205, 0.099);
+	width: 90%;
+	height: 100%;
+}

@@ -19,6 +19,10 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 			logo
 			interlocutor_id
 			directMsg
+			interlocutor{
+				nickname
+				avatar
+			}
 		}
 	}
 `;
@@ -29,11 +33,16 @@ export const GET_CONTACT = gql`
 			id
 			user_id
 			contact_id
-			contact {
-				nickname
+			contact{
 				id
-				state
+				email
+				intra_login
+				nickname
+				avatar
+				level
+				rank
 			}
+
 		}
 	}
 `;
@@ -54,6 +63,7 @@ export const CHANELS_LIST = gql`query GetChanelList($private_chan: Boolean!) {
 		pending
 		user_id
 		chanels {
+			owner_id
 			chanel_name
 			id
 			chanel_size
@@ -92,5 +102,14 @@ export const BANNED_LIST_QUERY = gql`
 		nickname
       }
     }
+  }
+`;
+
+
+export const USER_IS_BLOCKED = gql`
+  query IsBlocked($other_userId: Int!) {
+    IsBlocked(other_userId: $channelId) {
+		id 
+	}
   }
 `;

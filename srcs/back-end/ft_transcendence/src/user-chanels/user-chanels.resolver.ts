@@ -91,7 +91,7 @@ export class UserChanelsResolver {
 
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 
-		const isOwner = await this.userChanelService.IsOwnerInChannel(userId, userId);
+		const isOwner = await this.userChanelService.IsOwnerInChannel(userId, key.chanel_id);
 		if(!isOwner){
 			return 'you don t have the permission';
 		}

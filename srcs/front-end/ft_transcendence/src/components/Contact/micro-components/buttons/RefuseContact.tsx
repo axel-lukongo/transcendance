@@ -1,4 +1,3 @@
-import React from "react";
 import { useMutation } from "@apollo/client"
 import { IRequestProps } from "../../../interfaces/interfaces";
 import { REFUSE_CONTACT } from '../../graphql/Mutations'

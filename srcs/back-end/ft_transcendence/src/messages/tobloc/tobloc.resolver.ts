@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { ToblocService } from './tobloc.service';
 import { Tobloc } from './entities/tobloc.entity';
 import { CreateToblocInput } from './dto/create-tobloc.input';
@@ -52,6 +52,12 @@ async createToBloc(
     return this.toblocService.findOne(id);
   }
 
+
+  @Query(() => Tobloc, { name: 'IsBlocked' })
+  async UserBlocked(@Args('other_userId', { type: () => Int }) other_userId: number, @Context() context) {
+    return await this.toblocService.YourBloc(context.req.userId, other_userId);
+  }
+  
 
 //   @Query(() => User, { name: 'findUserById' })
 //   findUserById(@Args('id', { type: () => Int }) id: number) {

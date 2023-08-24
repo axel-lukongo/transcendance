@@ -3,13 +3,15 @@
 import React from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { CREATE_TOBLOC_MUTATION } from '../graphql/Mutation';
+import '../../Contact/css/profil.css';
 interface TheId {
   blockerId: number;
   blockedId: number;
+  handleshowBlocked: (state:boolean) => void;
 }
 
 
-const Tobloc: React.FC<TheId> = ({ blockerId, blockedId }) => {
+const Tobloc: React.FC<TheId> = ({ blockerId, blockedId, handleshowBlocked }) => {
   const [createTobloc, {data, loading}] = useMutation(CREATE_TOBLOC_MUTATION);
 
   const handleCreateTobloc = async () => {
@@ -21,6 +23,7 @@ const Tobloc: React.FC<TheId> = ({ blockerId, blockedId }) => {
 				blockedId
 			} 
 		});
+	handleshowBlocked(false);
       console.log('Tobloc created successfully!');
     } catch (error) {
       console.error('Error creating Tobloc:', error);
@@ -28,9 +31,12 @@ const Tobloc: React.FC<TheId> = ({ blockerId, blockedId }) => {
   };
 
   return (
-    <div>
-      {/* Your React component UI here */}
-      <button onClick={handleCreateTobloc}>Create Tobloc</button>
+    <div className='profil-modal'>
+		<div className='blocked-interface' style={{ textAlign: 'center' }} >
+			blocked this user ?
+			<button className='confirme-blocked-interface' onClick={handleCreateTobloc} >Confirme</button>
+			<button className='cancel-blocked-interface' onClick={() => handleshowBlocked(false)}>cancel</button>
+		</div>
     </div>
   );
 };

@@ -10,12 +10,14 @@ import CreateMsg from './micro-components/forms/createMessage';
 import Direct_message from './micro-components/direct-message';
 import AddUserInChan from './micro-components/forms/AddUserInChan'
 import Param_Chan from './micro-components/forms/chan_param';
+import { User } from '../interfaces/interfaces';
 
 /* Images */
 import user_onglet from '../../image/send.svg'
 import public_onglet from '../../image/visible.svg'
 import request_onglet from '../../image/wait-svgrepo-com.svg'
 
+// import { User } from '../interfaces/interfaces';
 /* CSS */
 import './css/messages.css';
 
@@ -35,18 +37,29 @@ const Message = () => {
 	/* User from sessionStorage */
 	
 	const user = JSON.parse(sessionStorage.getItem('user') || '');
-
+	const initialInterlocutor: User = {
+		avatar: "",
+		email: "",
+		id: 0,
+		nickname: "",
+		token: "",
+		level: 0,
+		rank: ""
+	  };
 	/* //////////////////////////////////////////////////////// */
 	/* States */
 
 	
+
 	const [chanel_focus, setChanelFocus] = useState({
 		id: "",
 		chanel_name: "",
 		chanel_size: "",
 		max_users: "",
 		logo: "",
-		directMsg: false
+		owner_id: "",
+		directMsg: false,
+		interlocutor: initialInterlocutor
 	});
 
 	const [refecthChanels, setRefetchChanel] = useState(false);
@@ -70,14 +83,15 @@ const Message = () => {
 	/* Handlers */
 
 	const handleChanelFocus = async (element: Chanel) => {
-
 		setChanelFocus({
 			id: element.id.toString(),
 			chanel_name: element.chanel_name,
 			chanel_size: element.chanel_size.toString(),
 			max_users: element.max_users.toString(),
 			logo: element.logo,
-			directMsg: element.directMsg
+			owner_id: element.owner_id.toString(),
+			directMsg: element.directMsg,
+			interlocutor: element.interlocutor
 		});
 	}
 
@@ -189,7 +203,6 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-							is_chanel={is_chanel}
 						/>
 						<div className='chat-history'>
 							<CreateChanelForm
@@ -207,7 +220,6 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-							is_chanel={is_chanel}
 						/>
 						<div className="chat-history">
 							<ChatBox chan={chanel_focus} />
@@ -225,7 +237,6 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-							is_chanel={is_chanel}
 						/>
 						<div className="chat-history">
 						<AddUserInChan 
@@ -245,7 +256,6 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-							is_chanel={is_chanel}
 						/>
 						<div className="chat-history">
 						<Param_Chan 

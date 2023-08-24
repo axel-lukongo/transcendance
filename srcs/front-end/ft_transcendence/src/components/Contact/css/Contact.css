@@ -237,6 +237,11 @@ h2 {
 	flex-wrap: wrap;
 }
 
+.Banned{
+	margin-left: 40%;
+
+}
+
 .List_contact {
 	position: relative;
 	height: 70%;
@@ -256,6 +261,8 @@ h2 {
 	margin-left: 10%;
 	margin-right: 10%;
 	background-color: rgba(121, 27, 235, 0.32);
+	align-items: center;
+
 }
 
 .List_contact .avatar {
@@ -389,6 +396,12 @@ h2 {
 		height: 30%;
 	}
 	
+		.profile_btn{
+			position: relative;
+			border: 0px transparent;
+			margin-left: 30%;
+			margin-right: 2%;
+		}
 	/* Pending Request Section */
 	
 	.pending_request {

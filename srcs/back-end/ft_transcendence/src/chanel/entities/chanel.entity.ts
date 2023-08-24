@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-
+import { User } from 'src/users/entities/user.entity';
 @ObjectType()
 export class Chanel {
 
@@ -24,10 +24,12 @@ export class Chanel {
 	@Field(() => Boolean)
 	private: boolean;
 
-	@Field(() => Boolean, {nullable: true})
-	directMsg?: boolean;
-
 	@Field({nullable: true})
 	interlocutor_id: number;
 
+	@Field(() => Boolean, {nullable: true})
+	directMsg?: boolean;
+
+	@Field(() => User, {nullable: true})
+	interlocutor?: User
 }

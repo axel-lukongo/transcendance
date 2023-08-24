@@ -10,6 +10,7 @@ import { User } from "../../interfaces/interfaces";
 import { SUB_STATE } from "../../Contact/graphql/Querys";
 import { WebSocketContext } from "../../../WebSocketProvider";
 
+import Profil_page from "../../Contact/micro-components/buttons/Profil_page";
 
 /*
 dans ce composant j'affiche la liste de mes contact sur le champs de gauche, et chaque contact possedes des boutons
@@ -29,6 +30,10 @@ export default function Direct_message(props: IPrivateMessageProps) {
 
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
 	const wsContext = useContext(WebSocketContext);
+
+	const [ShowProfil ,setShowProfil] = useState(false);
+	const [SelectedUserIndex ,setSelectedUserIndex] = useState(0);
+
 
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
 	
@@ -127,6 +132,15 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	/* //////////////////////////////////////////////////////// */
 	/* JSX.Element return  */
 
+	const handleShowProfil = (userIndex: number, show:boolean) => {
+		setShowProfil(show);
+		setSelectedUserIndex(userIndex);
+	};
+
+	const handleshowBlocked = (state: boolean) => {
+		setHandleTobloc(state);
+	}
+
 	return(
 
 		<div className="people-list">
@@ -134,7 +148,7 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				<h3>Direct Message</h3>
 			}</div>
 
-			{states.map((contact: IContactsLink) => {
+			{states.map((contact: IContactsLink, index:number) => {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
 					<ul className="chat-list " key={unique_key}>
@@ -152,11 +166,19 @@ export default function Direct_message(props: IPrivateMessageProps) {
 											handlechanelfocus={props.handleChanelFocus}
 										/>
 								}
+
+								{ShowProfil === true && SelectedUserIndex === index && (
+									<Profil_page handleShowProfil={handleShowProfil} user={contact.contact} />
+								)}
+								<button className="btn_profile " onClick={() => handleShowProfil(index, true)}>
+								</button>
+
 								{
 									handleTobloc === true 
 									&& < Tobloc 
 											blockerId={myuser.id}
 											blockedId={contact.contact.id}
+											handleshowBlocked={handleshowBlocked}
 										/>
 								}
 								<div className="blocked_btn" id="direct-msg-block-btn" onClick={() => setHandleTobloc(true)}></div>
