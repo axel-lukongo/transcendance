@@ -11,6 +11,7 @@
 
   .screen-box {
 	  position: fixed;
+	  display: flex;
 	  top: 3%;
 	  left: 15%;
 	  width: 83%;

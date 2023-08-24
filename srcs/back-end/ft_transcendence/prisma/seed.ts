@@ -36,61 +36,61 @@ async function main() {
 		})
 	}
 	
-	// Creation of N Contacts
-	for(let i = 1; i < N_CONTACT + 1; i++) {
+	// // Creation of N Contacts
+	// for(let i = 1; i < N_CONTACT + 1; i++) {
 		
-		await prisma.contact.upsert({
-			where: { user_id_contact_id: {
-				user_id: 1,
-				contact_id: i
-			}},
-			update: {},
-			create: {
-				user_id: 1,
-				contact_id: i
-			}
-		})
-	}
+	// 	await prisma.contact.upsert({
+	// 		where: { user_id_contact_id: {
+	// 			user_id: 1,
+	// 			contact_id: i
+	// 		}},
+	// 		update: {},
+	// 		create: {
+	// 			user_id: 1,
+	// 			contact_id: i
+	// 		}
+	// 	})
+	// }
 	
-	// Creation of N Chanels
-	for (let i = 1; i < N_CHANEL + 1; i++) {
-		await prisma.chanel.upsert({
-			where: { id: i },
-			update: {},
-			create: {
-				chanel_name: "toto_" + i,
-				chanel_size: i * 2,
-				max_users: i * 4,
-				owner_id: i
-			}
-		})
-	}
+	// // Creation of N Chanels
+	// for (let i = 1; i < N_CHANEL + 1; i++) {
+	// 	await prisma.chanel.upsert({
+	// 		where: { id: i },
+	// 		update: {},
+	// 		create: {
+	// 			chanel_name: "toto_" + i,
+	// 			chanel_size: i * 2,
+	// 			max_users: i * 4,
+	// 			owner_id: i
+	// 		}
+	// 	})
+	// }
 	
-	const USER_TO_ADD = {
-		user1: 1
-	}
+	// const USER_TO_ADD = {
+	// 	user1: 1
+	// }
 
-	const CHANEL_TO_ADD = {
-		chanel1: 1
-	}
+	// const CHANEL_TO_ADD = {
+	// 	chanel1: 1
+	// }
 
-	// Add Users in chanel
-	for (let i = 1; i < N_CHANEL_USER + 1; i++) { // Value Need to be changed
-		await prisma.users_Chanels.upsert({
-			where: {
-				user_id_chanel_id: {
-					user_id: USER_TO_ADD.user1,
-					chanel_id: i
-				}
-			},
-			update: {},
-			create: {
-				user_id: USER_TO_ADD.user1,
-				chanel_id: i,
-				pending: true
-			}
-		})
-	}
+	// // Add Users in chanel
+	// for (let i = 1; i < N_CHANEL_USER + 1; i++) { // Value Need to be changed
+	// 	await prisma.users_Chanels.upsert({
+	// 		where: {
+	// 			user_id_chanel_id: {
+	// 				user_id: USER_TO_ADD.user1,
+	// 				chanel_id: i
+	// 			}
+	// 		},
+	// 		update: {},
+	// 		create: {
+	// 			user_id: USER_TO_ADD.user1,
+	// 			chanel_id: i,
+	// 			pending: true
+	// 		}
+	// 	})
+	// }
 }
 
 main().catch((e) => {

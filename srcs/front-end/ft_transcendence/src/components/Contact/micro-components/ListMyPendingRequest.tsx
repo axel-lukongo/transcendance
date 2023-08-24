@@ -1,18 +1,25 @@
 import { useQuery } from "@apollo/client";
 import { REQUEST } from '../graphql/Querys'
 import { IContactsLink, User } from '../../interfaces/interfaces'
+import { useEffect } from "react";
 
+/* asimon */
 export interface IMyPendingRequest {
 	user: User;
+	refreshPending: boolean;
 }
 
-export default function MyPendingRequest({user}: IMyPendingRequest) {
+export default function MyPendingRequest({user, refreshPending}: IMyPendingRequest) {
 
-	const {data, error, loading } = useQuery(REQUEST, {
+	const {data, error, loading, refetch } = useQuery(REQUEST, {
 		variables: {
 			input: user.id
 		}
 	});
+
+	useEffect(() => {
+		refetch();
+	}, [refreshPending]);
 
 	if (loading)
 		return (<div> Loading...</div>)

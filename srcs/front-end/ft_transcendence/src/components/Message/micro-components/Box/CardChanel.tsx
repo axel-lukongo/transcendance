@@ -12,12 +12,10 @@ export default function CardChanel({handleChanelFocus, chanel, handleChatBox}: I
 	}
 
 	return (
-		<li className="clearfix">
-			<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
+		<li className="card-chat-list" onClick={handleClick }>
 			<div className="about">
-			<div className="name"> { chanel.chanels.chanel_name }</div>
-			<div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
-			<button onClick={handleClick }>her</button>
+				<img src={chanel.chanels.logo} alt="avatar" />{/**afficher avatar */}
+				<div className="name"> { chanel.chanels.chanel_name }</div>
 			</div>
 		</li>
 	);

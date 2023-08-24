@@ -1,8 +1,7 @@
-import React, {useContext} from "react";
-import { gql,useQuery, useMutation } from "@apollo/client";
+import { useContext } from "react";
+import { useQuery } from "@apollo/client";
 import { GET_CONTACT } from "../graphql/Query";
-// import React from 'react';
-import { IContactsLink, IPropsChanel, IRequest } from "../../interfaces/interfaces";
+import { IContactsLink } from "../../interfaces/interfaces";
 import {useEffect, useState} from 'react';
 import Creat_direct_msg from "./Creat_direct_msg";
 import { IPrivateMessageProps } from "../../interfaces/interfaces";
@@ -24,18 +23,30 @@ et le bouton pour un contact
 Ces fonctions ce declanche lorsque un boolean specifique passe a true.
 */
 export default function Direct_message(props: IPrivateMessageProps) {
+
+	/* //////////////////////////////////////////////////////// */
+	/* States */
+
 	const myuser = JSON.parse(sessionStorage.getItem('user') || '');
 	const wsContext = useContext(WebSocketContext);
-	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
-	const [updateState, setUpdateState] = useState<Partial<User>>({})
 
+	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
+	
+	const [updateState, setUpdateState] = useState<Partial<User>>({})
+	
+	const [handleTobloc, setHandleTobloc] = useState(false);
+	
+	const [states, setStates] = useState<IContactsLink[]>([]);
+
+	/* //////////////////////////////////////////////////////// */
+	/* Query / Mutations */
 
 	const {data, error, loading, refetch} = useQuery(GET_CONTACT, {
 		variables: {user_id: myuser.id}
 	});
 
-	const [states, setStates] = useState<IContactsLink[]>([]);
-
+	/* //////////////////////////////////////////////////////// */
+	/* Use Effects */
 	
 	useEffect(() => {
 		refetch();
@@ -80,11 +91,13 @@ export default function Direct_message(props: IPrivateMessageProps) {
 			setStates(data.myContacts);
 	}, [data])
 
+	/* //////////////////////////////////////////////////////// */
+	/* Handlers */
+
 	const handleNewDirectMsg = (contactId: number) => {
 		setSelectedContactId(contactId);
 	}
 	
-	const [handleTobloc, setHandleTobloc] = useState(false);
 	
 	if (error){
 		return <p> an error appen  </p>
@@ -99,42 +112,56 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	}
 	
 	const findClassState = (state: number) => {
-		// console.log(state);
 		switch (state) {
 			case 1: 
-				return ('state-active');
+				return ('active');
 			case 2: 
-				return ('state-afk');
+				return ('afk');
 			case 3: 
-				return ('state-disconnected');
+				return ('disconnected');
 			default:
 				return 'error';
 		}
 	}
 
+	/* //////////////////////////////////////////////////////// */
+	/* JSX.Element return  */
 
 	return(
 
-		<div id="plist" className="people-list">
-			<div className="position: sticky">{ 
+		<div className="people-list">
+			<div className="header-side-bar">{ 
 				<h3>Direct Message</h3>
 			}</div>
 
 			{states.map((contact: IContactsLink) => {
 				const unique_key=`${contact.id}-${contact.contact.id}`;
 				return (
-					<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-						<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />{/**afficher avatar */}
-						<div className="about">
-							<div className="name"> {contact.contact.nickname}</div>
-							<div className={findClassState(contact.contact.state)}></div>
-							{selectedContactId === contact.contact.id && < Creat_direct_msg
-							interlocutor={contact.contact}
-							handlechanelfocus={props.handleChanelFocus} />}
-							{handleTobloc === true && < Tobloc blockerId={myuser.id} blockedId={contact.contact.id}/>}
-							<button id="blocked_btn" onClick={() => setHandleTobloc(true)}></button>
-							<button onClick={() => handleNewDirectMsg(contact.contact.id)}>message</button>
-						</div>
+					<ul className="chat-list " key={unique_key}>
+						<li onClick={() => handleNewDirectMsg(contact.contact.id)} className="card-chat-list">
+							<div className="about">
+								<div className="img-states">
+									<img src={ wsContext?.user?.avatar } alt="avatar" />
+									<div className="state" id={ findClassState(contact.contact.state) }></div> 
+								</div>
+								<div className="name"> { contact.contact.nickname }</div>
+								{
+									selectedContactId === contact.contact.id 
+									&& < Creat_direct_msg
+											interlocutor={contact.contact}
+											handlechanelfocus={props.handleChanelFocus}
+										/>
+								}
+								{
+									handleTobloc === true 
+									&& < Tobloc 
+											blockerId={myuser.id}
+											blockedId={contact.contact.id}
+										/>
+								}
+								<div id="blocked_btn" onClick={() => setHandleTobloc(true)}></div>
+							</div>
+						</li>
 					</ul>
 				);
 			})}

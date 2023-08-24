@@ -1,11 +1,10 @@
-import React, { useEffect, useState,} from "react"
+import React, { useState } from "react"
 import FriendsRequest from "./micro-components/FriendsRequest"
 import ListContact from "./micro-components/ListContact";
 import AddContact from "./micro-components/AddContact";
-import { SUB_STATE } from "./graphql/Querys";
 import './css/Contact.css'
 import { MyBlockedList } from "./micro-components/ListBlocked";
-
+import { Link } from "react-router-dom";
 export default function Contact() {
 
     const user = JSON.parse(sessionStorage.getItem('user') || "");
@@ -13,7 +12,6 @@ export default function Contact() {
     /* //////////////////////////////////////////////////////// */
     /* States */
 
-    const [test, setTest] = useState([]);
 	const [refetchProp, setRefetch] = useState(false);
 
     const [swap, setSwap] = useState(true);
@@ -40,6 +38,10 @@ export default function Contact() {
     /* JSX.Element return */
     
 	return (
+    <div>
+        <Link to="/">
+        <button className='home-button logo-box'></button>
+      </Link>
 	<div className="Contact_pad">
 			<React.Fragment>
 				<div className="box_request">
@@ -50,7 +52,7 @@ export default function Contact() {
 						refetchContact={handleRefetch}
 						refetchProps={refetchProp}
                         user={user}
-					/>
+                        />
 				</div>
 					{/* Nouveau bouton pour afficher la liste des joueurs bloqués */}
 					{/* <button id="showBlockedPlayers_btn" onClick={handleShowBlockedPlayers}>
@@ -69,7 +71,7 @@ export default function Contact() {
 							</button>
                         </div>
 						{showBlockedPlayers && (
-						<div className="box_ListContact" >
+                            <div className="box_ListContact" >
 							<MyBlockedList/>
 						</div>
 						)} 
@@ -78,7 +80,7 @@ export default function Contact() {
                             refetchProps={refetchProp}
                             user={user}
                             setSwap={handleSwap}
-                        />
+                            />
                     </div> : 
                     <div className="box_ListContact">
                         <div className="title">
@@ -90,12 +92,13 @@ export default function Contact() {
                             refetchProps={refetchProp}
                             user={user}
                             setSwap={handleSwap}
-                        />
+                            />
                     </div>
 					// je vais rajouter les ban ici
 					
                 }
 			
 			</React.Fragment>
+        </div>
 	</div>);
 }

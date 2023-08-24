@@ -20,7 +20,7 @@ export interface Chanel {
 	max_users: number;
 	logo: string;
 	interlocutor_id: number;
-
+	directMsg: boolean;
 }
 
 export interface UserChanels {
@@ -121,9 +121,9 @@ export interface IRequestProps {
 
 export interface IAddContact {
 	id: number;
-	nickname: string;
 	user: User;
 	refetch: () => void;
+	handleRefreshPending: () => void;
 }
 
 /* //////////////////////////////////////////////////////// */
@@ -141,11 +141,12 @@ export interface IPropsChanel {
 }
 
 export interface channelfocus  {
-	id: string,
-	chanel_name: string,
-	chanel_size: string,
-	max_users: string,
-	logo: string,
+	id: string;
+	chanel_name: string;
+	chanel_size: string;
+	max_users: string;
+	logo: string;
+	directMsg: boolean;
 }
 
 export interface IRequest {
@@ -205,7 +206,7 @@ export interface ICardChanelProps {
 
 	export interface IHeaderProps {
 		user: User;
-		chanel_focus: channelfocus;
+		chanel_focus: channelfocus | User;
 		is_chanel: boolean;
 		handleChatBox: (switch_id: number) => void;
 	}

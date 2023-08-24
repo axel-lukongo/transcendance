@@ -21,7 +21,11 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 	}
 
 	if (loading)
-		return (<div>Loading...</div>);
+		return (
+			<div className="loader-container">
+				<p>Loading...</p>
+			</div>
+		);
 
 	if (!data)
 		return (<div>Nothing to see her</div>)

@@ -5,12 +5,17 @@
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
 }
 
+.side-bar {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 35%;
+    flex-direction: column;
+}
+
 .chat-app .people-list {
-    width: 280px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding: 20px;
+    position: relative;
+    width: 100%;
     z-index: 7;
     overflow: auto;
     height: 94%;
@@ -21,7 +26,9 @@
 }
 
 .chat-app .chat {
-    margin-left: 280px;
+    position: relative;
+    width: 65%;
+    height: 100%;
     border-left: 2px solid #FFD233;
     color: #ffd27d;
     font-family: "Orbitron";
@@ -30,9 +37,7 @@
 }
 
 .people-list {
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    -webkit-transition: .5s;
+    position: relative;
     transition: .2s;
     color: #ffd27d;
     font-family: "Orbitron";
@@ -40,31 +45,48 @@
     font-size: 20px;
 }
 
-.people-list .chat-list li {
+.people-list .header-side-bar {
+    display: flex;
+    justify-content: center;
+}
+
+.people-list h3 {
+    margin: 0;
+    margin-bottom: 2%;
+}
+
+.people-list .card-chat-list {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
     padding: 10px 1px;
-    list-style: none;
-    border-radius: 3px
-}
-
-
-.people-list .chat-list li:hover {
-    background: rgba(21, 39, 174, 0.186);
-    color: #ffd27d;
-    font-family: "Orbitron";
-    font-weight: bold;
-    font-size: 20px;
-    border-radius: 15%;
     cursor: pointer;
-    width: 200px;
+    flex-wrap: wrap;
+    font-size: 20px;
 }
 
-.people-list .chat-list li.active {
-    background: rgba(21, 39, 174, 0.186);
-    width: 200px;
+.people-list .chat-list .card-chat-list:hover {
+    margin-left: 10%;
+    transition: 1s;
+}
+
+.people-list .card-chat-list:not(:hover) {
+    transition: margin-left 1.5s;
+} 
+
+.people-list .chat-list li {
+    width: 70%;
+    list-style: none;
 }
 
 .people-list .chat-list li .name {
-    font-size: 15px
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 10%;
+    width: 100%;
 }
 
 .people-list .chat-list img {
@@ -78,10 +100,18 @@
 }
 
 .people-list .about {
-    float: left;
-    padding-left: 8px
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: #ffd27d;
 }
 
+.img-states {
+    display: flex;
+    position: relative;
+}
 /* .people-list .about-containers {
     float: left;
     padding-left: 8px
@@ -177,8 +207,13 @@
 }
 
 .chat-message {
-    top: 75%;
-    padding: 20px
+    position: relative;
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    height: 10%;
+    width: 100%;
+    /* padding: 20px */
 }
 
 .online,
@@ -239,39 +274,112 @@
     }
 }
 
+.nav_section_message {
+    position: relative;
+    width: 100%;
+    height:7%;
+    display: flex;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.nav_section_btn {
+    position: relative;
+    width: 20%;
+    height: 80%;
+    object-fit: contain;
+    max-width: 80%;
+    max-width: 80%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+}
+
+#btn1 {
+    height: 80%;
+    width: 80%;
+    transition: .5s;
+}
+
+#btn1:hover {
+    height: 100%;
+    width: 100%;
+}
+
+#btn2 {
+    height: 70%;
+    width: 70%;
+    transition: .5s;
+}
+
+#btn2:hover {
+    height: 100%;
+    width: 100%;
+}
+
+#btn3 {
+    height: 70%;
+    width: 70%;
+    transition: .5s;
+}
+
+#btn3:hover {
+    height: 100%;
+    width: 100%;
+}
+
+#btn4 {
+    height: 70%;
+    width: 70%;
+    transition: .5s;
+}
+
+#btn4:hover {
+    height: 100%;
+    width: 100%;
+}
 
 .input-message {
-	width: 90%;
+	width: 85%;
 	padding: 1%;
 	top: 1px;
 	/* border-radius: 40%; */
+}
+
+.input-send-msg {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .send-button{
 	padding: 1%;
 }
 
-.state-active {
+.state {
+    position: absolute;
     width: 20px;
     height: 20px;
     border-radius: 50%;
+    margin-top: 60%;
+    margin-left: 60%;
+    border: 1px solid #EDD3C4;
+}
+
+#active {
     background-color: green;
 }
 
-.state-afk {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+#afk {
     background-color: yellow;
-    color: yellow;
 }
 
-.state-disconnected {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+#disconnected {
     background-color: red;
 }
+
 /* @media only screen and (min-width: 768px) and (max-width: 992px) {
     .chat-app .chat-list {
         height: 650px;
