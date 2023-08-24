@@ -4,6 +4,7 @@ import { Display } from './Display';
 import { Player, User, Ball, PongI } from '../../interfaces/interfaces'
 import {useMutation, } from '@apollo/client';
 import { END_PONG, JOIN_PONG } from '../graphql/Mutation';
+import { Link } from 'react-router-dom';
 
 
 interface GameProps {
@@ -105,7 +106,23 @@ interface GameProps {
               <h2 className="loading-text">Loading GAME...</h2>
             </div>
           )}
+          <Link to ='/'>
+            <button className='log-out-button logo-box'></button>
+          </Link>
+          <Link to="/">
+            <button className='home-button logo-box'></button>
+          </Link>
+          <Link to="/leaderBoard">
+            <button className='leader-board-button logo-box'></button>
+          </Link>
+          <Link to="/message">
+            <button className='message-button logo-box'></button>
+          </Link>
+          <Link to="/contact">
+            <button className='contact-button logo-box'></button>
+          </Link>
         </div>
+      
       );
 
 }
