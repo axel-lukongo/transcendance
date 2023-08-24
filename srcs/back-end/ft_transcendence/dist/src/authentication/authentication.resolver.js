@@ -12,29 +12,26 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthenticationResolver = exports.CHANGE_STATE = void 0;
+exports.AuthenticationResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const user_entity_1 = require("../users/entities/user.entity");
-const create_authentication_input_1 = require("./dto/create-authentication.input");
 const authentication_service_1 = require("./authentication.service");
-const users_service_1 = require("../users/users.service");
 const mailing_service_1 = require("./mailing/mailing.service");
 const auth_utils_1 = require("../utils/auth.utils");
 const axios_1 = require("axios");
-const main_1 = require("../main");
-exports.CHANGE_STATE = 'changeState';
+const update_authentication_input_1 = require("./dto/update-authentication.input");
+const users_resolver_1 = require("../users/users.resolver");
 let AuthenticationResolver = exports.AuthenticationResolver = class AuthenticationResolver {
-    constructor(authService, userService, mailingService) {
+    constructor(authService, userResolveur, mailingService) {
         this.authService = authService;
-        this.userService = userService;
+        this.userResolveur = userResolveur;
         this.mailingService = mailingService;
     }
-    async createUser(createAuthenticationInput, context) {
-        if (this.intraLogin && this.email) {
+    async createUser(updateAuthenticationInput, context) {
+        if (context.req.userId) {
             try {
-                const createUserInput = Object.assign(Object.assign({}, createAuthenticationInput), { intra_login: this.intraLogin, email: this.email });
-                let user = await this.authService.create(createUserInput);
-                return (user);
+                const updateUserDataInput = Object.assign(Object.assign({}, updateAuthenticationInput), { id: context.req.userId, connection_status: authentication_service_1.__ACCESS__, state: authentication_service_1.__CONNECTED__ });
+                return await this.userResolveur.updateUser(updateUserDataInput);
             }
             catch (error) {
                 throw new Error("createUser Error: " + error);
@@ -64,46 +61,64 @@ let AuthenticationResolver = exports.AuthenticationResolver = class Authenticati
         catch (error) {
             return { error: "42 API is not accessible. Please try again in a few minutes." };
         }
-        this.intraLogin = profileResponse.data.login;
-        this.email = profileResponse.data.email;
-        this.user = await this.authService.findUserByIntraLogin(this.intraLogin);
-        if (!this.user) {
-            throw new Error("This user does not exist yet");
+        let user = await this.authService.findUserByEmail(profileResponse.data.email);
+        if (!user) {
+            const createUserInput = {
+                email: profileResponse.data.email,
+                nickname: profileResponse.data.login
+            };
+            const create_user = await this.authService.create(createUserInput);
+            return create_user;
         }
-        else if (this.user.tfa_code) {
+        else if (user.tfa_code) {
             const tfa_code = (0, auth_utils_1.generateTwoFactorCode)();
-            const updatedUser = await this.userService.update(this.user.id, { id: this.user.id, tfa_code });
-            this.mailingService.sendMail(this.user.email, tfa_code);
-            this.user = updatedUser;
-            throw new Error("To complete authentication, 2FA verification is required");
+            const updateUserDataInput = {
+                id: user.id,
+                tfa_code: code,
+                connection_status: authentication_service_1.__NEED_TFA__
+            };
+            this.mailingService.sendMail(user.email, tfa_code);
+            return this.userResolveur.updateUser(updateUserDataInput);
         }
-        return this.user;
+        return user;
     }
-    async checkTwoAuthenticationFactor(code) {
-        if (this.user && this.user.tfa_code === code) {
-            this.user.tfa_code = "true";
-            return this.user;
+    async checkTwoAuthenticationFactor(code, context) {
+        const user = await this.userResolveur.findUserById(context.token.userId);
+        if (!user) {
+            if (user.tfa_code === code) {
+                const updateUserDataInput = {
+                    id: context.token.userId,
+                    connection_status: authentication_service_1.__ACCESS__,
+                    state: authentication_service_1.__CONNECTED__,
+                    tfa_code: 'true'
+                };
+                return await this.userResolveur.updateUser(updateUserDataInput);
+            }
+            else {
+                throw new Error('Invalid two-factor authentication code');
+            }
         }
         else {
-            throw new Error('Invalid two-factor authentication code');
+            throw new Error('User does not found');
         }
     }
     async updateState(new_state, context) {
-        if (new_state < 1 || new_state > 3)
+        if (new_state < 1 || new_state > 3) {
             throw new Error("Unrecognized state");
-        const updateUser = await this.userService.update(context.req.userId, { id: context.req.userId, state: new_state });
-        main_1.socket.publish(exports.CHANGE_STATE, {
-            changeState: updateUser
-        });
-        return updateUser;
+        }
+        const updateUserDataInput = {
+            id: context.req.userId,
+            state: new_state
+        };
+        return await this.userResolveur.updateUser(updateUserDataInput);
     }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => user_entity_1.User),
-    __param(0, (0, graphql_1.Args)('createAuthenticationInput')),
+    __param(0, (0, graphql_1.Args)('updateAuthenticationInput')),
     __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_authentication_input_1.CreateAuthenticationInput, Object]),
+    __metadata("design:paramtypes", [update_authentication_input_1.UpdateAuthenticationInput, Object]),
     __metadata("design:returntype", Promise)
 ], AuthenticationResolver.prototype, "createUser", null);
 __decorate([
@@ -116,8 +131,9 @@ __decorate([
 __decorate([
     (0, graphql_1.Query)(() => user_entity_1.User),
     __param(0, (0, graphql_1.Args)('code')),
+    __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], AuthenticationResolver.prototype, "checkTwoAuthenticationFactor", null);
 __decorate([
@@ -131,7 +147,7 @@ __decorate([
 exports.AuthenticationResolver = AuthenticationResolver = __decorate([
     (0, graphql_1.Resolver)(),
     __metadata("design:paramtypes", [authentication_service_1.AuthenticationService,
-        users_service_1.UsersService,
+        users_resolver_1.UsersResolver,
         mailing_service_1.MailingService])
 ], AuthenticationResolver);
 //# sourceMappingURL=authentication.resolver.js.map

@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int, Context} from '@nestjs/graphql';
-import { Request, Response, NextFunction } from 'express';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UpdateUserInput } from './dto/update-user.input';
-import { Req } from '@nestjs/common';
-import { AuthenticatedRequest } from 'src/middleware/authMiddleware';
+import { socket } from 'src/main';
+
+
+export const CHANGE_STATE = 'changeState';
 
 
 @Resolver(() => User)
@@ -16,6 +17,12 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
+  // @Query(() => User, { name: 'myInfo' })
+  // myInfo(@Context() context: any) {
+
+  //   return this.usersService.findUserById(context.req.userId);
+  // }
+
   @Query(() => User, { name: 'findUserById' })
   findUserById(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.findUserById(id);
@@ -23,7 +30,15 @@ export class UsersResolver {
 
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.usersService.update(updateUserInput.id, updateUserInput);  }
+
+    const updateUser= this.usersService.update(updateUserInput.id, updateUserInput);
+    socket.publish(CHANGE_STATE, {
+      changeState: updateUser
+    });
+
+    return updateUser;
+
+  }
 
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {

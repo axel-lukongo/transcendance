@@ -1,17 +1,27 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { BannedService } from './banned.service';
 import { Banned } from './entities/banned.entity';
 import { CreateBannedInput } from './dto/create-banned.input';
 import { UpdateBannedInput } from './dto/update-banned.input';
-
+import { UserChanelsService } from 'src/user-chanels/user-chanels.service';
 @Resolver(() => Banned)
 export class BannedResolver {
-  constructor(private readonly bannedService: BannedService) {}
+  constructor(private readonly bannedService: BannedService,
+	private readonly userChanelService: UserChanelsService) {}
 
   @Mutation(() => Banned)
-  createBanned(@Args('createBannedInput') createBannedInput: CreateBannedInput) {
-    return this.bannedService.create(createBannedInput);
+ async createBanned(@Args('createBannedInput') createBannedInput: CreateBannedInput, @Context() context) {
+	const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
+	const I_amAdmin = await this.userChanelService.isAdministrator(createBannedInput.channel_id, userId);
+	const he_is_Owner = await this.userChanelService.IsOwnerInChannel(createBannedInput.user_id, createBannedInput.channel_id);
+
+	if(I_amAdmin && !he_is_Owner)
+	    return this.bannedService.create(createBannedInput);
+	else
+		return 'action denied';
   }
+
+
 
   @Query(() => [Banned], { name: 'banned_list' })
   async findAll(

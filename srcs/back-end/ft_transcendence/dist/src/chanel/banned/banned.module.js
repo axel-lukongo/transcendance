@@ -11,11 +11,12 @@ const common_1 = require("@nestjs/common");
 const banned_service_1 = require("./banned.service");
 const banned_resolver_1 = require("./banned.resolver");
 const prisma_service_1 = require("../../../prisma/prisma.service");
+const user_chanels_service_1 = require("../../user-chanels/user-chanels.service");
 let BannedModule = exports.BannedModule = class BannedModule {
 };
 exports.BannedModule = BannedModule = __decorate([
     (0, common_1.Module)({
-        providers: [banned_resolver_1.BannedResolver, banned_service_1.BannedService, prisma_service_1.PrismaService]
+        providers: [banned_resolver_1.BannedResolver, banned_service_1.BannedService, prisma_service_1.PrismaService, user_chanels_service_1.UserChanelsService]
     })
 ], BannedModule);
 //# sourceMappingURL=banned.module.js.map

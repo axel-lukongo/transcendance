@@ -15,6 +15,7 @@ import Message from '../Message/message';
 import Contact from '../Contact/Contact';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import { WebSocketContext } from '../../WebSocketProvider';
+import { __CREATING__, __NEED_TFA__ } from '../../App';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -29,6 +30,7 @@ const Authentication: FC = () => {
   const [userExist, setUserExist] = useState(true);
 
   const [user2fa, setUser2fa] = useState(false);
+  
 
   const wsContext = useContext(WebSocketContext);
   
@@ -37,7 +39,7 @@ const Authentication: FC = () => {
 /*                      REQUEST                           */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
   
-  const [makeAuthenticationQuery, {data: AuthenticationData, error: AuthenticationError }] = useLazyQuery(MAKE_AUTH);
+  const [makeAuthenticationQuery, {data: AuthenticationData }] = useLazyQuery(MAKE_AUTH);
 
   const [createUser] = useMutation(CREATE_USER);
 
@@ -71,31 +73,32 @@ const Authentication: FC = () => {
       reader.onloadend = () => {
         const avatarDataUrl = reader.result as string;
         user_info.avatar = avatarDataUrl;
-  
         createUser({
           variables: {
             input: user_info
           }
         })
-          .then(response => {
-            const { id, token, email, nickname, avatar, tfa_code, level, rank } = response.data.createUser;
-            const user = {
-              id,
-              token,
-              email,
-              nickname,
-              avatar,
-              tfa_code,
-              level,
-			  rank
-            };
-            sessionStorage.setItem('user', JSON.stringify(user));
-            wsContext?.updateUser(user);
-          })
-          .catch(error => {
-            console.log(error);
-            window.alert('Nickname is already in use. Please choose a different nickname.');
-          });
+        .then(response => {
+          const {id, token, connection_status,  email, nickname, avatar, tfa_code, level, rank}  = response.data.createUser;
+          const user = {
+            id,
+            token,
+            connection_status,
+            email,
+            nickname,
+            avatar,
+            tfa_code,
+            level,
+			rank
+          }
+          sessionStorage.setItem('user', JSON.stringify(user));
+          wsContext?.updateUser(user);
+        })
+        .catch(error => {
+          console.log(error);
+          window.alert('Nickname is already in use. Please choose a different nickname.');
+        });
+        
         };
       } else {
         // No avatar file selected
@@ -105,17 +108,18 @@ const Authentication: FC = () => {
           }
         })
         .then(response => {
-          const { id, token, email, nickname, avatar, tfa_code, level, rank} = response.data.createUser;
+          const {id, token, connection_status,  email, nickname, avatar, tfa_code, level, rank}  = response.data.createUser;
           const user = {
             id,
             token,
+            connection_status,
             email,
             nickname,
             avatar,
             tfa_code,
             level,
 			rank
-          };
+          }
           sessionStorage.setItem('user', JSON.stringify(user));
           wsContext?.updateUser(user);
         })
@@ -123,6 +127,7 @@ const Authentication: FC = () => {
           console.log(error);
           window.alert('Nickname is already in use. Please choose a different nickname.');
         });
+        
       }
     };
     
@@ -133,7 +138,19 @@ const Authentication: FC = () => {
       
       checkTwoAuthenticationFactor({ variables: { input: code.value } })
       .then((response: { data: { createUser: any; checkTwoAuthenticationFactor: any; }; }) => {
-        sessionStorage.setItem('user', JSON.stringify(response.data.checkTwoAuthenticationFactor));
+        
+        const {id, token, connection_status,  email, nickname, avatar, tfa_code, level} = response.data.checkTwoAuthenticationFactor
+        const user = {
+          id,
+          token,
+          connection_status,
+          email,
+          nickname,
+          avatar,
+          tfa_code,
+          level
+        }
+        sessionStorage.setItem('user', JSON.stringify(user));
       })
       .catch((error: any) => {
         window.alert('The code you entered does not match the one sent to the email address');
@@ -155,47 +172,44 @@ const Authentication: FC = () => {
     
     useEffect(() => {
       if (AuthenticationData) {
-        const { id, token, email, nickname, avatar, tfa_code, level, rank} = AuthenticationData.makeAuthentication;
+        const {id, token, connection_status,  email, nickname, avatar, tfa_code, level, rank} = AuthenticationData.makeAuthentication;
         const user = {
           id,
           token,
+          connection_status,
           email,
           nickname,
           avatar,
           tfa_code,
           level,
 		  rank
-        };
+        }
+        
+        if (connection_status === __CREATING__)
+        {
+          setCanCheck(true);
+          setUserExist(false);
+        }
+        else if (connection_status === __NEED_TFA__)
+        {
+          setCanCheck(true);
+          setUser2fa(true);
+        }
         sessionStorage.setItem('user', JSON.stringify(user));
         wsContext?.updateUser(user);
 
-        setCanCheck(true);
       }
     }, [AuthenticationData]);
     
-    useEffect(() => {
-    if (AuthenticationError) {
-        setCanCheck(true);
-        if (AuthenticationError.message === "To complete authentication, 2FA verification is required")
-         {
-           setUser2fa(true);
-         }
-        else if (AuthenticationError.message === "This user does not exist yet") 
-        {
-          setUserExist(false);
-        }
-    }
-  }, [AuthenticationError]);
-
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      RETURN                            */
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {sessionStorage.getItem('user') ? ( 
+    {(JSON.parse(sessionStorage.getItem('user') || '{}').connection_status === 1) ? (
       <Routes>
-        <Route path="/" element={<Home  />} />
-        <Route path="/pong" element={<Pong  />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/pong" element={<Pong />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/leaderBoard' element={<LeaderBoard />} />
@@ -206,17 +220,11 @@ return (
           <SigninButton onClick={handleRedirect} />
         ) : (
           <>
-            {AuthenticationError && (
-              <>
-                {!userExist && (
-                  <CreateUserForm onSubmit={handleCreateUser} />
-                )}
-                {user2fa && (
-                  <>
-                    <TwoFactorAuthForm onSubmit={handleTfa} />
-                  </>
-                )}
-              </>
+            {AuthenticationData && !userExist && (
+              <CreateUserForm onSubmit={handleCreateUser} />
+            )}
+            {AuthenticationData && user2fa && (
+              <TwoFactorAuthForm onSubmit={handleTfa} />
             )}
           </>
         )}
@@ -224,6 +232,10 @@ return (
     )}
   </div>
 );
+
+
+
+
 }
 
 export default Authentication;

@@ -26,9 +26,9 @@ export declare class ContactsResolver {
         id: number;
         token: string;
         state: number;
+        connection_status: number;
         tfa_code: string;
         email: string;
-        intra_login: string;
         nickname: string;
         avatar: string;
         rank: string;

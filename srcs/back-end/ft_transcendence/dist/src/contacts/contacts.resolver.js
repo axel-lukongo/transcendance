@@ -21,7 +21,7 @@ const create_contact_input_1 = require("./dto/create-contact.input");
 const user_entity_1 = require("../users/entities/user.entity");
 const users_service_1 = require("../users/users.service");
 const update_contact_input_1 = require("./dto/update-contact.input");
-const authentication_resolver_1 = require("../authentication/authentication.resolver");
+const users_resolver_1 = require("../users/users.resolver");
 const main_1 = require("../main");
 const tobloc_service_1 = require("../messages/tobloc/tobloc.service");
 let ContactsResolver = exports.ContactsResolver = class ContactsResolver {
@@ -75,7 +75,7 @@ let ContactsResolver = exports.ContactsResolver = class ContactsResolver {
         return this.contactService.findContacts(context.req.userId);
     }
     changeState(context) {
-        return main_1.socket.asyncIterator(authentication_resolver_1.CHANGE_STATE);
+        return main_1.socket.asyncIterator(users_resolver_1.CHANGE_STATE);
     }
 };
 __decorate([

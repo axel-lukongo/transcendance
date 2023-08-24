@@ -13,13 +13,13 @@ export class UpdateUserInput extends PartialType(User) {
   state?: number;
 
   @Field({ nullable: true })
+  connection_status?: number;
+
+  @Field({ nullable: true })
   tfa_code?: string;
 
   @Field({ nullable: true })
   email?: string;
-
-  @Field({ nullable: true })
-  intra_login?: string;
 
   @Field({ nullable: true })
   nickname?: string;

@@ -7,6 +7,7 @@ import { onError } from '@apollo/client/link/error';
 import App from './App';
 import { WebSocketProvider } from './WebSocketProvider'
 
+
 const authLink = setContext((_, { headers }) => {
   
   const userString = sessionStorage.getItem('user');
@@ -19,15 +20,6 @@ const authLink = setContext((_, { headers }) => {
     }
   }
 });
-
-
-function recupToken() {
-  const userString = sessionStorage.getItem('user');
-  const user = userString ? JSON.parse(userString) : null;
-  const token = user? user.token : null;
-  console.log('token : ', token);
-  return token;
-}
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',

@@ -12,13 +12,10 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const prisma_service_1 = require("../../prisma/prisma.service");
 let AuthMiddleware = exports.AuthMiddleware = class AuthMiddleware {
     use(req, res, next) {
-        var _a, _b, _c, _d;
+        var _a, _b;
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
-        const isUserCreationRequest = ((_b = req.body) === null || _b === void 0 ? void 0 : _b.operationName) === 'CreateUser';
-        const isMakeAuthenticationRequest = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.operationName) === 'MakeAuthentication';
-        const isCheckTwoAuthenticationFactorRequest = ((_d = req.body) === null || _d === void 0 ? void 0 : _d.operationName) === 'CheckTwoAuthenticationFactor';
-        const requiresTokenCheck = !(isUserCreationRequest || isMakeAuthenticationRequest || isCheckTwoAuthenticationFactorRequest);
-        if (requiresTokenCheck) {
+        const isMakeAuthenticationRequest = ((_b = req.body) === null || _b === void 0 ? void 0 : _b.operationName) === 'MakeAuthentication';
+        if (!isMakeAuthenticationRequest) {
             if (!token) {
                 res.status(401).json({ message: 'Token manquant' });
                 return;
@@ -37,6 +34,7 @@ let AuthMiddleware = exports.AuthMiddleware = class AuthMiddleware {
                     next();
                 }
                 catch (error) {
+                    console.log('error', error);
                     res.status(401).json({ message: 'Token invalide' });
                 }
             }

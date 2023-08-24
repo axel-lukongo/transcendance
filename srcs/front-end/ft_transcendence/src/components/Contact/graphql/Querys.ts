@@ -34,7 +34,6 @@ export const LIST_CONTACT = gql`query GetListContact {
 		contact {
 			id
 			email
-			intra_login
 			nickname
 			avatar
 			level
@@ -47,7 +46,6 @@ export const RESEARCH = gql`query ResearchContact($input: String!) {
 	searchUsers(research: $input) {
 		id
 		email
-		intra_login
 		nickname
 		avatar
 		level

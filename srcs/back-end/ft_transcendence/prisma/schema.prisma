@@ -14,9 +14,9 @@ model User {
 	id					Int         @id @default(autoincrement())
 	token				String?		@unique
 	state				Int
+	connection_status	Int
 	tfa_code			String?
 	email				String		@unique
-	intra_login			String		@unique
 	nickname			String		@unique
 	avatar				String?
 	rank				String		@default("Bronze")

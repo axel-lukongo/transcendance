@@ -661,3 +661,73 @@ Jaune ecrit =>     #ffd27d
 	display: flex;
 	height: 30%;
 }
+
+
+
+
+
+
+
+.mute_btn{
+	width: 20px;
+	height: 25px;
+	background: url("/ft_transcendence/src/image/muted.png") center no-repeat;
+	background-size: contain;
+	border: none;
+	margin: 1%;
+	align-items: center;
+}
+.mute_btn:hover {
+    width: 4%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.unmute_btn{
+	width: 20px;
+	height: 25px;
+	background: url("/ft_transcendence/src/image/unmuted.png") center no-repeat;
+	background-size: contain;
+	border: none;
+	margin: 1%;
+	align-items: center;
+}
+.unmute_btn:hover {
+    width: 4%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.admin_btn{
+	width: 20px;
+	height: 25px;
+	background: url("/ft_transcendence/src/image/admin.png") center no-repeat;
+	background-size: contain;
+	border: none;
+	margin: 1%;
+	align-items: center;
+}
+.admin_btn:hover {
+    width: 4%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.kick_btn{
+	width: 20px;
+	height: 25px;
+	background: url("/ft_transcendence/src/image/kick.png") center no-repeat;
+	background-size: contain;
+	border: none;
+	margin: 1%;
+	align-items: center;
+}
+.kick_btn:hover {
+    width: 4%; /* Nouvelle hauteur lorsque survolé */
+}
+.banned_btn{
+	width: 20px;
+	height: 25px;
+	background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat;
+	background-size: contain;
+	border: none;
+	margin: 1%;
+	align-items: center;
+}
+.banned_btn:hover {
+    width: 4%; /* Nouvelle hauteur lorsque survolé */
+}

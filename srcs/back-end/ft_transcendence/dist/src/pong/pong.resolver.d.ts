@@ -74,14 +74,14 @@ export declare class PongResolver {
         versusDate: Date;
         start: boolean;
     }, unknown> & {}, null, import("@prisma/client/runtime/library").DefaultArgs>;
-    myMatchHistory(userId: number): Promise<({
+    myMatchHistory(context: any): Promise<({
         user1: import("@prisma/client/runtime/library").GetResult<{
             id: number;
             token: string;
             state: number;
+            connection_status: number;
             tfa_code: string;
             email: string;
-            intra_login: string;
             nickname: string;
             avatar: string;
             rank: string;
@@ -91,9 +91,9 @@ export declare class PongResolver {
             id: number;
             token: string;
             state: number;
+            connection_status: number;
             tfa_code: string;
             email: string;
-            intra_login: string;
             nickname: string;
             avatar: string;
             rank: string;
@@ -110,7 +110,7 @@ export declare class PongResolver {
         versusDate: Date;
         start: boolean;
     }, unknown> & {})[]>;
-    myMatchStatistic(userId: number): Promise<StatisticMatch>;
+    myMatchStatistic(context: any): Promise<StatisticMatch>;
     leaderBoard(): Promise<StatisticMatch[]>;
     removePong(id: number): string;
     updatePong(updatePongInput: UpdatePongInput): import(".prisma/client").Prisma.Prisma__PongClient<import("@prisma/client/runtime/library").GetResult<{
@@ -126,7 +126,7 @@ export declare class PongResolver {
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
     pongUpdatedSubscription(context: any, id: number): AsyncIterator<unknown, any, undefined>;
     private updateRankLevel;
-    joinPong(userId: number): Promise<JoinPongResponse | {
+    joinPong(context: any): Promise<JoinPongResponse | {
         player: import("@prisma/client/runtime/library").GetResult<{
             id: number;
             userId: number;

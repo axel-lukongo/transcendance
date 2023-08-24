@@ -5,6 +5,7 @@ import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, 
 import Xp from './Xp';
 import '../css/Pong.css'
 import { WebSocketContext } from '../../../WebSocketProvider'; 
+import { Link } from 'react-router-dom';
 
 
 interface DisplayProps {
@@ -64,26 +65,26 @@ export const Display: FC<DisplayProps> = ({ player,
 *   SET GAME 
 */
   useEffect(() => {
-
-      // START PONG
-      if (player?.host)
-      {
-        startPong({
-          variables: {
-            ballId: ball?.id,
-            playerId: player?.id,
-            otherPlayerId: otherPlayer?.id,
-            pongId: pong?.id
-          },
-        })
-        .then((response) => {
-          // Appel réussi, le démarrage de ballMove est activé côté serveur
-          console.log('game start', response);
-        })
-        .catch((error) => {
-          console.error('Error calling startPong mutation:', error);
-        });
-      }
+    
+   // START PONG
+   if (player?.host)
+   {
+     startPong({
+       variables: {
+         ballId: ball?.id,
+         playerId: player?.id,
+         otherPlayerId: otherPlayer?.id,
+         pongId: pong?.id
+       },
+     })
+     .then((response) => {
+       // Appel réussi, le démarrage de ballMove est activé côté serveur
+       console.log('game start', response);
+     })
+     .catch((error) => {
+       console.error('Error calling startPong mutation:', error);
+     });
+   }
   }, []); 
 
 /*
@@ -227,7 +228,7 @@ export const Display: FC<DisplayProps> = ({ player,
         };
     }
   
-  }, [player, , playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
+  }, [player, playerScore, otherPlayerScore, victory, setPlayerScore, setOtherPlayerScore]);
   
   return (
 <div>
@@ -250,6 +251,21 @@ export const Display: FC<DisplayProps> = ({ player,
       <div className='ball' style={{ top: `${ball?.positionY}%`, left: `${ball?.positionX}%` }} /> 
     </div>
   )}
+  <Link to ='/'>
+    <button className='log-out-button logo-box'></button>
+  </Link>
+  <Link to="/">
+    <button className='home-button logo-box'></button>
+  </Link>
+  <Link to="/leaderBoard">
+    <button className='leader-board-button logo-box'></button>
+  </Link>
+  <Link to="/message">
+    <button className='message-button logo-box'></button>
+  </Link>
+  <Link to="/contact">
+    <button className='contact-button logo-box'></button>
+  </Link>
 </div>
   );
 }

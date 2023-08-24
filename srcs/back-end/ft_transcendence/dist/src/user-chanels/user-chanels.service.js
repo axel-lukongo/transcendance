@@ -71,12 +71,12 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
         });
         return updatedUsersChanels;
     }
-    async isAdministrator(key, userID) {
+    async isAdministrator(channel_id, userID) {
         const chan_executor = await this.prisma.users_Chanels.findUnique({
             where: {
                 user_id_chanel_id: {
                     user_id: userID,
-                    chanel_id: key.chanel_id
+                    chanel_id: channel_id,
                 },
             },
         });
@@ -126,7 +126,6 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
                 }
             },
         });
-        console.log('le owner ===>>>> ', is_owner);
         if (is_owner)
             return true;
         return false;

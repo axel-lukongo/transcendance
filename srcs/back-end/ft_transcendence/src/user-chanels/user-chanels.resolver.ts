@@ -62,8 +62,8 @@ export class UserChanelsResolver {
 	async deleteChanelUser(@Args("key") key: UpdateChanelUserInput, @Context() context) {
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 
-		const I_amAdmin = await this.userChanelService.isAdministrator(key, key.user_id);
-		const he_is_Admin = await this.userChanelService.isAdministrator(key, userId);
+		const I_amAdmin = await this.userChanelService.isAdministrator(key.chanel_id, key.user_id);
+		const he_is_Admin = await this.userChanelService.isAdministrator(key.chanel_id, userId);
 
 		if (I_amAdmin || !he_is_Admin) {
 			return 'you don t have the permission'
@@ -76,10 +76,10 @@ export class UserChanelsResolver {
 	async updateChanelUser(@Args("key") key: UpdateChanelUserInput, @Context() context){
 		
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
-		const isAdmin = await this.userChanelService.isAdministrator(key, userId);
-		const isOwner = await this.userChanelService.IsOwnerInChannel(key.user_id, userId);
+		const isAdmin = await this.userChanelService.isAdministrator(key.chanel_id, userId);
+		const he_is_Owner = await this.userChanelService.IsOwnerInChannel(key.user_id, key.chanel_id);
 
-		if(!isAdmin || isOwner){
+		if(!isAdmin || he_is_Owner){
 			return 'you don t have the permission';
 		}
 

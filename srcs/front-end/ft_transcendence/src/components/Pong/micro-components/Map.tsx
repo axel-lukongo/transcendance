@@ -5,6 +5,7 @@ import footballImage from '/ft_transcendence/src/image/football_map.jpg';
 import plateformImage from '/ft_transcendence/src/image/plateform_map.jpg';
 import defaultImage from '/ft_transcendence/src/image/default_map.png';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 interface MapProps {
@@ -63,6 +64,21 @@ interface MapProps {
             </div>
           )}
         </div>
+        <Link to ='/'>
+              <button className='log-out-button logo-box'></button>
+        </Link>
+        <Link to="/">
+          <button className='home-button logo-box'></button>
+        </Link>
+        <Link to="/leaderBoard">
+          <button className='leader-board-button logo-box'></button>
+        </Link>
+        <Link to="/message">
+          <button className='message-button logo-box'></button>
+        </Link>
+        <Link to="/contact">
+          <button className='contact-button logo-box'></button>
+        </Link>
       </div>
     );
   };

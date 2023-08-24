@@ -26,6 +26,10 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "state", void 0);
 __decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], User.prototype, "connection_status", void 0);
+__decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], User.prototype, "tfa_code", void 0);
@@ -33,10 +37,6 @@ __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", String)
-], User.prototype, "intra_login", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)

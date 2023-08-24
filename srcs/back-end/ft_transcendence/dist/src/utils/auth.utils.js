@@ -10,7 +10,7 @@ const generateTwoFactorCode = () => {
 exports.generateTwoFactorCode = generateTwoFactorCode;
 const generateAccessToken = (userId) => {
     const secret = process.env.CLIENT_SECRET_BACKEND;
-    const expiresIn = '24h';
+    const expiresIn = '1h';
     const payload = { userId };
     return (0, jsonwebtoken_1.sign)(payload, secret, { expiresIn });
 };

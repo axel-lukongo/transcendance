@@ -50,9 +50,9 @@ export declare class PongService {
             id: number;
             token: string;
             state: number;
+            connection_status: number;
             tfa_code: string;
             email: string;
-            intra_login: string;
             nickname: string;
             avatar: string;
             rank: string;
@@ -62,9 +62,9 @@ export declare class PongService {
             id: number;
             token: string;
             state: number;
+            connection_status: number;
             tfa_code: string;
             email: string;
-            intra_login: string;
             nickname: string;
             avatar: string;
             rank: string;

@@ -31,6 +31,7 @@ let UsersService = exports.UsersService = class UsersService {
             'http://localhost:4000/uploads/' + await (0, upload_utils_1.saveBase64ToFile)(data.avatar, id)
             :
                 'http://localhost:4000/uploads/default_avatar.jpg';
+        console.log("==============");
         return this.prisma.user.update({
             where: { id: data.id },
             data
