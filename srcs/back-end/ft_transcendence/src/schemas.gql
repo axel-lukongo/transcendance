@@ -23,6 +23,7 @@ type Chanel {
   max_users: Float!
   logo: String
   private: Boolean!
+  directMsg: Boolean
   interlocutor_id: Float
   messages: [Message!]!
 }

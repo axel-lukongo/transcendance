@@ -1,3 +1,10 @@
+/* 
+rose texte =>     rgb(205, 163, 241);
+Jaune ecrit =>     #ffd27d
+ */
+
+
+
 .card {
     transition: .1s;
     position: relative;
@@ -37,29 +44,6 @@
     object-fit: contain;
     width: 100%;
     height: 100%;
-}
-
-.chat-app .people-list {
-    position: relative;
-    width: 100%;
-    z-index: 7;
-    overflow: auto;
-    height: 94%;
-}
-
-.chat-app .people-list::-webkit-scrollbar {
-    display: none;
-}
-
-.chat-app .chat {
-    position: relative;
-    width: 65%;
-    height: 100%;
-    border-left: 2px solid #FFD233;
-    color: #ffd27d;
-    font-family: "Orbitron";
-    font-weight: bold;
-    font-size: 20px;
 }
 
 .people-list {
@@ -154,8 +138,34 @@
     font-size: 13px
 }
 
+.chat-app .people-list {
+    position: relative;
+    width: 100%;
+    z-index: 7;
+    overflow: auto;
+    height: 94%;
+}
+
+.chat-app .people-list::-webkit-scrollbar {
+    display: none;
+}
+
+.chat-app .chat {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    height: 100%;
+    border-left: 2px solid #FFD233;
+    color: #ffd27d;
+    font-family: "Orbitron";
+    font-weight: bold;
+    font-size: 20px;
+}
+
 .chat .chat-header {
-    padding: 15px 15px 15px 15px;
+    width: 100%;
+    height: 20%;
     border-bottom: 2px solid #FFD233;
     font-size: 25px;
 }
@@ -173,17 +183,71 @@
 }
 
 .chat .chat-history {
-    padding: 5%;
+    position: relative;
+    display: flex;
+    height: 80%;
+    width: 100%;
     background-color: rgba(21, 39, 174, 0.186);
-    height: 500px;
     border-radius: 40px;
-    padding: 15px 20px;
-	border-radius: 5px;
     color: #ffd27d;
     font-family: "Orbitron";
     font-weight: bold;
     font-size: 25px;
 	overflow:auto;
+}
+
+#create-chanel-box {
+    display:flex;
+    flex-direction: column;
+    height: 90%;
+    width: 90%;
+    padding: 5% 5% 5% 5%;
+    /* justify-content: center; */
+}
+
+#create-chanel-box form {
+    margin-left: 10%;
+    height: 100%;
+}
+
+.chat .chat-history input {
+    border: 0px transparent;
+    height: 6%;
+    width: 40%;
+    border-radius: 50px;
+    align-items: center;
+    background-color:rgba(41, 37, 82, 0.40);
+    color:	#FFFFFF;
+    text-align: center;
+    align-self: center;
+    margin-bottom: 2%;
+}
+
+#radio-create-chan-btn-1{ 
+    width: 5%;
+    cursor: pointer;
+}
+
+#radio-create-chan-btn-2 {
+    width: 5%;
+    cursor: pointer;
+}
+
+.radio-select {
+    color: rgb(205, 163, 241);
+    width: 100%;
+    font-size: 18px;
+}
+
+#create-chan-submit-btn {
+    width: 20%;
+    height: 10%;
+    border: 2px solid #FFD233;
+    border-radius: 50px;
+    color: #ffd27d;
+    background-color: rgba(0, 0, 0, 0);
+    margin-top: 5%;
+    cursor: pointer;
 }
 
 .chat .chat-history .message {

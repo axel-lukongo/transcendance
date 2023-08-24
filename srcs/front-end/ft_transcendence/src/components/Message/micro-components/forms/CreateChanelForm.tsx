@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { CREATE_CHANEL } from '../../graphql/Mutation'
 import { ICreateChanelFormProps } from '../../../interfaces/interfaces'
+import { read } from "fs";
 
 
 export default function CreateChanelForm({user, handleChanelRefetch}: ICreateChanelFormProps) {
@@ -25,25 +26,43 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		createChanel({variables: {
-			input: {
-				owner_id: user.id, 
-				chanel_name: chanel.chanel_name,
-				chanel_size: parseInt(chanel.chanel_size),
-				max_users: parseInt(chanel.max_users),
-				logo: chanel.logo,
-				private: chanel.private
-			}
-		}}).then(() => {
-			handleChanelRefetch();
-		}).catch((error) => {
-			console.log("Html: ", error.networkError.result);
-		})
+		if (chanel.chanel_name !== "") {
+			createChanel({variables: {
+				input: {
+					owner_id: user.id, 
+					chanel_name: chanel.chanel_name,
+					chanel_size: parseInt(chanel.chanel_size),
+					max_users: parseInt(chanel.max_users),
+					logo: chanel.logo,
+					private: chanel.private
+				}
+			}}).then(() => {
+				handleChanelRefetch();
+			}).catch((error) => {
+				console.log("Html: ", error.networkError.result);
+			})
+		}
 	}
 	
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setChanel({...chanel, [event.target.name]: event?.target.value
 		})
+	}
+
+	const handleLogo = (event: React.ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+		console.log(event.target.files);
+		if (event.target.files && event.target.files.length > 0) {
+			if (event.target.files[0].size <= (2 * 1024 * 1024)) {
+				const reader = new FileReader();
+				reader.readAsDataURL(event.target.files[0]);
+
+				reader.onloadend = () => {
+					const string_logo = reader.result as string;
+					setChanel({...chanel, logo: string_logo});
+				}
+			}
+		}
 	}
 
 	const handleSelect = (e: any) => {
@@ -58,14 +77,14 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 	/* JSX.Element return */
 
 	return (
-		<div>
-			<h3>Create Chanel Form</h3>
+		<div id='create-chanel-box'>
+			<h3>Create Chanel</h3>
 			<form action="submit" onSubmit={handleSubmit}>
 				<label htmlFor="chanel_name">
 				chanel_name
-				</label>
+				</label><br />
 				<input
-					type="text"
+					type="textx"
 					name="chanel_name"
 					value={chanel.chanel_name}
 					placeholder="type her..."
@@ -73,7 +92,7 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				/><br/>
 				<label htmlFor="chanel_size">
 				chanel_size
-				</label>
+				</label><br />
 				<input
 					type="text"
 					name="chanel_size"
@@ -83,7 +102,7 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				/><br/>
 				<label htmlFor="max_users">
 				max_users
-				</label>
+				</label><br />
 				<input
 					type="text"
 					name="max_users"
@@ -93,24 +112,26 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				/><br/>
 				<label htmlFor="logo">
 				logo
-				</label>
+				</label><br />
 				<input
-					type="text"
+					type="file"
 					name="logo"
-					value={chanel.logo}
 					placeholder="type her..."
-					onChange={handleChange}
+					accept=".png,.svg,.jpeg,.jpg"
+					onChange={handleLogo}
 				/><br/>
 				<label htmlFor="private">
 					private
-				</label>
-					<label htmlFor="">| yes</label><input type="radio" onClick={handleSelect} value={"true"} name="private"/>
-				<label htmlFor="public">
-				</label>No
-					<input type="radio" onClick={handleSelect} value={"false"} name="private"/>
-				<br />
+				</label><br />
+				<div className="radio-select">
+					yes 
+					<input type="radio" onClick={handleSelect} value={"true"} name="private" id="radio-create-chan-btn-1" defaultChecked/>
+					No
+					<input type="radio" onClick={handleSelect} value={"false"} name="private" id="radio-create-chan-btn-2" />
+					<br />
+				</div>
 				{/* need to add a toggle btn her */}
-				<button>Create +</button>
+				<button id="create-chan-submit-btn">Create +</button>
 			</form>
 		</div>
 	)

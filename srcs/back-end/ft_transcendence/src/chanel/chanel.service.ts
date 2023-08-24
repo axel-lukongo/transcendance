@@ -4,6 +4,7 @@ import { UpdateChanelInput } from './dto/update-chanel.input';
 import { PrismaService } from 'prisma/prisma.service';
 import { Chanel } from './entities/chanel.entity';
 import { UsersService } from 'src/users/users.service';
+import { saveBase64ToFile, saveBase64ToFileChan } from 'src/utils/upload.utils';
 
 @Injectable()
 export class ChanelService {
@@ -14,7 +15,25 @@ export class ChanelService {
     try{
 
       let chanelRes = await this.prisma.chanel.create({
-        data: createChanelInput,
+        data: {
+          private: createChanelInput.private,
+          owner_id: createChanelInput.owner_id,
+          chanel_name: createChanelInput.chanel_name,
+          chanel_size: createChanelInput.chanel_size,
+          max_users: createChanelInput.max_users
+        },
+      })
+      
+      const logo = createChanelInput.logo != '' ?
+        'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
+        :
+        'http://localhost:4000/uploads/default_chanel.png';
+
+      await this.prisma.chanel.update({
+        where: {id: chanelRes.id},
+        data: {
+          logo: logo
+        }
       })
 
       let user_chanel = await this.prisma.users_Chanels.create({
@@ -22,8 +41,8 @@ export class ChanelService {
           chanel_id: chanelRes.id,
           user_id: chanelRes.owner_id,
           pending: false,
-		  is_admin: true,
-		  is_muted: false,
+          is_admin: true,
+          is_muted: false,
         }
       })
 
