@@ -1,7 +1,7 @@
-import React from "react";
 import { useMutation } from "@apollo/client";
 import { IRequest } from '../../../interfaces/interfaces'
 import { QUITE_CHANEL } from '../../graphql/Mutation'
+import refuse_logo from '../../../../image/refuse-danger.svg'
 
 export default function QuiteChanel({handleChanelRefetch,  element, label}: IRequest) {
 
@@ -25,6 +25,8 @@ export default function QuiteChanel({handleChanelRefetch,  element, label}: IReq
 	};
 
 	return (
-		<button onClick={handleClic} >{label}</button>
+		<button onClick={handleClic} className="req-chan-btn" >
+			<img src={refuse_logo} alt="refuse" id="refuse-chan-req-btn"/>
+		</button>
 	)
 }

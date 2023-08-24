@@ -44,6 +44,7 @@ export const USER_CHANEL_LIST = gql`query UserChanelList {
 		chanels {
 			id
 			chanel_name
+			logo
 		}
 	}
 }`;

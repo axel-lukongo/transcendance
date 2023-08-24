@@ -82,12 +82,12 @@ Jaune ecrit =>     #ffd27d
     font-size: 20px;
 }
 
-.people-list .chat-list .card-chat-list:hover {
+.people-list .chat-list .card-chat-list:not(#chan-req-card):hover {
     margin-left: 10%;
     transition: 1s;
 }
 
-.people-list .card-chat-list:not(:hover) {
+.people-list .card-chat-list:not(:hover):not(#chan-req-card) {
     transition: margin-left 1.5s;
 } 
 
@@ -144,6 +144,45 @@ Jaune ecrit =>     #ffd27d
     z-index: 7;
     overflow: auto;
     height: 94%;
+}
+
+#chan-req-card {
+    cursor: auto;
+}
+
+.req-chan-btn {
+    border: none;
+    width: 50%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 0%);
+    cursor: pointer;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#accept-chan-req-btn {
+    height: 50%;
+    width: 50%;
+}
+
+#accept-chan-req-btn:hover {
+    height: 60%;
+    width: 60%;
+    transition: 1s;
+}
+
+#refuse-chan-req-btn {
+    border: none;
+    height: 50%;
+    width: 50%;
+    
+}
+
+#refuse-chan-req-btn:hover {
+    height: 60%;
+    width: 60%;
+    transition: 1s;
 }
 
 .chat-app .people-list::-webkit-scrollbar {

@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
-import React from "react";
 import { IRequest } from "../../../interfaces/interfaces";
 import { ACCEPT_CHANEL } from '../../graphql/Mutation'
+import accept_logo from '../../../../image/accept-check-good-mark.svg'
 
 export default function AcceptChanel({element, handleChanelRefetch, label}: IRequest ) {
 
@@ -26,8 +26,8 @@ export default function AcceptChanel({element, handleChanelRefetch, label}: IReq
 	}
 
 	return (
-		<div>
-			<button onClick={handleClick}>{label}</button>
-		</div>
+		<button onClick={handleClick} className="req-chan-btn">
+			<img src={accept_logo} alt="accept"  id="accept-chan-req-btn"/>
+		</button>
 	)
 } 

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Chanel, User } from '../interfaces/interfaces';
+import { Chanel } from '../interfaces/interfaces';
 import Chanels from './micro-components/Chanels';
 import ChanelsRequest from './micro-components/ChanelsRequests';
 import HeaderChanel from './micro-components/Box/HeaderChanel';

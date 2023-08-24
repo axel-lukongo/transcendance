@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
 import {  useQuery } from "@apollo/client";
 import { IPropsChanel } from "../../../interfaces/interfaces";
 import { UserChanels } from "../../../interfaces/interfaces";
-import QuiteChanel from "../buttons/QuitChanel";
 import { CHANELS_LIST } from '../../graphql/Query'
 import CardChanel from "../Box/CardChanel";
 import add_btn from '../../../../image/add-album-svgrepo-com.svg'

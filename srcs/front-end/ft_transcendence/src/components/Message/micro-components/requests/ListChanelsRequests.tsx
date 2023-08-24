@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { UserChanels } from "../../../interfaces/interfaces";
 import {USER_CHANEL_LIST} from '../../graphql/Query'
@@ -38,30 +38,34 @@ export default function ListChanelRequests(props: IListChanelRequestProps) {
 		return (
 			
 			<div id="plist" className="people-list">
-			<div className="header-side-bar">
-				<h3>Chanel Request</h3>
-			</div>{
-				data.chanelsRequest.map((chanel: UserChanels, index: number) => {
-					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`
-
-					return (
-						<ul key={unique_key} className="list-unstyled chat-list mt-2 mb-0">
-							<li >
-								<div><b>{chanel.chanels.chanel_name}</b></div>
-								<AcceptChanel 
-									element={chanel} 
-									label="Join" 
-									handleChanelRefetch={props.handleChanelRefetch}
-								/>
-								<QuiteChanel 
-									element={chanel}
-									label="refuse"
-									handleChanelRefetch={props.handleChanelRefetch}
-								/>
-							</li>
-						</ul>
-					);
-				})
-			}</div>
+				<div className="header-side-bar">
+					<h3>Chanel Request</h3>
+				</div>
+				{
+					data.chanelsRequest.map((chanel: UserChanels, index: number) => {
+						const unique_key = `${chanel.user_id}-${chanel.chanels.id}`
+						return (
+							<ul key={unique_key} className="chat-list">
+								<li className="card-chat-list" id="chan-req-card">
+									<div className="about">
+										<img src={chanel.chanels.logo} alt="avatar" />{/**afficher avatar */}
+										<div className="name">{chanel.chanels.chanel_name}</div>
+										<AcceptChanel 
+											element={chanel} 
+											label="Join" 
+											handleChanelRefetch={props.handleChanelRefetch}
+										/>
+										<QuiteChanel 
+											element={chanel}
+											label="refuse"
+											handleChanelRefetch={props.handleChanelRefetch}
+											/>
+									</div>
+								</li>
+							</ul>
+						);
+					})
+				}
+			</div>
 	)
 }

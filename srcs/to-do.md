@@ -53,7 +53,6 @@
 
 <!-- Chat box -->
 
-- reajuster la bar lorsque selection d'un direct message (disparait probablement en bas de l'ecran )
 - ? differentes couleur pour user et son texte
 
 <!-- Header -->
@@ -63,15 +62,12 @@
 - ajuster les elements
 - enlever le btn ajouter sur direct msg
 - ? enlever le btn param sur direct msg / changer param
-- enlever derniere activite
 - Creer un header par defaut
 
 <!-- Create chanel -->
 
-- btn creation chanel a changer
-- ? stylise form crea chanel
-- Stylise le btn create 
-- change titre (Create Chanel Form c'est cheum)
+- faire un reload lorsque creation d'un chanel
+- faire un reload lorsque demande d'ajout dans un chanel
 
 <!-- Chanel Request -->
 - Faire des cards
