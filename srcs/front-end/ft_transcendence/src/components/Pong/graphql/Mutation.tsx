@@ -54,6 +54,48 @@ export const JOIN_PONG = gql`
   }
 `;
 
+export const JOIN_PONG_INVITE = gql`
+  mutation JoinPongInvite($friendId: Int!)  {
+    joinPongInvite(friendId: $friendId) {
+      player {
+        id
+        userId
+        positionX
+        positionY
+        host
+        waitingRoomId
+        opponentPlayerId
+        ballId
+        pongId
+      }
+      otherPlayer {
+        id
+        userId
+        positionX
+        positionY
+        host
+        waitingRoomId
+        opponentPlayerId
+        ballId
+        pongId
+      }
+      ball {
+        id
+        positionX
+        positionY
+        directionX
+        directionY
+      }
+      pong {
+        id
+        scoreUser1
+        scoreUser2
+        winnerId
+      }
+    }
+  }`;
+
+
 export const UPDATE_PLAYER = gql `
   mutation UpdatePlayer($input: UpdatePlayerInput!) {
     updatePlayer(updatePlayerInput: $input) {

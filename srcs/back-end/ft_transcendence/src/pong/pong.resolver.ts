@@ -227,9 +227,75 @@ export class PongResolver {
   }
 
   @Mutation(() => JoinPongResponse)
+  async joinPongInvite( @Args('friendId', { type: () => Int }) friendId: number,
+  @Context() context : any) {
+
+    const pong = await this.pongService.findCurrentGame(context.req.userId);
+    if (!pong)
+    {
+      return ({pong :null});
+    }
+    if (pong && pong.winnerId !== null) // host sending the invit
+    {
+      const createPongInput: CreatePongInput = {
+        userId1: context.req.userId,
+        userId2: friendId,
+      };
+      const newPong = await this.createPong(createPongInput);
+      const newWaitingRoom = await this.waitingRoom.createWaitingRoom();
+      const ball = await this.ball.createBall();
+      await this.player.setPlayer(context.req.userId, newWaitingRoom.id);
+      
+      let otherPlayer = await this.player.setPlayer(friendId, newWaitingRoom.id);
+      
+      const otherPlayerData : UpdatePlayerInput ={
+        id : otherPlayer.id,
+        opponentPlayerId: context.req.userId,
+        positionX: 90,
+        ballId: ball.id,
+        pongId: newPong.id,
+      }
+       await this.player.updatePlayer(otherPlayerData);
+
+      return new Promise<JoinPongResponse>(resolve => {
+        const interval = setInterval(async () => {
+          const player = await this.player.findPlayerByUserId(context.req.userId);
+          if (!player) {
+            clearInterval(interval);
+            resolve({player : null, });
+          }
+          else if (player.opponentPlayerId !== 0) {
+            clearInterval(interval); // Arrêter l'intervalle
+            const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
+            const ball = await this.ball.findUnique(player.ballId);
+            const pong = await this.findPong(player.pongId);
+            resolve({ player , ball, otherPlayer , pong });
+          }
+        }, 1000);
+      });
+    }
+    else
+    {
+      const player = await this.player.findPlayerByUserId(context.req.userId);
+      const ball = await this.ball.findUnique(player.ballId);
+      const pong = await this.findPong(player.pongId);
+      const otherPlayerData : UpdatePlayerInput ={
+        id : friendId,
+        opponentPlayerId: context.req.userId,
+        host : true,
+        waitingRoomId: player.waitingRoomId,
+        ballId: player.waitingRoomId,
+        pongId: player.pongId,
+      }
+      const otherPlayer = await this.player.updatePlayer(otherPlayerData);
+      return { player, ball, otherPlayer, pong };
+    }
+  }
+
+  @Mutation(() => JoinPongResponse)
   async joinPong( @Args('userId', { type: () => Int }) userId: number) {
 
-    let player = await this.player.setPlayer(userId);
+    let player = await this.player.setPlayer(userId, 1);
     if (!player)
     {
       return { player: null };
@@ -240,7 +306,7 @@ export class PongResolver {
       if (pong_tmp && pong_tmp.winnerId)
       {
         await this.endPong(player.userId);
-        player = await this.player.setPlayer(userId);
+        player = await this.player.setPlayer(userId, 1);
       }
       else
       {

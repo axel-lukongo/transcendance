@@ -3,7 +3,11 @@ import Map from "./micro-components/Map";
 import Game from "./micro-components/Game";
 import { Link } from "react-router-dom";
 
-const Pong: FC = () => {
+interface PongProps {
+  friendId: number | undefined;
+}
+
+const Pong: FC<PongProps> = ({friendId}) => {
 
   const [pongMap, setPongMap] = useState<string | null>(sessionStorage.getItem('playerMap'));
 
@@ -12,7 +16,7 @@ const Pong: FC = () => {
       {pongMap === null ? ( 
         <Map setPongMap={setPongMap} />
       ) : ( 
-        <Game pongMap={pongMap} />
+        <Game pongMap={pongMap} friendId={friendId} />
       )}
       <Link to ='/'>
         <button className='log-out-button logo-box'></button>

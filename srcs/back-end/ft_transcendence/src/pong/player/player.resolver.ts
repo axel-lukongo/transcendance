@@ -48,8 +48,7 @@ export class PlayerResolver {
     return  this.playerService.create(createPlayerInput);
   }
 
-  @Mutation(() => Player)
-  async setPlayer(@Args('userId', { type: () => Int }) userId: number) {
+  async setPlayer(userId: number, room : number) {
     let player = await this.findPlayerByUserId(userId);
     
     if (!player) {

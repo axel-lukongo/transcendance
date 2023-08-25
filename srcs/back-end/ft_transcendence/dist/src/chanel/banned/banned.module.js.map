@@ -1,1 +1,0 @@
-{"version":3,"file":"banned.module.js","sourceRoot":"","sources":["../../../../src/chanel/banned/banned.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,qDAAiD;AACjD,uDAAmD;AACnD,mEAAsD;AACtD,kFAA2E;AAKpE,IAAM,YAAY,0BAAlB,MAAM,YAAY;CAAG,CAAA;uBAAf,YAAY;IAHxB,IAAA,eAAM,EAAC;QACN,SAAS,EAAE,CAAC,gCAAc,EAAE,8BAAa,EAAE,8BAAa,EAAE,yCAAkB,CAAC;KAC9E,CAAC;GACW,YAAY,CAAG"}

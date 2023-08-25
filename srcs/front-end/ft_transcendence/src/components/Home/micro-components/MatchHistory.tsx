@@ -32,7 +32,7 @@ const HistoryMatch: React.FC<PropsHistoryMatch> =({user}) => {
           return (
             <div  key={index}>
               <div className="history-match-item">
-                <h2>{user?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"} </h2>
+                <h2>{user?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😵"} </h2>
               <hr/>
               </div>
             </div>

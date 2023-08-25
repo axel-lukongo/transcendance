@@ -30,6 +30,24 @@ export class PongService {
     return this.prisma.pong.findUnique({ where : {id}})
   }
 
+
+  async findCurrentGame(userId: number) {
+    const game = await this.prisma.pong.findFirst({
+      where: {
+        OR: [
+          { userId1: userId },
+          { userId2: userId },
+        ],
+      },
+      orderBy: {
+        versusDate: 'desc',
+      },
+    });
+
+    return game;
+  }
+
+
   async myMatchStatistic(userId: number): Promise<StatisticMatch | null> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
