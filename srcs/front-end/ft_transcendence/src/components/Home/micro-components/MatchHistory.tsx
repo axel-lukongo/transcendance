@@ -21,7 +21,7 @@ const HistoryMatch: React.FC<PropsHistoryMatch> =({user}) => {
     const historyMatches: PongI[] = data.myMatchHistory;
 
     return (
-      <div>
+      <div className="history-match-container">
         {historyMatches.map((match, index) => {
           const isUser1 = match.user1?.nickname === user?.nickname;
           const myScore = isUser1 ? match.scoreUser1 : match.scoreUser2;
@@ -30,10 +30,10 @@ const HistoryMatch: React.FC<PropsHistoryMatch> =({user}) => {
           const isWinner = match.winnerId === user?.id;
 
           return (
-            <div className="history-match-container" key={index}>
+            <div  key={index}>
               <div className="history-match-item">
-                <p>{user?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"} </p>
-                <hr />
+                <h2>{user?.nickname} {myScore}-{opponentScore} {opponentNickname} : {isWinner ? "🏆" : "😓"} </h2>
+              <hr/>
               </div>
             </div>
           );

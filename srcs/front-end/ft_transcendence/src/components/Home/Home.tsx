@@ -34,6 +34,7 @@ const Home = () => {
             <AvatarBox />
 
             <div className="history-match-box profil-box">
+              <h1>MATCH HISTORY</h1>
               <HistoryMatch user={userFromStorage} />
             </div>
 
