@@ -30,7 +30,6 @@ export const REQUEST = gql`query GetMyContactRequest{
 export const LIST_CONTACT = gql`query GetListContact {
 	myContacts {
 		id
-		
 		contact {
 			id
 			email

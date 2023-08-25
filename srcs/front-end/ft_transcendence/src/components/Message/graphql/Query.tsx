@@ -40,6 +40,7 @@ export const GET_CONTACT = gql`
 				avatar
 				level
 				rank
+				state
 			}
 
 		}

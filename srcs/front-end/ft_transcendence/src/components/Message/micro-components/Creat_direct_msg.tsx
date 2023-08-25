@@ -25,11 +25,12 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 		  userId2: interlocutor.id,
 		},
 	});
+
 	
 	const [createChannel] = useMutation(CREATE_CHANEL);
-
+	
 	useEffect(() => {
-
+		
 		if (loading) {
 			return;
 		}
@@ -42,7 +43,7 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 						chanel_size: 2,
 						max_users: 2,
 						interlocutor_id: interlocutor.id,
-						logo: 'test10',
+						logo: user.avatar,
 						interlocutor_name: interlocutor.nickname,
 						interlocutor_avatar: interlocutor.avatar,
 						directMsg: true,

@@ -98,9 +98,9 @@ export class ContactsResolver {
 				const resolve_payload = await payload;
 				if (resolve_payload.changeState.id == context.token.userId)
 					return false;
-				let user_contact = await this.contactService.findContacts(context.token.userId);
-				let need_to_catch = user_contact.some((contact) => (
-					contact.user_id === resolve_payload.changeState.id || contact.contact_id === resolve_payload.changeState.id
+			let user_contact = await this.contactService.findContacts(context.token.userId);
+			let need_to_catch = user_contact.some((contact) => (
+				contact.user_id === resolve_payload.changeState.id || contact.contact_id === resolve_payload.changeState.id
 				))
 				return need_to_catch;
 			}

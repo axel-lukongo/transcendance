@@ -26,9 +26,9 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
 	
 	if(chanel_focus.directMsg === true){
 		chanel_focus.chanel_name = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_name:chanel_focus.chanel_name
-		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_avatar: chanel_focus.logo
+		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_avatar: user.avatar
+		console.log('weee ====>>>>  ',chanel_focus.logo);
 	}
-
     return (
         <div className="chat-header">
             <div className="row">
