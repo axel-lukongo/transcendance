@@ -20,7 +20,6 @@ async function main() {
 			email: "test_" + i,
 			nickname: "asimon_" + i,
 			token: "0" + i,
-			intra_login: "asimon_" + i
 		}
 		
 		await prisma.user.upsert({

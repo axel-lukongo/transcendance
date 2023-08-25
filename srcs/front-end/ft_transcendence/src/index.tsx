@@ -31,7 +31,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     // Gérer les erreurs GraphQL ici
     graphQLErrors.forEach(error => {
-      console.log('Erreur GraphQL :', error.message);
+      // console.log('Erreur GraphQL :', error.message);
     });
   }
   

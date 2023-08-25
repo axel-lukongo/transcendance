@@ -26,8 +26,6 @@ export class UsersService {
       :
       'http://localhost:4000/uploads/default_avatar.jpg';
 	  
-	  console.log("==============");
-
     return this.prisma.user.update({
       where: {id: data.id},
       data
