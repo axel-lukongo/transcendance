@@ -25,13 +25,18 @@ export class ChanelService {
 		  interlocutor_id: createChanelInput.interlocutor_id,
 		  interlocutor_name: createChanelInput.interlocutor_name,
 		  interlocutor_avatar: createChanelInput.interlocutor_avatar,
+		//   logo: createChanelInput.logo
         },
       })
-      
-      const logo = createChanelInput.logo != '' ?
-        'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
-        :
-        'http://localhost:4000/uploads/default_chanel.png';
+    //   console.log('ici====>>> ',createChanelInput.logo);
+	  let logo = '';
+	if( createChanelInput.directMsg === false ) {
+		   logo = createChanelInput.logo != '' ?
+			'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
+			:
+			'http://localhost:4000/uploads/default_chanel.png';
+		  
+	  }
 
       await this.prisma.chanel.update({
         where: {id: chanelRes.id},
@@ -56,6 +61,8 @@ export class ChanelService {
       return new Error("Error during chanel creation: " +  e);
     }
   }
+
+
 
   async findOne(id: number) {
     return this.prisma.chanel.findUnique({where: {id: id}});
