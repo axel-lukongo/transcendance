@@ -36,11 +36,11 @@ export const GET_CONTACT = gql`
 			contact{
 				id
 				email
-				intra_login
 				nickname
 				avatar
 				level
 				rank
+				state
 			}
 
 		}

@@ -13,6 +13,7 @@ exports.ChanelService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const users_service_1 = require("../users/users.service");
+const upload_utils_1 = require("../utils/upload.utils");
 let ChanelService = exports.ChanelService = class ChanelService {
     constructor(prisma, user) {
         this.prisma = prisma;
@@ -21,7 +22,23 @@ let ChanelService = exports.ChanelService = class ChanelService {
     async create(createChanelInput) {
         try {
             let chanelRes = await this.prisma.chanel.create({
-                data: createChanelInput,
+                data: {
+                    private: createChanelInput.private,
+                    owner_id: createChanelInput.owner_id,
+                    chanel_name: createChanelInput.chanel_name,
+                    chanel_size: createChanelInput.chanel_size,
+                    max_users: createChanelInput.max_users
+                },
+            });
+            const logo = createChanelInput.logo != '' ?
+                'http://localhost:4000/uploads/' + await (0, upload_utils_1.saveBase64ToFileChan)(createChanelInput.logo, chanelRes.id)
+                :
+                    'http://localhost:4000/uploads/default_chanel.png';
+            await this.prisma.chanel.update({
+                where: { id: chanelRes.id },
+                data: {
+                    logo: logo
+                }
             });
             let user_chanel = await this.prisma.users_Chanels.create({
                 data: {

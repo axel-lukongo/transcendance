@@ -29,9 +29,9 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+  async updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
 
-    const updateUser= this.usersService.update(updateUserInput.id, updateUserInput);
+    const updateUser = await this.usersService.update(updateUserInput.id, updateUserInput);
     socket.publish(CHANGE_STATE, {
       changeState: updateUser
     });
