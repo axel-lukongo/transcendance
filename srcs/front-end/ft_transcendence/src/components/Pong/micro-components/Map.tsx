@@ -32,6 +32,7 @@ interface MapProps {
     const confirmMapSelection = () => {
       if (selectedMap) {
         setPongMap(selectedMap);
+        sessionStorage.setItem('playerMap', selectedMap);
       }
     };
   

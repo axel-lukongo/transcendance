@@ -227,9 +227,9 @@ export class PongResolver {
   }
 
   @Mutation(() => JoinPongResponse)
-  async joinPong(@Context() context : any) {
+  async joinPong( @Args('userId', { type: () => Int }) userId: number) {
 
-    let player = await this.player.setPlayer(context.req.userId);
+    let player = await this.player.setPlayer(userId);
     if (!player)
     {
       return { player: null };
@@ -240,7 +240,7 @@ export class PongResolver {
       if (pong_tmp && pong_tmp.winnerId)
       {
         await this.endPong(player.userId);
-        player = await this.player.setPlayer(context.req.userId);
+        player = await this.player.setPlayer(userId);
       }
       else
       {
@@ -297,7 +297,7 @@ export class PongResolver {
           player = await this.player.findPlayer(player.id);
           if (!player) {
             clearInterval(interval);
-            resolve(null);
+            resolve({player : null, });
           }
           else if (player.opponentPlayerId !== 0) {
             clearInterval(interval); // Arrêter l'intervalle
@@ -370,13 +370,13 @@ export class PongResolver {
 
     const callback = async () => {
       const currentPong = await this.findPong(pongId);
-      if (currentPong.start === false) {
-        this.timer.stopPongTimer(pongId);
-        return true;
-      }
       const ball  = await this.ball.findUnique(ballId);
       const player = await this.player.findPlayer(playerId);
       const otherPlayer = await this.player.findPlayer(otherPlayerId);
+      if (currentPong.start === false || !ball || !player || !otherPlayer) {
+        this.timer.stopPongTimer(pongId);
+        return true;
+      }
       await this.ballMove(ball, player, otherPlayer, currentPong);
     }
     this.timer.startPongTimer(pongId, callback);

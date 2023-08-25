@@ -29,7 +29,11 @@ interface GameProps {
     
     useEffect(() => {
       if (!player && userFromStorage) {
-        joinPong({})
+        joinPong({
+          variables: {
+            userId: userFromStorage?.id
+          }
+        })
         .then(response => {
           console.log(response);
           const { player, otherPlayer, ball, pong } = response.data.joinPong;
@@ -63,30 +67,35 @@ interface GameProps {
       .catch(error => {
         console.error('Error ending pong:', error);
       });
+      sessionStorage.removeItem('playerMap');
     }
   }, []);
 
-  const handleUnload = async () => {
-    if (player && userFromStorage) {
-      try {
-        await endPong({
-          variables: {
-            userId: userFromStorage?.id,
-          },
-        });
-      } catch (error) {
-        console.error('Error ending pong:', error);
-      }
-    }
-  };
-
   useEffect(() => {
-    window.addEventListener('beforeunload', handleUnload);
-
+    const handleUnload = async () => {
+      if (player && userFromStorage) {
+        endPong({
+          variables: {
+            userId: userFromStorage?.id
+          }
+        })
+        .then(endPongResponse => {
+          console.log('endPong result:', endPongResponse.data.endPong); // Result string
+        })
+        .catch(error => {
+          console.error('Error ending pong:', error);
+        });
+        sessionStorage.removeItem('playerMap');
+      }
+    };
+  
+    window.addEventListener('unload', handleUnload);
+  
     return () => {
-      window.removeEventListener('beforeunload', handleUnload);
+      window.removeEventListener('unload', handleUnload);
     };
   }, [player, userFromStorage]);
+  
   
       return (
         <div>

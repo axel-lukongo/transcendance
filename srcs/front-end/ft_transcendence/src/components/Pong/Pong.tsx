@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Pong: FC = () => {
 
-  const [pongMap, setPongMap] = useState<string | null>(null);
+  const [pongMap, setPongMap] = useState<string | null>(sessionStorage.getItem('playerMap'));
 
   return (
     <div>

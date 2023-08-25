@@ -13,8 +13,8 @@ export const END_PONG = gql`
 `;
 
 export const JOIN_PONG = gql`
-  mutation JoinPong {
-    joinPong {
+  mutation JoinPong($userId: Int!)  {
+    joinPong(userId: $userId) {
       player {
         id
         userId
