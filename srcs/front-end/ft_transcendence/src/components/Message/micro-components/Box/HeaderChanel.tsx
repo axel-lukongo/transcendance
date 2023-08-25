@@ -28,21 +28,23 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
 		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_avatar: chanel_focus.logo
 	}
 
-	return (
-		<div className="chat-header">
-			<div className="row">
-				<div className="col-lg-6">
-					<img src={chanel_focus.logo} alt="avatar" />{/**afficher avatar */}
-					<div className="chat-about">
-						<h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
-					</div>
-				</div>
-				
-				<div className='btn-on-header'>
-					{chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='add-user-in-chan' onClick={handelClick}></button> : null}
-					{ chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
-				</div> {/* btn pour l'ajout de users dans un chanel */}
-			</div>
-		</div>
-	);
+    return (
+        <div className="chat-header">
+            <div className="row">
+                {
+                    chanel_focus.id !== "" ? 
+                    <div className="col-lg-6">
+                        <img src={chanel_focus.logo} alt="avatar" />
+                        <div className="chat-about">
+                            <h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
+                        </div>
+                    </div>: null
+                }
+                <div className='btn-on-header'>
+                    {chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='add-user-in-chan' onClick={handelClick}></button> : null}
+                    { chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
+                </div> {/* btn pour l'ajout de users dans un chanel */}
+            </div>
+        </div>
+    );
 }
