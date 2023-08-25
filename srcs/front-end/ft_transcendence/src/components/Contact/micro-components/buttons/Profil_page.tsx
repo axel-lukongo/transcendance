@@ -28,8 +28,8 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 		)
 	}
 
-	if (data && data.myHistoryMatch) {
-		const historyMatches: PongI[] = data.myHistoryMatch;
+	if (data && data.myMatchHistory) {
+		const historyMatches: PongI[] = data.myMatchHistory;
 	}	
 
 	return (
@@ -69,7 +69,7 @@ const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 
 				<div className='container-scroll'> 
 					<div className="container-tree" style={{ textAlign: 'center' }}>
-						{ data?.myHistoryMatch.map((match: PongI, index: number) => {
+						{ data?.myMatchHistory.map((match: PongI, index: number) => {
 							const isUser1 = match.user1?.nickname === user.nickname;
 							const myScore = isUser1 ? match.scoreUser1 : match.scoreUser2;
 						const opponentScore = isUser1 ? match.scoreUser2 : match.scoreUser1;

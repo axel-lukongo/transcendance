@@ -14,8 +14,8 @@ const HistoryMatch = () => {
     },
   });
 
-  if (data && data.myHistoryMatch) {
-    const historyMatches: PongI[] = data.myHistoryMatch;
+  if (data && data.myMatchHistory) {
+    const historyMatches: PongI[] = data.myMatchHistory;
 
     return (
       <div>

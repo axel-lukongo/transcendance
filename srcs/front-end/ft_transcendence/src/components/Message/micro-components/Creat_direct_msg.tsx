@@ -33,7 +33,6 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 		if (loading) {
 			return;
 		}
-
 		if (!data) {
 			createChannel({
 				variables: {
@@ -44,13 +43,17 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 						max_users: 2,
 						interlocutor_id: interlocutor.id,
 						logo: 'test10',
-						private: false,
+						interlocutor_name: interlocutor.nickname,
+						interlocutor_avatar: interlocutor.avatar,
 						directMsg: true,
+						private: false,
 					}
 				}
 			}).then((response) => {
 			const responseData = response.data; // Les données renvoyées par la mutation
-			setHasFetchedData(responseData.createChanel);})
+			setHasFetchedData(responseData.createChanel);
+			console.log('le retour ====>>> ', responseData.createChanel)
+		})
 			.catch((error) => {
 				console.log("Html: ", error.message);
 			});

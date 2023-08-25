@@ -20,7 +20,11 @@ export class ChanelService {
           owner_id: createChanelInput.owner_id,
           chanel_name: createChanelInput.chanel_name,
           chanel_size: createChanelInput.chanel_size,
-          max_users: createChanelInput.max_users
+          max_users: createChanelInput.max_users,
+		  directMsg: createChanelInput.directMsg,
+		  interlocutor_id: createChanelInput.interlocutor_id,
+		  interlocutor_name: createChanelInput.interlocutor_name,
+		  interlocutor_avatar: createChanelInput.interlocutor_avatar,
         },
       })
       
@@ -71,6 +75,8 @@ export class ChanelService {
   async getOwnChanels(user_id: number) {
     return this.prisma.chanel.findMany({where: {owner_id: user_id}});
   }
+
+
 
   async getChannelByOwnersAndInterlocutor(userId1: number, userId2: number): Promise<Chanel | null> {
     return this.prisma.chanel.findFirst({

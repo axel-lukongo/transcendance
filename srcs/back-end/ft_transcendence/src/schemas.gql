@@ -26,6 +26,8 @@ type Chanel {
   interlocutor_id: Float
   directMsg: Boolean
   interlocutor: User
+  interlocutor_avatar: String
+  interlocutor_name: String
   messages: [Message!]!
 }
 
@@ -235,6 +237,8 @@ input CreateChanelInput {
   logo: String
   interlocutor_id: Int
   directMsg: Boolean
+  interlocutor_avatar: String
+  interlocutor_name: String
 }
 
 input UpdateChanelInput {
@@ -246,6 +250,8 @@ input UpdateChanelInput {
   logo: String
   interlocutor_id: Int
   directMsg: Boolean
+  interlocutor_avatar: String
+  interlocutor_name: String
   id: Int!
 }
 

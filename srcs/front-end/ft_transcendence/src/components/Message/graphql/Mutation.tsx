@@ -40,7 +40,9 @@ export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInpu
 		logo
 		interlocutor_id
 		private
-		# interlocutor
+		directMsg
+		interlocutor_name
+		interlocutor_avatar
 	}
 }`;
 

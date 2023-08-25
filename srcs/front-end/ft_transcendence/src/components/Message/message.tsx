@@ -59,6 +59,8 @@ const Message = () => {
 		logo: "",
 		owner_id: "",
 		directMsg: false,
+		interlocutor_name: "",
+		interlocutor_avatar: "",
 		interlocutor: initialInterlocutor
 	});
 
@@ -91,6 +93,8 @@ const Message = () => {
 			logo: element.logo,
 			owner_id: element.owner_id.toString(),
 			directMsg: element.directMsg,
+			interlocutor_avatar: element.interlocutor_avatar,
+			interlocutor_name: element.interlocutor_name,
 			interlocutor: element.interlocutor
 		});
 	}
