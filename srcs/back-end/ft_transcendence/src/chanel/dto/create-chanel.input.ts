@@ -27,4 +27,10 @@ export class CreateChanelInput {
   @Field(() => Boolean, {nullable: true})
   directMsg?: boolean;
 
+  @Field(() => String, {nullable: true})
+  interlocutor_avatar?: string;
+
+  @Field(() => String, {nullable: true})
+  interlocutor_name?: string;
+
 }

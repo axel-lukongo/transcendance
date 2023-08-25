@@ -15,6 +15,7 @@ export class ChanelResolver {
 
   @Mutation(() => Chanel)
   createChanel(@Args('createChanelInput') createChanelInput: CreateChanelInput) {
+	// console.log('laa=======>>>>  ', createChanelInput)
     return this.chanelService.create(createChanelInput);
   }
 

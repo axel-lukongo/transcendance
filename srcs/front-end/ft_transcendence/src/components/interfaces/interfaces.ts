@@ -24,6 +24,8 @@ export interface Chanel {
 	interlocutor_id: number;
 	directMsg: boolean;
 	interlocutor: User;
+	interlocutor_name: string;
+	interlocutor_avatar: string;
 }
 
 export interface UserChanels {
@@ -157,6 +159,8 @@ export interface channelfocus  {
 	max_users: string,
 	logo: string,
 	directMsg: boolean,
+	interlocutor_name: string,
+	interlocutor_avatar: string,
 	interlocutor: User,
 }
 

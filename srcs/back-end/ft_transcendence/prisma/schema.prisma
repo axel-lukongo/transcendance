@@ -53,12 +53,14 @@ model Chanel {
 	max_users			Int
 	logo				String?
 	private				Boolean		@default(true)
-	interlocutor_id		Int?		
 	owner				User		@relation("Owner", fields: [owner_id], references: [id])
-	interlocutor		User?		@relation("Interlocutor", fields: [interlocutor_id], references: [id])
 	users				Users_Chanels[]
 	messages			Message[]	@relation("ChanelMessages")
 	directMsg			Boolean		@default(false)
+	interlocutor_id		Int?		
+	interlocutor_avatar	String?
+	interlocutor_name	String?
+	interlocutor		User?		@relation("Interlocutor", fields: [interlocutor_id], references: [id])
 	AdminList			Int[]		@default([]) // Liste des ID des administrateurs
 }
 

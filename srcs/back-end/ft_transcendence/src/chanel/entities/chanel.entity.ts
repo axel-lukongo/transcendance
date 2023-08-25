@@ -32,4 +32,10 @@ export class Chanel {
 
 	@Field(() => User, {nullable: true})
 	interlocutor?: User
+
+	@Field({nullable: true})
+	interlocutor_avatar?: string;
+
+	@Field({nullable: true})
+	interlocutor_name?: string;
 }
