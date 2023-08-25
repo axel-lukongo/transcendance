@@ -29,8 +29,8 @@ let UsersResolver = exports.UsersResolver = class UsersResolver {
     findUserById(id) {
         return this.usersService.findUserById(id);
     }
-    updateUser(updateUserInput) {
-        const updateUser = this.usersService.update(updateUserInput.id, updateUserInput);
+    async updateUser(updateUserInput) {
+        const updateUser = await this.usersService.update(updateUserInput.id, updateUserInput);
         main_1.socket.publish(exports.CHANGE_STATE, {
             changeState: updateUser
         });
@@ -65,7 +65,7 @@ __decorate([
     __param(0, (0, graphql_1.Args)('updateUserInput')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [update_user_input_1.UpdateUserInput]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersResolver.prototype, "updateUser", null);
 __decorate([
     (0, graphql_1.Mutation)(() => user_entity_1.User),

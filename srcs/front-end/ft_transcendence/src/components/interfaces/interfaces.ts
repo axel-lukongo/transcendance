@@ -52,7 +52,6 @@ export interface IContact {
 	avatar: string;
 	level: number;
 	rank: string;
-
 }
 
 export interface IContactsLink {
