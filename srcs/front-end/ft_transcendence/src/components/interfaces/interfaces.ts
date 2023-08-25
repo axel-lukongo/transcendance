@@ -172,7 +172,7 @@ export interface IRequest {
 export interface ICardChanelProps {
 	handleChatBox: (switch_id: number) => void
 	handleChanelFocus: (element: Chanel) => void;
-	chanel: UserChanels;
+	chanel: Chanel;
 }
 
 	/* //////////////////////////////////////////////////////// */

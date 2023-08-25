@@ -168,7 +168,7 @@ type Query {
   findBalls: [Ball!]!
   findBall(id: Int!): Ball!
   chanelsRequest: [UsersChanels!]!
-  myChanels(private_chan: Boolean!): [UsersChanels!]!
+  myChanels(private_chan: Boolean!): [Chanel!]!
   ChannelMembers(channel_id: Int!): [UsersChanels!]!
 }
 

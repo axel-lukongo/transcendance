@@ -43,7 +43,7 @@ export class UserChanelsResolver {
 	}
 
 
-	@Query(() => [UsersChanels], { name: 'myChanels' })
+	@Query(() => [Chanel] , { name: 'myChanels' })
 	findMyChanels(
 		@Context() context,
 		@Args("private_chan", {type: () => Boolean}) private_chan: boolean

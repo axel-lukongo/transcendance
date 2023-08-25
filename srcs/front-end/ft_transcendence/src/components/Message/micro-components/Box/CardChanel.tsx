@@ -7,15 +7,15 @@ export default function CardChanel({handleChanelFocus, chanel, handleChatBox}: I
 
 
 	const handleClick = () => {
-		handleChanelFocus(chanel.chanels);
+		handleChanelFocus(chanel);
 		handleChatBox(__CHAT__);
 	}
 
 	return (
 		<li className="card-chat-list" onClick={handleClick }>
 			<div className="about">
-				<img src={chanel.chanels.logo} alt="avatar" />{/**afficher avatar */}
-				<div className="name"> { chanel.chanels.chanel_name }</div>
+				<img src={chanel.logo} alt="avatar" />{/**afficher avatar */}
+				<div className="name"> { chanel.chanel_name }</div>
 			</div>
 		</li>
 	);
