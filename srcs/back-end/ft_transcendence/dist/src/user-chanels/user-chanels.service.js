@@ -17,13 +17,27 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
         this.prisma = prisma;
     }
     async findMyChanels(user_id, private_chan) {
-        return this.prisma.users_Chanels.findMany({
-            where: {
-                user_id,
-                pending: false,
-                chanel: { private: private_chan, directMsg: false }
-            }
-        });
+        if (private_chan === true) {
+            return this.prisma.chanel.findMany({
+                where: {
+                    private: private_chan,
+                    directMsg: false,
+                    users: {
+                        some: {
+                            user_id: user_id,
+                        }
+                    },
+                }
+            });
+        }
+        else {
+            return this.prisma.chanel.findMany({
+                where: {
+                    private: private_chan,
+                    directMsg: false,
+                }
+            });
+        }
     }
     async findMyRequestChanels(user_id) {
         return this.prisma.users_Chanels.findMany({

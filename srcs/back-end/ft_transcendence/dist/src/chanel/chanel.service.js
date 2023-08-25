@@ -34,13 +34,10 @@ let ChanelService = exports.ChanelService = class ChanelService {
                     interlocutor_avatar: createChanelInput.interlocutor_avatar,
                 },
             });
-            let logo = '';
-            if (createChanelInput.directMsg === false) {
-                logo = createChanelInput.logo != '' ?
-                    'http://localhost:4000/uploads/' + await (0, upload_utils_1.saveBase64ToFileChan)(createChanelInput.logo, chanelRes.id)
-                    :
-                        'http://localhost:4000/uploads/default_chanel.png';
-            }
+            const logo = createChanelInput.logo != '' ?
+                'http://localhost:4000/uploads/' + await (0, upload_utils_1.saveBase64ToFileChan)(createChanelInput.logo, chanelRes.id)
+                :
+                    'http://localhost:4000/uploads/default_chanel.png';
             await this.prisma.chanel.update({
                 where: { id: chanelRes.id },
                 data: {

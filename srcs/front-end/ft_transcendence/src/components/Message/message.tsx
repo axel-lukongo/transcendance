@@ -294,6 +294,7 @@ const Message = () => {
 							<img src={user_onglet} alt="" id='btn1' />
 						</button>
 						<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)} className='nav_section_btn'>
+							<div id='trick-btn-slash'></div>
 							<img src={public_onglet} alt="" id='btn2'/>
 						</button>
 						<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)} className='nav_section_btn'>

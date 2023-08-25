@@ -1,11 +1,11 @@
 import {  useQuery } from "@apollo/client";
-import { IPropsChanel } from "../../../interfaces/interfaces";
-import { UserChanels } from "../../../interfaces/interfaces";
+import { Chanel, IPropsChanel } from "../../../interfaces/interfaces";
 import { CHANELS_LIST } from '../../graphql/Query'
 import CardChanel from "../Box/CardChanel";
 import add_btn from '../../../../image/add-album-svgrepo-com.svg'
 
 import { __CREATE_CHANEL__ } from "../../message";
+import { useEffect } from "react";
 
 export default function ChanelList(props: IPropsChanel) {
 
@@ -16,6 +16,10 @@ export default function ChanelList(props: IPropsChanel) {
 			private_chan: props.private_chan
 		}
 	})
+
+	useEffect(() => {
+		refetch();
+	}, [props.refetchChanels])
 
 	/* //////////////////////////////////////////////////////// */
 	/* Querry Error */
@@ -58,10 +62,10 @@ export default function ChanelList(props: IPropsChanel) {
 			</div>
 			<div>
 			{
-				data.myChanels.map((chanel: UserChanels, index: number) => {
-					const unique_key = `${chanel.user_id}-${chanel.chanels.id}`;
+				data.myChanels.map((chanel: Chanel, index: number) => {
+
 					return (
-						<ul className="chat-list" key={unique_key}>
+						<ul className="chat-list" key={chanel.id}>
 							<CardChanel 
 								chanel={chanel}
 								handleChanelFocus={props.handleChanelFocus}

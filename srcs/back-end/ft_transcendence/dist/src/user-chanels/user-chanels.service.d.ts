@@ -5,12 +5,18 @@ export declare class UserChanelsService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     findMyChanels(user_id: number, private_chan: boolean): Promise<(import("@prisma/client/runtime/library").GetResult<{
-        user_id: number;
-        chanel_id: number;
-        pending: boolean;
-        is_muted: boolean;
-        is_admin: boolean;
-        mute_start_time: number;
+        id: number;
+        owner_id: number;
+        chanel_name: string;
+        chanel_size: number;
+        max_users: number;
+        logo: string;
+        private: boolean;
+        directMsg: boolean;
+        interlocutor_id: number;
+        interlocutor_avatar: string;
+        interlocutor_name: string;
+        AdminList: number[];
     }, unknown> & {})[]>;
     findMyRequestChanels(user_id: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
         user_id: number;

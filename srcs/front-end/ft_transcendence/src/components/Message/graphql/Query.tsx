@@ -60,16 +60,12 @@ export const USER_CHANEL_LIST = gql`query UserChanelList {
 
 export const CHANELS_LIST = gql`query GetChanelList($private_chan: Boolean!) {
 	myChanels(private_chan: $private_chan) {
-		pending
-		user_id
-		chanels {
-			owner_id
-			chanel_name
-			id
-			chanel_size
-			max_users
-			logo
-		}
+		owner_id
+		chanel_name
+		id
+		chanel_size
+		max_users
+		logo
 	}
 }`;
 
@@ -77,6 +73,7 @@ export const ALL_USERS = gql`query SearchUserForChan($chanel_id: Int!){
 searchUserForChan(chanel_id: $chanel_id) {
     id
     nickname
+	avatar
   }
 }`
 

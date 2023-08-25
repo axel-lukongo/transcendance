@@ -103,7 +103,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserChanelsResolver.prototype, "chanelRequest", null);
 __decorate([
-    (0, graphql_1.Query)(() => [user_chanel_entity_1.UsersChanels], { name: 'myChanels' }),
+    (0, graphql_1.Query)(() => [chanel_entity_1.Chanel], { name: 'myChanels' }),
     __param(0, (0, graphql_1.Context)()),
     __param(1, (0, graphql_1.Args)("private_chan", { type: () => Boolean })),
     __metadata("design:type", Function),
