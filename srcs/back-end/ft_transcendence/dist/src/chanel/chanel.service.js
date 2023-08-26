@@ -35,11 +35,14 @@ let ChanelService = exports.ChanelService = class ChanelService {
                 },
             });
 <<<<<<< HEAD
+<<<<<<< HEAD
             const logo = createChanelInput.logo != '' ?
                 'http://localhost:4000/uploads/' + await (0, upload_utils_1.saveBase64ToFileChan)(createChanelInput.logo, chanelRes.id)
                 :
                     'http://localhost:4000/uploads/default_chanel.png';
 =======
+=======
+>>>>>>> origin/axel
             let logo = '';
             if (createChanelInput.directMsg === false) {
                 logo = createChanelInput.logo != '' ?
@@ -47,7 +50,10 @@ let ChanelService = exports.ChanelService = class ChanelService {
                     :
                         'http://localhost:4000/uploads/default_chanel.png';
             }
+<<<<<<< HEAD
 >>>>>>> 88a6acf ( i fixed the probleme with the avatar)
+=======
+>>>>>>> origin/axel
             await this.prisma.chanel.update({
                 where: { id: chanelRes.id },
                 data: {

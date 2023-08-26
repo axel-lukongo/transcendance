@@ -7,6 +7,7 @@ export const NewMessageSubscription = gql`
 		id
 		content
 		sender_id
+		invite_game
 	}
 	}
 `;

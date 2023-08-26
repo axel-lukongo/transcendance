@@ -39,6 +39,7 @@ type Message {
   sender: User!
   channel_id: Int
   channel: Chanel
+  invite_game: Boolean
 }
 
 """
@@ -260,6 +261,7 @@ input CreateMessageInput {
   sent_at: DateTime
   sender_id: Int!
   channel_id: Int
+  invite_game: Boolean
 }
 
 input UpdateMessageInput {
@@ -267,6 +269,7 @@ input UpdateMessageInput {
   sent_at: DateTime
   sender_id: Int
   channel_id: Int
+  invite_game: Boolean
   id: Int!
 }
 

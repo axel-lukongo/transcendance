@@ -24,8 +24,6 @@ export class MessagesResolver {
 
 	@Query(() => [Message], { name: 'Message_findAll_msg_chan' })
 	async findAll_msg_chan(@Args('channelId', { type: () => Int }) channelId: number, @Context() context) {
-		// console.log('dans le long bay::: ', context.userId);
-		// const userID = context.req.userId
 	  return this.msgService.findAll_msg_chan(channelId, context.req.userId);
 	}
 
@@ -41,14 +39,11 @@ export class MessagesResolver {
 
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 		const isMuted = await this.msgService.isUserMutedInChannel(userId, createMsgInput.channel_id);
-		// const blocked = await this.toblocService.YourBloc(userId, createMsgInput.sender_id); 
-		// console.log(' ======blecked ======>>>>>  ', blocked);
 		if (isMuted === true) {
 			return (' you are muted');
 		}
 		
 		const new_message = this.msgService.create(createMsgInput);
-		//si je suis bloquer je ne rentre pas de le pubSub et je retourne simplement le new_message
 		pubSub.publish(NEW_MSG, {
 			addmessage: new_message,
 		});

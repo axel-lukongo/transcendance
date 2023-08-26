@@ -18,6 +18,7 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
     }
     async findMyChanels(user_id, private_chan) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (private_chan === true) {
             return this.prisma.chanel.findMany({
                 where: {
@@ -40,6 +41,8 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
             });
         }
 =======
+=======
+>>>>>>> origin/axel
         return this.prisma.users_Chanels.findMany({
             where: {
                 user_id,
@@ -47,7 +50,10 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
                 chanel: { private: private_chan, directMsg: false }
             }
         });
+<<<<<<< HEAD
 >>>>>>> 88a6acf ( i fixed the probleme with the avatar)
+=======
+>>>>>>> origin/axel
     }
     async findMyRequestChanels(user_id) {
         return this.prisma.users_Chanels.findMany({

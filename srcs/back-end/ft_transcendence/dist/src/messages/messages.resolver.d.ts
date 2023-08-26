@@ -8,6 +8,10 @@ export declare class MessagesResolver {
         id: number;
         sender_id: number;
         channel_id: number;
+<<<<<<< HEAD
+=======
+        invite_game: boolean;
+>>>>>>> origin/axel
         content: string;
         sent_at: Date;
     }, unknown> & {})[]>;
@@ -16,6 +20,10 @@ export declare class MessagesResolver {
         id: number;
         sender_id: number;
         channel_id: number;
+<<<<<<< HEAD
+=======
+        invite_game: boolean;
+>>>>>>> origin/axel
         content: string;
         sent_at: Date;
     }, unknown> & {}>;
@@ -23,6 +31,10 @@ export declare class MessagesResolver {
         id: number;
         sender_id: number;
         channel_id: number;
+<<<<<<< HEAD
+=======
+        invite_game: boolean;
+>>>>>>> origin/axel
         content: string;
         sent_at: Date;
     }, unknown> & {}) | " you are muted">;
@@ -30,6 +42,10 @@ export declare class MessagesResolver {
         id: number;
         sender_id: number;
         channel_id: number;
+<<<<<<< HEAD
+=======
+        invite_game: boolean;
+>>>>>>> origin/axel
         content: string;
         sent_at: Date;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -37,6 +53,10 @@ export declare class MessagesResolver {
         id: number;
         sender_id: number;
         channel_id: number;
+<<<<<<< HEAD
+=======
+        invite_game: boolean;
+>>>>>>> origin/axel
         content: string;
         sent_at: Date;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;

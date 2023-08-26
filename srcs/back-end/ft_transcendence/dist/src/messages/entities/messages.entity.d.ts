@@ -8,4 +8,8 @@ export declare class Message {
     sender: User;
     channel_id?: number;
     channel?: Chanel;
+<<<<<<< HEAD
+=======
+    invite_game: boolean;
+>>>>>>> origin/axel
 }

@@ -47,6 +47,7 @@ export declare class UserChanelsResolver {
     }, unknown> & {})[]>;
     findMyChanels(context: any, private_chan: boolean): Promise<(import("@prisma/client/runtime/library").GetResult<{
 <<<<<<< HEAD
+<<<<<<< HEAD
         id: number;
         owner_id: number;
         chanel_name: string;
@@ -60,13 +61,18 @@ export declare class UserChanelsResolver {
         interlocutor_name: string;
         AdminList: number[];
 =======
+=======
+>>>>>>> origin/axel
         user_id: number;
         chanel_id: number;
         pending: boolean;
         is_muted: boolean;
         is_admin: boolean;
         mute_start_time: number;
+<<<<<<< HEAD
 >>>>>>> 88a6acf ( i fixed the probleme with the avatar)
+=======
+>>>>>>> origin/axel
     }, unknown> & {})[]>;
     findMembers(channel_id: number): Promise<({
         user: import("@prisma/client/runtime/library").GetResult<{

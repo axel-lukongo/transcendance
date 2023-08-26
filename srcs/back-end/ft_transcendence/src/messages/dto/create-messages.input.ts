@@ -14,4 +14,7 @@ export class CreateMessageInput {
 
 	@Field(() => Int, {nullable: true})
 	channel_id?: number;
+
+	@Field(() => Boolean, {nullable: true})
+	invite_game:boolean;
 }
