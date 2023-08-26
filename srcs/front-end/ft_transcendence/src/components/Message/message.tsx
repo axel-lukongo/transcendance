@@ -229,7 +229,7 @@ const Message = () => {
 							<ChatBox chan={chanel_focus} />
 						</div>
 						<div className="chat-message ">
-							<CreateMsg chan={chanel_focus}/>
+							<CreateMsg chan={chanel_focus} secondProp={""} />
 						</div>
 					</div>
 				);

@@ -140,6 +140,7 @@ model Message {
   id					Int      	@id @default(autoincrement())
   sender_id				Int
   channel_id			Int?
+  invite_game			Boolean?	@default(false)
   content				String
   sent_at				DateTime 	@default(now())
   sender				User     	@relation("Send", fields: [sender_id], references: [id])

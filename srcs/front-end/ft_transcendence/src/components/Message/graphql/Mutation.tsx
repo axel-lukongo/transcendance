@@ -6,7 +6,8 @@ export const CREATE_MSG = gql`
     createMessage(createMsgInput: $createMsgInput) {
       content
       sender_id
-      channel_id 
+      channel_id
+	  invite_game
     }
   }
 `;

@@ -29,6 +29,10 @@ __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateMessageInput.prototype, "channel_id", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
+    __metadata("design:type", Boolean)
+], CreateMessageInput.prototype, "invite_game", void 0);
 exports.CreateMessageInput = CreateMessageInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateMessageInput);

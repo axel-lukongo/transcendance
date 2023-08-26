@@ -43,6 +43,10 @@ __decorate([
     (0, graphql_1.Field)(() => chanel_entity_1.Chanel, { nullable: true }),
     __metadata("design:type", chanel_entity_1.Chanel)
 ], Message.prototype, "channel", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => Boolean, { nullable: true }),
+    __metadata("design:type", Boolean)
+], Message.prototype, "invite_game", void 0);
 exports.Message = Message = __decorate([
     (0, graphql_1.ObjectType)()
 ], Message);

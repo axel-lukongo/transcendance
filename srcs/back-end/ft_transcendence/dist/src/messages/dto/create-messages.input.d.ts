@@ -3,4 +3,5 @@ export declare class CreateMessageInput {
     sent_at?: Date;
     sender_id: number;
     channel_id?: number;
+    invite_game: boolean;
 }

@@ -68,6 +68,7 @@ export declare class ChanelResolver {
         id: number;
         sender_id: number;
         channel_id: number;
+        invite_game: boolean;
         content: string;
         sent_at: Date;
     }, unknown> & {})[]>;

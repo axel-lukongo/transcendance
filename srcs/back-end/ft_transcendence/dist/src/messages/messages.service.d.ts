@@ -10,6 +10,7 @@ export declare class MessagesService {
         id: number;
         sender_id: number;
         channel_id: number;
+        invite_game: boolean;
         content: string;
         sent_at: Date;
     }, unknown> & {})[]>;
@@ -17,6 +18,7 @@ export declare class MessagesService {
         id: number;
         sender_id: number;
         channel_id: number;
+        invite_game: boolean;
         content: string;
         sent_at: Date;
     }, unknown> & {}>;
@@ -25,6 +27,7 @@ export declare class MessagesService {
         id: number;
         sender_id: number;
         channel_id: number;
+        invite_game: boolean;
         content: string;
         sent_at: Date;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -32,6 +35,7 @@ export declare class MessagesService {
         id: number;
         sender_id: number;
         channel_id: number;
+        invite_game: boolean;
         content: string;
         sent_at: Date;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
@@ -39,6 +43,7 @@ export declare class MessagesService {
         id: number;
         sender_id: number;
         channel_id: number;
+        invite_game: boolean;
         content: string;
         sent_at: Date;
     }, unknown> & {}, never, import("@prisma/client/runtime/library").DefaultArgs>;
