@@ -108,6 +108,13 @@ type WaitingRoom {
   waitingList: [Player!]
 }
 
+type PongInvite {
+  userId1: Int!
+  userId2: Int!
+  waitingRoomId: Int!
+  waitingRoom: WaitingRoom!
+}
+
 type JoinPongResponse {
   player: Player
   otherPlayer: Player
@@ -197,7 +204,7 @@ type Mutation {
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!
-  joinPongInvite(friendId: Int!): JoinPongResponse!
+  joinPongInvite(friendId: Int!, waitingRoomId: Int!): JoinPongResponse!
   joinPong(userId: Int!): JoinPongResponse!
   endPong(userId: Int!): String!
   startPong(ballId: Int!, playerId: Int!, otherPlayerId: Int!, pongId: Int!): Boolean!
@@ -209,6 +216,8 @@ type Mutation {
   createBall: Ball!
   removeBall(id: Int!): Ball!
   updateBall(updateBallInput: UpdateBallInput!): Ball!
+  setPongInvite(friendId: Int!): PongInvite!
+  removePongInvite(id: Int!): PongInvite!
   addUser(addUserChanel: AddUserChanel!): UsersChanels!
   acceptRequest(key: UpdateChanelUserInput!): UsersChanels!
   deleteChanelUser(key: UpdateChanelUserInput!): UsersChanels!

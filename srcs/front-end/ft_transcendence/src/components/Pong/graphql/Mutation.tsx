@@ -53,10 +53,19 @@ export const JOIN_PONG = gql`
     }
   }
 `;
+export const SET_INVITE = gql`
+  mutation SetPongInvite($friendId: Int!) {
+    setPongInvite(friendId: $friendId) {
+      userId1
+      userId2
+      waitingRoomId
+    }
+  }
+`;
 
 export const JOIN_PONG_INVITE = gql`
-  mutation JoinPongInvite($friendId: Int!)  {
-    joinPongInvite(friendId: $friendId) {
+  mutation JoinPongInvite($friendId: Int!, $waitingRoomId: Int!)  {
+    joinPongInvite(friendId: $friendId, waitingRoomId: $waitingRoomId) {
       player {
         id
         userId

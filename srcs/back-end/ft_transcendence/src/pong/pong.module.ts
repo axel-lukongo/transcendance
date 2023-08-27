@@ -14,6 +14,8 @@ import { BallService } from './ball/ball.service';
 import { UsersResolver } from 'src/users/users.resolver';
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
+import { PongInviteResolver } from './pong-invite/pong-invite.resolver';
+import { PongInviteService } from './pong-invite/pong-invite.service';
 
 @Module({
   providers: [PongResolver, 
@@ -27,6 +29,8 @@ import { UsersModule } from 'src/users/users.module';
               UsersResolver,
               UsersService,
               TimerService,
+              PongInviteResolver,
+              PongInviteService,
               PrismaService],
   
   imports: [PlayerModule, WaitingRoomModule, UsersModule, BallModule]

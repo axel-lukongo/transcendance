@@ -14,6 +14,7 @@ import { UpdateUserInput } from 'src/users/dto/update-user.input';
 import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 import { UpdatePlayerInput } from './player/dto/update-player.input';
 import { Injectable } from '@nestjs/common';
+import { PongInviteResolver } from './pong-invite/pong-invite.resolver';
 
 const pubSub = new PubSub();
 const PONG_UPDATE_EVENT = 'PongUp';
@@ -96,7 +97,8 @@ export class PongResolver {
               private readonly ball: BallResolver,
               private readonly waitingRoom: WaitingRoomResolver,
               private readonly user: UsersResolver,
-              private readonly timer: TimerService) {
+              private readonly pongInvite: PongInviteResolver,
+              private readonly timer: TimerService,) {
                 this.maxX = 100;
                 this.maxY = 100;
                 this.minX = 0;
@@ -228,38 +230,51 @@ export class PongResolver {
 
   @Mutation(() => JoinPongResponse)
   async joinPongInvite( @Args('friendId', { type: () => Int }) friendId: number,
-  @Context() context : any) {
+                        @Args('waitingRoomId', { type: () => Int }) waitingRoomId: number,
+                        @Context() context : any) {
+    
+    let player = await this.player.setPlayer(context.req.userId, waitingRoomId);
+                          
+    const listPlayers = await this.player.findAllPlayersInWaitingRoom(waitingRoomId);
+    
+    if (listPlayers.length > 1) {
 
-    const pong = await this.pongService.findCurrentGame(context.req.userId);
-    if (!pong)
-    {
-      return ({pong :null});
-    }
-    if (pong && pong.winnerId !== null) // host sending the invit
-    {
       const createPongInput: CreatePongInput = {
-        userId1: context.req.userId,
-        userId2: friendId,
+        userId1: listPlayers[0].userId,
+        userId2: listPlayers[1].userId,
       };
-      const newPong = await this.createPong(createPongInput);
-      const newWaitingRoom = await this.waitingRoom.createWaitingRoom();
-      const ball = await this.ball.createBall();
-      await this.player.setPlayer(context.req.userId, newWaitingRoom.id);
+      const pong = await this.createPong(createPongInput);
       
-      let otherPlayer = await this.player.setPlayer(friendId, newWaitingRoom.id);
+      
+      //Nouvelle instance d'un balle pour le Pong 
+      const ball = await this.ball.createBall();
+      
+      const playerData : UpdatePlayerInput ={
+        id : listPlayers[1].id,
+        opponentPlayerId: listPlayers[0].id,
+        host : false,
+        positionX : 90,
+        ballId: ball.id,
+        pongId: pong.id,
+      }
+      player = await this.player.updatePlayer(playerData);
       
       const otherPlayerData : UpdatePlayerInput ={
-        id : otherPlayer.id,
-        opponentPlayerId: context.req.userId,
-        positionX: 90,
+        id : listPlayers[0].id,
+        opponentPlayerId: listPlayers[1].id,
+        host : true,
         ballId: ball.id,
-        pongId: newPong.id,
+        pongId: pong.id,
       }
-       await this.player.updatePlayer(otherPlayerData);
+      const otherPlayer = await this.player.updatePlayer(otherPlayerData);
 
+      return { player, ball, otherPlayer, pong };
+    }
+    else
+    {
       return new Promise<JoinPongResponse>(resolve => {
         const interval = setInterval(async () => {
-          const player = await this.player.findPlayerByUserId(context.req.userId);
+          player = await this.player.findPlayer(player.id);
           if (!player) {
             clearInterval(interval);
             resolve({player : null, });
@@ -273,22 +288,6 @@ export class PongResolver {
           }
         }, 1000);
       });
-    }
-    else
-    {
-      const player = await this.player.findPlayerByUserId(context.req.userId);
-      const ball = await this.ball.findUnique(player.ballId);
-      const pong = await this.findPong(player.pongId);
-      const otherPlayerData : UpdatePlayerInput ={
-        id : friendId,
-        opponentPlayerId: context.req.userId,
-        host : true,
-        waitingRoomId: player.waitingRoomId,
-        ballId: player.waitingRoomId,
-        pongId: player.pongId,
-      }
-      const otherPlayer = await this.player.updatePlayer(otherPlayerData);
-      return { player, ball, otherPlayer, pong };
     }
   }
 
@@ -380,41 +379,42 @@ export class PongResolver {
 
   @Mutation(() => String)
   async endPong( @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
-    try {
-      const player = await this.player.findPlayerByUserId(userId);
-      if (!player) {
-        return 'Player was aldready deleted';
-      }
-      if (player.pongId)
-      {
-        if (player.host)
-        {
-          await this.ball.removeBall(player.ballId);
-        }
-        const pong = await this.findPong(player.pongId);
-        if (!pong.winnerId)
-        {
-          const winnerId = player.host ? pong.userId2 : pong.userId1;
-          const loserId = player.host ? pong.userId1 : pong.userId2;
-          const updateDataPong: UpdatePongInput = {
-            id: player.pongId,
-            scoreUser1: player.host ? 0 : 5,
-            scoreUser2: player.host ? 5 : 0,
-            winnerId: winnerId,
-            loserId: loserId,
-            start: false
-          };
-          await this.updateRankLevel(winnerId);
-          await this.updatePong(updateDataPong);
-        }
-      }
-        await this.player.removePlayer(player.id);
-        return 'Pong ended';
-
-    } catch (error) {
-      console.error('An error occurred:', error);
-      throw new Error('An error occurred during endPong');
+    
+    const player = await this.player.findPlayerByUserId(userId);
+    if (!player) {
+      return 'Pong ended';
     }
+    else if (player.pongId)
+    {
+      if (player.host)
+      {
+        await this.ball.removeBall(player.ballId);
+        const invite = await this.pongInvite.findPongInviteByWaitingRoomId(player.waitingRoomId);
+        if (invite)
+        {
+          await this.pongInvite.removePongInvite(invite.id);
+        }
+        this.waitingRoom.removeWaitingRoom(player.waitingRoomId);
+      }
+      const pong = await this.findPong(player.pongId);
+      if (!pong.winnerId)
+      {
+        const winnerId = player.host ? pong.userId2 : pong.userId1;
+        const loserId = player.host ? pong.userId1 : pong.userId2;
+        const updateDataPong: UpdatePongInput = {
+          id: player.pongId,
+          scoreUser1: player.host ? 0 : 5,
+          scoreUser2: player.host ? 5 : 0,
+          winnerId: winnerId,
+          loserId: loserId,
+          start: false
+        };
+        await this.updateRankLevel(winnerId);
+        await this.updatePong(updateDataPong);
+      }
+    }
+    await this.player.removePlayer(player.id);
+    return 'Pong ended';
   }
 
   @Mutation(() => Boolean)

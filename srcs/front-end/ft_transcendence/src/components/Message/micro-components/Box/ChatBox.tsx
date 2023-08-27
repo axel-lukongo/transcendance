@@ -6,6 +6,7 @@ import { NewMessageSubscription } from "../../graphql/souscription.ws";
 import { WebSocketContext } from "../../../../WebSocketProvider";
 // import { USER_IS_BLOCKED } from "../../graphql/Query";
 import { MY_BLOCKED_LIST } from "../../../Contact/graphql/Querys";
+import { Link } from "react-router-dom";
 
 type Message = {
 	id: number;
@@ -17,6 +18,8 @@ type Message = {
 type channelfocus = {
 	id: string,
 	chanel_name: string,
+	interlocutor_id : number;
+	owner_id: string;
 	chanel_size: string,
 	max_users: string,
 	logo: string,
@@ -103,14 +106,33 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 	if(error)
 		return ( <div> error </div>)
 
+	const otherId = +chan.owner_id === user.id ? chan.interlocutor_id : +chan.owner_id
 	return (
 
+		// <div>
+		// 	{messages.map((message, index) => (
+		// 			<div key={index}> {message.content} {message.invite_game === true ? <button>game</button> : null} </div>
+		// 		))}
+		// </div>
+
 		<div>
-			{messages.map((message, index) => (
-					<div key={index}> {message.content} {message.invite_game === true ? <button>game</button> : null} </div>
-				))}
+		{messages.map((message, index) => (
+		  <div key={index}>
+			{message.content}
+			{message.invite_game === true ? (
+			  <Link
+				to={{
+				  pathname: "/pong",
+				  search: `?friendid=${otherId}`,
+				}}
+			  >
+				<button>game</button>
+			  </Link>
+			) : null}
+		  </div>
+		))}
 		</div>
-	)
+)
 };
 
 export default ChatBox;

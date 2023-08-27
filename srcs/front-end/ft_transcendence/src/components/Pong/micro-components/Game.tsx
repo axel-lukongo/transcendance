@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { Display } from './Display';
 import { Player, User, Ball, PongI } from '../../interfaces/interfaces'
 import {useMutation, } from '@apollo/client';
-import { END_PONG, JOIN_PONG, JOIN_PONG_INVITE } from '../graphql/Mutation';
+import { END_PONG, JOIN_PONG, JOIN_PONG_INVITE, SET_INVITE } from '../graphql/Mutation';
 import { Link } from 'react-router-dom';
 
 
@@ -25,6 +25,7 @@ interface GameProps {
   
   
     const [joinPong] = useMutation(JOIN_PONG);
+    const [setInvite] =useMutation(SET_INVITE);
     const [joinPongInvite] = useMutation(JOIN_PONG_INVITE);
 
     const [endPong] = useMutation(END_PONG);
@@ -32,29 +33,36 @@ interface GameProps {
     
     useEffect(() => {
       if (!player && userFromStorage) {
-        if ( friendId !== undefined)
-        {
-          joinPongInvite({
+        if (friendId !== undefined) {
+          setInvite({
             variables: {
               friendId: friendId
             }
           })
-          .then(response => {
-            const { player, otherPlayer, ball, pong } = response.data.joinPong;
-            if (player && otherPlayer && ball && pong) {
-              setPlayer(player);
-              setOtherPlayer(otherPlayer);
-              setBall(ball);
-              setPong(pong);
-              // console.log('Setting otherPlayer:', otherPlayer);
-              // console.log('Setting player:', player);
-              // console.log('Setting ball:', ball);
-              // console.log('Setting pong:', pong);
-            }
-          })
-          .catch(error => {
-            console.error('Error joining pong:', error);
-          });
+            .then(response => {
+              const {waitingRoomId} = response.data.setPongInvite;
+              joinPongInvite({
+                variables: {
+                  friendId: friendId,
+                  waitingRoomId: waitingRoomId,
+                }
+              })
+                .then(response => {
+                  const { player, otherPlayer, ball, pong } = response.data.joinPongInvite;
+                  if (player && otherPlayer && ball && pong) {
+                    setPlayer(player);
+                    setOtherPlayer(otherPlayer);
+                    setBall(ball);
+                    setPong(pong);
+                  }
+                })
+                .catch(error => {
+                  console.error('Error joining pong:', error);
+                });
+            })
+            .catch(error => {
+              console.error('Error setting invite:', error);
+            });
         }
         else
         {
@@ -70,10 +78,6 @@ interface GameProps {
               setOtherPlayer(otherPlayer);
               setBall(ball);
               setPong(pong);
-              // console.log('Setting otherPlayer:', otherPlayer);
-              // console.log('Setting player:', player);
-              // console.log('Setting ball:', ball);
-              // console.log('Setting pong:', pong);
             }
           })
           .catch(error => {

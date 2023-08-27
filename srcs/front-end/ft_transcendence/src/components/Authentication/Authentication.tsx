@@ -209,7 +209,7 @@ return (
     {(JSON.parse(sessionStorage.getItem('user') || '{}').connection_status === 1) ? (
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/pong" element={<Pong friendId={undefined} />} />
+        <Route path="/pong" element={<Pong  />} />
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/leaderBoard' element={<LeaderBoard />} />

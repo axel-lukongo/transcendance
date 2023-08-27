@@ -52,13 +52,14 @@ export class PlayerResolver {
     let player = await this.findPlayerByUserId(userId);
     
     if (!player) {
-      // Si le joueur n'existe pas, le créer dans la salle d'attente 1
+      
       const createPlayerInput: CreatePlayerInput = {
         userId: userId,
-        waitingRoomId: 1,
+        waitingRoomId: room,
       };
+      
       player = await this.createPlayer(createPlayerInput);
-    }
+      }
     return player;
   }
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */

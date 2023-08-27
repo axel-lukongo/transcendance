@@ -1,15 +1,25 @@
 import { useState, FC} from "react";
 import Map from "./micro-components/Map";
 import Game from "./micro-components/Game";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import queryString from "query-string";
 
-interface PongProps {
-  friendId: number | undefined;
-}
-
-const Pong: FC<PongProps> = ({friendId}) => {
+const Pong: FC = () => {
 
   const [pongMap, setPongMap] = useState<string | null>(sessionStorage.getItem('playerMap'));
+
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+
+  // Convertissez la prop friendId en int si elle n'est pas null
+  let friendId = undefined; // Valeur par défaut en cas de problème de conversion
+
+  if (queryParams.friendId) {
+    if (typeof queryParams.friendId === "string") {
+      friendId = parseInt(queryParams.friendId, 10);
+    }
+    console.log('friendId:', friendId);
+  }
 
   return (
     <div>

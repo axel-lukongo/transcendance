@@ -15,6 +15,7 @@
     "css-what": "^5.0.1",
     "formik": "^2.4.2",
     "nth-check": "^2.0.1",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-responsive-carousel": "^3.2.23",

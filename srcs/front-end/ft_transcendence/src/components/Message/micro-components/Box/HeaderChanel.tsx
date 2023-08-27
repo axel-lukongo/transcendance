@@ -4,7 +4,6 @@ import { __ADD_USER__ } from "../../message";
 import { __CHAN_PARAM__ } from "../../message";
 import { channelfocus } from '../../../interfaces/interfaces';
 import { User } from '../../../interfaces/interfaces';
-import PongInvite from '../buttons/PongInvite';
 import CreateMsg from '../forms/createMessage';
 import { useState } from 'react';
 
@@ -64,7 +63,6 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
                     { chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
                 </div> {/* btn pour l'ajout de users dans un chanel */}
             </div>
-            <PongInvite friendId={+chanel_focus.id}/>
 			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={"je t'invite a jouer"} /> : null}
       		<button onClick={handle_create_msg}> play </button>
 	    </div>

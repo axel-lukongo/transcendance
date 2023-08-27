@@ -117,7 +117,18 @@ model Player {
 model WaitingRoom {
 	id            Int 				@id @default(autoincrement()) 
 	waitingList   Player[] 			@relation("PlayerWaitingList")
+	pongInvite     PongInvite?        @relation("inviteRoom")
 }
+
+model PongInvite {
+  id              Int      @id @default(autoincrement()) 
+  userId1         Int      
+  userId2         Int      
+  waitingRoomId   Int      @unique
+waitingRoom        WaitingRoom        @relation("inviteRoom", fields: [waitingRoomId], references: [id])
+  @@unique([userId1, userId2])
+}
+
 
 
 model Ball {
