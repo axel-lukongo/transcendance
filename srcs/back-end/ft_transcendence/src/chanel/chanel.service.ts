@@ -29,11 +29,15 @@ export class ChanelService {
         },
       })
     //   console.log('ici====>>> ',createChanelInput.logo);
-      const logo = createChanelInput.logo != '' ?
-    'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
-    :
-    'http://localhost:4000/uploads/default_chanel.png';
-		  
+	
+	let logo = '';
+	if( createChanelInput.directMsg === false ) {
+		   logo = createChanelInput.logo != '' ?
+			'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
+			:
+			'http://localhost:4000/uploads/default_chanel.png';
+	
+	  }
       await this.prisma.chanel.update({
         where: {id: chanelRes.id},
         data: {

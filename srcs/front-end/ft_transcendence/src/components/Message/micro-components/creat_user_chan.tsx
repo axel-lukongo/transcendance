@@ -45,20 +45,14 @@ const CreatUserChan = ({ hasFetchedData, setchanel_focus }: MyComponentProps) =>
 
   // Gérer les états de chargement et d'erreur pour afficher le résultat approprié
   if (loading2) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   if ( error2) {
-    return <div>Error: in the double mutation</div>;
+    return <div>Error</div>;
   }
 
-//   chanel_focus(hasFetchedData);
 
-//   if(hasFetchedData){
-// 		handleChange(hasFetchedData)
-// 		handleChanelFocus(chanel.chanels)
-// 		handleChatBox(__CHAT__);
-// 	}
 
   return (
     <div>

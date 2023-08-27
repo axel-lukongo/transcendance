@@ -75,7 +75,7 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 	if(error){
 		return(
 			<div>
-				Error
+				{/* Error */}
 			</div>
 		)
 	}
