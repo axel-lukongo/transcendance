@@ -150,14 +150,14 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
   return (
 		<div>
 			Member:
-			<div>
+			<div className="param-box">
 
 				{
 					data.ChannelMembers.map((member: UserChanels) => {
 						const unique_key=`${member.user_id}`
 						return (
-							<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-								<p>{member.user.nickname}
+							<ul className="chan_param" key={unique_key}> 
+								<p className="button_low" >{member.user.nickname}
 									{
 										member.is_muted===true?
 										<button className="unmute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>:

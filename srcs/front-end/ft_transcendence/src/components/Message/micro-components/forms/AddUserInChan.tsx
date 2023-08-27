@@ -13,7 +13,7 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 
 	const [users_list, setUsersList] = useState("");
 
-	const {data, loading, error} = useQuery(ALL_USERS, { 
+	const {data, loading, error, refetch} = useQuery(ALL_USERS, { 
 		variables: {
 			user_id: user.id,
 			chanel_id: parseInt(chanel_focus.id)
@@ -21,13 +21,14 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 	});
 
 	const [addUser] = useMutation(ADD_CHANEL);
+	refetch();
 
 	if (error)
 		return (<div>An Error as occured</div>);
 	
 	if (loading)
 		return (
-			<div>TEST</div>
+			<div>loading...</div>
 		)
 	if (data)
 		console.log(data);

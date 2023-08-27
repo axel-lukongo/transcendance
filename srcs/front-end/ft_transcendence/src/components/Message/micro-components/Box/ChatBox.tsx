@@ -107,7 +107,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 
 		<div>
 			{messages.map((message, index) => (
-					<div key={index}> {message.content} {message.invite_game === true ? <button>game</button> : null} </div>
+					<div key={index}> {message.content} {message.invite_game === true ? <button >game</button> : null} </div>
 				))}
 		</div>
 	)

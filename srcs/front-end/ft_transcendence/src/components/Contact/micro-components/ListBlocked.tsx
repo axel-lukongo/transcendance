@@ -3,6 +3,7 @@ import { MY_BLOCKED_LIST } from "../graphql/Querys";
 import { User } from "../../interfaces/interfaces";
 import { useState } from "react";
 import { Unblocked } from "./buttons/unblocked";
+import { useEffect } from "react";
 
 interface blocked{
 	id: number,
@@ -14,8 +15,14 @@ interface blocked{
 export function MyBlockedList(){
 	const user = JSON.parse(sessionStorage.getItem('user') || '');
 
-	const {data, loading, error} = useQuery(MY_BLOCKED_LIST,{variables: {id: user.id} });
+	const {data, loading, error, refetch} = useQuery(MY_BLOCKED_LIST,{variables: {id: user.id} });
 	const [showUnblock, setShowUnblock] = useState(false);
+
+
+	useEffect(() => {
+		refetch();
+	}, [showUnblock])
+
 	if (loading) {
 		return <p>Loading...</p>;
 	}
@@ -27,6 +34,7 @@ export function MyBlockedList(){
 	console.log(data.person_blocked);
 
 	const handleUnblockClick = () => {
+		refetch();
 		setShowUnblock(true);
 	};
 
