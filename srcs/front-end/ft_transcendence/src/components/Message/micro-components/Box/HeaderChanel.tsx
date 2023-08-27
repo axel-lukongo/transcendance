@@ -5,6 +5,9 @@ import { __CHAN_PARAM__ } from "../../message";
 import { channelfocus } from '../../../interfaces/interfaces';
 import { User } from '../../../interfaces/interfaces';
 import PongInvite from '../buttons/PongInvite';
+import CreateMsg from '../forms/createMessage';
+import { useState } from 'react';
+
 export interface theprops {
 	user: User,
 	chanel_focus: channelfocus;
@@ -12,7 +15,17 @@ export interface theprops {
 
 }
 
+// type channelfocus = {
+// 	id: string,
+// 	chanel_name: string,
+// 	chanel_size: string,
+// 	max_users: string,
+// 	logo: string,
+// }
+
 export default function HeaderChanel({chanel_focus, user,  handleChatBox}: theprops) {
+
+	const [playClicked, setPlayClicked] = useState(false);
 
 	const handelClick = () => {
 		handleChatBox(__ADD_USER__);
@@ -22,12 +35,17 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
 		handleChatBox(__CHAN_PARAM__);
 	}
 
+
+	const handle_create_msg = () => {
+		console.log("create");
+		setPlayClicked(true); // Active le drapeau pour afficher CreateMsg
+	  };
 	
-	
+
+
 	if(chanel_focus.directMsg === true){
-		chanel_focus.chanel_name = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_name:chanel_focus.chanel_name
+		chanel_focus.chanel_name = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_name:user.nickname
 		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_avatar: user.avatar
-		console.log('weee ====>>>>  ',chanel_focus.logo);
 	}
     return (
         <div className="chat-header">
@@ -46,7 +64,9 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
                     { chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
                 </div> {/* btn pour l'ajout de users dans un chanel */}
             </div>
-            <PongInvite friendId={+chanel_focus.id}/>
-        </div>
+            {/* <PongInvite friendId={+chanel_focus.id}/> */}
+			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={"je t'invite a jouer"} /> : null}
+      		{chanel_focus.directMsg === true? <button onClick={handle_create_msg}> play </button>:null}
+	    </div>
     );
 }

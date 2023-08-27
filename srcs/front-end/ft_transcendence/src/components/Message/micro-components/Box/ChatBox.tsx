@@ -11,6 +11,7 @@ type Message = {
 	id: number;
 	sender_id: number;
 	content: string;
+	invite_game: boolean;
 };
 
 type channelfocus = {
@@ -30,6 +31,7 @@ interface NewMessageResponse {
 	  id: number;
 	  content: string;
 	  sender_id: number;
+	  invite_game: boolean;
 	  // ... autres propriétés
 	};
   }
@@ -50,7 +52,6 @@ interface BlockedEntry {
 	blocked: BlockedData; // Assurez-vous que BlockedData est correctement défini
   }
 const is_blocked = (blockedList: Tobloc[], sender_id: number) => {
-		console.log('ici22 ====>>> ', blockedList.some(entry => entry.blocked_id));
 		return blockedList.some(entry => entry.blocked_id === sender_id );
 }
 
@@ -79,14 +80,11 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 					// Next est une fonction de suscribe qui s'execute a chaque nouvelle creation de message 
 					// reponse c'est la ou les reponse de notre server sont stocker.
 					if (response.data) {
-						const responseData = (response.data as any)['addmessage'] as NewMessageResponse['addmessage'];
-							console.log('111 ===>>> ', data2.person_blocked);
-							const usr_is_blocked = is_blocked(data2.person_blocked, responseData.sender_id);
-							console.log('il est banned ?===>>>> ', usr_is_blocked===true ? true: false);
+						const responseData = (response.data as any)['addmessage'] as NewMessageResponse['addmessage']; //addmessage de response.data etait de type inconnu donc j'ai du faire ca pour qu'il soir reconnu en tant que NewMessageResponse
+						const usr_is_blocked = is_blocked(data2.person_blocked, responseData.sender_id);
 						if(usr_is_blocked === false){
 							const newMessage = response.data.addmessage;
 							setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedents et on rajoute newMessage
-
 						}
 					}
 				},
@@ -109,7 +107,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 
 		<div>
 			{messages.map((message, index) => (
-					<div key={index}> {message.content}</div>
+					<div key={index}> {message.content} {message.invite_game === true ? <button >game</button> : null} </div>
 				))}
 		</div>
 	)

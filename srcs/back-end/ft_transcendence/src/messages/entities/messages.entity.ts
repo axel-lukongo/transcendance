@@ -24,4 +24,7 @@ export class Message {
 
 	@Field(() => Chanel, {nullable: true})
 	channel?: Chanel;
+
+	@Field(() => Boolean, {nullable: true})
+	invite_game:boolean;
 }

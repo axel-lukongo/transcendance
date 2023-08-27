@@ -117,6 +117,16 @@ model Player {
 model WaitingRoom {
 	id            Int 				@id @default(autoincrement()) 
 	waitingList   Player[] 			@relation("PlayerWaitingList")
+	InvitePong	 InvitePong?		@relation("inviteRoom")
+}
+
+
+model InvitePong {
+	id            Int 				@id @default(autoincrement()) 
+	userId1 		Int
+	userId2 		Int
+	waitingRoomId	Int 			@unique
+	waitingRoom		WaitingRoom		@relation("inviteRoom", fields: [waitingRoomId], references: [id])
 }
 
 
@@ -140,6 +150,7 @@ model Message {
   id					Int      	@id @default(autoincrement())
   sender_id				Int
   channel_id			Int?
+  invite_game			Boolean?	@default(false)
   content				String
   sent_at				DateTime 	@default(now())
   sender				User     	@relation("Send", fields: [sender_id], references: [id])

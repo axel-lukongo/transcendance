@@ -4,6 +4,7 @@ export const GET_MESSAGES_BY_CHANNEL = gql`
   query GetMessagesByChannel($channelId: Int!) {
     Message_findAll_msg_chan(channelId: $channelId) {
       content
+	  invite_game
     }
   }
 `;
@@ -18,8 +19,8 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 			owner_id
 			logo
 			interlocutor_id
-   			interlocutor_name
-      			interlocutor_avatar
+			interlocutor_name
+			interlocutor_avatar
 			directMsg
 			interlocutor{
 				nickname
