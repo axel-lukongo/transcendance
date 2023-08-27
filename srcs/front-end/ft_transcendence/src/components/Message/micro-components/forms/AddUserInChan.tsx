@@ -22,13 +22,14 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 	});
 
 	const [addUser] = useMutation(ADD_CHANEL);
+	refetch();
 
 	if (error)
 		return (<div>An Error as occured</div>);
 	
 	if (loading)
 		return (
-			<div>TEST</div>
+			<div>loading...</div>
 		)
 	if (data)
 		console.log(data);

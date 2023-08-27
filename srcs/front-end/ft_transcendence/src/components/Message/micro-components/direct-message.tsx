@@ -55,7 +55,7 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	
 	useEffect(() => {
 		refetch();
-	}, [])
+	}, [handleTobloc])
 	
 	useEffect(() => {
 		if (wsContext?.wsClient) {
@@ -180,9 +180,9 @@ export default function Direct_message(props: IPrivateMessageProps) {
 											blockerId={myuser.id}
 											blockedId={contact.contact.id}
 											handleshowBlocked={handleshowBlocked}
-										/>
+										/> 
 								}
-								<div className="blocked_btn" id="direct-msg-block-btn" onClick={() => setHandleTobloc(true)}></div>
+								<div className="blocked_btn" id="direct-msg-block-btn" onClick={() => setHandleTobloc(true) }></div>
 							</div>
 						</li>
 					</ul>

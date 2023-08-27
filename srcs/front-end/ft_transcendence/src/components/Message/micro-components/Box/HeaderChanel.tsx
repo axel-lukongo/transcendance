@@ -64,7 +64,7 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
                 </div> {/* btn pour l'ajout de users dans un chanel */}
             </div>
 			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={"je t'invite a jouer"} /> : null}
-      		<button onClick={handle_create_msg}> play </button>
+      		{chanel_focus.directMsg === true? <button onClick={handle_create_msg}> play </button>:null}
 	    </div>
     );
 }

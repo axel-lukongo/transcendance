@@ -120,6 +120,8 @@ model WaitingRoom {
 	pongInvite     PongInvite?        @relation("inviteRoom")
 }
 
+
+
 model PongInvite {
   id              Int      @id @default(autoincrement()) 
   userId1         Int      

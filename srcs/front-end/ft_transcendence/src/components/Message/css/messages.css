@@ -749,9 +749,10 @@ Jaune ecrit =>     #ffd27d
 	border: none;
 	margin: 1%;
 	align-items: center;
+	transition: width 0.3s;
 }
 .mute_btn:hover {
-    width: 4%; /* Nouvelle hauteur lorsque survolé */
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
 }
 
 .unmute_btn{
@@ -762,9 +763,11 @@ Jaune ecrit =>     #ffd27d
 	border: none;
 	margin: 1%;
 	align-items: center;
+	transition: width 0.3s;
+
 }
 .unmute_btn:hover {
-    width: 4%; /* Nouvelle hauteur lorsque survolé */
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
 }
 
 .admin_btn{
@@ -775,9 +778,11 @@ Jaune ecrit =>     #ffd27d
 	border: none;
 	margin: 1%;
 	align-items: center;
+	transition: width 0.3s;
+
 }
 .admin_btn:hover {
-    width: 4%; /* Nouvelle hauteur lorsque survolé */
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
 }
 
 .kick_btn{
@@ -788,9 +793,11 @@ Jaune ecrit =>     #ffd27d
 	border: none;
 	margin: 1%;
 	align-items: center;
+	transition: width 0.3s;
+
 }
 .kick_btn:hover {
-    width: 4%; /* Nouvelle hauteur lorsque survolé */
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
 }
 .banned_btn{
 	width: 20px;
@@ -800,7 +807,9 @@ Jaune ecrit =>     #ffd27d
 	border: none;
 	margin: 1%;
 	align-items: center;
+	transition: width 0.3s;
+
 }
 .banned_btn:hover {
-    width: 4%; /* Nouvelle hauteur lorsque survolé */
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
 }
