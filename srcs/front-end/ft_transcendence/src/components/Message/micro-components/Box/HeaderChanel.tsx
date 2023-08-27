@@ -66,7 +66,7 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox}: thepr
             </div>
             {/* <PongInvite friendId={+chanel_focus.id}/> */}
 			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={"je t'invite a jouer"} /> : null}
-      		<button onClick={handle_create_msg}> play </button>
+      		{chanel_focus.directMsg === true? <button onClick={handle_create_msg}> play </button>:null}
 	    </div>
     );
 }
