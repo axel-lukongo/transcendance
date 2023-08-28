@@ -490,7 +490,7 @@ Jaune ecrit =>     #ffd27d
     height:7%;
     display: flex;
     overflow: hidden;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .nav_section_btn {
@@ -506,17 +506,17 @@ Jaune ecrit =>     #ffd27d
 }
 
 #btn1 {
-    height: 80%;
-    width: 80%;
-    transition: .5s;
+    height: 50%;
+    width: 50%;
+    transition: .3s;
 }
 
 #btn1:hover {
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
 }
 
-#trick-btn-slash {
+/* #trick-btn-slash {
     position: absolute;
     margin-top: 13%;
     margin-left: 15%;
@@ -524,40 +524,41 @@ Jaune ecrit =>     #ffd27d
     border: 1px solid;
     transform: rotate(45deg);
     z-index: 3;
-}
+} */
 
 #btn2 {
-    height: 70%;
-    width: 70%;
-    transition: .5s;
+    height: 50%;
+    width: 50%;
+    transition: .3s;
     z-index: 4;
 }
 
 #btn2:hover {
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
 }
 
 #btn3 {
-    height: 70%;
-    width: 70%;
-    transition: .5s;
+    height: 50%;
+    width: 50%;
+    transition: .3s;
 }
 
 #btn3:hover {
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
 }
 
 #btn4 {
-    height: 70%;
-    width: 70%;
-    transition: .5s;
+    height: 50%;
+    width: 50%;
+    transition: .3s;
 }
 
 #btn4:hover {
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
+    transition: .3s;
 }
 
 .input-message {
@@ -740,8 +741,36 @@ Jaune ecrit =>     #ffd27d
 	height: 30%;
 }
 
-
-.mute_btn{
+/* Styles pour les boutons */
+.icon-container {
+    display: flex; /* Affichage en ligne des boutons */
+  }
+  
+  .icon-button {
+    width: 10%; /* Largeur en pourcentage */
+    /* height: auto;
+    border: none; */
+    /* margin: 1%;  */
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.3s;
+    border:  solid transparent; 
+  }
+  
+  .icon-button:hover {
+    transform: scale(1.2); /* Zoom au survol */
+    /* border-color: #3333336d; */
+  }
+  
+  /* Styles pour les images des boutons */
+  .icon-button img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain; /* Ajuste l'image à l'intérieur du bouton */
+  }
+  
+/* .mute_btn{
 	width: 20px;
 	height: 25px;
 	background: url("/ft_transcendence/src/image/muted.png") center no-repeat;
@@ -752,10 +781,10 @@ Jaune ecrit =>     #ffd27d
 	transition: width 0.3s;
 }
 .mute_btn:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
-}
+    width: 4%; /* Nouvelle hauteur lorsque survolé */
+/* } */
 
-.unmute_btn{
+/* .unmute_btn{
 	width: 20px;
 	height: 25px;
 	background: url("/ft_transcendence/src/image/unmuted.png") center no-repeat;
@@ -768,9 +797,9 @@ Jaune ecrit =>     #ffd27d
 }
 .unmute_btn:hover {
     width: 8%; /* Nouvelle hauteur lorsque survolé */
-}
+/* } */
 
-.admin_btn{
+/* .admin_btn{
 	width: 20px;
 	height: 25px;
 	background: url("/ft_transcendence/src/image/admin.png") center no-repeat;
@@ -783,9 +812,9 @@ Jaune ecrit =>     #ffd27d
 }
 .admin_btn:hover {
     width: 8%; /* Nouvelle hauteur lorsque survolé */
-}
+/* } */
 
-.kick_btn{
+/* .kick_btn{
 	width: 20px;
 	height: 25px;
 	background: url("/ft_transcendence/src/image/kick.png") center no-repeat;
@@ -798,8 +827,8 @@ Jaune ecrit =>     #ffd27d
 }
 .kick_btn:hover {
     width: 8%; /* Nouvelle hauteur lorsque survolé */
-}
-.banned_btn{
+/* } */
+/* .banned_btn{
 	width: 20px;
 	height: 25px;
 	background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat;
@@ -809,10 +838,10 @@ Jaune ecrit =>     #ffd27d
 	align-items: center;
 	transition: width 0.3s;
 
-}
-.banned_btn:hover {
+}  */
+/* .banned_btn:hover {
     width: 7%; /* Nouvelle hauteur lorsque survolé */
-}
+/* }  */  
 
 .leave-the-chan{
 	height: 20px;

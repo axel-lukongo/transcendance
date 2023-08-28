@@ -91,7 +91,7 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
                     <div className="col-lg-6">
                         <img src={chanel_focus.logo} alt="avatar" />
                         <div className="chat-about">
-                            <h6 className="m-b-0"> {chanel_focus.chanel_name} </h6>
+                            <h4 className="m-b-0"> {chanel_focus.chanel_name} </h4>
                         </div>
                     </div>: null
                 }

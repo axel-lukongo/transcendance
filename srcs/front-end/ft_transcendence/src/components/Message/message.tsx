@@ -13,9 +13,10 @@ import Param_Chan from './micro-components/forms/chan_param';
 import { User } from '../interfaces/interfaces';
 
 /* Images */
-import user_onglet from '../../image/send.svg'
-import public_onglet from '../../image/visible.svg'
-import request_onglet from '../../image/wait-svgrepo-com.svg'
+import user_onglet from '../../image/direct_msg_icon.svg'
+import public_onglet from '../../image/public_chan_icon.svg'
+import private_onglet from '../../image/private_chan_icon.svg'
+import request_onglet from '../../image/pending_chan_invite_icon.svg'
 
 // import { User } from '../interfaces/interfaces';
 /* CSS */
@@ -304,8 +305,7 @@ const Message = () => {
 							<img src={user_onglet} alt="" id='btn1' />
 						</button>
 						<button onClick={() => handleChangeOnglet(__PRIVATE_CHANEL__)} className='nav_section_btn'>
-							<div id='trick-btn-slash'></div>
-							<img src={public_onglet} alt="" id='btn2'/>
+							<img src={private_onglet} alt="" id='btn2'/>
 						</button>
 						<button onClick={() => handleChangeOnglet(__PUBLIC_CHANEL__)} className='nav_section_btn'>
 							<img src={public_onglet} alt="" id='btn3'/>

@@ -7,7 +7,14 @@ import { CREATE_BANNED_MUTATION } from "../../graphql/Mutation";
 import { REMOVE_BANNED_MUTATION } from "../../graphql/Mutation";
 import { CHANNEL_MEMBERS_QUERY } from "../../graphql/Query";
 import { BANNED_LIST_QUERY } from "../../graphql/Query";
-import { channel } from "diagnostics_channel";
+
+
+import muteImg from "/ft_transcendence/src/image/muted.png"
+import unmuteImg from "/ft_transcendence/src/image/unmuted.png"
+import adminImg from "/ft_transcendence/src/image/admin_icon.png"
+import unadminImg from "/ft_transcendence/src/image/poverty_icon.png"
+import kickImg from "/ft_transcendence/src/image/kick_icon.png"
+import BanImg from "/ft_transcendence/src/image/ban_param_icon.svg"
 
 export interface IAddUserInChanProps {
 	user: User,
@@ -150,29 +157,47 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 
   return (
 	<div className="param-box">
-	  Member:
-	  <div className="param-box">
 		{data.ChannelMembers.map((member: UserChanels) => {
 		  const unique_key = `${member.user_id}`;
   
 		  return (
 			member.user_id === user.id ? null : (
-			  <ul className="chan_param" key={unique_key}>
-				<p className="button_low">{member.user.nickname}
-				  {+chanel_focus.owner_id === member.user_id ? null : (
-					<>
-					  {member.is_muted === true ? (
-						<button className="unmute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>
-					  ) : (
-						<button className="mute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>
-					  )}
-					  <button className="admin_btn" onClick={() => handleadmin(member.user_id, member.is_admin)}></button>
-					  <button className="kick_btn" onClick={() => handlekick(member)}></button>
-					  <button className="banned_btn" onClick={() => handleban(member)}></button>
-					</>
-				  )}
-				</p>
-			  </ul>
+			<ul className="chan_param" key={unique_key}>
+				<p>{member.user.nickname} :</p>
+			  {+chanel_focus.owner_id === member.user_id ? null : (
+				  <div className="icon-container">
+				
+				{/* MUTE BTN  */}
+			      {member.is_muted === true ? (
+			        <button className="icon-button " onClick={() => { handlemuted(member.user_id, member.is_muted) }}>
+			          <img src={unmuteImg} alt="Unmute" />
+			        </button>
+			      ) : (
+			        <button className="icon-button" onClick={() => { handlemuted(member.user_id, member.is_muted) }}>
+			          <img src={muteImg} alt="Mute" />
+			        </button>
+			      )}
+				  {/* ADMIN BTN  */}
+				  	{member.is_admin === true ? (
+			        <button className="icon-button " onClick={() => { handlemuted(member.user_id, member.is_admin) }}>
+			          <img src={unadminImg} alt="admin" />
+			        </button>
+			      ) : (
+			        <button className="icon-button" onClick={() => { handlemuted(member.user_id, member.is_muted) }}>
+			          <img src={adminImg} alt="unadmin" />
+			        </button>
+			      )}
+				  {/* KICK BTN  */}
+			      <button className="icon-button" onClick={() => handlekick(member)}>
+			        <img src={kickImg} alt="Kick" />
+			      </button>
+				  {/* BAN BTN  */}
+			      <button className="icon-button " onClick={() => handleban(member)}>
+			        <img src={BanImg} alt="Ban" />
+			      </button>
+			    </div>
+			  )}
+			</ul>
 			)
 		  );
 		})}
@@ -188,7 +213,6 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 			</ul>
 		  );
 		})}
-	  </div>
 	</div>
   );
 	}  
