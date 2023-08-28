@@ -62,7 +62,7 @@ const Message = () => {
 		interlocutor_id: 0,
 		interlocutor_name: "",
 		interlocutor_avatar: "",
-		interlocutor: initialInterlocutor
+		// interlocutor: initialInterlocutor
 	});
 
 	const [refecthChanels, setRefetchChanel] = useState(false);
@@ -97,7 +97,7 @@ const Message = () => {
 			interlocutor_id: element.interlocutor_id,
 			interlocutor_avatar: element.interlocutor_avatar,
 			interlocutor_name: element.interlocutor_name,
-			interlocutor: element.interlocutor
+			// interlocutor: element.interlocutor
 		});
 	}
 
@@ -209,7 +209,9 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-						/>
+							handlechanelfocus={handleChanelFocus}
+							handleChanelRefetch={handleChanelReftch}
+							/>
 						<div className='chat-history'>
 							<CreateChanelForm
 								user={user}
@@ -226,7 +228,9 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-						/>
+							handlechanelfocus={handleChanelFocus}
+							handleChanelRefetch={handleChanelReftch}
+							/>
 						<div className="chat-history">
 							<ChatBox chan={chanel_focus} />
 						</div>
@@ -243,7 +247,9 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-						/>
+							handlechanelfocus={handleChanelFocus}
+							handleChanelRefetch={handleChanelReftch}
+							/>
 						<div className="chat-history">
 						<AddUserInChan 
 							user={user}
@@ -262,7 +268,9 @@ const Message = () => {
 							user={user}
 							chanel_focus={chanel_focus}
 							handleChatBox={handleChatBox}
-						/>
+							handlechanelfocus={handleChanelFocus}
+							handleChanelRefetch={handleChanelReftch}
+							/>
 						<div className="chat-history">
 						<Param_Chan 
 							user={user}

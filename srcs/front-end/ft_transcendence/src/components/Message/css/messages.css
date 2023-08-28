@@ -718,13 +718,13 @@ Jaune ecrit =>     #ffd27d
 	transition: width 0.3s;
 }
 .parametre-of-chan:hover {
-    width: 10%; /* Nouvelle hauteur lorsque survolé */
+    width: 5%; /* Nouvelle hauteur lorsque survolé */
 }
 
 .add-user-in-chan{
 	height: 30px;
 	width: 30px;
-	margin-left: 90%;
+	margin-left: 80%;
 	border: none;
 	background: url("/ft_transcendence/src/image/add-user.png") center no-repeat;
 	background-size: contain;
@@ -732,7 +732,7 @@ Jaune ecrit =>     #ffd27d
 
 }
 .add-user-in-chan:hover {
-    width: 10%; /* Nouvelle hauteur lorsque survolé */
+    width: 7%; /* Nouvelle hauteur lorsque survolé */
 }
 
 .btn-on-header{
@@ -812,4 +812,18 @@ Jaune ecrit =>     #ffd27d
 }
 .banned_btn:hover {
     width: 8%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.leave-the-chan{
+	height: 20px;
+	width: 20px;
+	margin-left: 2%;
+	margin-top: 0.7%;
+	border: none;
+	background: url("/ft_transcendence/src/image/leave_icon.svg") center no-repeat;
+	background-size: contain;
+	transition: width 0.3s;
+}
+.leave-the-chan:hover {
+    width: 5%; /* Nouvelle hauteur lorsque survolé */
 }

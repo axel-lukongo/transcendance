@@ -49,11 +49,15 @@ let UserChanelsResolver = exports.UserChanelsResolver = class UserChanelsResolve
     }
     async deleteChanelUser(key, context) {
         const userId = context.req.userId;
-        const I_amAdmin = await this.userChanelService.isAdministrator(key.chanel_id, key.user_id);
-        const he_is_Admin = await this.userChanelService.isAdministrator(key.chanel_id, userId);
-        if (I_amAdmin || !he_is_Admin) {
-            return 'you don t have the permission';
+        if (key.user_id !== userId) {
+            const I_amAdmin = await this.userChanelService.isAdministrator(key.chanel_id, key.user_id);
+            const he_is_Admin = await this.userChanelService.isAdministrator(key.chanel_id, userId);
+            if (I_amAdmin || !he_is_Admin) {
+                return 'you don t have the permission';
+            }
         }
+        console.log("key.user_id: ===>>> " + key.user_id, "userId: ===>>> " + userId);
+        console.log("---====>>>>  ", key);
         return this.userChanelService.delete(key);
     }
     async updateChanelUser(key, context) {

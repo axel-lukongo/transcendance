@@ -19,9 +19,9 @@ export function MyBlockedList(){
 	const [showUnblock, setShowUnblock] = useState(false);
 
 
-	useEffect(() => {
+	// useEffect(() => {
 		refetch();
-	}, [showUnblock])
+	// },)
 
 	if (loading) {
 		return <p>Loading...</p>;
@@ -34,8 +34,8 @@ export function MyBlockedList(){
 	console.log(data.person_blocked);
 
 	const handleUnblockClick = () => {
-		refetch();
 		setShowUnblock(true);
+		refetch();
 	};
 
 	return (

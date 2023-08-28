@@ -23,7 +23,7 @@ export interface Chanel {
 	logo: string;
 	interlocutor_id: number;
 	directMsg: boolean;
-	interlocutor: User;
+	// interlocutor: User;
 	interlocutor_name: string;
 	interlocutor_avatar: string;
 }
@@ -160,7 +160,7 @@ export interface channelfocus  {
 	directMsg: boolean,
 	interlocutor_name: string,
 	interlocutor_avatar: string,
-	interlocutor: User,
+	// interlocutor: User,
 }
 
 export interface IRequest {

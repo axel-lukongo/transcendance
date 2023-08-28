@@ -302,6 +302,8 @@ h2 {
 	#nickname-card-ListContact {
 		margin-left: 3%;
 		color: rgb(205, 163, 241);
+		font-size: 130; /* Remplace la valeur par celle que tu souhaites */
+
 	}
 
 /* Add Contact */
@@ -410,6 +412,7 @@ h2 {
 		height: 80%;
 		text-align: center;
 		color: rgb(205, 163, 241);;
+		
 	}
 
 	.header_pending_contact {

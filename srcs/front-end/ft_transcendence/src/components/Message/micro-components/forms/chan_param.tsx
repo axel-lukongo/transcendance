@@ -7,6 +7,7 @@ import { CREATE_BANNED_MUTATION } from "../../graphql/Mutation";
 import { REMOVE_BANNED_MUTATION } from "../../graphql/Mutation";
 import { CHANNEL_MEMBERS_QUERY } from "../../graphql/Query";
 import { BANNED_LIST_QUERY } from "../../graphql/Query";
+import { channel } from "diagnostics_channel";
 
 export interface IAddUserInChanProps {
 	user: User,
@@ -148,43 +149,46 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 
 
   return (
-		<div>
-			Member:
-			<div className="param-box">
-
-				{
-					data.ChannelMembers.map((member: UserChanels) => {
-						const unique_key=`${member.user_id}`
-						return (
-							<ul className="chan_param" key={unique_key}> 
-								<p className="button_low" >{member.user.nickname}
-									{
-										member.is_muted===true?
-										<button className="unmute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>:
-										<button className="mute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>
-									}
-									<button className="admin_btn" onClick={() => { handleadmin(member.user_id, member.is_admin) }}></button>
-									<button className="kick_btn" onClick={() => { handlekick(member) }}></button>
-									<button className="banned_btn" onClick={() => { handleban(member) }}></button>
-								</p>
-							</ul>
-							)
-						})
-					}
-			User Banned:
-				{
-					anotherData.banned_list.map((banned_list: Banned) => {
-						const unique_key=`${banned_list.user_id}`
-						return (
-							<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}> 
-								<p>{banned_list.user_ban.nickname}
-								<button onClick={() => { handleDeleteBanned(banned_list) }}>Unbanned</button>
-								</p>
-							</ul>
-						)
-					})
-				}
-			</div>
-		</div>
-	)
-}
+	<div>
+	  Member:
+	  <div className="param-box">
+		{data.ChannelMembers.map((member: UserChanels) => {
+		  const unique_key = `${member.user_id}`;
+  
+		  return (
+			member.user_id === user.id ? null : (
+			  <ul className="chan_param" key={unique_key}>
+				<p className="button_low">{member.user.nickname}
+				  {+chanel_focus.owner_id === member.user_id ? null : (
+					<>
+					  {member.is_muted === true ? (
+						<button className="unmute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>
+					  ) : (
+						<button className="mute_btn" onClick={() => { handlemuted(member.user_id, member.is_muted) }}></button>
+					  )}
+					  <button className="admin_btn" onClick={() => handleadmin(member.user_id, member.is_admin)}></button>
+					  <button className="kick_btn" onClick={() => handlekick(member)}></button>
+					  <button className="banned_btn" onClick={() => handleban(member)}></button>
+					</>
+				  )}
+				</p>
+			  </ul>
+			)
+		  );
+		})}
+		User Banned:
+		{anotherData.banned_list.map((banned_list: Banned) => {
+		  const unique_key = `${banned_list.user_id}`;
+		  return (
+			<ul className="list-unstyled chat-list mt-2 mb-0" key={unique_key}>
+			  <p>
+				{banned_list.user_ban.nickname}
+				<button onClick={() => { handleDeleteBanned(banned_list) }}>Unbanned</button>
+			  </p>
+			</ul>
+		  );
+		})}
+	  </div>
+	</div>
+  );
+	}  

@@ -17,15 +17,15 @@ export default function ChanelList(props: IPropsChanel) {
 		}
 	})
 
-	useEffect(() => {
+	// useEffect(() => {
 		refetch();
-	}, [props.refetchChanels])
+	// }, [props.refetchChanels])
 
 	/* //////////////////////////////////////////////////////// */
 	/* Querry Error */
 
 	if (error)
-		return (<div>An Error as occured her</div>)
+		return (<div>An Error as occured here</div>)
 
 	if (!data)
 		return (<div>nothing to see her</div>)

@@ -84,7 +84,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 					// reponse c'est la ou les reponse de notre server sont stocker.
 					if (response.data) {
 						const responseData = (response.data as any)['addmessage'] as NewMessageResponse['addmessage']; //addmessage de response.data etait de type inconnu donc j'ai du faire ca pour qu'il soir reconnu en tant que NewMessageResponse
-						const usr_is_blocked = is_blocked(data2.person_blocked, responseData.sender_id);
+						let usr_is_blocked = false;
+						if(data2.person_blocked){
+							usr_is_blocked = is_blocked(data2.person_blocked, responseData.sender_id);
+						}
 						if(usr_is_blocked === false){
 							const newMessage = response.data.addmessage;
 							setMessages(prevMessages => [...prevMessages, newMessage] as Message[]); // On copie les messages precedents et on rajoute newMessage
