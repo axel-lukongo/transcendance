@@ -835,3 +835,38 @@ Jaune ecrit =>     #ffd27d
 .param-box{
 	width: 100%;
 }
+
+.play-btn{
+	height: 30px;
+	width: 30px;
+	margin-left: 90%;
+	border: none;
+	background: url("/ft_transcendence/src/image/play_btn.png") center no-repeat;
+	background-size: contain;
+	transition: width 0.3s;
+}
+.play-btn:hover {
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.game-btn {
+	border-radius: 30%;
+	border: none;
+	background-color: #ed1418;
+	width: 30%;
+	height: 10%;
+	color: #FFD233;
+	background-image: linear-gradient(45deg, #2817e3, #7e32f9);
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+	animation: glow-border 2s linear infinite;
+  }
+  @keyframes glow-border {
+	0%, 100% {
+		border: 2px solid transparent;
+		box-shadow: 0 0 55px 5px rgba(212, 18, 18, 0.959);
+	}
+	50% {
+		/* border: 0px solid rgba(255, 0, 0, 0.6); */
+		box-shadow: none;
+	}
+}

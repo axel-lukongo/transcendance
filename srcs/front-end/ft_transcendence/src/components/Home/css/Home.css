@@ -253,7 +253,7 @@
 	width: 20%;
 	height: 10%;
 	font-size: large;
-	overflow: hidden;
+	/* overflow: hidden; */
   }
 
    .logo-box{

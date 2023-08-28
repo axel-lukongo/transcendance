@@ -101,8 +101,8 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
                     { chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='leave-the-chan' onClick={handlekick}></button> : null}
                 </div> {/* btn pour l'ajout de users dans un chanel */}
             </div>
-			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={"je t'invite a jouer"} /> : null}
-      		{chanel_focus.directMsg === true? <button onClick={handle_create_msg}> play </button>:null}
+			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={" "} /> : null}
+      		{chanel_focus.directMsg === true? <button className='play-btn' onClick={handle_create_msg}></button>:null}
 	    </div>
     );
 }
