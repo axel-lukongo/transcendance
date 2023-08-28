@@ -149,7 +149,7 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 
 
   return (
-	<div>
+	<div className="param-box">
 	  Member:
 	  <div className="param-box">
 		{data.ChannelMembers.map((member: UserChanels) => {

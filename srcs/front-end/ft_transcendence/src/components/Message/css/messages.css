@@ -747,7 +747,7 @@ Jaune ecrit =>     #ffd27d
 	background: url("/ft_transcendence/src/image/muted.png") center no-repeat;
 	background-size: contain;
 	border: none;
-	margin: 1%;
+	margin: 5%;
 	align-items: center;
 	transition: width 0.3s;
 }
@@ -761,7 +761,7 @@ Jaune ecrit =>     #ffd27d
 	background: url("/ft_transcendence/src/image/unmuted.png") center no-repeat;
 	background-size: contain;
 	border: none;
-	margin: 1%;
+	margin: 5%;
 	align-items: center;
 	transition: width 0.3s;
 
@@ -776,7 +776,7 @@ Jaune ecrit =>     #ffd27d
 	background: url("/ft_transcendence/src/image/admin.png") center no-repeat;
 	background-size: contain;
 	border: none;
-	margin: 1%;
+	margin: 5%;
 	align-items: center;
 	transition: width 0.3s;
 
@@ -791,7 +791,7 @@ Jaune ecrit =>     #ffd27d
 	background: url("/ft_transcendence/src/image/kick.png") center no-repeat;
 	background-size: contain;
 	border: none;
-	margin: 1%;
+	margin: 5%;
 	align-items: center;
 	transition: width 0.3s;
 
@@ -805,13 +805,13 @@ Jaune ecrit =>     #ffd27d
 	background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat;
 	background-size: contain;
 	border: none;
-	margin: 1%;
+	margin: 5%;
 	align-items: center;
 	transition: width 0.3s;
 
 }
 .banned_btn:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
+    width: 7%; /* Nouvelle hauteur lorsque survolé */
 }
 
 .leave-the-chan{
@@ -825,5 +825,13 @@ Jaune ecrit =>     #ffd27d
 	transition: width 0.3s;
 }
 .leave-the-chan:hover {
-    width: 5%; /* Nouvelle hauteur lorsque survolé */
+    width: 8%; /* Nouvelle hauteur lorsque survolé */
+}
+
+.button_low{
+	width: 100%;
+}
+
+.param-box{
+	width: 100%;
 }
