@@ -179,11 +179,11 @@ export default function Param_Chan({chanel_focus, user} : IAddUserInChanProps) {
 			      )}
 				  {/* ADMIN BTN  */}
 				  	{member.is_admin === true ? (
-			        <button className="icon-button " onClick={() => { handlemuted(member.user_id, member.is_admin) }}>
+			        <button className="icon-button " onClick={() => { handleadmin(member.user_id, member.is_admin) }}>
 			          <img src={unadminImg} alt="admin" />
 			        </button>
 			      ) : (
-			        <button className="icon-button" onClick={() => { handlemuted(member.user_id, member.is_muted) }}>
+			        <button className="icon-button" onClick={() => { handleadmin(member.user_id, member.is_muted) }}>
 			          <img src={adminImg} alt="unadmin" />
 			        </button>
 			      )}
