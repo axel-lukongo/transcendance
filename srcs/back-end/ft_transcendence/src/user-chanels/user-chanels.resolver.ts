@@ -58,7 +58,7 @@ export class UserChanelsResolver {
 	}
 
 
-	@Mutation(() => UsersChanels, {name: "deleteChanelUser"})
+	@Mutation(() => UsersChanels || [UsersChanels], {name: "deleteChanelUser"})
 	async deleteChanelUser(@Args("key") key: UpdateChanelUserInput, @Context() context) {
 		const userId = context.req.userId; // je recuperer l'id de la personne qui fait la requete
 
@@ -69,9 +69,7 @@ export class UserChanelsResolver {
 				return 'you don t have the permission'
 			}
 		}
-		console.log("key.user_id: ===>>> " + key.user_id, "userId: ===>>> " + userId)
-		console.log("---====>>>>  ", key);
-		return this.userChanelService.delete(key);
+		return this.userChanelService.delete(key, userId);
 	}
 
 

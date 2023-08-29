@@ -116,8 +116,32 @@ export class UserChanelsService {
 		})
 	}
 
-	async delete(key: UpdateChanelUserInput) {
-		return this.prisma.users_Chanels.delete({
+	async delete(key: UpdateChanelUserInput, userID: number){
+
+		const channel = await this.prisma.chanel.findUnique({
+			where: {
+				id: key.chanel_id,
+			}
+		});
+
+
+		if((userID === channel.owner_id) && (userID === key.user_id)){
+
+			const test = await this.prisma.users_Chanels.deleteMany({
+				where: {
+					chanel_id: channel.id
+				}
+			});
+
+			await this.prisma.chanel.delete({
+				where: {
+					id: key.chanel_id
+				}
+			})
+
+			return key;
+		}
+		const test2 = await this.prisma.users_Chanels.delete({
 			where: {
 				user_id_chanel_id: {
 					user_id: key.user_id,
@@ -125,6 +149,7 @@ export class UserChanelsService {
 				},
 			}
 		});
+		return test2
 	}
 
 

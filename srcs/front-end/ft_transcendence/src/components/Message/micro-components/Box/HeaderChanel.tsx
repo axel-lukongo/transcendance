@@ -57,26 +57,26 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
 			},
 			},
 		  }).then((result) => {
+
 			console.log(result.data.updateChanelUser);
-	
+			handleChanelRefetch();
+			handlechanelfocus ( {
+				id: 0,
+				chanel_name: "",
+				chanel_size: 0,
+				max_users: 0,
+				logo: "",
+				owner_id: 0,
+				directMsg: false,
+				interlocutor_id: 0,
+				interlocutor_name: "",
+				interlocutor_avatar: "",
+			})
 		  }).catch(() => {
 			console.log("action denied ",);
 		});
 
-		handlechanelfocus ( {
-			id: 0,
-			chanel_name: "",
-			chanel_size: 0,
-			max_users: 0,
-			logo: "",
-			owner_id: 0,
-			directMsg: false,
-			interlocutor_id: 0,
-			interlocutor_name: "",
-			interlocutor_avatar: "",
-		})
-		handleChanelRefetch();
-		console.log("wewewe===>>>>  ", chanel_focus)
+
 	  }
 
 	if(chanel_focus.directMsg === true){
@@ -87,7 +87,7 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
         <div className="chat-header">
             <div className="row">
                 {
-                    chanel_focus.id !== "" ? 
+                   (chanel_focus.id !== "" && chanel_focus.id !== "0") ? 
                     <div className="col-lg-6">
                         <img src={chanel_focus.logo} alt="avatar" />
                         <div className="chat-about">
@@ -96,10 +96,10 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
                     </div>: null
                 }
                 <div className='btn-on-header'>
-                    {chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='add-user-in-chan' onClick={handelClick}></button> : null}
-                    { chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
-                    { chanel_focus.id !== "" && chanel_focus.directMsg !== true ? <button className='leave-the-chan' onClick={handlekick}></button> : null}
-                </div> {/* btn pour l'ajout de users dans un chanel */}
+                    {(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? <button className='add-user-in-chan' onClick={handelClick}></button> : null}
+                    {(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
+                    {(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? <button className='leave-the-chan' onClick={handlekick}></button> : null}
+                </div>
             </div>
 			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={" "} /> : null}
       		{chanel_focus.directMsg === true? <button className='play-btn' onClick={handle_create_msg}></button>:null}

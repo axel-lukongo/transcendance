@@ -80,14 +80,7 @@ export declare class UserChanelsResolver {
         is_admin: boolean;
         mute_start_time: number;
     }, unknown> & {})[]>;
-    deleteChanelUser(key: UpdateChanelUserInput, context: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
-        user_id: number;
-        chanel_id: number;
-        pending: boolean;
-        is_muted: boolean;
-        is_admin: boolean;
-        mute_start_time: number;
-    }, unknown> & {}) | "you don t have the permission">;
+    deleteChanelUser(key: UpdateChanelUserInput, context: any): Promise<UpdateChanelUserInput | "you don t have the permission">;
     updateChanelUser(key: UpdateChanelUserInput, context: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
         user_id: number;
         chanel_id: number;

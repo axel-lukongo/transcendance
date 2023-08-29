@@ -109,8 +109,26 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
             include: { user: true }
         });
     }
-    async delete(key) {
-        return this.prisma.users_Chanels.delete({
+    async delete(key, userID) {
+        const channel = await this.prisma.chanel.findUnique({
+            where: {
+                id: key.chanel_id,
+            }
+        });
+        if ((userID === channel.owner_id) && (userID === key.user_id)) {
+            const test = await this.prisma.users_Chanels.deleteMany({
+                where: {
+                    chanel_id: channel.id
+                }
+            });
+            await this.prisma.chanel.delete({
+                where: {
+                    id: key.chanel_id
+                }
+            });
+            return key;
+        }
+        const test2 = await this.prisma.users_Chanels.delete({
             where: {
                 user_id_chanel_id: {
                     user_id: key.user_id,
@@ -118,6 +136,7 @@ let UserChanelsService = exports.UserChanelsService = class UserChanelsService {
                 },
             }
         });
+        return test2;
     }
     async UserBanInChannel(userId, channelId) {
         const userChannel = await this.prisma.user_banned.findFirst({

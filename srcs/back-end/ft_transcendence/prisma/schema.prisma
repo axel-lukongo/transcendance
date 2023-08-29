@@ -12,7 +12,7 @@ datasource db {
 
 model User {
 	id					Int				@id @default(autoincrement())
-	token				String			@unique
+	token				String?			@unique
 	state				Int
 	connection_status	Int
 	tfa_code			String?

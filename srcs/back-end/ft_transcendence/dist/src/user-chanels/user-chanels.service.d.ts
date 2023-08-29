@@ -72,14 +72,7 @@ export declare class UserChanelsService {
         is_admin: boolean;
         mute_start_time: number;
     }, unknown> & {})[]>;
-    delete(key: UpdateChanelUserInput): Promise<import("@prisma/client/runtime/library").GetResult<{
-        user_id: number;
-        chanel_id: number;
-        pending: boolean;
-        is_muted: boolean;
-        is_admin: boolean;
-        mute_start_time: number;
-    }, unknown> & {}>;
+    delete(key: UpdateChanelUserInput, userID: number): Promise<UpdateChanelUserInput>;
     UserBanInChannel(userId: number, channelId: number): Promise<boolean>;
     IsOwnerInChannel(userId: number, channelId: number): Promise<boolean>;
 }

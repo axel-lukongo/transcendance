@@ -56,9 +56,7 @@ let UserChanelsResolver = exports.UserChanelsResolver = class UserChanelsResolve
                 return 'you don t have the permission';
             }
         }
-        console.log("key.user_id: ===>>> " + key.user_id, "userId: ===>>> " + userId);
-        console.log("---====>>>>  ", key);
-        return this.userChanelService.delete(key);
+        return this.userChanelService.delete(key, userId);
     }
     async updateChanelUser(key, context) {
         const userId = context.req.userId;
@@ -122,7 +120,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserChanelsResolver.prototype, "findMembers", null);
 __decorate([
-    (0, graphql_1.Mutation)(() => user_chanel_entity_1.UsersChanels, { name: "deleteChanelUser" }),
+    (0, graphql_1.Mutation)(() => user_chanel_entity_1.UsersChanels || [user_chanel_entity_1.UsersChanels], { name: "deleteChanelUser" }),
     __param(0, (0, graphql_1.Args)("key")),
     __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
