@@ -126,7 +126,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 			  <Link
 				to={{
 				  pathname: "/pong",
-				  search: `?friendid=${otherId}`,
+				  search: `?friendId=${otherId}`,
 				}}
 			  >
 				<button className="game-btn" >game</button>
