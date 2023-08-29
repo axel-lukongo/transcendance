@@ -65,7 +65,7 @@ h2 {
 		/* position: relative; */
 		width: 7%;
 		height: 40%;
-		background: url("/ft_transcendence/src/image/user.png") center no-repeat;
+		background: url("/ft_transcendence/src/image/add_user_icon.svg") center no-repeat;
 		background-size: contain;
 		border: 0px transparent;
 		object-fit: scale-down;
@@ -75,12 +75,12 @@ h2 {
 	}
 
 	#addContact_btn:hover {
-		transition: 1s;
+		transition: 0.3s;
 		height: 50%;
 	}
 
 	#addContact_btn:not(:hover) {
-		transition:.75s;
+		transition: 0.3s;
 	}
 
 	.blocked_btn {
