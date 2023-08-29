@@ -11,151 +11,149 @@ datasource db {
 }
 
 model User {
-	id					Int         @id @default(autoincrement())
-	token				String?		@unique
+	id					Int				@id @default(autoincrement())
+	token				String			@unique
 	state				Int
 	connection_status	Int
 	tfa_code			String?
-	email				String		@unique
-	nickname			String		@unique
+	email				String			@unique
+	nickname			String			@unique
 	avatar				String?
-	rank				String		@default("Bronze")
-	level 				Float 		@default(1)
-	userPong			Pong[]		@relation("User1")
-	userPong2			Pong[]		@relation("User2")
+	rank				String			@default("Bronze")
+	level				Float			@default(1)
+	userPong			Pong[]			@relation("User1")
+	userPong2			Pong[]			@relation("User2")
 	chanels				Users_Chanels[]
 	own_chan			Chanel[]		@relation("Owner")
 	contact				Contact[]		@relation("contactRef")
 	reverse_contact		Contact[]		@relation("reverseContactRef")
-	sender				Message[]       @relation("Send")
+	sender				Message[]		@relation("Send")
 	blocked				ToBloc[]		@relation("Blocked")
-	user_ban			user_banned[]		@relation("User_ban")
+	user_ban			user_banned[]	@relation("User_ban")
 	interlocutor		Chanel[]		@relation("Interlocutor")
-
 }
 
 model Contact {
-	id					Int			@default(autoincrement())@id
+	id					Int				@default(autoincrement())@id
 	user_id				Int				
 	contact_id			Int				
-	pending				Boolean?	@default(true)
-	contact				User		@relation("contactRef", fields: [user_id], references: [id])
-	user				User		@relation("reverseContactRef", fields: [contact_id], references: [id])
+	pending				Boolean?		@default(true)
+	contact				User			@relation("contactRef", fields: [user_id], references: [id])
+	user				User			@relation("reverseContactRef", fields: [contact_id], references: [id])
 	@@unique([user_id, contact_id])
 }
 
 
 model Chanel {
-	id					Int			@id @default(autoincrement())
+	id					Int				@id @default(autoincrement())
 	owner_id			Int
 	chanel_name			String
 	chanel_size			Int
 	max_users			Int
 	logo				String?
-	private				Boolean		@default(true)
-	owner				User		@relation("Owner", fields: [owner_id], references: [id])
+	private				Boolean			@default(true)
+	owner				User			@relation("Owner", fields: [owner_id], references: [id])
 	users				Users_Chanels[]
-	messages			Message[]	@relation("ChanelMessages")
-	directMsg			Boolean		@default(false)
-	interlocutor_id		Int?		
+	messages			Message[]		@relation("ChanelMessages")
+	directMsg			Boolean			@default(false)
+	interlocutor_id		Int?
 	interlocutor_avatar	String?
 	interlocutor_name	String?
-	interlocutor		User?		@relation("Interlocutor", fields: [interlocutor_id], references: [id])
-	AdminList			Int[]		@default([]) // Liste des ID des administrateurs
+	interlocutor		User?			@relation("Interlocutor", fields: [interlocutor_id], references: [id])
+	AdminList			Int[]			@default([]) // Liste des ID des administrateurs
 }
 
 model user_banned{
-	id					Int			@id @default(autoincrement())
+	id					Int				@id @default(autoincrement())
 	user_id				Int
 	channel_id			Int
-	user_ban			User		@relation("User_ban", fields: [user_id], references: [id])
+	user_ban			User			@relation("User_ban", fields: [user_id], references: [id])
 }
 
 model Users_Chanels {
-
 	user_id				Int
 	chanel_id			Int
-	pending				Boolean?	@default(true)
-	is_muted			Boolean?	@default(false)
-	is_admin			Boolean?	@default(false)
-	user				User		@relation(fields: [user_id], references: [id])
-	chanel				Chanel		@relation(fields: [chanel_id], references: [id])
-	mute_start_time		Int			@default(0)
+	pending				Boolean?		@default(true)
+	is_muted			Boolean?		@default(false)
+	is_admin			Boolean?		@default(false)
+	user				User			@relation(fields: [user_id], references: [id])
+	chanel				Chanel			@relation(fields: [chanel_id], references: [id])
+	mute_start_time		Int				@default(0)
 	@@id([user_id, chanel_id])
 }
 
 model Pong {
-  id           			Int      	@id @default(autoincrement())
-  userId1      			Int
-  userId2      			Int
-  scoreUser1   			Int?		@default(0)
-  scoreUser2   			Int?		@default(0)
-  loserId     			Int?
-  winnerId    			Int?
-  versusDate  			DateTime 	@default(now())
-  start					Boolean		@default(false)
+	id					Int				@id @default(autoincrement())
+	userId1				Int
+	userId2				Int
+	scoreUser1			Int?			@default(0)
+	scoreUser2			Int?			@default(0)
+	loserId				Int?
+	winnerId			Int?
+	versusDate			DateTime		@default(now())
+	start				Boolean			@default(false)
 
-  user1        			User     	@relation("User1", fields: [userId1], references: [id])
-  user2        			User     	@relation("User2", fields: [userId2], references: [id])
+	user1				User			@relation("User1", fields: [userId1], references: [id])
+	user2				User			@relation("User2", fields: [userId2], references: [id])
   
 }
 
 model Player {
-  id            	Int 			@id @default(autoincrement())
-  userId        	Int 			@unique
-  positionX     	Float			@default(10)
-  positionY     	Float			@default(50)
-  host				Boolean?		@default(false)
-  opponentPlayerId	Int				@default(0)
-  waitingRoomId 	Int
-  ballId 			Int ?
-  pongId			Int?
-  positionBall		Ball? 			@relation("Ball", fields: [ballId], references: [id])
-  waitingRoom   	WaitingRoom? 	@relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
+	id					Int 			@id @default(autoincrement())
+	userId				Int				@unique
+	positionX			Float			@default(10)
+	positionY			Float			@default(50)
+	host				Boolean?		@default(false)
+	opponentPlayerId	Int				@default(0)
+	waitingRoomId		Int
+	ballId				Int ?
+	pongId				Int?
+	positionBall		Ball?			@relation("Ball", fields: [ballId], references: [id])
+	waitingRoom			WaitingRoom?	@relation("PlayerWaitingList", fields: [waitingRoomId], references: [id])
 }
 
 model WaitingRoom {
-	id            Int 				@id @default(autoincrement()) 
-	waitingList   Player[] 			@relation("PlayerWaitingList")
-	pongInvite     PongInvite?        @relation("inviteRoom")
+	id            		Int				@id @default(autoincrement()) 
+	waitingList   		Player[]		@relation("PlayerWaitingList")
+	pongInvite			PongInvite?		@relation("inviteRoom")
 }
 
 
 
 model PongInvite {
-  id              Int      @id @default(autoincrement()) 
-  userId1         Int      
-  userId2         Int      
-  waitingRoomId   Int      @unique
-waitingRoom        WaitingRoom        @relation("inviteRoom", fields: [waitingRoomId], references: [id])
-  @@unique([userId1, userId2])
+	id					Int				@id @default(autoincrement()) 
+	userId1				Int
+	userId2				Int
+	waitingRoomId		Int				@unique
+	waitingRoom			WaitingRoom		@relation("inviteRoom", fields: [waitingRoomId], references: [id])
+	@@unique([userId1, userId2])
 }
 
 
 
 model Ball {
-  id					Int      	@id @default(autoincrement())
-  positionX        		Float 		@default(50)
-  positionY        		Float 		@default(50)
-  directionX         	Float 		@default(-20)
-  directionY         	Float 		@default(10)
-  players				Player[] 	@relation("Ball")
+	id					Int				@id @default(autoincrement())
+	positionX			Float			@default(50)
+	positionY			Float			@default(50)
+	directionX			Float			@default(-20)
+	directionY			Float			@default(10)
+	players				Player[]		@relation("Ball")
 }
 
 model ToBloc{
-	id					Int			@id @default(autoincrement())
+	id					Int				@id @default(autoincrement())
 	blocker_id			Int
 	blocked_id			Int
-	blocked				User		@relation("Blocked", fields: [blocked_id], references: [id])
+	blocked				User			@relation("Blocked", fields: [blocked_id], references: [id])
 }
 
 model Message {
-  id					Int      	@id @default(autoincrement())
-  sender_id				Int
-  channel_id			Int?
-  invite_game			Boolean?	@default(false)
-  content				String
-  sent_at				DateTime 	@default(now())
-  sender				User     	@relation("Send", fields: [sender_id], references: [id])
-  channel				Chanel?  	@relation("ChanelMessages", fields: [channel_id], references: [id])
+	id					Int				@id @default(autoincrement())
+	sender_id			Int
+	channel_id			Int?
+	invite_game			Boolean?		@default(false)
+	content				String
+	sent_at				DateTime		@default(now())
+	sender				User			@relation("Send", fields: [sender_id], references: [id])
+	channel				Chanel?			@relation("ChanelMessages", fields: [channel_id], references: [id])
 }
