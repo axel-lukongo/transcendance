@@ -11,14 +11,14 @@ const AvatarBox = () => {
     const avatarFiles = e.target.files?.[0];
 
     if (avatarFiles) {
-      const maxSize = 2 * 1024 * 1024;
+      const maxSize = 35000; //3ko
 
       const allowedTypes = ['image/png', 'image/jpeg'];
       if (!allowedTypes.includes(avatarFiles.type)) {
         alert('Please select a PNG or JPG type image.');
         return;
       } else if (avatarFiles.size > maxSize) {
-        alert('Please select a PNG or JPG image. File size should not exceed 2MB.');
+        alert('Please select a PNG or JPG image. File size should not exceed 3Ko.');
         return;
       }
 
