@@ -184,6 +184,7 @@ type Mutation {
   sendTwoFactorCodeByEmail(email: String!, code: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  updateState(new_state: Int!): User!
   createChanel(createChanelInput: CreateChanelInput!): Chanel!
   Channel_update(updateChanelInput: UpdateChanelInput!): Chanel!
   removeChanel(id: Int!): Chanel!
@@ -200,7 +201,6 @@ type Mutation {
   deletecontact(user1: Float!, user2: Float!): Contact!
   deleteContact(id: Int!): Contact!
   createUser(updateAuthenticationInput: UpdateAuthenticationInput!): User!
-  updateState(new_state: Int!): User!
   createPong(createPongInput: CreatePongInput!): Pong!
   removePong(id: Int!): Pong!
   updatePong(updatePongInput: UpdatePongInput!): Pong!

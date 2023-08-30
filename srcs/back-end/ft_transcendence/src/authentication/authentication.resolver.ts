@@ -120,21 +120,6 @@ export class AuthenticationResolver {
     }
   }
 
-  @Mutation(() => User, {name: "updateState"})
-  async updateState(
-    @Args("new_state", { type: () => Int }) new_state: number,
-    @Context() context: any
-  ) {
-    if (new_state < 1 || new_state > 3)
-    {
-      throw new Error("Unrecognized state");
-    }
-    const updateUserDataInput: UpdateUserInput = {
-      id:  context.req.userId,
-      state: new_state
-    };
-    return await this.userResolveur.updateUser(updateUserDataInput);
 
-  }
 
 }

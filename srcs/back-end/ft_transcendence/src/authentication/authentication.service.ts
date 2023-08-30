@@ -11,6 +11,7 @@ export const __ACCESS__ = 1;
 export const __CONNECTED__ = 1;
 export const __AFK__ = 2;
 export const __DISCONNECTED__ = 3;
+export const __IN_GAME__= 4;
 
 @Injectable()
 export class AuthenticationService {

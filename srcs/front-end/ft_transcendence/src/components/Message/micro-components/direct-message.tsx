@@ -80,7 +80,7 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		console.log(updateState);
 		const ChangeState = () => {
 			let update = states.map( (contacts: IContactsLink ) => {
-				if (contacts.contact.id == updateState.id){
+				if (contacts.contact.id === updateState.id){
 					return ({...contacts, contact: { ...contacts.contact, state: updateState.state } });
 				} 
 				return contacts;
@@ -125,6 +125,8 @@ export default function Direct_message(props: IPrivateMessageProps) {
 				return ('afk');
 			case 3: 
 				return ('disconnected');
+			case 4:
+				return ('inGame')
 			default:
 				return 'error';
 		}

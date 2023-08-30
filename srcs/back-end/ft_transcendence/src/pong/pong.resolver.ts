@@ -15,6 +15,7 @@ import { WaitingRoomResolver } from './waiting-room/waiting-room.resolver';
 import { UpdatePlayerInput } from './player/dto/update-player.input';
 import { Injectable } from '@nestjs/common';
 import { PongInviteResolver } from './pong-invite/pong-invite.resolver';
+import { __CONNECTED__, __IN_GAME__ } from 'src/authentication/authentication.service';
 
 const pubSub = new PubSub();
 const PONG_UPDATE_EVENT = 'PongUp';
@@ -267,6 +268,7 @@ export class PongResolver {
         pongId: pong.id,
       }
       const otherPlayer = await this.player.updatePlayer(otherPlayerData);
+      this.user.updateState(__IN_GAME__, context);
 
       return { player, ball, otherPlayer, pong };
     }
@@ -284,6 +286,7 @@ export class PongResolver {
             const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
             const ball = await this.ball.findUnique(player.ballId);
             const pong = await this.findPong(player.pongId);
+            this.user.updateState(__IN_GAME__, context);
             resolve({ player , ball, otherPlayer , pong });
           }
         }, 1000);
@@ -292,7 +295,7 @@ export class PongResolver {
   }
 
   @Mutation(() => JoinPongResponse)
-  async joinPong( @Args('userId', { type: () => Int }) userId: number) {
+  async joinPong( @Args('userId', { type: () => Int }) userId: number, @Context() context: any) {
 
     let player = await this.player.setPlayer(userId, 1);
     if (!player)
@@ -304,15 +307,8 @@ export class PongResolver {
       const pong_tmp = await this.findPong(player.pongId);
       if (pong_tmp && pong_tmp.winnerId)
       {
-        await this.endPong(player.userId);
+        await this.endPong(player.userId, context);
         player = await this.player.setPlayer(userId, 1);
-      }
-      else
-      {
-        const pong =  await this.findPong(player.pongId);
-        const otherPlayer =  await this.player.findPlayer(player.opponentPlayerId);
-        const ball =  await this.ball.findUnique(player.ballId);
-        return { player, ball, otherPlayer, pong };
       }
     }
       
@@ -354,6 +350,8 @@ export class PongResolver {
       }
       const otherPlayer = await this.player.updatePlayer(otherPlayerData);
 
+      this.user.updateState(__IN_GAME__, context);
+
       return { player, ball, otherPlayer, pong };
     }
     else {
@@ -369,6 +367,9 @@ export class PongResolver {
             const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
             const ball = await this.ball.findUnique(player.ballId);
             const pong = await this.findPong(player.pongId);
+
+            this.user.updateState(__IN_GAME__, context);
+
             resolve({ player , ball, otherPlayer , pong });
           }
         }, 1000);
@@ -378,7 +379,7 @@ export class PongResolver {
 
 
   @Mutation(() => String)
-  async endPong( @Args('userId', { type: () => Int }) userId: number ): Promise<string> {
+  async endPong( @Args('userId', { type: () => Int }) userId: number, @Context() context : any): Promise<string> {
     
     const player = await this.player.findPlayerByUserId(userId);
     if (!player) {
@@ -414,6 +415,8 @@ export class PongResolver {
       }
     }
     await this.player.removePlayer(player.id);
+    
+    this.user.updateState(__CONNECTED__, context);
     return 'Pong ended';
   }
 

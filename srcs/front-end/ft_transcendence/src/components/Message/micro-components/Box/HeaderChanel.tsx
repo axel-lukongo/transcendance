@@ -1,5 +1,4 @@
-import { channel } from 'diagnostics_channel';
-import { Chanel, IHeaderProps, UserChanels } from '../../../interfaces/interfaces'
+import { Chanel } from '../../../interfaces/interfaces'
 import { __ADD_USER__ } from "../../message";
 import { __CHAN_PARAM__ } from "../../message";
 import { channelfocus } from '../../../interfaces/interfaces';

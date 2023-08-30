@@ -602,6 +602,10 @@ Jaune ecrit =>     #ffd27d
     background-color: red;
 }
 
+#inGame {
+    background-color: blue;
+}
+
 
 
 
@@ -770,78 +774,6 @@ Jaune ecrit =>     #ffd27d
     object-fit: contain; /* Ajuste l'image à l'intérieur du bouton */
   }
   
-/* .mute_btn{
-	width: 20px;
-	height: 25px;
-	background: url("/ft_transcendence/src/image/muted.png") center no-repeat;
-	background-size: contain;
-	border: none;
-	margin: 5%;
-	align-items: center;
-	transition: width 0.3s;
-}
-.mute_btn:hover {
-    width: 4%; /* Nouvelle hauteur lorsque survolé */
-/* } */
-
-/* .unmute_btn{
-	width: 20px;
-	height: 25px;
-	background: url("/ft_transcendence/src/image/unmuted.png") center no-repeat;
-	background-size: contain;
-	border: none;
-	margin: 5%;
-	align-items: center;
-	transition: width 0.3s;
-
-}
-.unmute_btn:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
-/* } */
-
-/* .admin_btn{
-	width: 20px;
-	height: 25px;
-	background: url("/ft_transcendence/src/image/admin.png") center no-repeat;
-	background-size: contain;
-	border: none;
-	margin: 5%;
-	align-items: center;
-	transition: width 0.3s;
-
-}
-.admin_btn:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
-/* } */
-
-/* .kick_btn{
-	width: 20px;
-	height: 25px;
-	background: url("/ft_transcendence/src/image/kick.png") center no-repeat;
-	background-size: contain;
-	border: none;
-	margin: 5%;
-	align-items: center;
-	transition: width 0.3s;
-
-}
-.kick_btn:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
-/* } */
-/* .banned_btn{
-	width: 20px;
-	height: 25px;
-	background: url("/ft_transcendence/src/image/interdit_symbole.png") center no-repeat;
-	background-size: contain;
-	border: none;
-	margin: 5%;
-	align-items: center;
-	transition: width 0.3s;
-
-}  */
-/* .banned_btn:hover {
-    width: 7%; /* Nouvelle hauteur lorsque survolé */
-/* }  */  
 
 .leave-the-chan{
 	height: 20px;
