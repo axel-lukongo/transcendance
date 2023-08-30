@@ -53,7 +53,6 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 			}).then((response) => {
 			const responseData = response.data; // Les données renvoyées par la mutation
 			setHasFetchedData(responseData.createChanel);
-			console.log('le retour ====>>> ', responseData.createChanel)
 		})
 			.catch((error) => {
 				console.log("Html: ", error.message);
