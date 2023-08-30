@@ -59,6 +59,7 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 			});
 		}
 		if (data) {
+			console.log("dans creat===>>>  ", data.getChannelByOwnersAndInterlocutor);
 			handlechanelfocus(data.getChannelByOwnersAndInterlocutor);
 		}
 	}, [loading]);

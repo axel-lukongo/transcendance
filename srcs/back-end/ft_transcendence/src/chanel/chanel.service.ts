@@ -31,7 +31,9 @@ export class ChanelService {
     //   console.log('ici====>>> ',createChanelInput.logo);
 	
 	let logo = createChanelInput.logo;
-	if( createChanelInput.directMsg === false ) {
+	// console.log("teste11===>>>",createChanelInput.directMsg)
+	if( createChanelInput.directMsg === false || createChanelInput.directMsg === undefined ) {
+			// console.log("teste12")
 		   logo = createChanelInput.logo != '' ?
 			'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
 			:
@@ -44,7 +46,6 @@ export class ChanelService {
           logo: logo
         }
       })
-	  console.log("wewewe ===>>>>  ", chanelRes)
       let user_chanel = await this.prisma.users_Chanels.create({
         data: {
           chanel_id: chanelRes.id,

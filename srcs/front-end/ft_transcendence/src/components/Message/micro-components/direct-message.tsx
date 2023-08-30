@@ -158,7 +158,7 @@ export default function Direct_message(props: IPrivateMessageProps) {
 						<li onClick={() => handleNewDirectMsg(contact.contact.id)} className="card-chat-list">
 							<div className="about">
 								<div className="img-states">
-									<img src={ wsContext?.user?.avatar } alt="avatar" />
+									<img src={ contact.contact.avatar } alt="avatar" />
 									<div className="state" id={ findClassState(contact.contact.state) }></div> 
 								</div>
 								<div className="name"> { contact.contact.nickname }</div>

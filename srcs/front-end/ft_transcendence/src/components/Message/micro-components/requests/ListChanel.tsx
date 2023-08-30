@@ -39,7 +39,7 @@ export default function ChanelList(props: IPropsChanel) {
 
 	/* //////////////////////////////////////////////////////// */
 	/* JSX.Element return  */
-
+	console.log("test1 ==========>>>> ", data)
 	return (
 		
 		<div className="people-list">
