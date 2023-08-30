@@ -356,7 +356,7 @@ export class PongResolver {
       const otherPlayer = await this.player.updatePlayer(otherPlayerData);
 
       //STATE IN GAME
-      // await this.user.updateState(__IN_GAME__, context);
+      await this.user.updateState(__IN_GAME__, context);
 
       return { player, ball, otherPlayer, pong };
     }
@@ -375,7 +375,7 @@ export class PongResolver {
             const pong = await this.findPong(player.pongId);
 
             //STATE IN GAME
-            // await this.user.updateState(__IN_GAME__, context);
+            await this.user.updateState(__IN_GAME__, context);
 
             resolve({ player , ball, otherPlayer , pong });
           }
