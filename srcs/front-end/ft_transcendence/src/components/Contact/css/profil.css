@@ -17,8 +17,6 @@
 	height: 20px;
 	background: url("/ft_transcendence/src/image/profil.png") center no-repeat;
 	background-size: contain;
-	/* margin-left: 5%; */
-	/* margin-right: 1%; */
 	align-items: center;
 	margin-left: 60%;
 }
@@ -48,8 +46,6 @@
 
 
 .modal-content .close-btn {
-	/* position: relative; */
-	/* left: 10%; */
 	margin-top: 3%;
 	margin-left: 85%;
 	background-color: #ec5454;
@@ -60,35 +56,48 @@
 }
 
 
-
-.blocked-interface{
-	position: relative;
+.blocked-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	background-color: rgba(35, 24, 104, 0.466);
-	border-radius: 5%;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	height: 10%;
-	width: 20%;
-	overflow: hidden;
-	animation: glow-border 4s linear infinite;
-}
-.confirme-blocked-interface{
-	margin-top: 15%;
-	margin-left: 6%;
-	color: #ec5454;
-	background-color: #ece95400;
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+  
+  .confirme-blocked,
+  .cancel-blocked {
+	margin-top: 10px;
+	padding: 5px 10px;
 	border: none;
+	border-radius: 5px;
 	cursor: pointer;
-}
-
-.cancel-blocked-interface{
-	margin-left: 30%;
-	color: #90ebae;
-	background-color: #ec545400;
-	border: none;
-	cursor: pointer;
-
-}
-
+	font-family: 	"Orbitron";
+	font-weight: bold;
+	font-size:x-large;
+	background-color: transparent;
+	width: 100%;
+  }
+  
+  .confirme-blocked {
+	color: #4caf4fd1;
+  }
+  
+  .cancel-blocked {
+	color: #ff4032;
+	margin-top: 5px;
+  }
+  
+  .confirme-blocked:hover,
+  .cancel-blocked:hover {
+	opacity: 0.8;
+  }
+  
 
 
 /* ############################ parti du haut #############################*/

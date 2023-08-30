@@ -32,10 +32,10 @@ const Tobloc: React.FC<TheId> = ({ blockerId, blockedId, handleshowBlocked }) =>
 
   return (
     <div className='profil-modal'>
-		<div className='blocked-interface' style={{ textAlign: 'center' }} >
-			blocked this user ?
-			<button className='confirme-blocked-interface' onClick={handleCreateTobloc} >Confirme</button>
-			<button className='cancel-blocked-interface' onClick={() => handleshowBlocked(false)}>cancel</button>
+		<div className='blocked-container' >
+			blocked this user?
+			<button className='confirme-blocked' onClick={handleCreateTobloc} >Confirme</button>
+			<button className='cancel-blocked' onClick={() => handleshowBlocked(false)}>cancel</button>
 		</div>
     </div>
   );
