@@ -133,11 +133,6 @@ Jaune ecrit =>     #ffd27d
     display: flex;
     position: relative;
 }
-/* .people-list .about-containers {
-    float: left;
-    padding-left: 8px
-} */
-
 
 .people-list .status {
     color: #999;
@@ -212,7 +207,8 @@ Jaune ecrit =>     #ffd27d
     width: 100%;
     height: 20%;
     border-bottom: 2px solid #FFD233;
-    font-size: 25px;
+    font-size: x-large;
+    overflow: hidden;
 }
 
 .chat .chat-header img {
@@ -296,6 +292,7 @@ Jaune ecrit =>     #ffd27d
 #img-add-user-in-chan:not(:hover) {
     transition: .5s;
 }
+
 
 .chat .chat-history {
     position: relative;
@@ -516,15 +513,6 @@ Jaune ecrit =>     #ffd27d
     width: 80%;
 }
 
-/* #trick-btn-slash {
-    position: absolute;
-    margin-top: 13%;
-    margin-left: 15%;
-    width: 50%;
-    border: 1px solid;
-    transform: rotate(45deg);
-    z-index: 3;
-} */
 
 #btn2 {
     height: 50%;
@@ -605,36 +593,6 @@ Jaune ecrit =>     #ffd27d
 #inGame {
     background-color: blue;
 }
-
-
-
-
-
-
-
-/* @media only screen and (min-width: 768px) and (max-width: 992px) {
-    .chat-app .chat-list {
-        height: 650px;
-        overflow-x: auto
-    }
-    .chat-app .chat-history {
-        height: 600px;
-        overflow-x: auto;
-        border: 1200px;
-    }
-} */
-
-/* @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
-    .chat-app .chat-list {
-        height: 480px;
-        overflow-x: auto
-    }
-    .chat-app .chat-history {
-        height: calc(100vh - 350px);
-        overflow-x: auto
-    }
-} */
-
 
 
 .list-of-direct-msg{
@@ -740,21 +698,15 @@ Jaune ecrit =>     #ffd27d
     width: 7%; /* Nouvelle hauteur lorsque survolé */
 }
 
-.btn-on-header{
-	display: flex;
-	height: 30%;
-}
+
 
 /* Styles pour les boutons */
 .icon-container {
-    display: flex; /* Affichage en ligne des boutons */
+    display: flex; 
   }
   
   .icon-button {
-    width: 10%; /* Largeur en pourcentage */
-    /* height: auto;
-    border: none; */
-    /* margin: 1%;  */
+    width: 10%; 
     background-color: transparent;
     padding: 0;
     cursor: pointer;
@@ -764,67 +716,47 @@ Jaune ecrit =>     #ffd27d
   
   .icon-button:hover {
     transform: scale(1.2); /* Zoom au survol */
-    /* border-color: #3333336d; */
   }
   
   /* Styles pour les images des boutons */
   .icon-button img {
     width: 70%;
     height: 70%;
-    object-fit: contain; /* Ajuste l'image à l'intérieur du bouton */
+    object-fit: contain; 
   }
+
+  .param-chan-button {
+    position: relative;
+    width: 100%;
+    height: 40%;
+    left: 70%;
+
+}
   
-
-.leave-the-chan{
-	height: 20px;
-	width: 20px;
-	margin-left: 2%;
-	margin-top: 0.7%;
-	border: none;
-	background: url("/ft_transcendence/src/image/leave_icon.svg") center no-repeat;
-	background-size: contain;
-	transition: width 0.3s;
-}
-.leave-the-chan:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
-}
-
-.button_low{
-	width: 100%;
-}
-
-.param-box{
-	width: 100%;
-}
-
 .play-btn{
-	height: 30px;
-	width: 30px;
-	margin-left: 90%;
-	border: none;
-	background: url("/ft_transcendence/src/image/play_btn.png") center no-repeat;
-	background-size: contain;
-	transition: width 0.3s;
+    position: relative;
+    left: 90%;
 }
-.play-btn:hover {
-    width: 8%; /* Nouvelle hauteur lorsque survolé */
-}
+
 
 .game-btn {
-	border-radius: 30%;
+	border-radius: 20%;
 	border: none;
 	background-color: #ed1418;
-	width: 30%;
-	height: 10%;
-	color: #FFD233;
-	background-image: linear-gradient(45deg, #2817e3, #7e32f9);
+    font-family: "Orbitron";
+    font-weight: bold;
+    font-size: 100%;
+	width: 80%;
+	height: 20=5%;
+	color: #ffd27d;
+	background-image: linear-gradient(45deg, #66315d, #7e32f9);
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 	animation: glow-border 2s linear infinite;
   }
   @keyframes glow-border {
 	0%, 100% {
 		border: 2px solid transparent;
-		box-shadow: 0 0 55px 5px rgba(212, 18, 18, 0.959);
+		box-shadow: 0 0 55px 5px rgba(105, 189, 241, 0.516);
 	}
 	50% {
 		/* border: 0px solid rgba(255, 0, 0, 0.6); */

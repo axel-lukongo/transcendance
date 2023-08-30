@@ -7,6 +7,13 @@ import CreateMsg from '../forms/createMessage';
 import { useState } from 'react';
 import { DELETE_CHANEL_USER_MUTATION } from '../../graphql/Mutation';
 import { useMutation } from '@apollo/client';
+
+import playImg from "/ft_transcendence/src/image/play_btn.png"
+import addUserImg from "/ft_transcendence/src/image/add-user.png"
+import settingImg from "/ft_transcendence/src/image/settings_btn.png"
+import leaveImg from "/ft_transcendence/src/image/exit_icon.svg"
+
+
 export interface theprops {
 	user: User,
 	chanel_focus: channelfocus;
@@ -94,14 +101,42 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
                         </div>
                     </div>: null
                 }
-                <div className='btn-on-header'>
-                    {(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? <button className='add-user-in-chan' onClick={handelClick}></button> : null}
-                    {(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? <button className='parametre-of-chan' onClick={handleChanParam}></button> : null}
-                    {(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? <button className='leave-the-chan' onClick={handlekick}></button> : null}
-                </div>
+                <div className="icon-container">
+					<div className='param-chan-button '>
+                    	{(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? 
+							<button title='add User' className='icon-button' onClick={handelClick}>
+								<img src={addUserImg} alt="add user" />
+							</button> 
+							: 
+							null
+						}
+                    	{(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? 
+							<button className='icon-button' title='setting' onClick={handleChanParam}>
+								<img src={settingImg} alt="setting" />
+							</button> 
+							: 
+							null
+						}
+                    	{(chanel_focus.id !== "" && chanel_focus.id !== "0") && chanel_focus.directMsg !== true ? 
+							<button title='leave channel' className='icon-button'  onClick={handlekick}>
+								<img src={leaveImg} alt="leave" />
+							</button> 
+							:
+							null
+						}
+                	</div>
+				</div>
             </div>
 			{playClicked ? <CreateMsg chan={chanel_focus} secondProp={" "} /> : null}
-      		{chanel_focus.directMsg === true? <button className='play-btn' onClick={handle_create_msg}></button>:null}
+      		{chanel_focus.directMsg === true ? 
+			<div className="icon-container">
+				<button className='icon-button play-btn' onClick={handle_create_msg}>
+				<img src={playImg} alt="play" />
+				</button>
+			</div>
+			: 
+			null
+			}
 	    </div>
     );
 }

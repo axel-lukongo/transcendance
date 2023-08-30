@@ -129,7 +129,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chan }) => {
 				  search: `?friendId=${otherId}`,
 				}}
 			  >
-				<button className="game-btn" >game</button>
+				<button className="game-btn" >JOIN GAME</button>
 			  </Link>
 			) : null}
 		  </div>
