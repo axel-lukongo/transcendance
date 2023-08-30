@@ -11,8 +11,7 @@ const AvatarBox = () => {
     const avatarFiles = e.target.files?.[0];
 
     if (avatarFiles) {
-      const maxSize = 35000; //3Ko
-      console.log('size', avatarFiles.size);
+      const maxSize = 35000; //3ko
 
       const allowedTypes = ['image/png', 'image/jpeg'];
       if (!allowedTypes.includes(avatarFiles.type)) {
