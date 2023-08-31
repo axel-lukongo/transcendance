@@ -18,7 +18,6 @@ export class AuthMiddleware implements NestMiddleware {
     if (!isMakeAuthenticationRequest ) {
       
       if (!token ) {
-		console.log(res);
         res.status(401).json({ message: 'Token manquant' });
         return;
       }

@@ -45,7 +45,6 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
     }, [wsContext]);
 
 	useEffect(() => {
-		console.log(updateState);
 		const ChangeState = () => {
 			let update = states.map( (contacts: IContactsLink ) => {
 				if (contacts.contact.id == updateState.id){

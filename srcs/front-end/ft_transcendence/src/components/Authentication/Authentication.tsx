@@ -3,7 +3,7 @@ import { Route, Routes} from 'react-router-dom';
 
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { CHECK_2AF, MAKE_AUTH } from './graphql/Query';
-import { CREATE_USER } from './graphql/Mutation';
+import { CREATE_USER, UPDATE_STATE } from './graphql/Mutation';
 
 import { SigninButton } from './micro-components/SignInButton';
 import { CreateUserForm } from './micro-components/CreateUserForm';
@@ -15,7 +15,7 @@ import Message from '../Message/message';
 import Contact from '../Contact/Contact';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import { WebSocketContext } from '../../WebSocketProvider';
-import { __CREATING__, __NEED_TFA__ } from '../../App';
+import { __CONNECTED_, __CREATING__, __NEED_TFA__ } from '../../App';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -33,6 +33,8 @@ const Authentication: FC = () => {
   
 
   const wsContext = useContext(WebSocketContext);
+
+  const [updateState] = useMutation(UPDATE_STATE);
   
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
@@ -197,6 +199,11 @@ const Authentication: FC = () => {
         }
         sessionStorage.setItem('user', JSON.stringify(user));
         wsContext?.updateUser(user);
+		updateState({
+			variables: {
+				state: __CONNECTED_
+			}
+		})
 
       }
     }, [AuthenticationData]);

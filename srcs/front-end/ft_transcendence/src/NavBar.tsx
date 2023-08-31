@@ -9,19 +9,22 @@ export default function NavBar() {
 	const wsContext = useContext(WebSocketContext);
 	const [updateState] = useMutation(UPDATE_STATE);
 	
-	const handleLogOut = () => {
-		updateState({
-			variables: {
-				state: __DISCONECTED__
-		}})
-		sessionStorage.removeItem('user');
-		wsContext?.updateUser(null);
-		window.location.reload();
+	const handleLogOut = async () => {
+		if (wsContext?.wsClient) {
+			updateState({
+				variables: {
+					state: __DISCONECTED__
+			}}).then((resp) => {
+				wsContext?.updateUser(null);
+				sessionStorage.removeItem('user');
+				window.location.reload();
+			})
+		}
 	}
 	
 	return (
 		<div id='nav-bar'>
-			<Link to ='/logout'>
+			<Link to ='/'>
 				<button className='log-out-button logo-box' onClick={handleLogOut}></button>
 			</Link>
 			<Link to="/">
