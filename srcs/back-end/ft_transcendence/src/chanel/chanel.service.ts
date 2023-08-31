@@ -19,8 +19,6 @@ export class ChanelService {
           private: createChanelInput.private,
           owner_id: createChanelInput.owner_id,
           chanel_name: createChanelInput.chanel_name,
-          chanel_size: createChanelInput.chanel_size,
-          max_users: createChanelInput.max_users,
 		  directMsg: createChanelInput.directMsg,
 		  interlocutor_id: createChanelInput.interlocutor_id,
 		  interlocutor_name: createChanelInput.interlocutor_name,

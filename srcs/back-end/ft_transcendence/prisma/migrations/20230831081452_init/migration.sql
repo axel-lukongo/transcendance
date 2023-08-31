@@ -3,13 +3,13 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "token" TEXT,
     "state" INTEGER NOT NULL,
+    "connection_status" INTEGER NOT NULL,
     "tfa_code" TEXT,
     "email" TEXT NOT NULL,
-    "intra_login" TEXT NOT NULL,
     "nickname" TEXT NOT NULL,
     "avatar" TEXT,
     "rank" TEXT NOT NULL DEFAULT 'Bronze',
-    "level" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "level" DOUBLE PRECISION NOT NULL DEFAULT 1,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -29,12 +29,12 @@ CREATE TABLE "Chanel" (
     "id" SERIAL NOT NULL,
     "owner_id" INTEGER NOT NULL,
     "chanel_name" TEXT NOT NULL,
-    "chanel_size" INTEGER NOT NULL,
-    "max_users" INTEGER NOT NULL,
     "logo" TEXT,
     "private" BOOLEAN NOT NULL DEFAULT true,
-    "interlocutor_id" INTEGER,
     "directMsg" BOOLEAN NOT NULL DEFAULT false,
+    "interlocutor_id" INTEGER,
+    "interlocutor_avatar" TEXT,
+    "interlocutor_name" TEXT,
     "AdminList" INTEGER[] DEFAULT ARRAY[]::INTEGER[],
 
     CONSTRAINT "Chanel_pkey" PRIMARY KEY ("id")
@@ -71,6 +71,7 @@ CREATE TABLE "Pong" (
     "loserId" INTEGER,
     "winnerId" INTEGER,
     "versusDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "start" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Pong_pkey" PRIMARY KEY ("id")
 );
@@ -79,13 +80,13 @@ CREATE TABLE "Pong" (
 CREATE TABLE "Player" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "positionX" DOUBLE PRECISION NOT NULL,
-    "positionY" DOUBLE PRECISION NOT NULL,
+    "positionX" DOUBLE PRECISION NOT NULL DEFAULT 10,
+    "positionY" DOUBLE PRECISION NOT NULL DEFAULT 50,
     "host" BOOLEAN DEFAULT false,
     "opponentPlayerId" INTEGER NOT NULL DEFAULT 0,
     "waitingRoomId" INTEGER NOT NULL,
-    "pongId" INTEGER,
     "ballId" INTEGER,
+    "pongId" INTEGER,
 
     CONSTRAINT "Player_pkey" PRIMARY KEY ("id")
 );
@@ -98,11 +99,21 @@ CREATE TABLE "WaitingRoom" (
 );
 
 -- CreateTable
+CREATE TABLE "PongInvite" (
+    "id" SERIAL NOT NULL,
+    "userId1" INTEGER NOT NULL,
+    "userId2" INTEGER NOT NULL,
+    "waitingRoomId" INTEGER NOT NULL,
+
+    CONSTRAINT "PongInvite_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Ball" (
     "id" SERIAL NOT NULL,
     "positionX" DOUBLE PRECISION NOT NULL DEFAULT 50,
     "positionY" DOUBLE PRECISION NOT NULL DEFAULT 50,
-    "directionX" DOUBLE PRECISION NOT NULL DEFAULT 20,
+    "directionX" DOUBLE PRECISION NOT NULL DEFAULT -20,
     "directionY" DOUBLE PRECISION NOT NULL DEFAULT 10,
 
     CONSTRAINT "Ball_pkey" PRIMARY KEY ("id")
@@ -122,6 +133,7 @@ CREATE TABLE "Message" (
     "id" SERIAL NOT NULL,
     "sender_id" INTEGER NOT NULL,
     "channel_id" INTEGER,
+    "invite_game" BOOLEAN DEFAULT false,
     "content" TEXT NOT NULL,
     "sent_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -135,9 +147,6 @@ CREATE UNIQUE INDEX "User_token_key" ON "User"("token");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_intra_login_key" ON "User"("intra_login");
-
--- CreateIndex
 CREATE UNIQUE INDEX "User_nickname_key" ON "User"("nickname");
 
 -- CreateIndex
@@ -145,6 +154,12 @@ CREATE UNIQUE INDEX "Contact_user_id_contact_id_key" ON "Contact"("user_id", "co
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Player_userId_key" ON "Player"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PongInvite_waitingRoomId_key" ON "PongInvite"("waitingRoomId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PongInvite_userId1_userId2_key" ON "PongInvite"("userId1", "userId2");
 
 -- AddForeignKey
 ALTER TABLE "Contact" ADD CONSTRAINT "Contact_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -154,6 +169,9 @@ ALTER TABLE "Contact" ADD CONSTRAINT "Contact_contact_id_fkey" FOREIGN KEY ("con
 
 -- AddForeignKey
 ALTER TABLE "Chanel" ADD CONSTRAINT "Chanel_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Chanel" ADD CONSTRAINT "Chanel_interlocutor_id_fkey" FOREIGN KEY ("interlocutor_id") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_banned" ADD CONSTRAINT "user_banned_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -175,6 +193,9 @@ ALTER TABLE "Player" ADD CONSTRAINT "Player_ballId_fkey" FOREIGN KEY ("ballId") 
 
 -- AddForeignKey
 ALTER TABLE "Player" ADD CONSTRAINT "Player_waitingRoomId_fkey" FOREIGN KEY ("waitingRoomId") REFERENCES "WaitingRoom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PongInvite" ADD CONSTRAINT "PongInvite_waitingRoomId_fkey" FOREIGN KEY ("waitingRoomId") REFERENCES "WaitingRoom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ToBloc" ADD CONSTRAINT "ToBloc_blocked_id_fkey" FOREIGN KEY ("blocked_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

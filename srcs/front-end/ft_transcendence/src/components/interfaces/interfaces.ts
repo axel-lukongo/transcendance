@@ -154,8 +154,6 @@ export interface channelfocus  {
 	id: string,
 	owner_id: string
 	chanel_name: string,
-	chanel_size: string,
-	max_users: string,
 	logo: string,
 	directMsg: boolean,
 	interlocutor_name: string,

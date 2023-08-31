@@ -14,8 +14,6 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 		getChannelByOwnersAndInterlocutor(userId1: $userId1, userId2: $userId2) {
 			id
 			chanel_name
-			chanel_size
-			max_users
 			owner_id
 			logo
 			interlocutor_id
@@ -66,8 +64,6 @@ export const CHANELS_LIST = gql`query GetChanelList($private_chan: Boolean!) {
 		owner_id
 		chanel_name
 		id
-		chanel_size
-		max_users
 		logo
 	}
 }`;

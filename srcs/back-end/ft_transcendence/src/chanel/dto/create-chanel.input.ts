@@ -12,12 +12,6 @@ export class CreateChanelInput {
   @Field(() => String)
   chanel_name: string;
 
-  @Field(() => Int)
-  chanel_size: number;
-
-  @Field(() => Int)
-  max_users: number;
-
   @Field(() => String, {nullable: true})
   logo: string;
 

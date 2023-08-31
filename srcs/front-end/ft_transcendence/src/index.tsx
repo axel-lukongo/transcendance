@@ -38,8 +38,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     // Gérer les erreurs réseau ici
     if (networkError.message.includes('401')) {
-      sessionStorage.removeItem('user');
-      window.location.reload();
+    //   sessionStorage.removeItem('user');
+    //   window.location.reload();
       console.log('erreur 401');
     }
     else if (networkError.message.includes('404'))

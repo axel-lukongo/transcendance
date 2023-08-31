@@ -37,6 +37,7 @@ export const LIST_CONTACT = gql`query GetListContact {
 			avatar
 			level
 			rank
+			state
 		}
 	}
 }`

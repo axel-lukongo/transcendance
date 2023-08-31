@@ -4,6 +4,7 @@ import AvatarBox from './micro-components/Avatar';
 import HistoryMatch from './micro-components/MatchHistory';
 import { TfaToggleButton } from './micro-components/TfaToogleButton';
 import { User } from '../interfaces/interfaces';
+import NavBar from '../../NavBar';
 
 import './css/Home.css';
 import MatchStatistic from './micro-components/MatchStatistic';
@@ -11,21 +12,19 @@ import MatchStatistic from './micro-components/MatchStatistic';
 
 
 const Home = () => {
+	
   const userFromStorageString = sessionStorage.getItem('user');
   let userFromStorage: User | null = null;
+
   if (userFromStorageString && userFromStorageString !== 'undefined')
     userFromStorage = JSON.parse(userFromStorageString);
   
-	const handleLogOut = () => {
-		sessionStorage.removeItem('user');
-		window.location.reload();
-	}
 
   return (
     <div className='Home'>
       {userFromStorage && (
-        <>
           <div className='screen-box'>
+			<NavBar />
             
             <div className="stat-box profil-box">
               <MatchStatistic  />
@@ -52,23 +51,7 @@ const Home = () => {
                 <div className="movement-ball"></div>
               </button>
             </Link>
-            <Link to ='/'>
-              <button className='log-out-button logo-box' onClick={handleLogOut}></button>
-            </Link>
-            <Link to="/">
-              <button className='home-button logo-box'></button>
-            </Link>
-            <Link to="/leaderBoard">
-              <button className='leader-board-button logo-box'></button>
-            </Link>
-            <Link to="/message">
-              <button className='message-button logo-box'></button>
-            </Link>
-            <Link to="/contact">
-              <button className='contact-button logo-box'></button>
-            </Link>
           </div>
-        </>
       )}
     </div>
   );

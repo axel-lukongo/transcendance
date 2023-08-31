@@ -48,8 +48,6 @@ model Chanel {
 	id					Int				@id @default(autoincrement())
 	owner_id			Int
 	chanel_name			String
-	chanel_size			Int
-	max_users			Int
 	logo				String?
 	private				Boolean			@default(true)
 	owner				User			@relation("Owner", fields: [owner_id], references: [id])

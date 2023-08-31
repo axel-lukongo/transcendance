@@ -5,6 +5,8 @@ import AddContact from "./micro-components/AddContact";
 import './css/Contact.css'
 import { MyBlockedList } from "./micro-components/ListBlocked";
 import { Link } from "react-router-dom";
+import NavBar from "../../NavBar";
+
 export default function Contact() {
 
     const user = JSON.parse(sessionStorage.getItem('user') || "");
@@ -39,9 +41,7 @@ export default function Contact() {
     
 	return (
     <div>
-        <Link to="/">
-        <button className='home-button logo-box'></button>
-      </Link>
+		<NavBar></NavBar>
 	<div className="Contact_pad">
 			<React.Fragment>
 				<div className="box_request">

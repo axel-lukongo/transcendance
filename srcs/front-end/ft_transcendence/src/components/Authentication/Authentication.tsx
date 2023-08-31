@@ -213,6 +213,7 @@ return (
         <Route path="/message" element={<Message />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/leaderBoard' element={<LeaderBoard />} />
+		<Route path='/logout' element={<Authentication />}/>
       </Routes>
     ) : (
       <>

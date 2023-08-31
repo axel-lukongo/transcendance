@@ -13,12 +13,6 @@ export class Chanel {
 	chanel_name: string;
 
 	@Field({nullable: true})
-	chanel_size: number;
-
-	@Field()
-	max_users: number;
-
-	@Field({nullable: true})
 	logo: string;
 
 	@Field(() => Boolean)

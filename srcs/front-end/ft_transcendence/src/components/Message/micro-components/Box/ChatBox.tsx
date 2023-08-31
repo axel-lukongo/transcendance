@@ -20,8 +20,6 @@ type channelfocus = {
 	chanel_name: string,
 	interlocutor_id : number;
 	owner_id: string;
-	chanel_size: string,
-	max_users: string,
 	logo: string,
 }
 

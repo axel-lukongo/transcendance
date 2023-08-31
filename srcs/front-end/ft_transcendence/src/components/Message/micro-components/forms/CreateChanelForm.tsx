@@ -15,8 +15,6 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 
 	const [chanel, setChanel] = useState({
 		chanel_name: "",
-		chanel_size: "",
-		max_users: "",
 		logo: "",
 		private: true
 	});
@@ -31,8 +29,6 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				input: {
 					owner_id: user.id, 
 					chanel_name: chanel.chanel_name,
-					chanel_size: parseInt(chanel.chanel_size),
-					max_users: parseInt(chanel.max_users),
 					logo: chanel.logo,
 					private: chanel.private
 				}
@@ -87,26 +83,6 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 					type="textx"
 					name="chanel_name"
 					value={chanel.chanel_name}
-					placeholder="type her..."
-					onChange={handleChange}
-				/><br/>
-				<label htmlFor="chanel_size">
-				chanel_size
-				</label><br />
-				<input
-					type="text"
-					name="chanel_size"
-					value={chanel.chanel_size}
-					placeholder="type her..."
-					onChange={handleChange}
-				/><br/>
-				<label htmlFor="max_users">
-				max_users
-				</label><br />
-				<input
-					type="text"
-					name="max_users"
-					value={chanel.max_users}
 					placeholder="type her..."
 					onChange={handleChange}
 				/><br/>

@@ -6,8 +6,6 @@ import { CREATE_MSG } from '../../graphql/Mutation';
 type channelfocus = {
 	id: string,
 	chanel_name: string,
-	chanel_size: string,
-	max_users: string,
 	logo: string,
 }
 interface CreateMsgProps {

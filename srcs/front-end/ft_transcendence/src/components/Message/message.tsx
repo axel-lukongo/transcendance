@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Chanel } from '../interfaces/interfaces';
+import NavBar from '../../NavBar';
 import Chanels from './micro-components/Chanels';
 import ChanelsRequest from './micro-components/ChanelsRequests';
 import HeaderChanel from './micro-components/Box/HeaderChanel';
@@ -55,8 +56,6 @@ const Message = () => {
 	const [chanel_focus, setChanelFocus] = useState({
 		id: "",
 		chanel_name: "",
-		chanel_size: "",
-		max_users: "",
 		logo: "",
 		owner_id: "",
 		directMsg: false,
@@ -90,8 +89,6 @@ const Message = () => {
 		setChanelFocus({
 			id: element.id.toString(),
 			chanel_name: element.chanel_name,
-			chanel_size: element.chanel_size.toString(),
-			max_users: element.max_users.toString(),
 			logo: element.logo,
 			owner_id: element.owner_id.toString(),
 			directMsg: element.directMsg,
@@ -295,9 +292,7 @@ const Message = () => {
 
 	return (
 		<div className="container">
-        <Link to="/">
-          <button className='home-button logo-box'></button>
-        </Link>
+			<NavBar></NavBar>
 			  <div className="screen-box chat-app">
 				<div className='side-bar'>
 					<div className='nav_section_message'>

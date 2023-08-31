@@ -19,8 +19,6 @@ type Chanel {
   id: Int!
   owner_id: Int!
   chanel_name: String!
-  chanel_size: Float
-  max_users: Float!
   logo: String
   private: Boolean!
   interlocutor_id: Float
@@ -242,8 +240,6 @@ input CreateChanelInput {
   private: Boolean!
   owner_id: Int!
   chanel_name: String!
-  chanel_size: Int!
-  max_users: Int!
   logo: String
   interlocutor_id: Int
   directMsg: Boolean
@@ -255,8 +251,6 @@ input UpdateChanelInput {
   private: Boolean
   owner_id: Int
   chanel_name: String
-  chanel_size: Int
-  max_users: Int
   logo: String
   interlocutor_id: Int
   directMsg: Boolean
