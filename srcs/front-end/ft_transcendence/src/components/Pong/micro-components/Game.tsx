@@ -105,7 +105,7 @@ interface GameProps {
 
   useEffect(() => {
     const handleUnload = async () => {
-      if (player && userFromStorage) {
+      // if (player && userFromStorage) {
         endPong({
           variables: {
             userId: userFromStorage?.id
@@ -118,15 +118,15 @@ interface GameProps {
           console.error('Error ending pong:', error);
         });
         sessionStorage.removeItem('playerMap');
-      }
+      // }
     };
   
-    window.addEventListener('unload', handleUnload);
+    window.addEventListener('beforeunload', handleUnload);
   
     return () => {
-      window.removeEventListener('unload', handleUnload);
+      window.removeEventListener('beforeunload', handleUnload);
     };
-  }, [player, userFromStorage]);
+  }, );
   
   
       return (

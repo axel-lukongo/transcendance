@@ -31,7 +31,9 @@ export default function MyPendingRequest({user, refreshPending}: IMyPendingReque
 		<div>
 			{
 				data.myContactRequest.map( (element: IContactsLink) => (
-					<h2>{element.contact.nickname}</h2>
+					<h2 key={element.id} >
+						{element.contact.nickname}
+					</h2>
 				))
 			}
 		</div>

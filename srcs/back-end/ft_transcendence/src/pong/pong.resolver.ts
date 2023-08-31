@@ -235,6 +235,9 @@ export class PongResolver {
                         @Context() context : any) {
     
     let player = await this.player.setPlayer(context.req.userId, waitingRoomId);
+
+     //STATE IN GAME
+    await this.user.updateState(__IN_GAME__, context);
                           
     const listPlayers = await this.player.findAllPlayersInWaitingRoom(waitingRoomId);
     
@@ -268,9 +271,7 @@ export class PongResolver {
         pongId: pong.id,
       }
       const otherPlayer = await this.player.updatePlayer(otherPlayerData);
-
-      //STATE IN GAME
-      await this.user.updateState(__IN_GAME__, context);
+     
 
       return { player, ball, otherPlayer, pong };
     }
@@ -289,9 +290,6 @@ export class PongResolver {
             const ball = await this.ball.findUnique(player.ballId);
             const pong = await this.findPong(player.pongId);
 
-            //STATE IN GAME
-            await this.user.updateState(__IN_GAME__, context);
-
             resolve({ player , ball, otherPlayer , pong });
           }
         }, 1000);
@@ -302,6 +300,9 @@ export class PongResolver {
   @Mutation(() => JoinPongResponse)
   async joinPong( @Args('userId', { type: () => Int }) userId: number, @Context() context: any) {
 
+
+      //STATE IN GAME
+      await this.user.updateState(__IN_GAME__, context);
     let player = await this.player.setPlayer(userId, 1);
     if (!player)
     {
@@ -355,8 +356,7 @@ export class PongResolver {
       }
       const otherPlayer = await this.player.updatePlayer(otherPlayerData);
 
-      //STATE IN GAME
-      await this.user.updateState(__IN_GAME__, context);
+  
 
       return { player, ball, otherPlayer, pong };
     }
@@ -373,9 +373,6 @@ export class PongResolver {
             const otherPlayer = await this.player.findPlayer(player.opponentPlayerId);
             const ball = await this.ball.findUnique(player.ballId);
             const pong = await this.findPong(player.pongId);
-
-            //STATE IN GAME
-            await this.user.updateState(__IN_GAME__, context);
 
             resolve({ player , ball, otherPlayer , pong });
           }
@@ -422,10 +419,6 @@ export class PongResolver {
       }
     }
     await this.player.removePlayer(player.id);
-    
-    //STATE IN GAME
-    await this.user.updateState(__CONNECTED__, context);
-  
     return 'Pong ended';
   }
 
