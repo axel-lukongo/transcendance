@@ -35,9 +35,7 @@ let ChanelService = exports.ChanelService = class ChanelService {
                 },
             });
             let logo = createChanelInput.logo;
-            console.log("teste11===>>>", createChanelInput);
-            if (createChanelInput.directMsg === false) {
-                console.log("teste12");
+            if (createChanelInput.directMsg === false || createChanelInput.directMsg === undefined) {
                 logo = createChanelInput.logo != '' ?
                     'http://localhost:4000/uploads/' + await (0, upload_utils_1.saveBase64ToFileChan)(createChanelInput.logo, chanelRes.id)
                     :

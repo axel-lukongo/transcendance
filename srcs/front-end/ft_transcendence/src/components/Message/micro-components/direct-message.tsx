@@ -34,6 +34,19 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	const [ShowProfil ,setShowProfil] = useState(false);
 	const [SelectedUserIndex ,setSelectedUserIndex] = useState(0);
 
+	// props.handleChanelFocus ( {
+	// 	id: 0,
+	// 	chanel_name: "",
+	// 	chanel_size: 0,
+	// 	max_users: 0,
+	// 	logo: "",
+	// 	owner_id: 0,
+	// 	directMsg: false,
+	// 	interlocutor_id: 0,
+	// 	interlocutor_name: "",
+	// 	interlocutor_avatar: "",
+	// })
+
 
 	const [selectedContactId, setSelectedContactId] = useState<number | null>(null);
 	
@@ -52,7 +65,25 @@ export default function Direct_message(props: IPrivateMessageProps) {
 
 	/* //////////////////////////////////////////////////////// */
 	/* Use Effects */
+	useEffect(() => {
+		props.handleChatBox(3);
+		// props.handleChanelFocus( {
+		// 	id: 0,
+		// 	chanel_name: "",
+		// 	chanel_size: 0,
+		// 	max_users: 0,
+		// 	logo: "",
+		// 	owner_id: 0,
+		// 	directMsg: false,
+		// 	interlocutor_id: 0,
+		// 	interlocutor_name: "",
+		// 	interlocutor_avatar: "",
+		// })
+
+	}, [])
+
 	
+
 	useEffect(() => {
 		refetch();
 	}, [handleTobloc])
