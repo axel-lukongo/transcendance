@@ -40,8 +40,6 @@ const Creat_direct_msg = ({interlocutor, handlechanelfocus}: MyProps) => {
 					input: {
 						owner_id: parseInt(user.id, 10),
 						chanel_name: user.nickname,
-						chanel_size: 2,
-						max_users: 2,
 						interlocutor_id: interlocutor.id,
 						logo: user.avatar,
 						interlocutor_name: interlocutor.nickname,
