@@ -19,32 +19,26 @@ export class AuthenticationService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserInput: CreateUserInput) {
+
+    let  {avatar, ...restCreateUserInput} = createUserInput;
     try {
       const user = await this.prisma.user.create({
         data: {
-          ...createUserInput,
+          ...restCreateUserInput,
           state: __CONNECTED__,
           connection_status: __CREATING__,
         } 
       });
 
-
       //GENERATE ACCES TOKEN
       const token = generateAccessToken(user.id);
-      
-      // DEFINE THE AVATAR IMG
-      let avatar = createUserInput.avatar;
-      avatar = avatar ? 
-      'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, user.id) 
-      :
-      'http://localhost:4000/uploads/default_avatar.jpg';
 
       const updatedUser =  this.prisma.user.update({
         where: { id: user.id },
         data: { 
-          token,
-           avatar }
-      });
+          token
+        }
+        });
 
       return updatedUser;
     } 

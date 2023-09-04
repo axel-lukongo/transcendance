@@ -39,12 +39,12 @@ export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInpu
 		logo
 		interlocutor_id
 		private
-		directMsg
-		interlocutor_name
-		interlocutor_avatar
+		interlocutor{
+			nickname
+			avatar
+		}
 	}
-}`;
-
+}`
 
 export const QUITE_CHANEL = gql`mutation QuiteChanel($input: UpdateChanelUserInput!) {
 	deleteChanelUser(key: $input) {

@@ -58,8 +58,6 @@ async function main() {
 	// 		update: {},
 	// 		create: {
 	// 			chanel_name: "toto_" + i,
-	// 			chanel_size: i * 2,
-	// 			max_users: i * 4,
 	// 			owner_id: i
 	// 		}
 	// 	})

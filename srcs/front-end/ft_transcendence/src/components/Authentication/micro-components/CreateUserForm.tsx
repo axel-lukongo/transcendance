@@ -19,7 +19,7 @@ interface PropsCreateUser {
         const file = files[0];
         const fileType = file.type;
         const fileSize = file.size;
-        const maxSize = 3500; //3Ko
+        const maxSize = 50000; //3Ko
   
         // Vérifications du format et de la taille du fichier
         if (fileType === 'image/png' || fileType === 'image/jpeg') {
@@ -28,7 +28,7 @@ interface PropsCreateUser {
             console.log('Fichier valide :', avatar);
             setAvatarError('');
           } else {
-            setAvatarError('Please select a PNG or JPG image File size should not exceed 3Ko.');
+            setAvatarError('Please select a PNG or JPG image File size should not exceed 50Ko.');
           }
         } else {
           setAvatarError('Please select a PNG or JPG type image.');

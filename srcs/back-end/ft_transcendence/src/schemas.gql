@@ -21,6 +21,7 @@ type Chanel {
   chanel_name: String!
   logo: String
   private: Boolean!
+  owner: User
   interlocutor_id: Float
   directMsg: Boolean
   interlocutor: User

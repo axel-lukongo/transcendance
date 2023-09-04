@@ -37,8 +37,6 @@ export default function Direct_message(props: IPrivateMessageProps) {
 	// props.handleChanelFocus ( {
 	// 	id: 0,
 	// 	chanel_name: "",
-	// 	chanel_size: 0,
-	// 	max_users: 0,
 	// 	logo: "",
 	// 	owner_id: 0,
 	// 	directMsg: false,
@@ -70,8 +68,6 @@ export default function Direct_message(props: IPrivateMessageProps) {
 		// props.handleChanelFocus( {
 		// 	id: 0,
 		// 	chanel_name: "",
-		// 	chanel_size: 0,
-		// 	max_users: 0,
 		// 	logo: "",
 		// 	owner_id: 0,
 		// 	directMsg: false,

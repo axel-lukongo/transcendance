@@ -15,7 +15,7 @@ import Message from '../Message/message';
 import Contact from '../Contact/Contact';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import { WebSocketContext } from '../../WebSocketProvider';
-import { __CONNECTED_, __CREATING__, __NEED_TFA__ } from '../../App';
+import { __ACCESS__, __CONNECTED_, __CREATING__, __NEED_TFA__ } from '../../App';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
 
@@ -91,7 +91,7 @@ const Authentication: FC = () => {
             avatar,
             tfa_code,
             level,
-			rank
+			    rank
           }
           sessionStorage.setItem('user', JSON.stringify(user));
           wsContext?.updateUser(user);
@@ -120,7 +120,7 @@ const Authentication: FC = () => {
             avatar,
             tfa_code,
             level,
-			rank
+			      rank
           }
           sessionStorage.setItem('user', JSON.stringify(user));
           wsContext?.updateUser(user);
@@ -184,8 +184,9 @@ const Authentication: FC = () => {
           avatar,
           tfa_code,
           level,
-		  rank
+		      rank
         }
+        console.log('user front', user);
         
         if (connection_status === __CREATING__)
         {
@@ -213,7 +214,7 @@ const Authentication: FC = () => {
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 return (
   <div>
-    {(JSON.parse(sessionStorage.getItem('user') || '{}').connection_status === 1) ? (
+    {(JSON.parse(sessionStorage.getItem('user') || '{}').connection_status === __ACCESS__) ? (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pong" element={<Pong  />} />

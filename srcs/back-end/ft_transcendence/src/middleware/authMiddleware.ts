@@ -21,7 +21,6 @@ export class AuthMiddleware implements NestMiddleware {
         res.status(401).json({ message: 'Token manquant' });
         return;
       }
-      
       async function check() {
         
         try {
@@ -45,7 +44,6 @@ export class AuthMiddleware implements NestMiddleware {
           res.status(401).json({ message: 'Token invalide' });
         }
       }
-
       check();
     }
     else

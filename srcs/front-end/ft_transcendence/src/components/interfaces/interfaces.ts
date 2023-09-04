@@ -18,12 +18,11 @@ export interface Chanel {
 	id: number;
 	owner_id: number;
 	chanel_name: string;
-	chanel_size: number;
-	max_users: number;
 	logo: string;
 	interlocutor_id: number;
 	directMsg: boolean;
-	// interlocutor: User;
+	interlocutor: User;
+	owner: User;
 	interlocutor_name: string;
 	interlocutor_avatar: string;
 }
@@ -158,7 +157,8 @@ export interface channelfocus  {
 	directMsg: boolean,
 	interlocutor_name: string,
 	interlocutor_avatar: string,
-	// interlocutor: User,
+	interlocutor: User,
+	owner : User,
 }
 
 export interface IRequest {

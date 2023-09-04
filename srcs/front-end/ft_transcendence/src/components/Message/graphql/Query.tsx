@@ -24,6 +24,10 @@ export const GET_CHAN_BY_OWNER_AND_INTERLOCUTOR = gql`
 				nickname
 				avatar
 			}
+			owner{
+				nickname
+				avatar
+			}
 		}
 	}
 `;

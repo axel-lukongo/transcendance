@@ -21,11 +21,6 @@ export class UsersService {
   }
   
   async update(id: number, data: UpdateUserInput) {
-	  data.avatar = data.avatar ? 
-      'http://localhost:4000/uploads/' + await saveBase64ToFile(data.avatar, id) 
-      :
-      'http://localhost:4000/uploads/default_avatar.jpg';
-	  
     return this.prisma.user.update({
       where: {id: data.id},
       data

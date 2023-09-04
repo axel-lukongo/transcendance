@@ -8,6 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 import { UpdateAuthenticationInput } from './dto/update-authentication.input';
 import { UpdateUserInput } from 'src/users/dto/update-user.input';
 import { UsersResolver } from 'src/users/users.resolver';
+import { saveBase64ToFile } from 'src/utils/upload.utils';
 
 
 
@@ -27,11 +28,20 @@ export class AuthenticationResolver {
     @Context() context) {
       if (context.req.userId)
       {
+      
+        let  {avatar, ...restupdateAuthenticationInput} = updateAuthenticationInput;
+      // DEFINE THE AVATAR IMG
+      avatar = avatar ? 
+      'http://localhost:4000/uploads/' + await saveBase64ToFile(avatar, context.req.userId) 
+      :
+      'http://localhost:4000/uploads/default_avatar.jpg';
+
         try {
           const updateUserDataInput: UpdateUserInput = {
-            ...updateAuthenticationInput,
+            ...restupdateAuthenticationInput,
             id:  context.req.userId,
             connection_status: __ACCESS__,
+            avatar,
             state: __CONNECTED__,
           };
            return await this.userResolveur.updateUser(updateUserDataInput);

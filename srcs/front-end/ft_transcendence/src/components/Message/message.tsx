@@ -62,7 +62,8 @@ const Message = () => {
 		interlocutor_id: 0,
 		interlocutor_name: "",
 		interlocutor_avatar: "",
-		// interlocutor: initialInterlocutor
+		interlocutor: initialInterlocutor,
+		owner: initialInterlocutor
 	});
 
 	const [refecthChanels, setRefetchChanel] = useState(false);
@@ -73,7 +74,7 @@ const Message = () => {
 
 	const [chatBox, setChatBox] = useState(__CHAT__);
 
-	const [is_chanel] = useState(true);
+	// const [is_chanel] = useState(true);
 
 
 	/* //////////////////////////////////////////////////////// */
@@ -95,7 +96,8 @@ const Message = () => {
 			interlocutor_id: element.interlocutor_id,
 			interlocutor_avatar: element.interlocutor_avatar,
 			interlocutor_name: element.interlocutor_name,
-			// interlocutor: element.interlocutor
+			interlocutor: element.interlocutor,
+			owner: element.owner,
 		});
 	}
 

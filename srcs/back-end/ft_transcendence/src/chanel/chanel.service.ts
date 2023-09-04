@@ -98,7 +98,7 @@ export class ChanelService {
           },
         ],
       },
-	  include: {interlocutor: true}
+      include: {interlocutor: true, owner: true}
 
     });
   }

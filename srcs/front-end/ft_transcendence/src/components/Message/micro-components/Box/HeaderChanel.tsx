@@ -22,12 +22,18 @@ export interface theprops {
 	handleChanelRefetch: () => void;
 
 }
-
+const initialInterlocutor: User = {
+	avatar: "",
+	email: "",
+	id: 0,
+	nickname: "",
+	token: "",
+	level: 0,
+	rank: ""
+  };
 // type channelfocus = {
 // 	id: string,
 // 	chanel_name: string,
-// 	chanel_size: string,
-// 	max_users: string,
 // 	logo: string,
 // }
 
@@ -69,14 +75,14 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
 			handlechanelfocus ( {
 				id: 0,
 				chanel_name: "",
-				chanel_size: 0,
-				max_users: 0,
 				logo: "",
 				owner_id: 0,
 				directMsg: false,
 				interlocutor_id: 0,
 				interlocutor_name: "",
 				interlocutor_avatar: "",
+				interlocutor: initialInterlocutor,
+				owner: initialInterlocutor
 			})
 		  }).catch(() => {
 			console.log("action denied ",);
@@ -87,9 +93,8 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
 
 	if(chanel_focus.directMsg === true){
 
-		chanel_focus.chanel_name = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_name:chanel_focus.chanel_name
-		// console.log("====>>>> ",chanel_focus)
-		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor_avatar: chanel_focus.logo
+		chanel_focus.chanel_name = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor.nickname:chanel_focus.owner.nickname
+		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor.avatar: chanel_focus.owner.avatar
 	}
     return (
         <div className="chat-header">
