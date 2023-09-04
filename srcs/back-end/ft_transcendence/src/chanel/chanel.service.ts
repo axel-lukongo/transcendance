@@ -25,6 +25,7 @@ export class ChanelService {
 		  interlocutor_avatar: createChanelInput.interlocutor_avatar,
 		//   logo: createChanelInput.logo
         },
+		include: {interlocutor: true, owner: true}
       })
     //   console.log('ici====>>> ',createChanelInput.logo);
 	
