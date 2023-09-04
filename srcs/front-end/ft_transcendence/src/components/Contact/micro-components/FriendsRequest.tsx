@@ -44,7 +44,7 @@ export default function FriendsRequest({refetchContact, refetchProps, user}: IPr
 		{
 			contacts.map((element: IContactsLink) => (
                 <div key={element.id} className="card">
-                    <div className="avatar"><img src={user.avatar} alt="" id="avatar_contact" /></div>
+                    <div className="avatar"><img src={element.contact.avatar} alt="" id="avatar_contact" /></div>
                     <p id="card_p">{element.contact.nickname.toString()}</p>
                     <div className="response">
                         <AccepContact 

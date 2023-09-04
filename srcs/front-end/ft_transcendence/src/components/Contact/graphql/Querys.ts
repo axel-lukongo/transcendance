@@ -10,6 +10,7 @@ export const CONTACTS = gql`query GetRequestList {
 			nickname
 			email
 			token
+			avatar
 		}
 	  }
 }`
