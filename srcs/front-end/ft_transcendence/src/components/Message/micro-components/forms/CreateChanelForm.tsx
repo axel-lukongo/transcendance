@@ -47,7 +47,6 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 
 	const handleLogo = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
-		console.log(event.target.files);
 		if (event.target.files && event.target.files.length > 0) {
 			if (event.target.files[0].size <= (2 * 1024 * 1024)) {
 				const reader = new FileReader();
@@ -66,7 +65,6 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 			setChanel({...chanel, private: true});
 		else
 			setChanel({...chanel, private: false});
-		// console.log(e);
 	}
 
 	/* //////////////////////////////////////////////////////// */

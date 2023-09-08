@@ -31,7 +31,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     // Gérer les erreurs GraphQL ici
     graphQLErrors.forEach(error => {
-      // console.log('Erreur GraphQL :', error.message);
+    //   console.log('Erreur GraphQL :', error.message);
     });
   }
   
@@ -40,12 +40,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (networkError.message.includes('401')) {
       sessionStorage.removeItem('user');
       window.location.reload();
-      console.log('erreur 401');
     }
-    else if (networkError.message.includes('404'))
-      console.log('erreur 404');
-
-    console.log('Erreur réseau :', networkError);
+    // console.log('Erreur réseau :', networkError);
 
   }
 });

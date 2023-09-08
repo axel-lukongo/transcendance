@@ -60,7 +60,7 @@ const App = () => {
 			}
 		  }
 	  
-		  const handleUnload = () => {
+		  const handleUnload = (event: any ) => {
 			updateState({
 			  variables: {
 				state: __DISCONECTED__
@@ -71,11 +71,11 @@ const App = () => {
 		  }
 	  
 		  document.addEventListener("visibilitychange", handleVisibiltyChange);
-		  window.addEventListener('beforeunload', handleUnload);
+		  window.addEventListener('unload', handleUnload);
 	  
 		  return () => {
 			document.removeEventListener("visibilitychange", handleVisibiltyChange);
-			window.removeEventListener("beforeunload", handleUnload);
+			window.removeEventListener("unload", handleUnload);
 		  };
 
 		}

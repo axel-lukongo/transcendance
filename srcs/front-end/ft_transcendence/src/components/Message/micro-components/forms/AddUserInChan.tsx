@@ -31,8 +31,6 @@ export default function AddUserInChan({chanel_focus, user} : IAddUserInChanProps
 		return (
 			<div>loading...</div>
 		)
-	if (data)
-		console.log(data);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();

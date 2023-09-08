@@ -35,7 +35,6 @@ export default function FriendsRequest({refetchContact, refetchProps, user}: IPr
 
 	if (!contacts)
 	{
-		console.log(data);
 		return (<div>Pas de contacts</div>)
 	}
 	

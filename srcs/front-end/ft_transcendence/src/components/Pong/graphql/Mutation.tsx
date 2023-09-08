@@ -7,8 +7,8 @@ export const START_PONG = gql`
 `;
 
 export const END_PONG = gql`
-  mutation EndPong($userId: Int!) {
-    endPong(userId: $userId)
+  mutation EndPong {
+    endPong
   }
 `;
 

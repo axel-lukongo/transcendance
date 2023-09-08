@@ -23,16 +23,12 @@ export class ChanelService {
 		  interlocutor_id: createChanelInput.interlocutor_id,
 		  interlocutor_name: createChanelInput.interlocutor_name,
 		  interlocutor_avatar: createChanelInput.interlocutor_avatar,
-		//   logo: createChanelInput.logo
         },
 		include: {interlocutor: true, owner: true}
       })
-    //   console.log('ici====>>> ',createChanelInput.logo);
 	
 	let logo = createChanelInput.logo;
-	// console.log("teste11===>>>",createChanelInput.directMsg)
 	if( createChanelInput.directMsg === false || createChanelInput.directMsg === undefined ) {
-			// console.log("teste12")
 		   logo = createChanelInput.logo != '' ?
 			'http://localhost:4000/uploads/' + await saveBase64ToFileChan(createChanelInput.logo, chanelRes.id) 
 			:

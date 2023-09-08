@@ -36,7 +36,6 @@ const AvatarBox = () => {
           },
         })
           .then((response) => {
-            console.log('User avatar is updated:', response);
             const updatedAvatar = response.data.updateUser;
             if (updatedAvatar) {
               userFromStorage.avatar = response.data.updateUser.avatar;

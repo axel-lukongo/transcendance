@@ -42,7 +42,6 @@ export class AuthenticationResolver {
             id:  context.req.userId,
             connection_status: __ACCESS__,
             avatar,
-            state: __CONNECTED__,
           };
            return await this.userResolveur.updateUser(updateUserDataInput);
         } 

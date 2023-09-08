@@ -95,11 +95,6 @@ export default function ListContact({refetchContact, refetchProps, user, setSwap
 	if (!data)
 		return (<div>Nothing to see her</div>)
 
-	if (data)
-	{
-		console.log('data => ',data.myContacts);
-	}
-
 	const handleShowProfil = (userIndex: number) => {
 		setShowProfil(true);
 		setSelectedUserIndex(userIndex);

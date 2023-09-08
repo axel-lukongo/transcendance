@@ -18,7 +18,6 @@ const Pong: FC = () => {
     if (typeof queryParams.friendId === "string") {
       friendId = parseInt(queryParams.friendId, 10);
     }
-    console.log('friendId:', friendId);
   }
 
   return (
