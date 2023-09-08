@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { ILeaderBoard } from "../interfaces/interfaces";
-import './css/LeaderBoard.css'
-
 import trophyImg from "/ft_transcendence/src/image/trophy.png";
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
-import { Link } from "react-router-dom"; 
 import { LEADERBOARD } from "./graphql/Query";
+import './css/LeaderBoard.css'
+import NavBar from "../../NavBar";
+
 
 
 
@@ -28,24 +28,8 @@ const LeaderBoard: React.FC = () => {
   // ...
   
   return (
-    <div>
-      <Link to="/">
-        <button className='log-out-button logo-box'></button>
-      </Link>
-      <Link to="/">
-        <button className='home-button logo-box'></button>
-      </Link>
-      <Link to="/leaderBoard">
-        <button className='leader-board-button logo-box'></button>
-      </Link>
-      <Link to="/message">
-        <button className='message-button logo-box'></button>
-      </Link>
-      <Link to="/contact">
-        <button className='contact-button logo-box'></button>
-      </Link>
-  
-      <div className="screen-box-leader-board">
+    <div className="screen-box-leader-board">
+      <NavBar/>
         <h1>Leaderboard</h1>
         <img src={trophyImg} alt="Trophy " />
         <div className="table-container">
@@ -74,7 +58,6 @@ const LeaderBoard: React.FC = () => {
             </tbody>
           </table>
         </div>
-      </div>
     </div>
   );
   

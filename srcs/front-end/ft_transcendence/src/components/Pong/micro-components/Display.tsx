@@ -5,7 +5,7 @@ import { UPDATE_PLAYER, PLAYER_UPDATED_SUBSCRIPTION, BALL_UPDATED_SUBSCRIPTION, 
 import Xp from './Xp';
 import '../css/Pong.css'
 import { WebSocketContext } from '../../../WebSocketProvider'; 
-import { Link } from 'react-router-dom';
+import NavBar from '../../../NavBar';
 
 
 interface DisplayProps {
@@ -225,6 +225,7 @@ export const Display: FC<DisplayProps> = ({ player,
   
   return (
 <div>
+  <NavBar/>
   <div className="score-container-box">
     <h1 className={playerScoreClass}>{playerScore}</h1>
     <div className="score-separator" />
@@ -244,21 +245,6 @@ export const Display: FC<DisplayProps> = ({ player,
       <div className='ball' style={{ top: `${ball?.positionY}%`, left: `${ball?.positionX}%` }} /> 
     </div>
   )}
-  <Link to ='/'>
-    <button className='log-out-button logo-box'></button>
-  </Link>
-  <Link to="/">
-    <button className='home-button logo-box'></button>
-  </Link>
-  <Link to="/leaderBoard">
-    <button className='leader-board-button logo-box'></button>
-  </Link>
-  <Link to="/message">
-    <button className='message-button logo-box'></button>
-  </Link>
-  <Link to="/contact">
-    <button className='contact-button logo-box'></button>
-  </Link>
 </div>
   );
 }

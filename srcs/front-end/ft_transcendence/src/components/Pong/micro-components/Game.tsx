@@ -4,9 +4,9 @@ import { Display } from './Display';
 import { Player, User, Ball, PongI } from '../../interfaces/interfaces'
 import {useMutation, } from '@apollo/client';
 import { END_PONG, JOIN_PONG, JOIN_PONG_INVITE, SET_INVITE } from '../graphql/Mutation';
-import { Link } from 'react-router-dom';
 import { UPDATE_STATE } from '../../Authentication/graphql/Mutation';
 import { __CONNECTED_ } from '../../../App';
+import NavBar from '../../../NavBar';
 
 
 interface GameProps {
@@ -126,7 +126,8 @@ interface GameProps {
   
 	  return (
 		<div>
-		  {pong && pong.winnerId === null ? (
+			<NavBar/>
+		  	{pong && pong.winnerId === null ? (
 			<Display
 			  player={player}
 			  otherPlayer={otherPlayer}
@@ -142,21 +143,6 @@ interface GameProps {
 			  <h2 className="loading-text">Loading GAME...</h2>
 			</div>
 		  )}
-		  <Link to ='/'>
-			<button className='log-out-button logo-box'></button>
-		  </Link>
-		  <Link to="/">
-			<button className='home-button logo-box'></button>
-		  </Link>
-		  <Link to="/leaderBoard">
-			<button className='leader-board-button logo-box'></button>
-		  </Link>
-		  <Link to="/message">
-			<button className='message-button logo-box'></button>
-		  </Link>
-		  <Link to="/contact">
-			<button className='contact-button logo-box'></button>
-		  </Link>
 		</div>
 	  
 	  );
