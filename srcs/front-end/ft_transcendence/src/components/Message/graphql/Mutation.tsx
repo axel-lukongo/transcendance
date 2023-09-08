@@ -38,8 +38,12 @@ export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInpu
 		chanel_name
 		logo
 		interlocutor_id
-		private
+		directMsg
 		interlocutor{
+			nickname
+			avatar
+		}
+		owner{
 			nickname
 			avatar
 		}
