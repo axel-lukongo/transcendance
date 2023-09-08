@@ -94,11 +94,14 @@ export class AuthenticationResolver {
       const tfa_code = generateTwoFactorCode();
       const updateUserDataInput: UpdateUserInput = {
         id: user.id,
-        tfa_code: code,
+        tfa_code: tfa_code,
         connection_status : __NEED_TFA__
       };
       this.mailingService.sendMail(user.email, tfa_code);
-      return this.userResolveur.updateUser(updateUserDataInput);
+
+      let updateUser= await this.userResolveur.updateUser(updateUserDataInput);
+      updateUser.tfa_code = '';
+      return updateUser;
     }
     return user;
   }
@@ -107,13 +110,13 @@ export class AuthenticationResolver {
   async checkTwoAuthenticationFactor(@Args('code') code: string, 
   @Context() context) {
 
-    const user = await this.userResolveur.findUserById(context.token.userId)
+    const user = await this.userResolveur.findUserById(context.req.userId)
 
-    if (!user)
+    if (user)
     {
       if (user.tfa_code === code) {
         const updateUserDataInput: UpdateUserInput = {
-          id:  context.token.userId,
+          id:  context.req.userId,
           connection_status: __ACCESS__,
           state: __CONNECTED__,
           tfa_code : 'true'

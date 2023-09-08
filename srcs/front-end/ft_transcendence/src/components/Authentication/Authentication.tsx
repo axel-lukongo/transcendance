@@ -16,7 +16,6 @@ import Contact from '../Contact/Contact';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
 import { __ACCESS__, __CONNECTED_, __CREATING__, __NEED_TFA__ } from '../../App';
 
-// import { MessageContext } from '../Message/micro-components/MessageContext';
 
 const Authentication: FC = () => {
 
@@ -177,19 +176,19 @@ const Authentication: FC = () => {
           avatar,
           tfa_code,
           level,
-		  rank
+          rank
         }
         
         if (connection_status === __CREATING__)
         {
-			setUserExist(false);
+			    setUserExist(false);
         }
         else if (connection_status === __NEED_TFA__)
         {
-			setUser2fa(true);
+			    setUser2fa(true);
         }
         sessionStorage.setItem('user', JSON.stringify(user));
-		setCanCheck(true);
+		    setCanCheck(true);
       }
     }, [AuthenticationData]);
     
