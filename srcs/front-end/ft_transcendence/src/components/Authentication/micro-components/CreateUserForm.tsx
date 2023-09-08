@@ -19,7 +19,7 @@ interface PropsCreateUser {
         const file = files[0];
         const fileType = file.type;
         const fileSize = file.size;
-        const maxSize = 50000; //3Ko
+        const maxSize = 50000; //50Ko
   
         // Vérifications du format et de la taille du fichier
         if (fileType === 'image/png' || fileType === 'image/jpeg') {
