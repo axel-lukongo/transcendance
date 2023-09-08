@@ -18,7 +18,7 @@ const MatchStatistic: React.FC = () => {
 
   useEffect(() => {
     refetch();
-  }, );
+  }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

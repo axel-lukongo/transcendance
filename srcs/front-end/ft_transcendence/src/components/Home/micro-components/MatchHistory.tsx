@@ -14,7 +14,7 @@ const HistoryMatch: React.FC<PropsHistoryMatch> =({user}) => {
 
   useEffect(() => {
     refetch();
-  }, );
+  }, []);
 
 
   if (data && data.myMatchHistory) {
