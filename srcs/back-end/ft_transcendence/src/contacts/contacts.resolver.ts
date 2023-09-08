@@ -51,7 +51,6 @@ export class ContactsResolver {
 
 	@Query(() => [Contact], { name: "myContactRequest" })
 	findMyContactRequest(@Context() context) {
-		console.log(context.req.userId);
 		return this.contactService.findMyContactRequest(context.req.userId);
 	}
   

@@ -32,7 +32,6 @@ interface CreateMsgProps {
 					},
 				},
 			});
-			// console.log(response.data);
 			setContent(''); // Réinitialiser le champ de texte après la création de l'utilisateur
 		} catch (error) {
 			console.error(error);

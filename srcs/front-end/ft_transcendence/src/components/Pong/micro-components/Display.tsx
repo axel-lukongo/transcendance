@@ -77,10 +77,6 @@ export const Display: FC<DisplayProps> = ({ player,
          pongId: pong?.id
        },
      })
-     .then((response) => {
-       // Appel réussi, le démarrage de ballMove est activé côté serveur
-       console.log('game start', response);
-     })
      .catch((error) => {
        console.error('Error calling startPong mutation:', error);
      });
@@ -159,9 +155,6 @@ export const Display: FC<DisplayProps> = ({ player,
           ballId: player.ballId,
         },
       },
-    })
-    .then((response) => {
-      // console.log('player has been updated:', response.data.updatePlayer);
     })
     .catch((error) => {
       console.error('Error updating player:', error);

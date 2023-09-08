@@ -25,7 +25,6 @@ interface PropsCreateUser {
         if (fileType === 'image/png' || fileType === 'image/jpeg') {
           if (fileSize <= maxSize) {
             setAvatar(file);
-            console.log('Fichier valide :', avatar);
             setAvatarError('');
           } else {
             setAvatarError('Please select a PNG or JPG image File size should not exceed 50Ko.');

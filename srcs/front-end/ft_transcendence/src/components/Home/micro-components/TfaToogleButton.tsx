@@ -26,7 +26,6 @@ interface PropsTfaToggleButton {
             const userFromStorage = JSON.parse(sessionStorage.getItem('user') || '');
             userFromStorage.tfa_code = newTfaCode;
             sessionStorage.setItem('user', JSON.stringify(userFromStorage));
-            console.log("User updated:", response.data.updateUser);
         })
         .catch((error) => {
           console.error("Error updating user:", error);

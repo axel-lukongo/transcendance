@@ -52,7 +52,6 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
 
 
 	const handle_create_msg = () => {
-		console.log("create");
 		setPlayClicked(true); // Active le drapeau pour afficher CreateMsg
 	  };
 	
@@ -70,7 +69,6 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
 			},
 		  }).then((result) => {
 
-			console.log(result.data.updateChanelUser);
 			handleChanelRefetch();
 			handlechanelfocus ( {
 				id: 0,
@@ -92,7 +90,6 @@ export default function HeaderChanel({chanel_focus, user,  handleChatBox, handle
 	  }
 
 	if(chanel_focus.directMsg === true){
-		console.log("===>>>> ",chanel_focus);
 		chanel_focus.chanel_name = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor.nickname:chanel_focus.owner.nickname
 		chanel_focus.logo = user.id === (+chanel_focus.owner_id)? chanel_focus.interlocutor.avatar: chanel_focus.owner.avatar
 	}

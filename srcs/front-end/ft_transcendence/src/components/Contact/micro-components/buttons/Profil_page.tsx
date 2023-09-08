@@ -14,7 +14,6 @@ interface IshowProfil{
 const Profil_page: React.FC<IshowProfil> = ({ handleShowProfil, user }) => {
 
 	const [avatar, setAvatar] = useState(user.avatar);
-	console.log(' ========>>>>>>>  ', user);
 	const { data, loading, error, refetch } = useQuery(MY_MATCH_HISTORY, {
 		variables: {
 			userId: user.id

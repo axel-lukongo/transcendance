@@ -226,7 +226,6 @@ export class PongResolver {
     };
 
     const updatedUser = await this.user.updateUser(dataUpdateUser);
-    // console.log(updatedUser);
   }
 
   @Mutation(() => JoinPongResponse)
@@ -313,7 +312,7 @@ export class PongResolver {
       const pong_tmp = await this.findPong(player.pongId);
       if (pong_tmp && pong_tmp.winnerId)
       {
-        await this.endPong(player.userId, context);
+        await this.endPong(context);
         player = await this.player.setPlayer(userId, 1);
       }
     }
@@ -383,9 +382,8 @@ export class PongResolver {
 
 
   @Mutation(() => String)
-  async endPong( @Args('userId', { type: () => Int }) userId: number, @Context() context : any): Promise<string> {
-    
-    const player = await this.player.findPlayerByUserId(userId);
+  async endPong( @Context() context : any): Promise<string> {
+    const player = await this.player.findPlayerByUserId(context.req.userId);
     if (!player) {
       return 'Pong ended';
     }

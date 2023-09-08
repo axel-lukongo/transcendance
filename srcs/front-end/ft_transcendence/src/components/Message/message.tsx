@@ -127,14 +127,9 @@ const Message = () => {
 		else
 			setChatBox(switch_id);
 	}
-	
-	// const handleIsChanel = () => {
-	// 	setIsChanel(prevValue => !prevValue);
-	// }
 
 	/* //////////////////////////////////////////////////////// */
 	/* Switch */
-	// console.log('dans les message ====>>>>   ',chanel_focus );
 
 	const renderSwitch = (id: number) => {
 		switch(id) {

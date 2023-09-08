@@ -24,7 +24,6 @@ const Tobloc: React.FC<TheId> = ({ blockerId, blockedId, handleshowBlocked }) =>
 			} 
 		});
 	handleshowBlocked(false);
-      console.log('Tobloc created successfully!');
     } catch (error) {
       console.error('Error creating Tobloc:', error);
     }

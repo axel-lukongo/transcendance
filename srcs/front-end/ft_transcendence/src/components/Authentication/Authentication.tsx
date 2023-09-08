@@ -3,7 +3,7 @@ import { Route, Routes} from 'react-router-dom';
 
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { CHECK_2AF, MAKE_AUTH } from './graphql/Query';
-import { CREATE_USER, UPDATE_STATE } from './graphql/Mutation';
+import { CREATE_USER } from './graphql/Mutation';
 
 import { SigninButton } from './micro-components/SignInButton';
 import { CreateUserForm } from './micro-components/CreateUserForm';
@@ -14,7 +14,6 @@ import Pong from '../Pong/Pong';
 import Message from '../Message/message';
 import Contact from '../Contact/Contact';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
-import { WebSocketContext } from '../../WebSocketProvider';
 import { __ACCESS__, __CONNECTED_, __CREATING__, __NEED_TFA__ } from '../../App';
 
 // import { MessageContext } from '../Message/micro-components/MessageContext';
@@ -32,10 +31,6 @@ const Authentication: FC = () => {
   const [user2fa, setUser2fa] = useState(false);
   
 
-  const wsContext = useContext(WebSocketContext);
-
-  const [updateState] = useMutation(UPDATE_STATE);
-  
   
 /*    ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   */
 /*                      REQUEST                           */
@@ -94,7 +89,6 @@ const Authentication: FC = () => {
 			    rank
           }
           sessionStorage.setItem('user', JSON.stringify(user));
-          wsContext?.updateUser(user);
         })
         .catch(error => {
           console.log(error);
@@ -123,7 +117,6 @@ const Authentication: FC = () => {
 			      rank
           }
           sessionStorage.setItem('user', JSON.stringify(user));
-          wsContext?.updateUser(user);
         })
         .catch(error => {
           console.log(error);
@@ -184,28 +177,19 @@ const Authentication: FC = () => {
           avatar,
           tfa_code,
           level,
-		      rank
+		  rank
         }
-        console.log('user front', user);
         
         if (connection_status === __CREATING__)
         {
-          setCanCheck(true);
-          setUserExist(false);
+			setUserExist(false);
         }
         else if (connection_status === __NEED_TFA__)
         {
-          setCanCheck(true);
-          setUser2fa(true);
+			setUser2fa(true);
         }
         sessionStorage.setItem('user', JSON.stringify(user));
-        wsContext?.updateUser(user);
-		updateState({
-			variables: {
-				state: __CONNECTED_
-			}
-		})
-
+		setCanCheck(true);
       }
     }, [AuthenticationData]);
     

@@ -30,7 +30,6 @@ export class MessagesService {
 		const filteredMessages = [];
 		for (const message of new_msg) {
 			const isBlocked = await this.blocked.is_blocked(my_id, message.sender_id); // Vérifier si le sender_id est bloqué par my_id
-			// console.log
 			if (!isBlocked) {
 				filteredMessages.push(message);
 			}
