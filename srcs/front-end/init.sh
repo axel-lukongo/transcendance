@@ -2,4 +2,4 @@
 
 npm i 
 echo "====> THE SITE IS READY! <===="
-tail -f /dev/null
+run npm run start
