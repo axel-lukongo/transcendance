@@ -19,5 +19,4 @@ function test_db_connection {
 test_db_connection
 
 # Démarrage de l'application Nest.js
-# npm run start
-tail -f /dev/null
+npm run start

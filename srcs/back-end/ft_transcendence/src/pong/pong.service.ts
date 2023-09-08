@@ -66,7 +66,6 @@ export class PongService {
   
 
   async myMatchHistory(userId: number) {
-    try {
       const games = await this.prisma.pong.findMany({
         where: {
           OR: [
@@ -80,14 +79,7 @@ export class PongService {
         },
       });
   
-      if (games.length === 0) {
-        throw new Error('No game found for the given userId.');
-      }
-  
       return games;
-    } catch (error) {
-      throw new Error(`Error fetching game: ${error.message}`);
-    }
   }
 
 
