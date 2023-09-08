@@ -19,6 +19,8 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 		private: true
 	});
 
+	const [errorForm, setErrorForm] = useState(true);
+
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
 
@@ -49,7 +51,8 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 		event.preventDefault();
 		console.log(event.target.files);
 		if (event.target.files && event.target.files.length > 0) {
-			if (event.target.files[0].size <= (2 * 1024 * 1024)) {
+			if (event.target.files[0].size <= (50000)) {
+				setErrorForm(false);
 				const reader = new FileReader();
 				reader.readAsDataURL(event.target.files[0]);
 
@@ -57,6 +60,10 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 					const string_logo = reader.result as string;
 					setChanel({...chanel, logo: string_logo});
 				}
+			}
+			else {
+				alert('Please select a PNG or JPG image. File size should not exceed 50Ko.');
+				setErrorForm(true);
 			}
 		}
 	}
@@ -80,7 +87,7 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 				chanel_name
 				</label><br />
 				<input
-					type="textx"
+					type="text"
 					name="chanel_name"
 					value={chanel.chanel_name}
 					placeholder="type her..."
@@ -106,8 +113,8 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 					<input type="radio" onClick={handleSelect} value={"false"} name="private" id="radio-create-chan-btn-2" />
 					<br />
 				</div>
-				{/* need to add a toggle btn her */}
-				<button id="create-chan-submit-btn">Create +</button>
+
+				<button id="create-chan-submit-btn" hidden={errorForm}>Create + </button>
 			</form>
 		</div>
 	)
