@@ -91,16 +91,16 @@ interface GameProps {
 	
 	 //Cleanup function
 	return () => {
-	  endPong()
-	  .catch(error => {
-		console.error('Error ending pong:', error);
-	  });
+// 	  endPong()
+// 	  .catch(error => {
+// 		console.error('Error ending pong:', error);
+// 	  });
 	  
-	  updateState({
-		variables: {
-			state: __CONNECTED_
-		}
-	  })
+// 	  updateState({
+// 		variables: {
+// 			state: __CONNECTED_
+// 		}
+// 	  })
 	  
 	  sessionStorage.removeItem('playerMap');
 	}

@@ -2,8 +2,11 @@ import React, { FC, useEffect, useState } from 'react';
 import bronzeMedal from '/ft_transcendence/src/image/bronze_medal.png';
 import silverMedal from '/ft_transcendence/src/image/silver_medal.png';
 import goldMedal from '/ft_transcendence/src/image/gold_medal.png';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { FIND_USER } from '../graphql/Query';
+import { END_PONG } from '../graphql/Mutation';
+import { UPDATE_STATE } from '../../Authentication/graphql/Mutation';
+import { __CONNECTED_ } from '../../../App';
 
 enum Rank {
   Bronze = "Bronze",
@@ -64,16 +67,33 @@ const Xp: FC<XpProps> = ({ userId }) => {
   const [nextRank, setNextRank] = useState<Rank | null>(null);
 
 
-  
-  const { data, refetch } = useQuery(FIND_USER, {
+  const [endPong] = useMutation(END_PONG);
+  const [updateState] = useMutation(UPDATE_STATE);
+  const { data } = useQuery(FIND_USER, {
     variables: {
       id: userId,
     },
   });
+	useEffect( () => {
+	  endPong()
+	  .catch(error => {
+		console.error('Error ending pong:', error);
+	  });
+	  
+	  updateState({
+		variables: {
+			state: __CONNECTED_
+		}
+	  })
+	  
+	  sessionStorage.removeItem('playerMap');
+	},[]);
 
-  useEffect(() => {
-    refetch();
-  }, [userId, refetch]);
+
+
+//   useEffect(() => {
+//     refetch();
+//   }, []);
 
   useEffect(() => {
     if (data && data.findUserById) {
@@ -96,6 +116,7 @@ const Xp: FC<XpProps> = ({ userId }) => {
 
   return (
     <div className='xp-container'>
+		
       <img className='xp-image xp-image-left' src={getMedalImage(rank)} alt='left-medal' />
       <div className='xp-bar'>
         <div className='xp-bar-segment' style={{ transition: 'width 0.5s ease 0.3s', width: `${totalXpPercentage}%` }} />

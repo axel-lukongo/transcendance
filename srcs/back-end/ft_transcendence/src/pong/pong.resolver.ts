@@ -43,7 +43,7 @@ export class StatisticMatch{
   @Field(() => String)
   nickname: string;
 
-  @Field(() => Int)
+  @Field(() => Float)
   level: number;
 
   @Field(() => String)
@@ -104,7 +104,7 @@ export class PongResolver {
                 this.maxY = 100;
                 this.minX = 0;
                 this.minY = 0;
-                this.speed = 5;
+                this.speed = 10;
               }
 
   @Mutation(() => Pong)

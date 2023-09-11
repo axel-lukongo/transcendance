@@ -11,7 +11,7 @@ type User {
   email: String!
   nickname: String!
   avatar: String
-  level: Int!
+  level: Float!
   rank: String!
 }
 
@@ -124,7 +124,7 @@ type JoinPongResponse {
 type StatisticMatch {
   grade: Int!
   nickname: String!
-  level: Int!
+  level: Float!
   rank: String!
   wins: Int!
   defeats: Int!

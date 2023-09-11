@@ -16,8 +16,9 @@ export class AuthMiddleware implements NestMiddleware {
     
     // Vérifie si la requête doit être vérifiée avec le token
     if (!isMakeAuthenticationRequest ) {
-      
+
       if (!token ) {
+
         res.status(401).json({ message: 'Token manquant' });
         return;
       }

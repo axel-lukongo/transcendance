@@ -10,18 +10,18 @@ export default function NavBar() {
 	const [updateState] = useMutation(UPDATE_STATE);
 	
 	const handleLogOut = async () => {
-		if (wsContext?.wsClient) {
-			updateState({
+		
+		if (wsContext?.user) {
+			await updateState({
 				variables: {
 					state: __DISCONECTED__
-			}}).then((resp) => {
-				wsContext?.updateUser(null);
-				sessionStorage.removeItem('user');
-				window.location.reload();
-			})
+			}})
+			wsContext?.updateUser(null);
+			sessionStorage.removeItem('user');
+			window.location.reload();
 		}
 	}
-	
+
 	return (
 		<div id='nav-bar'>
 			<Link to ='/'>

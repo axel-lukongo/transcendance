@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 
 @ObjectType()
 export class User {
@@ -26,7 +26,7 @@ export class User {
   @Field({ nullable: true })
   avatar?: string;
 
-  @Field(() => Int)
+  @Field(() => Float)
   level: number;
 
   @Field()

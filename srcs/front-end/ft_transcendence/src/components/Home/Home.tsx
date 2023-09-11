@@ -27,13 +27,15 @@ const Home = () => {
 		
 		if (userFromStorageString && userFromStorageString !== 'undefined')
 			userFromStorage = JSON.parse(userFromStorageString);
-
-		wsContext?.updateUser(userFromStorage);
-		updateState({
-			variables: {
-				state: __CONNECTED_
-			}
-		})
+		
+		if (userFromStorage) {
+			wsContext?.updateUser(userFromStorage);
+			updateState({
+				variables: {
+					state: __CONNECTED_
+				}
+			})
+		}
 	}, [])
 
   

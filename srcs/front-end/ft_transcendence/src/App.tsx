@@ -39,8 +39,9 @@ const App = () => {
 	},[])
 	
 	useEffect(() => {
-
-		if (wsContext?.user) {
+		const userString = sessionStorage.getItem('user'); 
+		const user = userString ? JSON.parse(userString) : null;
+		if (user) {
 
 		  const handleVisibiltyChange = () => {
 			if (state === __CONNECTED_) {
@@ -61,13 +62,19 @@ const App = () => {
 		  }
 	  
 		  const handleUnload = (event: any ) => {
-			updateState({
-			  variables: {
-				state: __DISCONECTED__
-			  }
-			}).then(() => {
-			  setState(__DISCONECTED__);
-			})
+			const userString = sessionStorage.getItem('user'); 
+			const user = userString ? JSON.parse(userString) : null;
+			if (user) {
+				updateState({
+					variables: {
+						state:__DISCONECTED__
+					}
+					}).then(() => {
+					setState(__DISCONECTED__);
+					})
+					wsContext?.updateUser(null);
+			}
+				
 		  }
 	  
 		  document.addEventListener("visibilitychange", handleVisibiltyChange);

@@ -28,14 +28,12 @@ remove(id: number) {
 }
 
 async is_blocked(blockerId: number, blockedId: number){
-	// console.log('le bloqueur: ', blockerId, 'le bloquer: ', blockedId);
 	const user_is_blocked = await this.prisma.toBloc.findFirst({
 		where: {
 			blocker_id: blockerId,
 			blocked_id: blockedId,
 		},
 	  });
-	//   console.log('===>>>>>  ',user_is_blocked);
 	  if (user_is_blocked)
 	  	return true;
 	  else
