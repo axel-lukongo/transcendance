@@ -71,11 +71,11 @@ const App = () => {
 		  }
 	  
 		  document.addEventListener("visibilitychange", handleVisibiltyChange);
-		  window.addEventListener('unload', handleUnload);
+		  window.addEventListener('beforeunload', handleUnload);
 	  
 		  return () => {
 			document.removeEventListener("visibilitychange", handleVisibiltyChange);
-			window.removeEventListener("unload", handleUnload);
+			window.removeEventListener("beforeunload", handleUnload);
 		  };
 
 		}

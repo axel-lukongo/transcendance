@@ -5,7 +5,7 @@ import { Player, User, Ball, PongI } from '../../interfaces/interfaces'
 import {useMutation, } from '@apollo/client';
 import { END_PONG, JOIN_PONG, JOIN_PONG_INVITE, SET_INVITE } from '../graphql/Mutation';
 import { UPDATE_STATE } from '../../Authentication/graphql/Mutation';
-import { __CONNECTED_ } from '../../../App';
+import { __CONNECTED_, __DISCONECTED__ } from '../../../App';
 import NavBar from '../../../NavBar';
 
 
@@ -112,6 +112,11 @@ interface GameProps {
 		.catch(error => {
 		  console.error('Error ending pong:', error);
 		});
+		updateState({
+			variables: {
+				state: __DISCONECTED__
+			}
+		  })
 
 		sessionStorage.removeItem('playerMap');
 	};
