@@ -352,11 +352,11 @@ input AddUserChanel {
 
 input UpdateChanelUserInput {
   user_id: Int!
-  chanel_id: Int!
+  chanel_id: Int
   pending: Boolean
-  is_muted: Boolean!
-  is_admin: Boolean!
-  mute_start_time: Int!
+  is_muted: Boolean
+  is_admin: Boolean
+  mute_start_time: Int
 }
 
 type Subscription {

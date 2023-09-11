@@ -18,8 +18,9 @@ export class UserChanelsService {
 					users: {
 						some: {
 							user_id: user_id,
+							pending: false
 						}
-					},
+					}
 				}
 			});
 		}
@@ -110,7 +111,8 @@ export class UserChanelsService {
 	async findMembersOfChan(channel_id: number){
 		return await this.prisma.users_Chanels.findMany({
 			where: {
-					chanel_id: channel_id
+				chanel_id: channel_id,
+				pending: false
 			},
 			include: { user: true }
 		})

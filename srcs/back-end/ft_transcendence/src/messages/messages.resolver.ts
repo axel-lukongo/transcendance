@@ -42,12 +42,16 @@ export class MessagesResolver {
 		if (isMuted === true) {
 			return (' you are muted');
 		}
-		
-		const new_message = this.msgService.create(createMsgInput);
-		pubSub.publish(NEW_MSG, {
-			addmessage: new_message,
-		});
-		return new_message;
+		const done_to_go = await this.msgService.check_user_in_chan(createMsgInput.channel_id, userId);
+		if (done_to_go != 0) {
+			const new_message = this.msgService.create(createMsgInput);
+			pubSub.publish(NEW_MSG, {
+				addmessage: new_message,
+			});
+			return new_message;
+		}
+		else
+			return null;
 	}
 
 
@@ -74,6 +78,7 @@ export class MessagesResolver {
 	@Subscription(() => Message, {
 	filter: async (payload, variables) => {
 		const resolvedPayload = await payload.addmessage;
+
 		return resolvedPayload.channel_id === variables.channel_id;
 		}
 	})

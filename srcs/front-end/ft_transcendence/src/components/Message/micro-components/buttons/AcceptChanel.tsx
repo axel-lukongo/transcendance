@@ -3,7 +3,7 @@ import { IRequest } from "../../../interfaces/interfaces";
 import { ACCEPT_CHANEL } from '../../graphql/Mutation'
 import accept_logo from '../../../../image/accept-check-good-mark.svg'
 
-export default function AcceptChanel({element, handleChanelRefetch, label}: IRequest ) {
+export default function AcceptChanel({element, handleChanelRefetch}: IRequest ) {
 
 
 	const [acceptChanel] = useMutation(ACCEPT_CHANEL)

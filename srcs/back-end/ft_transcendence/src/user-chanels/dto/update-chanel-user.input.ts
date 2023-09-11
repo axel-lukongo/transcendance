@@ -6,15 +6,15 @@ export class UpdateChanelUserInput extends PartialType(AddUserChanel) {
 	@Field(() => Int)
 	user_id: number;
 
-	@Field(() => Int)
-	chanel_id: number;
+	@Field(() => Int, {nullable: true})
+	chanel_id?: number;
 
-	@Field(() => Boolean)
-	is_muted: boolean;
+	@Field(() => Boolean, {nullable: true})
+	is_muted?: boolean;
 
-	@Field(() => Boolean)
-	is_admin: boolean;
+	@Field(() => Boolean, {nullable: true})
+	is_admin?: boolean;
 
-	@Field(() =>  Int)
+	@Field(() =>  Int, {nullable: true})
 	mute_start_time?: number;
 }

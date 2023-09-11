@@ -162,7 +162,6 @@ export interface channelfocus  {
 }
 
 export interface IRequest {
-	label: string;
 	element: UserChanels;
 	handleChanelRefetch: () => void;
 }

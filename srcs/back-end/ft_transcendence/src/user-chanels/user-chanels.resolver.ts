@@ -46,7 +46,7 @@ export class UserChanelsResolver {
 	@Query(() => [Chanel] , { name: 'myChanels' })
 	findMyChanels(
 		@Context() context,
-		@Args("private_chan", {type: () => Boolean}) private_chan: boolean
+		@Args("private_chan", { type: () => Boolean }) private_chan: boolean
 	) {
 	  return this.userChanelService.findMyChanels(context.req.userId, private_chan);
 	}

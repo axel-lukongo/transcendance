@@ -23,12 +23,6 @@ export 	const CREATE_CHANEL = gql`mutation CreateChanel($input: CreateChanelInpu
 }`
 
 
-export const QUITE_CHANEL = gql`mutation QuiteChanel($input: UpdateChanelUserInput!) {
-	deleteChanelUser(key: $input) {
-		user_id
-	}
-}`
-
 // export const ADD_CHANEL = gql`
 //   mutation AddChanel($input: AddUserChanel!) {
 // 	addUser(addUserChanel: $input) {

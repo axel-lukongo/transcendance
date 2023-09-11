@@ -52,12 +52,10 @@ export default function ListChanelRequests(props: IListChanelRequestProps) {
 										<div className="name">{chanel.chanels.chanel_name}</div>
 										<AcceptChanel 
 											element={chanel} 
-											label="Join" 
 											handleChanelRefetch={props.handleChanelRefetch}
 										/>
 										<QuiteChanel 
 											element={chanel}
-											label="refuse"
 											handleChanelRefetch={props.handleChanelRefetch}
 											/>
 									</div>

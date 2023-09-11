@@ -42,6 +42,20 @@ export class MessagesService {
 		return this.prisma.message.create({ data: createMsg });
 	}
 
+	async check_user_in_chan(chanel_id: number, user_id: number) {
+		const user_in_chan = await this.prisma.users_Chanels.findUnique({
+			where: {
+				user_id_chanel_id: {
+					user_id: user_id,
+					chanel_id: chanel_id
+				}
+			}
+		})
+		if (user_in_chan == undefined)
+			return (0);
+		return (1);
+	}
+
 	update(id: number, updateMsg: UpdateMessageInput) {
 		return this.prisma.message.update({ 
 			where: {id: id},

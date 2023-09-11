@@ -19,7 +19,7 @@ export default function CreateChanelForm({user, handleChanelRefetch}: ICreateCha
 		private: true
 	});
 
-	const [errorForm, setErrorForm] = useState(true);
+	const [errorForm, setErrorForm] = useState(false);
 
 	/* //////////////////////////////////////////////////////// */
 	/* Handlers */
